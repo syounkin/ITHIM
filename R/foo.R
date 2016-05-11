@@ -1,0 +1,20 @@
+
+
+transportMode <- c("walk","cycle","bus","minibus","train","car.driver","car.passenger","mbike","elec.bike.scooter","LGV","HGV.rigid","HGV.articulated")
+
+speed <- c(1.35299774571063,5.39374775150058,5.22298847623309,NA,9.94147658251227,17.36906017290580,14.51012134295660,NA,NA,NA,NA,NA)
+
+dist <- c(2.44072161538462,1.19969769230769,4.37851867307692,NA,5.58545353846154,111.91985351923100,39.12264265384620,0.00000000000000,0.00000000000000,NA,1.05479452054795,NA) # miles per week
+
+Data.Speed <- data.frame(speed,dist, row.names = transportMode)
+
+transportTime <- Data.Speed$dist/Data.Speed$speed*60
+
+transportModeByRoadType <- c("bus","Cars.urban","Cars.mway","LGVs.urban","LGVs.mway","motorbike","HGV")
+CO2 <- c(957.686509527760,221.578783667454,203.624526028894,247.869842164617,333.468424533125,90.000000000000,835.014773125786)
+
+Data.CO2 <- data.frame(CO2, row.names = transportModeByRoadType)
+
+Data.RoadType <- data.frame(local=c(0.75,0.53,0.0,0.09,0.29,NA,0.09,NA), arterial=c(0.25,0.47,0.96,0.31,0.42,NA,0.31,NA), highway=c(0.0,0,0.04,0.60,0.29,NA,0.60,NA),row.names=c("walk","cycle","bus","car","HGV","LGV","mbike","elec.bike") )
+
+Data.Occupancy <- data.frame(occupancy = c(1.0,1.0,18.9,1.3,1.0,NA,1.0,NA), row.names = c("walk","cycle","bus","car","HGV","LGV","mbike","elec.bike"))
