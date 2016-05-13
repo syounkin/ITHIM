@@ -18,3 +18,9 @@ Data.CO2 <- data.frame(CO2, row.names = transportModeByRoadType)
 Data.RoadType <- data.frame(local=c(0.75,0.53,0.0,0.09,0.29,NA,0.09,NA), arterial=c(0.25,0.47,0.96,0.31,0.42,NA,0.31,NA), highway=c(0.0,0,0.04,0.60,0.29,NA,0.60,NA),row.names=c("walk","cycle","bus","car","HGV","LGV","mbike","elec.bike") )
 
 Data.Occupancy <- data.frame(occupancy = c(1.0,1.0,18.9,1.3,1.0,NA,1.0,NA), row.names = c("walk","cycle","bus","car","HGV","LGV","mbike","elec.bike"))
+
+
+# Non-Travel METs
+
+x <- data.frame(scan(file="./data/NonTravelMETs.csv", sep = ",", what = list("","","","","","","","",1,1,1), skip = 1))
+names(x) <- c("ID","sexcat","agecat2","GESTFIPS", paste0("x",1:7))
