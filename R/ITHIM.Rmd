@@ -1,10 +1,13 @@
 ## Integrated Transport and Health Impacts Model (ITHIM)
 
-```{r libs, eval = FALSE, echo = FALSE, results = "hide", warning = FALSE, error = FALSE}
+```{r libs, eval = TRUE, echo = FALSE, results = "hide", warning = FALSE, error = FALSE}
 library("ggplot2")
+library("reshape")
 ```
 
-```{r test, eval = TRUE, echo = FALSE} 
+
+
+```{r transportData, eval = TRUE, echo = FALSE} 
 
 transportMode <- c("walk","cycle","bus","minibus","train","car.driver","car.passenger","mbike","elec.bike.scooter","LGV","HGV.rigid","HGV.articulated")
 
@@ -38,9 +41,15 @@ METs.  The data are stratified by age and sex.
 nonTravelMETs <- data.frame(scan(file="./data/NonTravelMETs.csv", sep = ",", what = list("","","","",1,1,1,1,1,1,1), skip = 1))
 names(nonTravelMETs) <- c("ID","sexcat","agecat2","GESTFIPS", paste0("x",1:7))
 summary(nonTravelMETs[,paste0("x",1:7)])
-boxplot(nonTravelMETs[,paste0("x",1:7)])
-#hist(nonTravelMETs[,paste0("x",1)])
 ```
+
+```{r ggplot, fig.width=12, fig.height=12}
+D <- melt(nonTravelMETs)
+p <- ggplot(D, aes(x = variable, y = value, colour = agecat2), outlier.colour = "red", outlier.shape = 1 )
+p + geom_boxplot()
+```
+
+
 ```{r headNontravelmets, eval = TRUE, echo = TRUE}
 head(nonTravelMETs)
 nonTravelMETs[which.max(nonTravelMETs$x5),] # Outlier??
