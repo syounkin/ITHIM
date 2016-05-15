@@ -1,12 +1,19 @@
 ## Integrated Transport and Health Impacts Model (ITHIM)
 
+This document will eventually serve as a compendium to the R package
+_ITHIM_.  It will describe how to use the package to implement the
+ITHIM model, as well as a detailed description of the model itself.
+
+As a working document it will serve as a place for SGY to post
+results, questions, interpreations, notes, etc.
+
 ```{r libs, eval = TRUE, echo = FALSE, results = "hide", warning = FALSE, error = FALSE}
 library("ggplot2")
 library("reshape")
 ```
 
-
-
+### Active Transport Estimates (Speed and Distance by Transport Mode)
+These data were ripped out of the EXCEL workbook and vary per scenario.
 ```{r transportData, eval = TRUE, echo = FALSE} 
 
 transportMode <- c("walk","cycle","bus","minibus","train","car.driver","car.passenger","mbike","elec.bike.scooter","LGV","HGV.rigid","HGV.articulated")
@@ -16,13 +23,27 @@ speed <- c(1.35299774571063,5.39374775150058,5.22298847623309,NA,9.9414765825122
 dist <- c(2.44072161538462,1.19969769230769,4.37851867307692,NA,5.58545353846154,111.91985351923100,39.12264265384620,0.00000000000000,0.00000000000000,NA,1.05479452054795,NA) # miles per week
 
 Data.Speed <- data.frame(speed,dist, row.names = transportMode)
+```
 
-transportTime <- Data.Speed$dist/Data.Speed$speed*60
+```{r headDataSpeed}
+Data.Speed
+```
 
-transportModeByRoadType <- c("bus","Cars.urban","Cars.mway","LGVs.urban","LGVs.mway","motorbike","HGV")
+```{r transportTime, echo = FALSE, results = "hide", eval = TRUE}
+head(transportTime <- Data.Speed$dist/Data.Speed$speed*60)
+```
+
+
+
+### Emissions Data
+
+
+
+```{r roadAndCO2Data, echo = FALSE, eval = TRUE, results = "hide"}
+
 CO2 <- c(957.686509527760,221.578783667454,203.624526028894,247.869842164617,333.468424533125,90.000000000000,835.014773125786)
 
-Data.CO2 <- data.frame(CO2, row.names = transportModeByRoadType)
+Data.CO2 <- data.frame(CO2, row.names = c("bus","Cars.urban","Cars.mway","LGVs.urban","LGVs.mway","motorbike","HGV"))
 
 Data.RoadType <- data.frame(local=c(0.75,0.53,0.0,0.09,0.29,NA,0.09,NA), arterial=c(0.25,0.47,0.96,0.31,0.42,NA,0.31,NA), highway=c(0.0,0,0.04,0.60,0.29,NA,0.60,NA),row.names=c("walk","cycle","bus","car","HGV","LGV","mbike","elec.bike") )
 
@@ -30,36 +51,75 @@ Data.Occupancy <- data.frame(occupancy = c(1.0,1.0,18.9,1.3,1.0,NA,1.0,NA), row.
 
 ```
 
-### Non-Travel METs
+The amount of carbon emissions varies by transport mode and road type.
+To accomodate this we need the distribution of road type by transport
+mode.  At some point we need the expected number of passengers per
+transport mode and we create it here, arbitrarily perhaps.
+
+```{r showData, echo = TRUE, eval = TRUE, results = "show"}
+Data.CO2
+Data.RoadType
+Data.Occupancy
+```
+
+
+### Non-(Active Transport) METs
 
 The file NonTravelMETs.csv was created from the tripleWin EXCEL file.
 These data are used in a table look-up for a given county.  The data
 represent the non-travel-related energy expenditures as measured in
-METs.  The data are stratified by age and sex.
+METs.  The data are stratified by age and sex.  Variable names were
+not given for the 7 numerical variables listed.  Here we name them x1
+through x7.
 
 ```{r nonTravelMETs, eval = TRUE, echo = FALSE}
 nonTravelMETs <- data.frame(scan(file="./data/NonTravelMETs.csv", sep = ",", what = list("","","","",1,1,1,1,1,1,1), skip = 1))
 names(nonTravelMETs) <- c("ID","sexcat","agecat2","GESTFIPS", paste0("x",1:7))
-summary(nonTravelMETs[,paste0("x",1:7)])
 ```
 
-```{r ggplot, fig.width=12, fig.height=12}
+```{r ggplot, fig.width=12, fig.height=12, echo = FALSE, message = FALSE, warning = FALSE, results = "hide"}
 D <- melt(nonTravelMETs)
 p <- ggplot(D, aes(x = variable, y = value, colour = agecat2), outlier.colour = "red", outlier.shape = 1 )
 p + geom_boxplot()
 ```
 
+Who is the outlier?  Perhaps it is a cohort of laborers, e.g., a county of coal miners?
 
-```{r headNontravelmets, eval = TRUE, echo = TRUE}
-head(nonTravelMETs)
-nonTravelMETs[which.max(nonTravelMETs$x5),] # Outlier??
+```{r foo, eval = TRUE, echo = TRUE}
+nonTravelMETs[which.max(nonTravelMETs$x5),]
 ```
 
+Strange that it is group of middle-aged men.  I see this as a red
+flag.  I remove this datum and redraw the boxplots, but this time only
+for x5, x6 and x7, the others seemed less interesting.
 
-```{r foo, eval = TRUE, echo = FALSE}
-length(table(nonTravelMETs$GESTFIPS)) # Number of counties???
-```
-```{r fips, eval = TRUE, echo = TRUE}
+```{r fips, eval = TRUE, echo = FALSE, results = "hide"}
 fips <- read.csv("./data/fips_codes_website.csv")
 any(fips$County.FIPS.Code==38)
 ```
+
+```{r Nontravelmets, echo = FALSE, message = FALSE, warning = FALSE, results = "hide", fig.width=12, fig.height=6}
+D <- melt(nonTravelMETs[-which.max(nonTravelMETs$x5),-(5:8)])
+p <- ggplot(D, aes(x = variable, y = value, colour = agecat2), outlier.colour = "red", outlier.shape = 1 ) + geom_boxplot()
+
+p + facet_grid(. ~ sexcat)
+```
+
+Thoughts?
+
+### Relative Risk of MET Exposure
+
+In the worksheet _Phy activity RRs_ we see estimates for relative risk
+for various disease outcomes.  My guess is that some transformation is
+being made to convert the exposure from active transport time to METs.
+I don't know why this is needed yet.  I can't make much progress here
+until I understand that better.
+
+### Coefficient of Variation
+
+An estimate for the coefficient of variation is provided without much
+explanation.  The literature cites an empirical result.  The feeling
+is that as mean active transport increases in the population people
+are fitter and there is less variance in active transport time.  I
+guess this has been shown in the same refernce for the coefficient of
+variation estimate.
