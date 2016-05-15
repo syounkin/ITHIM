@@ -3,3 +3,7 @@ docs
 .DS_Store
 data
 .Rhistory
+*.html
+*.md
+figure/
+.#*
