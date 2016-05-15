@@ -24,3 +24,12 @@ Data.Occupancy <- data.frame(occupancy = c(1.0,1.0,18.9,1.3,1.0,NA,1.0,NA), row.
 
 x <- data.frame(scan(file="./data/NonTravelMETs.csv", sep = ",", what = list("","","","","","","","",1,1,1), skip = 1))
 names(x) <- c("ID","sexcat","agecat2","GESTFIPS", paste0("x",1:7))
+
+length(table(x$GESTFIPS)) # Number of counties???
+
+x[which.max(x$x5),] # Outlier??
+
+fips <- read.csv("./data/fips_codes_website.csv")
+
+fips[fips$County.FIPS.Code==38,]
+
