@@ -4,6 +4,5 @@ docs
 data
 .Rhistory
 *.html
-*.md
 figure/
 .#*
