@@ -8,6 +8,7 @@ As a working document it will serve as a place for SGY to post
 results, questions, interpreations, notes, etc.
 
 ```{r libs, eval = TRUE, echo = FALSE, results = "hide", warning = FALSE, error = FALSE}
+options(repos='http://cran.rstudio.com/')
 library("ggplot2")
 library("reshape")
 ```
@@ -123,3 +124,13 @@ is that as mean active transport increases in the population people
 are fitter and there is less variance in active transport time.  I
 guess this has been shown in the same refernce for the coefficient of
 variation estimate.
+
+### Vital Statistics Data
+
+```{r vitalstats}
+source("../vargo/process_2001_vital_stats.r")
+```
+
+```{r histAge}
+hist(mort$age)
+```
