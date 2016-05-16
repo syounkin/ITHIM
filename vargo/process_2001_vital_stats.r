@@ -1,11 +1,14 @@
-library(ggplot2)
-library(reshape2)
-library(plyr)
+#library(ggplot2)
+#library(reshape2)
+#library(plyr)
 #http://www.cdc.gov/nchs/data_access/Vitalstatsonline.htm
 
 lengths <- c(58,1,2,7,2,53,2,3,13,4,295)
 
-mortality2001 <- read.fwf("~/Box Documents/work/CoBenefits/MaggieShare/VitalStats/Mort01us.dat", lengths, header=F, as.is=T)
+# dataDir <- "~/Box Documents/work/CoBenefits/MaggieShare/VitalStats/"
+dataDir <- "~/ITHIM/R/data/"
+
+mortality2001 <- read.fwf(paste0(dataDir,"/Mort01us.dat"), lengths, header=F, as.is=T)
 
 #check column numbers when changing years
 mort <- mortality2001[,c(2,3,5,7,8,10)]
@@ -24,8 +27,8 @@ names(mort) <- c("sex","race","age","state","county","cause.of.death")
 
 #write.csv(stats, "~/Box Documents/work/CoBenefits/MaggieShare/VitalStats/MW_IDC_Codes.csv", row.names=F)
 
-ICD.key  <- read.csv("~/Box Documents/work/CoBenefits/MaggieShare/VitalStats/IDC_Codes_key.csv", header=T)
-county.key  <- read.csv("~/Box Documents/work/CoBenefits/MaggieShare/TripleWinCountyKey.csv", header=T)
+ICD.key  <- read.csv(paste0(dataDir, "IDC_Codes_key.csv"), header=T)
+county.key  <- read.csv(paste0(dataDir,"TripleWinCountyKey.csv"), header=T)
 
 
 age <- as.data.frame(matrix(c(1:27,"age0-4","age0-4","age0-4","age0-4","age0-4","age0-4","age5-14","age5-14","age15-29","age15-29","age15-29","age30-44","age30-44","age30-44","age45-59","age45-59","age45-59","age60-69","age60-69","age70-79","age70-79","age80+","age80+","age80+","age80+","age80+",""), ncol = 2, nrow = 27))
@@ -38,7 +41,7 @@ mort <- merge(mort, ICD.key, by.x="cause.of.death", by.y="cause.of.death")
 
 mort.ITHIM <- subset(mort, Include == 1)
 
-age.sex <- read.csv("~/Box Documents/work/CoBenefits/MaggieShare/VitalStats/county_age_sex2002.csv", header=T)
+age.sex <- read.csv(paste0(dataDir,"county_age_sex2002.csv"), header=T)
 
 names(age.sex) <- c("county.name","state.name", "MSA","sex","all.ages","age0-4","age5-14","age15-29","age30-44","age45-59","age60-69","age70-79","age80+", "STATE","COUNTY") 
 
@@ -60,7 +63,4 @@ stats <- ddply(mort.age, .(state, county, ITHIMCause, sex, ITHIM.age, year), sum
 
 stats$ITHIM.age <- as.factor(stats$ITHIM.age)
 
-write.csv(stats, "~/Box Documents/work/CoBenefits/MaggieShare/VitalStats/Disease_stats_4_ITHIM2001.csv", row.names=F)
-
-
-
+write.csv(stats, paste0(dataDir,"Disease_stats_4_ITHIM2001.csv"), row.names=F)
