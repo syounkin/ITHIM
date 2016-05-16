@@ -21,6 +21,8 @@ cp -v ./docs/EXCEL/ITHIM_tripleWin_Countylevel_4-10.xlsx  ./docs/EXCEL/ITHIM-sgy
 CDC Vital Stats are found here:
 http://www.cdc.gov/nchs/data_access/vitalstatsonline.htm
 
+wget ftp://ftp.cdc.gov/pub/Health_Statistics/NCHS/Datasets/DVS/mortality/mort2011us.zip
+
 Accompanying User Manual found here:
 http://www.cdc.gov/nchs/nvss/mortality_public_use_data.htm
 
