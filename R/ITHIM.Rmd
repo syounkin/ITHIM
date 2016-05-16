@@ -10,7 +10,8 @@ results, questions, interpreations, notes, etc.
 ```{r libs, eval = TRUE, echo = FALSE, results = "hide", warning = FALSE, error = FALSE}
 options(repos='http://cran.rstudio.com/')
 library("ggplot2")
-library("reshape")
+library("reshape2")
+library("plyr")
 ```
 
 ### Active Transport Estimates (Speed and Distance by Transport Mode)
