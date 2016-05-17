@@ -133,6 +133,9 @@ variation estimate.
 
 ### Vital Statistics Data
 
+
+#### Mort01us.dat
+
 ```{r vitalstats, eval = FALSE, echo = TRUE}
 source("../vargo/process_2001_vital_stats.r")
 saveRDS(mortality2001, file = "./data/mortality2001.rds")
@@ -141,6 +144,8 @@ saveRDS(mortality2001, file = "./data/mortality2001.rds")
 ```{r histAge, eval = FALSE, echo = TRUE}
 mortality2001 <- readRDS(file = "./data/mortality2001.rds")
 ```
+
+#### VS11MORT.DUSMCPUB
 
 Lets read in the CDC data using the file VS11MORT.DUSMCPUB and see whats up.
 
@@ -173,7 +178,7 @@ p + facet_grid(. ~ sex)
 
 ### Appendix
 
-```{r date}
+```{r appendix}
 date()
 sessionInfo()
 ```
