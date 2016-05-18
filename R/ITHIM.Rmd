@@ -196,13 +196,15 @@ with(Data.Mortality, table(CauseofDeathITHIM))
 ```
 
 ```{r ageClass}
-ageClass <- c(rep("0-4",5),rep("5-14",10),rep("15-29",15),rep("30-44",15),rep("45-59",15),rep("60-69",10),rep("70-79",10),rep("80+",121))
+ageClass <- c(rep("00-04",5),rep("05-14",10),rep("15-29",15),rep("30-44",15),rep("45-59",15),rep("60-69",10),rep("70-79",10),rep("80+",121))
 names(ageClass) <- as.character(0:200)
 Data.Mortality <- data.frame(Data.Mortality, ageClass = as.factor(ageClass[as.character(as.integer(Data.Mortality$convertedAge))]))
 with(Data.Mortality, table(ageClass))
-D <- data.frame(ageClass = Data.Mortality$ageClass)
-p <- ggplot(D, aes(ageClass))
-p + geom_bar()
+
+D <- data.frame(ageClass = Data.Mortality$ageClass, disease = Data.Mortality$CauseofDeathITHIM)
+p <- ggplot(D, aes(disease))
+p + geom_bar(aes(fill=ageClass))
+
 ```
 
 ### Appendix
