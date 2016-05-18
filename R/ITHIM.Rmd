@@ -150,29 +150,45 @@ mortality2001 <- readRDS(file = "./data/mortality2001.rds")
 Lets read in the CDC data using the file VS11MORT.DUSMCPUB and see whats up.
 
 ```{r VS11}
-tapePosition <- list(sex = 69, ageUnit = 70, ageValue = c(71:73)) # Magic number!!!
-colClasses <- c("factor", "factor","integer")
+tapePosition <- list(sex = 69, ageUnit = 70, ageValue = c(71:73), skippedVars = c(74:145), ICD = 146:149) # Magic number!!!
+colClasses <- c("factor", "factor","integer", "factor")
 fileWidth <- 488 # Magic number!!!
+```
 
-cbind(names(tapePosition), colClasses)
-
+```{r VS11Classes}
+names(colClasses) <- names(tapePosition)[-which(names(tapePosition)=="skippedVars")]
+colClasses
 ```
 
 To include more variables edit the above lines.  The variable listed
 must be contiguous.
 
-```{r convertAge, warning = FALSE}
+```{r convertAge, warning = FALSE, eval = TRUE}
 
 varWidths <- unlist(lapply(tapePosition, "length"))
+
+varWidths <- ifelse(names(tapePosition) == "skippedVars", -varWidths, varWidths)
+
 widths <- c(-(tapePosition[[1]]-1),c(varWidths))
 widths <- c(widths,-(fileWidth-sum(abs(widths))))
 
-Data.Mortality <- read.fwf(file = "~/ITHIM/R/data/VS11MORT.DUSMCPUB", widths = widths, col.names = names(tapePosition), header = FALSE, colClasses = colClasses)
+Data.Mortality <- read.fwf(file = "~/ITHIM/R/data/VS11MORT.DUSMCPUB", widths = widths, col.names = names(colClasses), header = FALSE, colClasses = colClasses)
 
 Data.Mortality <- data.frame(Data.Mortality, convertedAge = with(Data.Mortality, convertAge(value = ageValue, unit = ageUnit)))
 
 p <- ggplot(Data.Mortality, aes(x = convertedAge)) + geom_histogram(binwidth = 1)
 p + facet_grid(. ~ sex)
+
+```
+
+```{r ICD}
+Data.IDC.Codes <- read.csv(file="./data/IDC_Codes_key.csv", header = TRUE, colClasses = c("factor","factor","factor"), na.string = "")
+Data.IDC.Codes <- subset(Data.IDC.Codes, Include == "1" & !is.na(ITHIMCause))
+ITHIMCauseOfDeath <- Data.IDC.Codes$ITHIMCause
+names(ITHIMCauseOfDeath) <- Data.IDC.Codes$cause.of.death
+Data.Mortality <- data.frame(Data.Mortality, CauseofDeathITHIM = ITHIMCauseOfDeath[Data.Mortality$ICD])
+
+with(Data.Mortality, table(CauseofDeathITHIM))
 
 ```
 
