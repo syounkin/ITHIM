@@ -134,28 +134,25 @@ variation estimate.
 ### Vital Statistics Data
 
 
-#### Mort01us.dat
+#### 2001 Data with Vargo Script
 
-```{r vitalstats, eval = FALSE, echo = TRUE}
+```{r vitalstats, eval = FALSE, echo = FALSE}
 source("../vargo/process_2001_vital_stats.r")
 saveRDS(mortality2001, file = "./data/mortality2001.rds")
 ```
 
-```{r histAge, eval = FALSE, echo = TRUE}
-mortality2001 <- readRDS(file = "./data/mortality2001.rds")
-```
 
-#### VS11MORT.DUSMCPUB
+#### 2011 (VS11MORT.DUSMCPUB)
 
 Lets read in the CDC data using the file VS11MORT.DUSMCPUB and see whats up.
 
-```{r VS11}
+```{r VS11, echo = FALSE}
 tapePosition <- list(sex = 69, ageUnit = 70, ageValue = c(71:73), skippedVars = c(74:145), ICD = 146:149) # Magic number!!!
 colClasses <- c("factor", "factor","integer", "character")
 fileWidth <- 488 # Magic number!!!
 ```
 
-```{r VS11Classes}
+```{r VS11Classes, echo = FALSE}
 names(colClasses) <- names(tapePosition)[-which(names(tapePosition)=="skippedVars")]
 colClasses
 ```
@@ -163,7 +160,7 @@ colClasses
 To include more variables edit the above lines.  The variable listed
 must be contiguous.
 
-```{r convertAge, warning = FALSE, eval = TRUE}
+```{r convertAge, warning = FALSE, eval = TRUE, echo = FALSE}
 
 varWidths <- unlist(lapply(tapePosition, "length"))
 varWidths <- ifelse(names(tapePosition) == "skippedVars", -varWidths, varWidths)
@@ -178,7 +175,7 @@ p + facet_grid(. ~ sex)
 
 ```
 
-```{r ICD, fig.width = 12}
+```{r ICD, fig.width = 12, echo = FALSE}
 Data.IDC.Codes <- read.csv(file="./data/IDC_Codes_key.csv", header = TRUE, colClasses = c("character","character","character"), na.string = "")
 Data.IDC.Codes <- subset(Data.IDC.Codes, Include == "1" & !is.na(ITHIMCause))
 ITHIMCauseOfDeath <- Data.IDC.Codes$ITHIMCause
@@ -195,7 +192,7 @@ p + geom_bar()
 with(Data.Mortality, table(CauseofDeathITHIM))
 ```
 
-```{r ageClass}
+```{r ageClass, fig.width = 12, echo = FALSE}
 ageClass <- c(rep("00-04",5),rep("05-14",10),rep("15-29",15),rep("30-44",15),rep("45-59",15),rep("60-69",10),rep("70-79",10),rep("80+",121))
 names(ageClass) <- as.character(0:200)
 Data.Mortality <- data.frame(Data.Mortality, ageClass = as.factor(ageClass[as.character(as.integer(Data.Mortality$convertedAge))]))
@@ -205,6 +202,15 @@ D <- data.frame(ageClass = Data.Mortality$ageClass, disease = Data.Mortality$Cau
 p <- ggplot(D, aes(disease))
 p + geom_bar(aes(fill=ageClass))
 
+```
+
+```{r tabulate}
+Data.Mortality.Table <- as.data.frame(ftable(with(Data.Mortality, table(sex,ageClass,CauseofDeathITHIM))))
+```
+
+```{r saveMortality, echo = FALSE}
+saveRDS(object = Data.Mortality, file = "./data/Data.Mortality.rds")
+saveRDS(object = Data.Mortality.Table, file = "./data/Data.Mortality.Table.rds")
 ```
 
 ### Appendix
