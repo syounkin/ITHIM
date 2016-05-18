@@ -201,7 +201,12 @@ with(Data.Mortality, table(ageClass))
 D <- data.frame(ageClass = Data.Mortality$ageClass, disease = Data.Mortality$CauseofDeathITHIM)
 p <- ggplot(D, aes(disease))
 p + geom_bar(aes(fill=ageClass))
+```
 
+```{r histbyDisease, fig.width = 12, echo = FALSE}
+D <- data.frame(convertedAge = Data.Mortality$convertedAge, disease = Data.Mortality$CauseofDeathITHIM)
+p <- ggplot(D, aes(convertedAge)) + geom_histogram(binwidth=1)
+p + facet_grid( . ~ disease)
 ```
 
 ```{r tabulate}
