@@ -151,7 +151,7 @@ Lets read in the CDC data using the file VS11MORT.DUSMCPUB and see whats up.
 
 ```{r VS11}
 tapePosition <- list(sex = 69, ageUnit = 70, ageValue = c(71:73), skippedVars = c(74:145), ICD = 146:149) # Magic number!!!
-colClasses <- c("factor", "factor","integer", "factor")
+colClasses <- c("factor", "factor","integer", "character")
 fileWidth <- 488 # Magic number!!!
 ```
 
@@ -179,20 +179,30 @@ p + facet_grid(. ~ sex)
 ```
 
 ```{r ICD, fig.width = 12}
-Data.IDC.Codes <- read.csv(file="./data/IDC_Codes_key.csv", header = TRUE, colClasses = c("factor","factor","factor"), na.string = "")
+Data.IDC.Codes <- read.csv(file="./data/IDC_Codes_key.csv", header = TRUE, colClasses = c("character","character","character"), na.string = "")
 Data.IDC.Codes <- subset(Data.IDC.Codes, Include == "1" & !is.na(ITHIMCause))
 ITHIMCauseOfDeath <- Data.IDC.Codes$ITHIMCause
 names(ITHIMCauseOfDeath) <- Data.IDC.Codes$cause.of.death
 Data.Mortality <- data.frame(Data.Mortality, CauseofDeathITHIM = ITHIMCauseOfDeath[Data.Mortality$ICD])
 Data.Mortality <- subset(Data.Mortality, !is.na(CauseofDeathITHIM) & !is.na(convertedAge))
-
-p <- ggplot(data.frame(disease = Data.Mortality$CauseofDeathITHIM), aes(disease))
+D <- data.frame(disease = Data.Mortality$CauseofDeathITHIM)
+p <- ggplot(D, aes(disease))
 p + geom_bar()
 
 ```
 
 ```{r CoDTable}
 with(Data.Mortality, table(CauseofDeathITHIM))
+```
+
+```{r ageClass}
+ageClass <- c(rep("0-4",5),rep("5-14",10),rep("15-29",15),rep("30-44",15),rep("45-59",15),rep("60-69",10),rep("70-79",10),rep("80+",121))
+names(ageClass) <- as.character(0:200)
+Data.Mortality <- data.frame(Data.Mortality, ageClass = as.factor(ageClass[as.character(as.integer(Data.Mortality$convertedAge))]))
+with(Data.Mortality, table(ageClass))
+D <- data.frame(ageClass = Data.Mortality$ageClass)
+p <- ggplot(D, aes(ageClass))
+p + geom_bar()
 ```
 
 ### Appendix
