@@ -167,7 +167,7 @@ varWidths <- ifelse(names(tapePosition) == "skippedVars", -varWidths, varWidths)
 widths <- c(-(min(tapePosition[[1]])-1),c(varWidths))
 widths <- c(widths,-(fileWidth-sum(abs(widths))))
 
-Data.Mortality <- read.fwf(file = "~/ITHIM/R/data/VS11MORT.DUSMCPUB.first100", widths = widths, col.names = names(colClasses), header = FALSE, colClasses = colClasses)
+Data.Mortality <- read.fwf(file = "~/ITHIM/R/data/VS11MORT.DUSMCPUB", widths = widths, col.names = names(colClasses), header = FALSE, colClasses = colClasses)
 Data.Mortality <- data.frame(Data.Mortality, convertedAge = with(Data.Mortality, convertAge(value = ageValue, unit = ageUnit)))
 
 p <- ggplot(Data.Mortality, aes(x = convertedAge)) + geom_histogram(binwidth = 1)
