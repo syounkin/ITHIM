@@ -15,25 +15,31 @@ Documents/work/BenMAP_morbidity/VJ_JV_share/data/figs/8-01-98.XLS
 cp -v ./docs/EXCEL/ITHIM_tripleWin_Countylevel_4-10.xlsx  ./docs/EXCEL/ITHIM-sgy-working.xlsx
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~ CDC Mortality Stats ~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 CDC Vital Stats are found here:
 http://www.cdc.gov/nchs/data_access/vitalstatsonline.htm
 
-wget ftp://ftp.cdc.gov/pub/Health_Statistics/NCHS/Datasets/DVS/mortality/mort2011us.zip
-
-Accompanying User Manual found here:
+Accompanying User Manuals found here:
 http://www.cdc.gov/nchs/nvss/mortality_public_use_data.htm
 
+2001
+
+wget ftp://ftp.cdc.gov/pub/Health_Statistics/NCHS/Datasets/DVS/mortality/mort2001us.zip
+wget ftp://ftp.cdc.gov/pub/Health_Statistics/NCHS/Datasets/DVS/mortality/mort2001ps.zip
+wget http://www.cdc.gov/nchs/data/dvs/interim2001p1.pdf
+
+2011
+
+wget ftp://ftp.cdc.gov/pub/Health_Statistics/NCHS/Datasets/DVS/mortality/mort2011us.zip
 wget http://www.cdc.gov/nchs/data/dvs/Record_Layout_2011.pdf
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~ American Time Use Survey ~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 American Time Use Survey data found here:
 http://www.bls.gov/tus/datafiles_2003.htm
 
 "I think you need the summary file and the CPS file from ATUS"
-
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
