@@ -147,8 +147,8 @@ saveRDS(mortality2001, file = "./data/mortality2001.rds")
 Lets read in the CDC data using the file VS11MORT.DUSMCPUB and see whats up.
 
 ```{r VS11, echo = FALSE}
-tapePosition <- list(sex = 69, ageUnit = 70, ageValue = c(71:73), skippedVars = c(74:145), ICD = 146:149) # Magic number!!!
-colClasses <- c("factor", "factor","integer", "character")
+tapePosition <- list(state = c(29:30), skippedVars = c(31:34), county = c(35:37), skippedVars = c(38:68), sex = 69, ageUnit = 70, ageValue = c(71:73), skippedVars = c(74:145), ICD = c(146:149), skippedVars = c(150:444), race = c(445:446)) # Magic number!!!
+colClasses <- c("factor","factor","factor", "factor","integer", "character", "factor")
 fileWidth <- 488 # Magic number!!!
 ```
 
@@ -164,10 +164,10 @@ must be contiguous.
 
 varWidths <- unlist(lapply(tapePosition, "length"))
 varWidths <- ifelse(names(tapePosition) == "skippedVars", -varWidths, varWidths)
-widths <- c(-(tapePosition[[1]]-1),c(varWidths))
+widths <- c(-(min(tapePosition[[1]])-1),c(varWidths))
 widths <- c(widths,-(fileWidth-sum(abs(widths))))
 
-Data.Mortality <- read.fwf(file = "~/ITHIM/R/data/VS11MORT.DUSMCPUB", widths = widths, col.names = names(colClasses), header = FALSE, colClasses = colClasses)
+Data.Mortality <- read.fwf(file = "~/ITHIM/R/data/VS11MORT.DUSMCPUB.first100", widths = widths, col.names = names(colClasses), header = FALSE, colClasses = colClasses)
 Data.Mortality <- data.frame(Data.Mortality, convertedAge = with(Data.Mortality, convertAge(value = ageValue, unit = ageUnit)))
 
 p <- ggplot(Data.Mortality, aes(x = convertedAge)) + geom_histogram(binwidth = 1)
@@ -205,8 +205,23 @@ p + geom_bar(aes(fill=ageClass))
 
 ```{r histbyDisease, fig.width = 12, echo = FALSE}
 D <- data.frame(convertedAge = Data.Mortality$convertedAge, disease = Data.Mortality$CauseofDeathITHIM)
-p <- ggplot(D, aes(convertedAge, ..density.., colour = disease)) + geom_histogram(binwidth=1, show.legend = TRUE)
+p <- ggplot(D, aes(convertedAge, ..density.., colour = disease)) + geom_histogram(binwidth=5, show.legend = TRUE)
 p + facet_grid( . ~ disease)
+```
+
+```{r counties}
+Data.AgeSex <- read.csv("./data/county_age_sex2002.csv", header=T, col.names = c("county.name","state.name", "MSA","sex","all.ages","age0-4","age5-14","age15-29","age30-44","age45-59","age60-69","age70-79","age80+", "STATE","COUNTY"), colClasses = c("factor","factor","factor","factor","integer","integer","integer","integer","integer","integer","integer","integer","integer", "factor", "factor"))
+
+age.sex.2 <- melt(age.sex[,c(14,15,4,6:13)], id=c("STATE","COUNTY","sex"))
+
+#age.sex.3 <- dcast(age.sex.2, STATE + COUNTY + variable ~ sex, mean)
+
+mort.age <- merge(mort.ITHIM, age.sex.3, by.x=c("state","county", "ITHIM.age"), by.y=c("STATE","COUNTY","variable"))
+
+mort.age$year <- 2001
+
+mort.age$app.pop <- ifelse(mort.age$sex ==1, mort.age$male, mort.age$female)
+
 ```
 
 ```{r tabulate}
@@ -217,6 +232,7 @@ Data.Mortality.Table <- as.data.frame(ftable(with(Data.Mortality, table(sex,ageC
 saveRDS(object = Data.Mortality, file = "./data/Data.Mortality.rds")
 saveRDS(object = Data.Mortality.Table, file = "./data/Data.Mortality.Table.rds")
 ```
+
 
 ### Appendix
 
