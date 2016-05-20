@@ -234,6 +234,45 @@ saveRDS(object = Data.Mortality.Table, file = "./data/Data.Mortality.Table.rds")
 ```
 
 
+## R Implementation
+
+```{r implement}
+parList <- createParameterList()
+
+meanMatrices <- computeMeanMatrices(parList)
+
+ITHIM <- c(parList = parList, meanMatrices)
+
+ITHIM <- within(ITHIM, {
+quintMat <- matrix(computeQuintiles(meanActiveTransportTime, sdActiveTransportTime), nrow = 2*nrow(meanActiveTransportTime), ncol = 5)
+quintList = list(M = quintMat[1:ITHIM$parList.nAgeClass,], F = quintMat[ITHIM$parList.nAgeClass+1:8,])
+})
+
+ITHIM <- within(ITHIM, {
+propTimeCycling = propTimeCycling <- meanCycleTime/(meanCycleTime+meanWalkTime)
+})
+
+ITHIM <- within(ITHIM, {
+quintWalkingList = list(M = quintList[["M"]]* (1-propTimeCycling[,"M"]), F = quintList[["F"]]* (1-propTimeCycling[,"F"]))
+
+quintCyclingList = list(M = quintList[["M"]]* (propTimeCycling[,"M"]), F = quintList[["F"]]* (propTimeCycling[,"F"]))
+
+quintWalkingMETList = list(M = meanWalkMET[,"M"]*quintWalkingList[["M"]]/60, F = meanWalkMET[,"F"]*quintWalkingList[["F"]]/60)
+
+quintCyclingMETList = list(M = meanCycleMET[,"M"]*quintCyclingList[["M"]]/60, F = meanCycleMET[,"F"]*quintCyclingList[["F"]]/60)
+
+})
+
+ITHIM <- within(ITHIM, {
+quintTotalTravelMETList = list(M = quintWalkingMETList[["M"]] + quintCyclingMETList[["M"]], F = quintWalkingMETList[["F"]] + quintCyclingMETList[["F"]])
+})
+
+```
+
+```{r ITHIM}
+ITHIM
+```
+
 ### Appendix
 
 ```{r appendix}
