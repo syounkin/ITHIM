@@ -1,0 +1,76 @@
+\section{Input Parameters}
+
+\subsection{Population}
+\beq
+\popDensity = \begin{pmatrix}{f_{ij}}\end{pmatrix},\quad i \in \{\mathrm{M},\mathrm{F}\}, j \in \{\mathrm{age\ classes}\}  
+\eeq
+
+$\mu^t_w$ is the population mean time walking, with $\mu^t_c$, $\mu^s_w$, $\mu^s_c$ defined similarly with speed ($s$), time ($t$), walking ($w$) and cycling ($c$).
+
+\subsection{Relative Time and Speed for Walking and Cycling}
+
+\beq
+\relativeWalk = \begin{pmatrix}{{\rho^t_w}_{ij}}\end{pmatrix}
+\eeq
+
+as well as $\relativeCycle$, $\speedWalk$ and $\speedCycle$ defined likewise.
+
+\section{Model}
+
+See \textit{Baseline} worksheet.
+
+\subsection{Mean Walking and Cycling Times (minutes)}
+
+\begin{eqnarray}
+%%\hat{\mathbf{M}}_w &=& \begin{pmatrix}{\mu_{ij}}\end{pmatrix}\\
+%%\mu_{ij} &=& \frac{\mu_w^{0}}{\alpha}{\rho_w}_{ij}\\
+\walkMean &=& \frac{\mu^t_w}{\alpha^t_w}\relativeWalk, \quad \alpha^t_w = \sum_{ij} f_{ij}{\rho^t_w}_{ij}\\
+\cycleMean &=& \frac{\mu^t_c}{\alpha^t_c}\relativeCycle, \quad \alpha^t_c = \sum_{ij} f_{ij}{\rho^t_c}_{ij}
+\end{eqnarray}
+
+\subsection{Mean Walking and Cycling Speeds}
+
+\begin{eqnarray}
+%%\hat{\mathbf{M}}_w &=& \begin{pmatrix}{\mu_{ij}}\end{pmatrix}\\
+%%\mu_{ij} &=& \frac{\mu_w^{0}}{\alpha}{\rho_w}_{ij}\\
+\walkSpeedMean &=& \frac{\mu^s_w}{\alpha^s_w}\speedWalk, \quad \alpha^s_w = \sum_{ij} f_{ij}{\rho^s_w}_{ij}\\
+\cycleSpeedMean &=& \frac{\mu^s_c}{\alpha^s_c}\speedCycle, \quad \alpha^s_c = \sum_{ij} f_{ij}{\rho^s_c}_{ij}
+\end{eqnarray}
+
+
+\subsection{METs}
+\beq
+\metTransport = \metWalk + \metCycle
+\eeq
+
+\beq
+\metWalk = f_w\left(\speedWalk\right), \quad f_w\left( \sijw \right) = \max\{ \beta_0 + \beta_1 \sijw, 2.5 \}
+\eeq
+
+with $\beta_1 = 1.2216$, $\beta_0 = 0.0838$ 
+
+\beq
+\metCycle = \mathbf{6}
+\eeq
+
+\subsection{\textit{Relative} Mean Distance of Active Transport}
+
+Not sure about the relative distance measure.  What are the units?  Is
+it used later for road injury miodeling.  I don't think it is used
+here.
+
+\beq
+\distWalkMean = \frac{1}{60} \speedWalk \cdot \walkMean
+\eeq
+\beq
+\distCycleMean = \frac{1}{60} \speedCycle \cdot \cycleMean
+\eeq
+
+\subsection{Quintiles}
+
+Estimate quintiles per group based on group mean $\mu_{ij}$ and
+constant coefficient of variation, $\gamma$ using a with $T$
+distributed as lognormal.  Divided the quintiles proportionally into
+walking and cycling, based on within-group proportions.  Compute MET-hours per quintile as $\metWalk T_w$
+
+And we arrive at quintiles for total MET-hours per week stratified by age group and sex.

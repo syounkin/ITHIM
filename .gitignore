@@ -9,3 +9,7 @@ figure/
 foo
 log
 foo.R
+*.aux
+*.log
+*.toc
+*.pdf
