@@ -73,4 +73,40 @@ constant coefficient of variation, $\gamma$ using a with $T$
 distributed as lognormal.  Divided the quintiles proportionally into
 walking and cycling, based on within-group proportions.  Compute MET-hours per quintile as $\metWalk T_w$
 
-And we arrive at quintiles for total MET-hours per week stratified by age group and sex.
+And we arrive at quintiles for total MET-hours per week stratified by age group and sex, $\quintMat$.
+
+
+
+\section{Relative Risk given two types of Exposure (Weekly Active Time and MET-hours)}
+
+%% \begin{verbatim}
+%% =IF(($'user page'.$N$39=0),C5^(1/C6^0.25),
+%% IF(($'user page'.$N$39=1),C5^(1/C6^0.5),
+%% IF(($'user page'.$N$39=2),C5^(1/C6^0.375),IF(($'user page'.$N$39=4),C5^(1/C6),
+%% IF(($'user page'.$N$39=3),C5^(1/(LN(C6))),""
+%% )))))
+%% \end{verbatim}
+
+Let $x$ be the ``exposure'' in \textit{Phy Activity RRs} and $\RR$ the ``RR'' in the same worksheet then the ``1 MET'' described in the worksheet is named $\RR_{\scriptsize{\textrm{MET}}}$ here.
+
+$$\RRMET = {\RR}^{{x^{-k}}}$$ with $k$ a model parameter.
+
+\subsection{Definitions of $\RR$, Exposure ($x$) and $\RRMET$}
+
+Do not have these yet.
+
+For developmental purposes we fix the vector $\RRvec$ to be
+the vector of disease sprecific relative risks given an exposure of 1
+MET-hour per week.
+
+$\RRvec = \left( \RRMETi \right)$
+
+\subsection{Disease Burden}
+
+First we define a weight vector for disease burden, $\burdenVec$. With
+$\RRvec$, $\quintMat$ and $\burdenVec$ we can compute measures of
+total disease burden.
+
+\subsubsection{\textit{GBDUS}}
+
+What are these data?  It's a table look up as with Non-travel METs.
