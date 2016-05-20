@@ -244,12 +244,12 @@ meanMatrices <- computeMeanMatrices(parList)
 ITHIM <- c(parList = parList, meanMatrices)
 
 ITHIM <- within(ITHIM, {
-quintMat <- matrix(computeQuintiles(meanActiveTransportTime, sdActiveTransportTime), nrow = 2*nrow(meanActiveTransportTime), ncol = 5)
+quintMat <- matrix(computeQuintiles(meanActiveTransportTime, sdActiveTransportTime), nrow = 2*nrow(meanActiveTransportTime), ncol = 5, dimnames = list(paste0("ageClass", rep(1:parList.nAgeClass,2)),paste0("q",1:5)))
 quintList = list(M = quintMat[1:ITHIM$parList.nAgeClass,], F = quintMat[ITHIM$parList.nAgeClass+1:8,])
 })
 
 ITHIM <- within(ITHIM, {
-propTimeCycling = propTimeCycling <- meanCycleTime/(meanCycleTime+meanWalkTime)
+propTimeCycling = meanCycleTime/(meanCycleTime+meanWalkTime)
 })
 
 ITHIM <- within(ITHIM, {
