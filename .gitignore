@@ -13,3 +13,6 @@ foo.R
 *.log
 *.toc
 *.pdf
+html
+man
+*.tar.gz
