@@ -16,7 +16,7 @@ options(repos='http://cran.rstudio.com/')
 library("ggplot2")
 library("reshape2")
 library("plyr")
-source("functions.R")
+library("ITHIM")
 ```
 
 ### Active Transport Estimates (Speed and Distance by Transport Mode)
@@ -277,6 +277,16 @@ quintTotalTravelMETList = list(M = quintWalkingMETList[["M"]] + quintCyclingMETL
 Now we print all of the parameters and results.
 ```{r ITHIM}
 ITHIM
+```
+
+## R Package ITHIM
+
+As of writing this the R package can compute means.  Soon it will
+compute quintiles as well.
+
+```{r package}
+library("ITHIM")
+example("ITHIM-package")
 ```
 
 ### Appendix
