@@ -43,3 +43,37 @@ American Time Use Survey data found here:
 http://www.bls.gov/tus/datafiles_2003.htm
 
 "I think you need the summary file and the CPS file from ATUS"
+
+
+
+tree ~/ITHIM/docs/
+.
+├── admin
+│   └── Younkin appt ltr PVL 86538.docx
+├── data
+│   ├── interim2001p1.pdf
+│   └── Record_Layout_2011.pdf
+├── EXCEL
+│   ├── ITHIM Input Data for Sioux City 051215 (1).xlsx
+│   ├── ITHIM-sgy-working.xlsx
+│   └── ITHIM_tripleWin_Countylevel_4-10.xlsx
+└── lit
+    └── ITHIM
+        ├── printed
+        │   ├── familiar
+        │   │   ├── Health-and-Climate-Change-2 (1).pdf
+        │   │   ├── ITHIM_Technical_Report11-21-11rev3-6-12.pdf
+        │   │   ├── jarrett_woodcock.pdf
+        │   │   └── Woodcock_SF_ITHIM.pdf
+        │   └── unfamiliar
+        │       ├── physicalActivityHealthImpactDiagram.ai
+        │       └── physicalactivityhealthimpactdiagram.pdf
+        └── unprinted
+            ├── grabowEHP.pdf
+            ├── ITHIM_Monetized_Co-Benefits1-20-12.pdf
+            ├── ITHIMUsersGuide11-7-13SanDiego.pdf
+            ├── ITHIM_Workshop11-15-12.pdf
+            ├── ITHIM_Workshop11-7-13.pdf
+            └── WoodcockPlosOne.PDF
+
+9 directories, 18 files
