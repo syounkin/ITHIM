@@ -77,3 +77,5 @@ tree ~/ITHIM/docs/
             └── WoodcockPlosOne.PDF
 
 9 directories, 18 files
+rsync -av syounkin@45.55.5.232:~/share/data/ ~/ITHIM/R/data/ &> ~/log/rsync.log 
+brew cask install mactex
