@@ -236,42 +236,30 @@ saveRDS(object = Data.Mortality.Table, file = "./data/Data.Mortality.Table.rds")
 
 ## R Implementation
 
-First we set all input parameters.
-```{r parList}
-(parList <- createParameterList())
-```
-Then we compute means, stratified by ageClass and sex.
-
-```{r implement}
-(meanMatrices <- computeMeanMatrices(parList))
-ITHIM <- c(parList = parList, meanMatrices)
+```{r instantiate}
+ITHIM <- list(parameters = parList <- createParameterList(), means = computeMeanMatrices(parList))
 ```
 Then we compute quintiles for active transport time.
 ```{r quints}
 ITHIM <- within(ITHIM, {
-quintMat <- matrix(computeQuintiles(meanActiveTransportTime, sdActiveTransportTime), nrow = 2*nrow(meanActiveTransportTime), ncol = 5, dimnames = list(paste0("ageClass", rep(1:parList.nAgeClass,2)),paste0("q",1:5)))
-quintList = list(M = quintMat[1:ITHIM$parList.nAgeClass,], F = quintMat[ITHIM$parList.nAgeClass+1:8,])
+quintilesActiveTransportTime <- computeQuintiles(means$meanActiveTransportTime, means$sdActiveTransportTime)
 })
 ```
-Then we compute the proportion of active travel spent cycling.
-```{r proportionCycling}
-ITHIM <- within(ITHIM, {
-propTimeCycling = meanCycleTime/(meanCycleTime+meanWalkTime)
-})
-```
+
 Then the METs by walking and cycling.
 ```{r quintMETs}
 ITHIM <- within(ITHIM, {
-  quintWalkingList = list(M = quintList[["M"]] * (1-propTimeCycling[,"M"]), F = quintList[["F"]] * (1-propTimeCycling[,"F"]))
-  quintCyclingList = list(M = quintList[["M"]] * (propTimeCycling[,"M"]), F = quintList[["F"]] * (propTimeCycling[,"F"]))
-  quintWalkingMETList = list(M = meanWalkMET[,"M"]*quintWalkingList[["M"]]/60, F = meanWalkMET[,"F"]*quintWalkingList[["F"]]/60)
-  quintCyclingMETList = list(M = meanCycleMET[,"M"]*quintCyclingList[["M"]]/60, F = meanCycleMET[,"F"]*quintCyclingList[["F"]]/60)
+  quintWalkingTime = list(M = quintilesActiveTransportTime[["M"]] * (1-means$propTimeCycling[,"M"]), F = quintilesActiveTransportTime[["F"]] * (1-means$propTimeCycling[,"F"]))
+  quintCyclingTime = list(M = quintilesActiveTransportTime[["M"]] * (means$propTimeCycling[,"M"]), F = quintilesActiveTransportTime[["F"]] * (means$propTimeCycling[,"F"]))
+  quintWalkingMET = list(M = means$meanWalkMET[,"M"]*quintWalkingTime[["M"]]/60, F = means$meanWalkMET[,"F"]*quintWalkingTime[["F"]]/60)
+  quintCyclingMET = list(M = means$meanCycleMET[,"M"]*quintCyclingTime[["M"]]/60, F = means$meanCycleMET[,"F"]*quintCyclingTime[["F"]]/60)
 })
 ```
+
 And the METs for active travel.
 ```{r totalTravelMETS}
 ITHIM <- within(ITHIM, {
-quintTotalTravelMETList = list(M = quintWalkingMETList[["M"]] + quintCyclingMETList[["M"]], F = quintWalkingMETList[["F"]] + quintCyclingMETList[["F"]])
+quintTotalTravelMET = list(M = quintWalkingMET[["M"]] + quintCyclingMET[["M"]], F = quintWalkingMET[["F"]] + quintCyclingMET[["F"]])
 })
 ```
 Now we print all of the parameters and results.
