@@ -111,6 +111,7 @@ createParameterList <- function(){
 #' \item{meanCycleMET}{A numerical matrix of mean weekly METs for cycling as transport}
 #' \item{meanActiveTransportTime}{A numerical matrix containing mean weekly active transport time}
 #' \item{sdActiveTransportTime}{A numerical matrix containing standard deviation of weekly active transport time}
+#' \item{propTimeCycling}{The proportion of time walking out of walking or cycling as active transport}
 #'
 #' @note Currently all age by sex classes are assigned 6 for weekly
 #'     cycling for transport METs.  This means we assume that, unlike
@@ -127,13 +128,15 @@ computeMeanMatrices <- function(parList){
         alphacs <- sum(F*Rcs)
         meanWalkTime <- muwt/alphawt*Rwt
         meanCycleTime <- muct/alphact*Rct
+        propTimeCycling <-  meanCycleTime/(meanCycleTime+meanWalkTime)
         meanWalkSpeed <- muws/alphaws*Rws
         meanCycleSpeed <- mucs/alphacs*Rcs
         meanWalkMET <- ifelse(1.2216*meanWalkSpeed + 0.0838 < 2.5, 2.5,  1.2216*meanWalkSpeed + 0.0838)
         meanCycleMET <- matrix(6, byrow=TRUE, ncol = 2, nrow =nrow(F),dimnames = list(paste0("ageClass",1:nAgeClass),c("M","F")))
         meanActiveTransportTime <- meanWalkTime + meanCycleTime
         sdActiveTransportTime <- meanActiveTransportTime*cv
-        return(list(meanWalkTime = meanWalkTime, meanCycleTime = meanCycleTime, meanWalkSpeed = meanWalkSpeed, meanCycleSpeed = meanCycleSpeed, meanWalkMET = meanWalkMET, meanCycleMET = meanCycleMET, meanActiveTransportTime = meanActiveTransportTime, sdActiveTransportTime = sdActiveTransportTime))
+        
+        return(list(meanWalkTime = meanWalkTime, meanCycleTime = meanCycleTime, meanWalkSpeed = meanWalkSpeed, meanCycleSpeed = meanCycleSpeed, meanWalkMET = meanWalkMET, meanCycleMET = meanCycleMET, meanActiveTransportTime = meanActiveTransportTime, sdActiveTransportTime = sdActiveTransportTime, propTimeCycling = propTimeCycling))
         })
 }
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -157,6 +160,9 @@ computeMeanMatrices <- function(parList){
 #' @export
 computeQuintiles <- function( mean, sd ){
 
+    nAgeClass <- nrow(mean)
+    ncol <- 5
+    
     logMean <- log(mean)-1/2*log(1+(sd/mean)^2)
     logSD <- sqrt(log(1+(sd/mean)^2))
 
@@ -165,5 +171,10 @@ computeQuintiles <- function( mean, sd ){
     mapply(qlnorm, logMean, logSD, p = 0.5),
     mapply(qlnorm, logMean, logSD, p = 0.7),
     mapply(qlnorm, logMean, logSD, p = 0.9))
-    return(quintVec)
+
+    quintMat <- matrix(quintVec, nrow = 2*nAgeClass, ncol = ncol, dimnames = list(paste0("ageClass", rep(1:nAgeClass,2)),paste0("q",1:ncol)))
+
+    quintList = list(M = quintMat[1:nAgeClass,], F = quintMat[nAgeClass+1:8,])
+    
+    return(quintList)
 }
