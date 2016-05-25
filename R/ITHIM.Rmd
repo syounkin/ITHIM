@@ -19,6 +19,59 @@ library("plyr")
 library("ITHIM")
 ```
 
+## R Implementation
+
+```{r instantiate}
+ITHIM <- list(parameters = parList <- createParameterList(), means = computeMeanMatrices(parList))
+```
+Then we compute quintiles for active transport time.
+```{r quints}
+ITHIM <- within(ITHIM, {
+quintilesActiveTransportTime <- computeQuintiles(means$meanActiveTransportTime, means$sdActiveTransportTime)
+})
+```
+
+Then the METs by walking and cycling.
+```{r quintMETs}
+ITHIM <- within(ITHIM, {
+  quintWalkingTime = list(M = quintilesActiveTransportTime[["M"]] * (1-means$propTimeCycling[,"M"]), F = quintilesActiveTransportTime[["F"]] * (1-means$propTimeCycling[,"F"]))
+  quintCyclingTime = list(M = quintilesActiveTransportTime[["M"]] * (means$propTimeCycling[,"M"]), F = quintilesActiveTransportTime[["F"]] * (means$propTimeCycling[,"F"]))
+  quintWalkingMET = list(M = means$meanWalkMET[,"M"]*quintWalkingTime[["M"]]/60, F = means$meanWalkMET[,"F"]*quintWalkingTime[["F"]]/60)
+  quintCyclingMET = list(M = means$meanCycleMET[,"M"]*quintCyclingTime[["M"]]/60, F = means$meanCycleMET[,"F"]*quintCyclingTime[["F"]]/60)
+})
+```
+
+And the METs for active travel.
+```{r totalTravelMETS}
+ITHIM <- within(ITHIM, {
+quintTotalTravelMET = list(M = quintWalkingMET[["M"]] + quintCyclingMET[["M"]], F = quintWalkingMET[["F"]] + quintCyclingMET[["F"]])
+})
+```
+Now we print all of the parameters and results.
+```{r ITHIM}
+ITHIM
+```
+### Example
+To run the example contained in the _ITHIM_ package run the following.
+
+```{r package}
+library("ITHIM")
+example("ITHIM-package")
+```
+
+```{r plot1}
+D <- melt(ITHIM$means$meanActiveTransportTime, c("age","sex"), value.name = "activeTransportTime")
+p <- ggplot(D, aes(age,  activeTransportTime)) + geom_bar(aes(fill=sex), stat = "identity", position = "dodge")
+p 
+```
+
+```{r plot2}
+D <- melt(ITHIM$parameters$Rwt, c("age","sex"), value.name = "rhowt")
+p <- ggplot(D, aes(age,  rhowt)) + geom_bar(aes(fill=sex), stat = "identity", position = "dodge")
+p 
+```
+
+## Archive
 ### Active Transport Estimates (Speed and Distance by Transport Mode)
 These data were ripped out of the EXCEL workbook and vary per scenario.
 ```{r transportData, eval = TRUE, echo = FALSE} 
@@ -167,7 +220,7 @@ varWidths <- ifelse(names(tapePosition) == "skippedVars", -varWidths, varWidths)
 widths <- c(-(min(tapePosition[[1]])-1),c(varWidths))
 widths <- c(widths,-(fileWidth-sum(abs(widths))))
 
-Data.Mortality <- read.fwf(file = "~/ITHIM/R/data/VS11MORT.DUSMCPUB", widths = widths, col.names = names(colClasses), header = FALSE, colClasses = colClasses)
+Data.Mortality <- read.fwf(file = "~/ITHIM/R/data/VS11MORT.DUSMCPUB.first100", widths = widths, col.names = names(colClasses), header = FALSE, colClasses = colClasses)
 Data.Mortality <- data.frame(Data.Mortality, convertedAge = with(Data.Mortality, convertAge(value = ageValue, unit = ageUnit)))
 
 p <- ggplot(Data.Mortality, aes(x = convertedAge)) + geom_histogram(binwidth = 1)
@@ -231,50 +284,6 @@ Data.Mortality.Table <- as.data.frame(ftable(with(Data.Mortality, table(sex,ageC
 ```{r saveMortality, echo = FALSE}
 saveRDS(object = Data.Mortality, file = "./data/Data.Mortality.rds")
 saveRDS(object = Data.Mortality.Table, file = "./data/Data.Mortality.Table.rds")
-```
-
-
-## R Implementation
-
-```{r instantiate}
-ITHIM <- list(parameters = parList <- createParameterList(), means = computeMeanMatrices(parList))
-```
-Then we compute quintiles for active transport time.
-```{r quints}
-ITHIM <- within(ITHIM, {
-quintilesActiveTransportTime <- computeQuintiles(means$meanActiveTransportTime, means$sdActiveTransportTime)
-})
-```
-
-Then the METs by walking and cycling.
-```{r quintMETs}
-ITHIM <- within(ITHIM, {
-  quintWalkingTime = list(M = quintilesActiveTransportTime[["M"]] * (1-means$propTimeCycling[,"M"]), F = quintilesActiveTransportTime[["F"]] * (1-means$propTimeCycling[,"F"]))
-  quintCyclingTime = list(M = quintilesActiveTransportTime[["M"]] * (means$propTimeCycling[,"M"]), F = quintilesActiveTransportTime[["F"]] * (means$propTimeCycling[,"F"]))
-  quintWalkingMET = list(M = means$meanWalkMET[,"M"]*quintWalkingTime[["M"]]/60, F = means$meanWalkMET[,"F"]*quintWalkingTime[["F"]]/60)
-  quintCyclingMET = list(M = means$meanCycleMET[,"M"]*quintCyclingTime[["M"]]/60, F = means$meanCycleMET[,"F"]*quintCyclingTime[["F"]]/60)
-})
-```
-
-And the METs for active travel.
-```{r totalTravelMETS}
-ITHIM <- within(ITHIM, {
-quintTotalTravelMET = list(M = quintWalkingMET[["M"]] + quintCyclingMET[["M"]], F = quintWalkingMET[["F"]] + quintCyclingMET[["F"]])
-})
-```
-Now we print all of the parameters and results.
-```{r ITHIM}
-ITHIM
-```
-
-## R Package ITHIM
-
-As of writing this the R package can compute means.  Soon it will
-compute quintiles as well.
-
-```{r package}
-library("ITHIM")
-example("ITHIM-package")
 ```
 
 ### Appendix
