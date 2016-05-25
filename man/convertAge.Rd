@@ -14,7 +14,7 @@ convertAge(value, unit)
 with class!)}
 }
 \value{
-A numeric vector of age in years
+A numeric vector of age in years - this is a test
 }
 \description{
 This function coverts the 2001 CDC Age variable to years.
