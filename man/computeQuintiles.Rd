@@ -17,12 +17,16 @@ A vector of quintiles
 }
 \description{
 Compute quintiles of the lognormal distribution given matrices for
-mean and standard deviation of active transport time
+mean and standard deviation of active transport time.  This
+function is used by the function \code{\link{getQuintiles}}
 }
 \note{
 This function needs to be cleaned up so it is more user
     friendly
 
 Quintiles are defined as 10, 30, 50, 70, 90 percentiles
+}
+\seealso{
+\code{\link{getQuintiles}}
 }
 
