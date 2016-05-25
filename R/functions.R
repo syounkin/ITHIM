@@ -25,7 +25,7 @@ NULL
 #'     with class!)
 #' @note This function is likely only applicable to the 2001 data
 #'     file.
-#' @return A numeric vector of age in years
+#' @return A numeric vector of age in years - this is a test
 #' 
 #' @export
 convertAge <- function(value, unit){
