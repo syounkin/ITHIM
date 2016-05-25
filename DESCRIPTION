@@ -1,7 +1,7 @@
 Package: ITHIM
 Type: Package
 Title: ITHIM
-Version: 0.0.1
+Version: 0.0.2
 Date: Tue 24 May 2016 05:28:20 PM CDT
 Author: Samuel G. Younkin
 Maintainer: Samuel G. Younkin <syounkin@wisc.edu>
@@ -9,7 +9,7 @@ Description: This package implemtes the Integrated Transport and Health Impacts 
 URL: https://github.com/syounkin/ITHIM
 License: GPL-2
 Depends:
-    R (>= 3.1.0),
+    R (>= 3.0.0),
 Suggests:
     knitr,
 VignetteBuilder: knitr
