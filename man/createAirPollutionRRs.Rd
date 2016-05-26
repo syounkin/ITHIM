@@ -13,9 +13,8 @@ A numerical vector of risk ratios given air pollution exposure
 Set risk ratios for a list of diseases given air pollution exposure.  These
 values are used to compute change in disease burden due to air pollution.
 }
-\examples{
-
-createRRs()
-
+\note{
+Hypertensive HD is done using a combination of RR by METs and RR by air
+    pollution.
 }
 
