@@ -4,7 +4,10 @@
 \alias{createParameterList}
 \title{Create a list of input parameters}
 \usage{
-createParameterList()
+createParameterList(baseline = TRUE)
+}
+\arguments{
+\item{baseline}{A logical value indicating if we are using the baseline scenario}
 }
 \value{
 A list with parameters and estimates
