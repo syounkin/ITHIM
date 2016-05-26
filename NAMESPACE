@@ -3,5 +3,7 @@
 export(computeMeanMatrices)
 export(computeQuintiles)
 export(convertAge)
+export(createActiveTransportRRs)
+export(createAirPollutionRRs)
 export(createParameterList)
 export(getQuintiles)
