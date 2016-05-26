@@ -14,4 +14,13 @@ Set risk ratios for a list of diseases given MET exposure.  These
 values are used to compute change in disease burden due to active
 transport increase.
 }
+\note{
+To see the default values and how they are computed run
+    \code{createActiveTransportRRs} with no parentheses
+}
+\examples{
+
+createActiveTransportRRs
+
+}
 
