@@ -47,6 +47,8 @@ convertAge <- function(value, unit){
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #' Create a list of input parameters
 #'
+#' @param baseline A logical value indicating if we are using the baseline scenario
+#'
 #' @return A list with parameters and estimates
 #'
 #' \item{F}{A numerical matrix for the population density, stratified by age class and sex}
@@ -64,11 +66,13 @@ convertAge <- function(value, unit){
 #'
 #'
 #' @export
-createParameterList <- function(){
+createParameterList <- function(baseline = TRUE){
 
     nAgeClass <- 8
 
     F <- matrix(c(0.0368276992,0.0353723566,0.0746989673,0.0716902674,0.1123490977,0.1104366009,0.1163649132,0.1182206842,0.0808260989,0.0891264801,0.0308720468,0.037493344,0.0223834475,0.0321797163,0.0098989332,0.0212593465), byrow = TRUE, nrow = nAgeClass, ncol = 2, dimnames = list(paste0("ageClass",1:nAgeClass),c("M","F")))
+
+if(baseline){
 
     Rwt <- matrix(c(0.43053,0.34715,0.49337,0.48135,0.93248,1.00000,0.76528,0.73350,0.68250,0.65805,0.56376,0.77155,0.58923,0.62678,0.56524,0.39604),byrow=TRUE, ncol = 2, dimnames = list(paste0("ageClass",1:nAgeClass),c("M","F")))
 
@@ -78,6 +82,17 @@ createParameterList <- function(){
 
     Rcs <- matrix(c(0.847395,0.837454,0.892011,0.981718,1.072100,0.956966,1.073487,0.980472,1.156495,0.962792,1.063072,0.929156,1.029339,0.848509,0.902283,0.830812),byrow=TRUE, ncol = 2, dimnames = list(paste0("ageClass",1:nAgeClass),c("M","F")))
 
+}else{
+
+    Rwt <- matrix(c(0.430529164,0.347145072,0.493373244,0.481350453,0.932484686,1,0.765284191,0.733501073,0.682502249,0.65804925,0.563755831,0.771546332,0.589228976,0.626782877,0.565238338,0.396044894),byrow=TRUE, ncol = 2, dimnames = list(paste0("ageClass",1:nAgeClass),c("M","F")))
+
+    Rct <- matrix(c(0.5,0.3,1.1,0.9,1.5,1,1.3,1,1.3,0.8,1,0.6,0.7,0.5,0.25,0.2),byrow=TRUE, ncol = 2, dimnames = list(paste0("ageClass",1:nAgeClass),c("M","F")))
+
+    Rws <- matrix(c(1.06625,0.87533,1.06625,0.87533,1.02062,1.00021,1.05905,1.03383,1.03923,0.94738,1.03023,0.93297,0.95098,0.89695,0.95098,0.89695),byrow=TRUE, ncol = 2, dimnames = list(paste0("ageClass",1:nAgeClass),c("M","F")))
+
+    Rcs <- matrix(c(0.847395,0.837454,0.892011,0.981718,1.072100,0.956966,1.073487,0.980472,1.156495,0.962792,1.063072,0.929156,1.029339,0.848509,0.902283,0.830812),byrow=TRUE, ncol = 2, dimnames = list(paste0("ageClass",1:nAgeClass),c("M","F")))
+
+}
     muwt <- 54.4 # min per week
     muws <- 2.7 # mph
     muct <- 9.7 # min per week
