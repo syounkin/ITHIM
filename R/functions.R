@@ -225,14 +225,11 @@ getQuintiles <- function(ITHIM){
 #'
 #' @return A numerical vector of risk ratios given MET exposure
 #'
-#' @examples
-#'
-#' createRRs()
 #'
 #' @export
 createActiveTransportRRs <- function(){
 
-    diseaseNames <- c("Colon Cancer","Lung Cancer","Breast Cancer","Diabetes","Dementia","Depression","Hypertensive HD","IHD","Inflammatory HD","Stroke","Acute resp infections","Respiratory diseases","RTIs")
+    diseaseNames <- c("Breast Cancer","Colon Cancer","IHD","Depression","Dementia","Diabetes","Stroke")
     RR <- rep(0.98, length(diseaseNames))
     names(RR) <- diseaseNames
     return(RR)
@@ -248,14 +245,32 @@ createActiveTransportRRs <- function(){
 #'
 #' @return A numerical vector of risk ratios given air pollution exposure
 #'
-#' @examples
-#'
-#' createRRs()
-#'
+#' @note Hypertensive HD is done using a combination of RR by METs and RR by air
+#'     pollution.
+#' 
 #' @export
 createAirPollutionRRs <- function(){
+    
+    diseaseNames <- c("Lung Cancer","Acute resp infections","Inflammatory HD","Respiratory diseases")
+    RR <- rep(1.02, length(diseaseNames))
+    names(RR) <- diseaseNames
+    return(RR)
 
-    diseaseNames <- c("dummyName1", "dummyName2")
+}
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#' Set Risk Ratios for Active Transport and Air Pollution
+#'
+#' Set risk ratios for a list of diseases given air pollution exposure and active transport exposure.  These
+#' values are used to compute change in disease burden..
+#'
+#' @return A numerical vector of risk ratios given air pollution exposure and active transport exposure
+#'
+#' @export
+createATandAPRRs <- function(){
+    
+    diseaseNames <- c("Hypertensive HD")
     RR <- rep(1.02, length(diseaseNames))
     names(RR) <- diseaseNames
     return(RR)
