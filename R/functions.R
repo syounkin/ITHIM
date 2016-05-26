@@ -82,6 +82,12 @@ if(baseline){
 
     Rcs <- matrix(c(0.8474,0.8375,0.8920,0.9817,1.0721,0.9570,1.0735,0.9805,1.1565,0.9628,1.0631,0.9292,1.0293,0.8485,0.9023,0.8308),byrow=TRUE, ncol = 2, dimnames = list(paste0("ageClass",1:nAgeClass),c("M","F")))
 
+    muwt <- 54.4 # min per week
+    muws <- 2.7 # mph
+    muct <- 9.7 # min per week
+    mucs <- 7.4 # mph
+
+
 }else{
 
     Rwt <- matrix(c(0.430529164,0.347145072,0.493373244,0.481350453,0.932484686,1,0.765284191,0.733501073,0.682502249,0.65804925,0.563755831,0.771546332,0.589228976,0.626782877,0.565238338,0.396044894),byrow=TRUE, ncol = 2, dimnames = list(paste0("ageClass",1:nAgeClass),c("M","F")))
@@ -92,16 +98,16 @@ if(baseline){
 
     Rcs <- matrix(c(0.847395,0.837454,0.892011,0.981718,1.072100,0.956966,1.073487,0.980472,1.156495,0.962792,1.063072,0.929156,1.029339,0.848509,0.902283,0.830812),byrow=TRUE, ncol = 2, dimnames = list(paste0("ageClass",1:nAgeClass),c("M","F")))
 
+    muwt <- 107.1 # min per week
+    muws <- 2.8 # mph
+    muct <- 39.0 # min per week
+    mucs <- 7.7 # mph
+
+
 }
-    muwt <- 54.4 # min per week
-    muws <- 2.7 # mph
-    muct <- 9.7 # min per week
-    mucs <- 7.4 # mph
 
     cv <- 1.723 # coefficient of variation
-
-    #meanTw.Mat <- muwt/alphawt*Rwt
-
+    
     return(list(F = F, Rwt = Rwt, Rws = Rws, Rct = Rct, Rcs = Rcs, muwt = muwt, muws = muws, muct = muct, mucs = mucs, cv = cv, nAgeClass = nAgeClass))
 
 }
