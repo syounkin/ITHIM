@@ -214,3 +214,50 @@ getQuintiles <- function(ITHIM){
 
  return(list(ActiveTransportTime=ActiveTransportTime, WalkingTime=WalkingTime, CyclingTime=CyclingTime, WalkingMET=WalkingMET, CyclingMET = CyclingMET, TotalTravelMET = TotalTravelMET))})
 }
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#' Set Risk Ratios for Avctive Transport
+#'
+#' Set risk ratios for a list of diseases given MET exposure.  These
+#' values are used to compute change in disease burden due to active
+#' transport increase.
+#'
+#' @return A numerical vector of risk ratios given MET exposure
+#'
+#' @examples
+#'
+#' createRRs()
+#'
+#' @export
+createActiveTransportRRs <- function(){
+
+    diseaseNames <- c("Colon Cancer","Lung Cancer","Breast Cancer","Diabetes","Dementia","Depression","Hypertensive HD","IHD","Inflammatory HD","Stroke","Acute resp infections","Respiratory diseases","RTIs")
+    RR <- rep(0.98, length(diseaseNames))
+    names(RR) <- diseaseNames
+    return(RR)
+
+}
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#' Set Risk Ratios for Air Pollution
+#'
+#' Set risk ratios for a list of diseases given air pollution exposure.  These
+#' values are used to compute change in disease burden due to air pollution.
+#'
+#' @return A numerical vector of risk ratios given air pollution exposure
+#'
+#' @examples
+#'
+#' createRRs()
+#'
+#' @export
+createAirPollutionRRs <- function(){
+
+    diseaseNames <- c("dummyName1", "dummyName2")
+    RR <- rep(1.02, length(diseaseNames))
+    names(RR) <- diseaseNames
+    return(RR)
+
+}
