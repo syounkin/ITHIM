@@ -107,7 +107,7 @@ if(baseline){
 }
 
     cv <- 1.723 # coefficient of variation
-    
+
     return(list(F = F, Rwt = Rwt, Rws = Rws, Rct = Rct, Rcs = Rcs, muwt = muwt, muws = muws, muct = muct, mucs = mucs, cv = cv, nAgeClass = nAgeClass))
 
 }
@@ -234,7 +234,10 @@ getQuintiles <- function(ITHIM){
   CyclingMET <- list(M = means$meanCycleMET[,"M"]*CyclingTime[["M"]]/60, F = means$meanCycleMET[,"F"]*CyclingTime[["F"]]/60)
     TotalTravelMET <- list(M = WalkingMET[["M"]] + CyclingMET[["M"]], F = WalkingMET[["F"]] + CyclingMET[["F"]])
 
- return(list(ActiveTransportTime=ActiveTransportTime, WalkingTime=WalkingTime, CyclingTime=CyclingTime, WalkingMET=WalkingMET, CyclingMET = CyclingMET, TotalTravelMET = TotalTravelMET))})
+  TotalMET <- mapply("+",TotalTravelMET,computeNonTravelMETs(),SIMPLIFY=FALSE)
+
+
+ return(list(ActiveTransportTime=ActiveTransportTime, WalkingTime=WalkingTime, CyclingTime=CyclingTime, WalkingMET=WalkingMET, CyclingMET = CyclingMET, TotalTravelMET = TotalTravelMET, TotalMET = TotalMET))})
 }
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -294,6 +297,10 @@ createActiveTransportRRs <- function(){
     RR.lit[["Depression"]][3:nAgeClass,1:2] <- 0.859615572255727
 
     RR <- mapply(function(x,y,k) x^(1/y)^k, RR.lit, exposure, 0.5, SIMPLIFY=FALSE)
+
+    RR <- lapply(RR, reshapeRR)
+
+
 
     return(RR)
 
@@ -358,4 +365,20 @@ computeNonTravelMETs <- function(){
 
     return(list(M = nonTravelMETs[1:nAgeClass,], F = nonTravelMETs[nAgeClass+(1:nAgeClass),]))
 
+}
+
+reshapeRR <- function(RR){
+    nAgeClass <- 8
+    list( F = matrix(RR[,"F"], nrow = nAgeClass, ncol = 5, dimnames = list(paste0("ageClass",1:nAgeClass), paste0("quint",1:5))),M = matrix(RR[,"M"], nrow = nAgeClass, ncol = 5, dimnames = list(paste0("ageClass",1:nAgeClass), paste0("quint",1:5))))
+    }
+
+MET2RR <- function(RR,MET){
+    mapply(FUN = function(x, y) x^(y^0.5), RR, MET, SIMPLIFY = FALSE)
+}
+ratioForList <- function(baseline,scenario){
+mapply(FUN = "/", baseline, scenario, SIMPLIFY = FALSE)
+}
+
+AFForList <- function(scenario,baseline){
+    mapply(function(scenario,baseline) (rowSums(scenario)-rowSums(baseline))/rowSums(scenario), scenario, baseline)
 }
