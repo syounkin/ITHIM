@@ -138,6 +138,7 @@ if(baseline){
 #'     cycling for transport METs.  This means we assume that, unlike
 #'     walking, cycling energy is not a function of speed.
 #'
+#' @note meanCycleMET is constant.  So, it's really a parameter and not a function of parameters.
 #' @seealso \code{\link{createParameterList}}, \code{\link{ITHIM-package}}
 #'
 #' @export

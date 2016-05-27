@@ -31,6 +31,8 @@ active transport METs mean and standard deviation
 Currently all age by sex classes are assigned 6 for weekly
     cycling for transport METs.  This means we assume that, unlike
     walking, cycling energy is not a function of speed.
+
+meanCycleMET is constant.  So, it's really a parameter and not a function of parameters.
 }
 \seealso{
 \code{\link{createParameterList}}, \code{\link{ITHIM-package}}
