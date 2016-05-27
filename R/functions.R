@@ -366,19 +366,61 @@ computeNonTravelMETs <- function(){
     return(list(M = nonTravelMETs[1:nAgeClass,], F = nonTravelMETs[nAgeClass+(1:nAgeClass),]))
 
 }
-
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#' Transforms the RR object
+#'
+#' Transforms the RR object into something more convenient.
+#'
+#' @return A list of two matrices of RRs stratified by age class and
+#'     sex
+#'
+#' @export
 reshapeRR <- function(RR){
     nAgeClass <- 8
-    list( F = matrix(RR[,"F"], nrow = nAgeClass, ncol = 5, dimnames = list(paste0("ageClass",1:nAgeClass), paste0("quint",1:5))),M = matrix(RR[,"M"], nrow = nAgeClass, ncol = 5, dimnames = list(paste0("ageClass",1:nAgeClass), paste0("quint",1:5))))
+    list( M = matrix(RR[,"M"], nrow = nAgeClass, ncol = 5, dimnames = list(paste0("ageClass",1:nAgeClass), paste0("quint",1:5))),F = matrix(RR[,"F"], nrow = nAgeClass, ncol = 5, dimnames = list(paste0("ageClass",1:nAgeClass), paste0("quint",1:5))))
     }
-
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#' Computes the RR for an exposure of x MET
+#'
+#' We use the transformation RR_x = RR_1^(x^k), where RR_1 is the
+#' relative risk for one MET.
+#'
+#' @return A list of matrices of quintiles of RR_x stratified by age
+#'     class and sex
+#'
+#' @note k is fixed at 0.5 for now
+#'
+#' @export
 MET2RR <- function(RR,MET){
     mapply(FUN = function(x, y) x^(y^0.5), RR, MET, SIMPLIFY = FALSE)
 }
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#' Computes a ratio of elements in two lists
+#'
+#' Computes a ratio of elements in two lists.
+#'
+#' @return A list of ratios
+#'
+#' @export
 ratioForList <- function(baseline,scenario){
 mapply(FUN = "/", baseline, scenario, SIMPLIFY = FALSE)
 }
-
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#' Computes AF given baseline and scenario
+#'
+#' Computes AF given baseline and scenario
+#'
+#' @return A list of AFs stratified by age and sex
+#'
+#' @export
 AFForList <- function(scenario,baseline){
     mapply(function(scenario,baseline) (rowSums(scenario)-rowSums(baseline))/rowSums(scenario), scenario, baseline)
 }
