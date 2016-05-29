@@ -16,11 +16,9 @@ A list with parameters and estimates
 \item{Rwt}{A numerical matrix for the walking time, relative to ?value?}
 \item{Rws}{A numerical matrix for the walking speed, relative to ?value?}
 \item{Rct}{A numerical matrix for the cycling time, relative to ?value?}
-\item{Rcs}{A numerical matrix for the cycling speed, relative to ?value?}
 \item{muwt}{A numerical value for the mean walking time}
 \item{muws}{A numerical value for the mean walking speed}
 \item{muct}{A numerical value for the mean cycling time}
-\item{mucs}{A numerical value for the mean cycling speed}
 \item{cv}{A numerical value for the coefficient of variation for active transport time}
 }
 \description{

@@ -16,7 +16,6 @@ A list with matrices of means
 \item{meanWalkTime}{A numerical matrix of mean weekly time (hours?) for walking as transport}
 \item{meanWalkSpeed}{A numerical matrix of mean weekly speed for walking as transport}
 \item{meanCycleTime}{A numerical matrix of mean weekly time for cycling as transport}
-\item{meanCycleSpeed}{A numerical matrix of mean weekly speed for cycling as transport}
 \item{meanWalkMET}{A numerical matrix of mean weekly METs for walking as transport}
 \item{meanCycleMET}{A numerical matrix of mean weekly METs for cycling as transport}
 \item{meanActiveTransportTime}{A numerical matrix containing mean weekly active transport time}
@@ -33,6 +32,8 @@ Currently all age by sex classes are assigned 6 for weekly
     walking, cycling energy is not a function of speed.
 
 meanCycleMET is constant.  So, it's really a parameter and not a function of parameters.
+
+cycling speed has been removed
 }
 \seealso{
 \code{\link{createParameterList}}, \code{\link{ITHIM-package}}
