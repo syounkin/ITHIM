@@ -55,11 +55,9 @@ convertAge <- function(value, unit){
 #' \item{Rwt}{A numerical matrix for the walking time, relative to ?value?}
 #' \item{Rws}{A numerical matrix for the walking speed, relative to ?value?}
 #' \item{Rct}{A numerical matrix for the cycling time, relative to ?value?}
-#' \item{Rcs}{A numerical matrix for the cycling speed, relative to ?value?}
 #' \item{muwt}{A numerical value for the mean walking time}
 #' \item{muws}{A numerical value for the mean walking speed}
 #' \item{muct}{A numerical value for the mean cycling time}
-#' \item{mucs}{A numerical value for the mean cycling speed}
 #' \item{cv}{A numerical value for the coefficient of variation for active transport time}
 #'
 #' @note A note about the default values.
@@ -80,13 +78,9 @@ if(baseline){
 
     Rws <- matrix(c(1.0663,0.8753,1.0663,0.8753,1.0206,1.0002,1.0590,1.0338,1.0392,0.9474,1.0302,0.9330,0.9510,0.8969,0.9510,0.8969),byrow=TRUE, ncol = 2, dimnames = list(paste0("ageClass",1:nAgeClass),c("M","F")))
 
-    Rcs <- matrix(c(0.8474,0.8375,0.8920,0.9817,1.0721,0.9570,1.0735,0.9805,1.1565,0.9628,1.0631,0.9292,1.0293,0.8485,0.9023,0.8308),byrow=TRUE, ncol = 2, dimnames = list(paste0("ageClass",1:nAgeClass),c("M","F")))
-
     muwt <- 54.4 # min per week
     muws <- 2.7 # mph
     muct <- 9.7 # min per week
-    mucs <- 7.4 # mph
-
 
 }else{
 
@@ -96,19 +90,15 @@ if(baseline){
 
     Rws <- matrix(c(1.06625,0.87533,1.06625,0.87533,1.02062,1.00021,1.05905,1.03383,1.03923,0.94738,1.03023,0.93297,0.95098,0.89695,0.95098,0.89695),byrow=TRUE, ncol = 2, dimnames = list(paste0("ageClass",1:nAgeClass),c("M","F")))
 
-    Rcs <- matrix(c(0.847395,0.837454,0.892011,0.981718,1.072100,0.956966,1.073487,0.980472,1.156495,0.962792,1.063072,0.929156,1.029339,0.848509,0.902283,0.830812),byrow=TRUE, ncol = 2, dimnames = list(paste0("ageClass",1:nAgeClass),c("M","F")))
-
     muwt <- 107.1 # min per week
     muws <- 2.8 # mph
     muct <- 39.0 # min per week
-    mucs <- 7.7 # mph
-
 
 }
 
     cv <- 1.723 # coefficient of variation
 
-    return(list(F = F, Rwt = Rwt, Rws = Rws, Rct = Rct, Rcs = Rcs, muwt = muwt, muws = muws, muct = muct, mucs = mucs, cv = cv, nAgeClass = nAgeClass))
+    return(list(F = F, Rwt = Rwt, Rws = Rws, Rct = Rct, muwt = muwt, muws = muws, muct = muct, cv = cv, nAgeClass = nAgeClass))
 
 }
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -127,7 +117,6 @@ if(baseline){
 #' \item{meanWalkTime}{A numerical matrix of mean weekly time (hours?) for walking as transport}
 #' \item{meanWalkSpeed}{A numerical matrix of mean weekly speed for walking as transport}
 #' \item{meanCycleTime}{A numerical matrix of mean weekly time for cycling as transport}
-#' \item{meanCycleSpeed}{A numerical matrix of mean weekly speed for cycling as transport}
 #' \item{meanWalkMET}{A numerical matrix of mean weekly METs for walking as transport}
 #' \item{meanCycleMET}{A numerical matrix of mean weekly METs for cycling as transport}
 #' \item{meanActiveTransportTime}{A numerical matrix containing mean weekly active transport time}
@@ -139,6 +128,7 @@ if(baseline){
 #'     walking, cycling energy is not a function of speed.
 #'
 #' @note meanCycleMET is constant.  So, it's really a parameter and not a function of parameters.
+#' @note cycling speed has been removed
 #' @seealso \code{\link{createParameterList}}, \code{\link{ITHIM-package}}
 #'
 #' @export
@@ -147,18 +137,18 @@ computeMeanMatrices <- function(parList){
         alphawt <- sum(F*Rwt)
         alphact <- sum(F*Rct)
         alphaws <- sum(F*Rws)
-        alphacs <- sum(F*Rcs)
+
         meanWalkTime <- muwt/alphawt*Rwt
         meanCycleTime <- muct/alphact*Rct
         propTimeCycling <-  meanCycleTime/(meanCycleTime+meanWalkTime)
         meanWalkSpeed <- muws/alphaws*Rws
-        meanCycleSpeed <- mucs/alphacs*Rcs
+
         meanWalkMET <- ifelse(1.2216*meanWalkSpeed + 0.0838 < 2.5, 2.5,  1.2216*meanWalkSpeed + 0.0838)
         meanCycleMET <- matrix(6, byrow=TRUE, ncol = 2, nrow =nrow(F),dimnames = list(paste0("ageClass",1:nAgeClass),c("M","F")))
         meanActiveTransportTime <- meanWalkTime + meanCycleTime
         sdActiveTransportTime <- meanActiveTransportTime*cv
 
-        return(list(meanWalkTime = meanWalkTime, meanCycleTime = meanCycleTime, meanWalkSpeed = meanWalkSpeed, meanCycleSpeed = meanCycleSpeed, meanWalkMET = meanWalkMET, meanCycleMET = meanCycleMET, meanActiveTransportTime = meanActiveTransportTime, sdActiveTransportTime = sdActiveTransportTime, propTimeCycling = propTimeCycling))
+        return(list(meanWalkTime = meanWalkTime, meanCycleTime = meanCycleTime, meanWalkSpeed = meanWalkSpeed, meanWalkMET = meanWalkMET, meanCycleMET = meanCycleMET, meanActiveTransportTime = meanActiveTransportTime, sdActiveTransportTime = sdActiveTransportTime, propTimeCycling = propTimeCycling))
         })
 }
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -266,8 +256,6 @@ createActiveTransportRRs <- function(){
 
     names(RR.lit) <- names(exposure) <- diseaseNames
 
-    k <- 0.5
-
     exposure[["BreastCancer"]][1:nAgeClass,"F"] <- 4.5
     RR.lit[["BreastCancer"]][1:nAgeClass,"F"] <- 0.944
 
@@ -295,11 +283,9 @@ createActiveTransportRRs <- function(){
     exposure[["Depression"]][3:nAgeClass,1:2] <- 11.25
     RR.lit[["Depression"]][3:nAgeClass,1:2] <- 0.859615572255727
 
+    k <- 0.5
     RR <- mapply(function(x,y,k) x^(1/y)^k, RR.lit, exposure, 0.5, SIMPLIFY=FALSE)
-
     RR <- lapply(RR, reshapeRR)
-
-
 
     return(RR)
 
@@ -413,7 +399,7 @@ mapply(FUN = "/", baseline, scenario, SIMPLIFY = FALSE)
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#' Computes AF given baseline and scenario
+#' Computes AF given baseline and scenario ?disease burdens?
 #'
 #' Computes AF given baseline and scenario
 #'
@@ -422,4 +408,42 @@ mapply(FUN = "/", baseline, scenario, SIMPLIFY = FALSE)
 #' @export
 AFForList <- function(scenario,baseline){
     mapply(function(scenario,baseline) (rowSums(scenario)-rowSums(baseline))/rowSums(scenario), scenario, baseline)
+}
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#' Computes AF given baseline and scenario models
+#'
+#' Computes AF given baseline and scenario
+#'
+#' @return A list of AFs stratified by age and sex
+#'
+#' @export
+compareModels <- function(baseline,scenario){
+    RR <- createActiveTransportRRs()
+    RR.baseline <- lapply(RR, MET2RR, baseline$quintiles$TotalMET)
+    RR.scenario <- lapply(RR, MET2RR, scenario$quintiles$TotalMET)
+
+    diseaseBurden.scenario <- mapply(ratioForList,RR.baseline, RR.scenario, SIMPLIFY = FALSE)
+    diseaseBurden.baseline <- mapply(ratioForList,RR.baseline, RR.baseline, SIMPLIFY = FALSE) # What!
+    AF <- mapply(AFForList, diseaseBurden.scenario,diseaseBurden.baseline, SIMPLIFY = FALSE)
+
+    return(list(RR.baseline = RR.baseline, RR.scenario = RR.scenario, diseaseBurden = diseaseBurden.scenario, AF = AF))
+    }
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#' Plots a RR matrix
+#'
+#' Plots a RR matrix
+#'
+#' @return A ggplot object
+#'
+#' @export
+plotRR <- function(RR.baseline,RR.scenario){
+D <- melt(list(baseline = RR.baseline, scenario = RR.scenario), c("age","quint"), value.name = "RR")
+names(D) <- c("age","quint","RR","sex","vision")
+p <- ggplot(D, aes(age,  RR)) + geom_bar(aes(fill=vision), stat = "identity", position = "dodge")
+p <- p + facet_grid( . ~ sex)
+return(p)
 }
