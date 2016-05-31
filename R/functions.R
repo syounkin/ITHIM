@@ -81,6 +81,7 @@ if(baseline){
     muwt <- 54.4 # min per week
     muws <- 2.7 # mph
     muct <- 9.7 # min per week
+    pm25 <- 16.6067363
 
 }else{
 
@@ -93,12 +94,13 @@ if(baseline){
     muwt <- 107.1 # min per week
     muws <- 2.8 # mph
     muct <- 39.0 # min per week
+    pm25 <- 16.4807478
 
 }
 
     cv <- 1.723 # coefficient of variation
 
-    return(list(F = F, Rwt = Rwt, Rws = Rws, Rct = Rct, muwt = muwt, muws = muws, muct = muct, cv = cv, nAgeClass = nAgeClass))
+    return(list(F = F, Rwt = Rwt, Rws = Rws, Rct = Rct, muwt = muwt, muws = muws, muct = muct, cv = cv, nAgeClass = nAgeClass, pm25 = pm25))
 
 }
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -225,7 +227,7 @@ getQuintiles <- function(ITHIM){
     TotalTravelMET <- list(M = WalkingMET[["M"]] + CyclingMET[["M"]], F = WalkingMET[["F"]] + CyclingMET[["F"]])
 
   TotalMET <- mapply(function(x,y) ifelse(x+y<2.5,0.1,x+y),TotalTravelMET,computeNonTravelMETs(),SIMPLIFY=FALSE)
-    
+
  return(list(ActiveTransportTime=ActiveTransportTime, WalkingTime=WalkingTime, CyclingTime=CyclingTime, WalkingMET=WalkingMET, CyclingMET = CyclingMET, TotalTravelMET = TotalTravelMET, TotalMET = TotalMET))})
 }
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -283,6 +285,12 @@ createActiveTransportRRs <- function(){
     exposure[["Depression"]][3:nAgeClass,1:2] <- 11.25
     RR.lit[["Depression"]][3:nAgeClass,1:2] <- 0.859615572255727
 
+    exposure[["Depression"]][3:nAgeClass,1:2] <- 11.25
+    RR.lit[["Depression"]][3:nAgeClass,1:2] <- 0.859615572255727
+
+    exposure[["Stroke"]] <- exposure[["CVD"]]
+    RR.lit[["Stroke"]] <- RR.lit[["CVD"]]
+
     k <- 0.5
     RR <- mapply(function(x,y,k) x^(1/y)^k, RR.lit, exposure, 0.5, SIMPLIFY=FALSE)
     RR <- lapply(RR, reshapeRR)
@@ -304,11 +312,18 @@ createActiveTransportRRs <- function(){
 #'     pollution.
 #'
 #' @export
-createAirPollutionRRs <- function(){
+createAirPollutionRRs <- function(baseline, scenario){
 
-    diseaseNames <- c("Lung Cancer","Acute resp infections","Inflammatory HD","Respiratory diseases")
-    RR <- rep(1.02, length(diseaseNames))
+    diseaseNames <- c("Lung Cancer","Acute resp infections","Inflammatory HD","Respiratory diseases", "Dementia")
+
+    k <- rep(0.008618,length(diseaseNames))
+
+    exposure.baseline <- baseline$parameters$pm25
+    exposure.scenario <- scenario$parameters$pm25
+
+    RR <- exp(k*(exposure.scenario-exposure.baseline))
     names(RR) <- diseaseNames
+
     return(RR)
 
 }
@@ -423,6 +438,8 @@ compareModels <- function(baseline,scenario){
     RR <- createActiveTransportRRs()
     RR.baseline <- lapply(RR, MET2RR, baseline$quintiles$TotalMET)
     RR.scenario <- lapply(RR, MET2RR, scenario$quintiles$TotalMET)
+
+
 
     diseaseBurden.scenario <- mapply(ratioForList,RR.baseline, RR.scenario, SIMPLIFY = FALSE)
     diseaseBurden.baseline <- mapply(ratioForList,RR.baseline, RR.baseline, SIMPLIFY = FALSE) # What!

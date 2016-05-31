@@ -4,7 +4,7 @@
 \alias{createAirPollutionRRs}
 \title{Set Risk Ratios for Air Pollution}
 \usage{
-createAirPollutionRRs()
+createAirPollutionRRs(baseline, scenario)
 }
 \value{
 A numerical vector of risk ratios given air pollution exposure
