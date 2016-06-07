@@ -464,3 +464,17 @@ p <- ggplot(D, aes(age,  RR)) + geom_bar(aes(fill=vision), stat = "identity", po
 p <- p + facet_grid( . ~ sex)
 return(p)
 }
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#' Sets a model parameter
+#'
+#' Sets a model parameter
+#'
+#' @return An updated list of parameters
+#'
+#' @export
+setParameter <- function( parName, parValue, parList ){
+    parList[[parName]] <- parValue
+    return(parList)
+    }
