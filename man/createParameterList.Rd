@@ -25,6 +25,46 @@ A list with parameters and estimates
 Create a list of input parameters
 }
 \note{
-A note about the default values.
+There are 15 parameters in the ITHIM model;
+
+Active Transport
+
+1. mean travel distance (muwt,muws,Rws,Rwt)
+
+3. ratio of active travel time to reference group (Rwt, Rct)
+
+4. standard deviation of active travel time (cv),
+
+5. distribution of population by age and sex (F)
+
+8. walk speed (muws)
+
+15. Ratio of daily per capita bicycling to walking time (?)
+
+Disease Burden
+
+6. ratio of regional disease-specific mortality to national disease-specific mortality (-)
+
+7. proportion of colon cancers from colo-rectal cancer (-)
+
+Non-travel METs
+
+9. non-travel related physical activity by age and sex (fixed)
+
+Air Pollution
+
+2. mean travel time by mode (-)
+
+10. Personal travel distance by facility type and travel mode (-)
+
+11. Vehicle distance traveled by facility type and travel mode (-)
+
+12. CO2 emitted per distance traveled by vehicle (-)
+
+14. Emissions of primary and secondary sources of PM 2.5 (-)
+
+Road Injuries
+
+13. Serious and fatal injuries between a striking vehicle and victim vehicle by severity and modes (-)
 }
 
