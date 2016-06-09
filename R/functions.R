@@ -120,7 +120,7 @@ if(baseline){
     muwt <- 54.4 # min per week
     muws <- 2.7 # mph
     muct <- 9.7 # min per week
-    pm25 <- 16.6067363
+    pm25 <- 10.075 # microns per cubic meter
 
 }else{
 
@@ -133,7 +133,7 @@ if(baseline){
     muwt <- 107.1 # min per week
     muws <- 2.8 # mph
     muct <- 39.0 # min per week
-    pm25 <- 16.4807478
+    pm25 <- 10.072 # microns per cubic meter
 
 }
 
@@ -330,6 +330,9 @@ createActiveTransportRRs <- function(){
     exposure[["Stroke"]] <- exposure[["CVD"]]
     RR.lit[["Stroke"]] <- RR.lit[["CVD"]]
 
+    exposure[["HHD"]] <- exposure[["CVD"]]
+    RR.lit[["HHD"]] <- RR.lit[["CVD"]]
+
     k <- 0.5
     RR <- mapply(function(x,y,k) x^(1/y)^k, RR.lit, exposure, 0.5, SIMPLIFY=FALSE)
     RR <- lapply(RR, reshapeRR)
@@ -353,7 +356,7 @@ createActiveTransportRRs <- function(){
 #' @export
 createAirPollutionRRs <- function(baseline, scenario){
 
-    diseaseNames <- c("Lung Cancer","Acute resp infections","Inflammatory HD","Respiratory diseases", "Dementia")
+    diseaseNames <- c("LungCancer","AcuteRespInfect","InflammatoryHD","RespiratoryDisease", "CVD", "HHD", "Stroke")
 
     k <- rep(0.008618,length(diseaseNames))
 
@@ -363,7 +366,9 @@ createAirPollutionRRs <- function(baseline, scenario){
     RR <- exp(k*(exposure.scenario-exposure.baseline))
     names(RR) <- diseaseNames
 
-    return(RR)
+    RR.list <- lapply(as.list(RR), function(x) list(M=matrix(x,nrow=8,ncol=5,dimnames=list(paste0("ageClass",1:8),paste0("quint",1:5))),F=matrix(x,nrow=8,ncol=5,dimnames=list(paste0("ageClass",1:8),paste0("quint",1:5)))))
+    
+    return(RR.list)
 
 }
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -478,13 +483,13 @@ compareModels <- function(baseline,scenario){
     RR.baseline <- lapply(RR, MET2RR, baseline$quintiles$TotalMET)
     RR.scenario <- lapply(RR, MET2RR, scenario$quintiles$TotalMET)
 
-
-
     diseaseBurden.scenario <- mapply(ratioForList,RR.baseline, RR.scenario, SIMPLIFY = FALSE)
     diseaseBurden.baseline <- mapply(ratioForList,RR.baseline, RR.baseline, SIMPLIFY = FALSE) # What!
     AF <- mapply(AFForList, diseaseBurden.scenario,diseaseBurden.baseline, SIMPLIFY = FALSE)
 
-    return(list(RR.baseline = RR.baseline, RR.scenario = RR.scenario, diseaseBurden = diseaseBurden.scenario, AF = AF))
+    APRR <- createAirPollutionRRs(baseline,scenario)
+
+    return(list(RR.baseline = RR.baseline, RR.scenario = RR.scenario, diseaseBurden = diseaseBurden.scenario, AF = AF, AirPollutionRR = APRR))
     }
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
