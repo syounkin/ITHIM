@@ -324,9 +324,6 @@ createActiveTransportRRs <- function(){
     exposure[["Depression"]][3:nAgeClass,1:2] <- 11.25
     RR.lit[["Depression"]][3:nAgeClass,1:2] <- 0.859615572255727
 
-    exposure[["Depression"]][3:nAgeClass,1:2] <- 11.25
-    RR.lit[["Depression"]][3:nAgeClass,1:2] <- 0.859615572255727
-
     exposure[["Stroke"]] <- exposure[["CVD"]]
     RR.lit[["Stroke"]] <- RR.lit[["CVD"]]
 
