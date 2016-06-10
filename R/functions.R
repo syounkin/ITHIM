@@ -256,13 +256,14 @@ computeQuintiles <- function( mean, sd ){
 #' @seealso \code{\link{computeMeanMatrices}}
 #'
 #' @export
-getQuintiles <- function(ITHIM){
-  with(ITHIM,{
-    ActiveTransportTime <- computeQuintiles(means$meanActiveTransportTime, means$sdActiveTransportTime)
-  WalkingTime <- list(M = ActiveTransportTime[["M"]] * (1-means$propTimeCycling[,"M"]), F = ActiveTransportTime[["F"]] * (1-means$propTimeCycling[,"F"]))
-  CyclingTime <- list(M = ActiveTransportTime[["M"]] * (means$propTimeCycling[,"M"]), F = ActiveTransportTime[["F"]] * (means$propTimeCycling[,"F"]))
-  WalkingMET <- list(M = means$meanWalkMET[,"M"]*WalkingTime[["M"]]/60, F = means$meanWalkMET[,"F"]*WalkingTime[["F"]]/60)
-  CyclingMET <- list(M = means$meanCycleMET[,"M"]*CyclingTime[["M"]]/60, F = means$meanCycleMET[,"F"]*CyclingTime[["F"]]/60)
+getQuintiles <- function(means){
+#    browser()
+  with(means,{
+    ActiveTransportTime <- computeQuintiles(meanActiveTransportTime, sdActiveTransportTime)
+  WalkingTime <- list(M = ActiveTransportTime[["M"]] * (1-propTimeCycling[,"M"]), F = ActiveTransportTime[["F"]] * (1-propTimeCycling[,"F"]))
+  CyclingTime <- list(M = ActiveTransportTime[["M"]] * (propTimeCycling[,"M"]), F = ActiveTransportTime[["F"]] * (propTimeCycling[,"F"]))
+  WalkingMET <- list(M = meanWalkMET[,"M"]*WalkingTime[["M"]]/60, F = meanWalkMET[,"F"]*WalkingTime[["F"]]/60)
+  CyclingMET <- list(M = meanCycleMET[,"M"]*CyclingTime[["M"]]/60, F = meanCycleMET[,"F"]*CyclingTime[["F"]]/60)
     TotalTravelMET <- list(M = WalkingMET[["M"]] + CyclingMET[["M"]], F = WalkingMET[["F"]] + CyclingMET[["F"]])
 
   TotalMET <- mapply(function(x,y) ifelse(x+y<2.5,0.1,x+y),TotalTravelMET,computeNonTravelMETs(),SIMPLIFY=FALSE)
