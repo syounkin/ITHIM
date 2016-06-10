@@ -1,8 +1,8 @@
 Package: ITHIM
 Type: Package
 Title: ITHIM
-Version: 0.0.7
-Date: Tue 07 Jun 2016 08:45:33 AM CDT
+Version: 0.0.8
+Date: Fri 10 Jun 2016 06:09:01 PM CDT
 Author: Samuel G. Younkin
 Maintainer: Samuel G. Younkin <syounkin@wisc.edu>
 Description: This package implemtes the Integrated Transport and Health Impacts Model (ITHIM) developed by James Woodcock.
