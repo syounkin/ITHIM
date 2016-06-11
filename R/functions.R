@@ -499,7 +499,7 @@ compareModels <- function(baseline,scenario){
     diseaseBurden.baseline <- mapply(ratioForList,RR.baseline, RR.baseline, SIMPLIFY = FALSE) # What!
     AF <- mapply(AFForList, diseaseBurden.scenario,diseaseBurden.baseline, SIMPLIFY = FALSE)
 
-    ## normalizedDiseaseBurden <- lapply(RR.scenario, normalizeDiseaseBurden)
+    normalizedDiseaseBurden <- lapply(RR.scenario, normalizeDiseaseBurden)
 
     ## denom <- lapply(normalizedDiseaseBurden, function(x) lapply(x, rowSums))
 
