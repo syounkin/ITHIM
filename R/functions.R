@@ -499,8 +499,21 @@ compareModels <- function(baseline,scenario){
     diseaseBurden.baseline <- mapply(ratioForList,RR.baseline, RR.baseline, SIMPLIFY = FALSE) # What!
     AF <- mapply(AFForList, diseaseBurden.scenario,diseaseBurden.baseline, SIMPLIFY = FALSE)
 
-    normalizedDiseaseBurden <- lapply(RR.scenario, normalizeDiseaseBurden)
+    ## normalizedDiseaseBurden <- lapply(RR.scenario, normalizeDiseaseBurden)
 
+    ## denom <- lapply(normalizedDiseaseBurden, function(x) lapply(x, rowSums))
+
+    ## gbd <- list( "BreastCancer" = matrix( c(0,0,0,0,8,3,1,1, 0,0,4,57,215,162,179,213), byrow = FALSE, nrow = 8, ncol = 2, dimnames = list(paste0("ageClass",1:baseline$parameters$nAgeClass),c("M","F"))))
+             
+    
+    ## browser()
+    
+    ## NewBurden <- lapply(AF,function(x) 1-x)
+
+    ## fooFunction <- function(newBurden, denom, gbd) mapply(function(newBurden,denom,gbd) newBurden*gbd/denom , NewBurden, denom, gbd, SIMPLIFY = FALSE)
+    
+    ## gbd1 <- mapply(fooFunction, NewBurden, denom, gbd, SIMPLIFY = FALSE)
+    
     APRR <- createAirPollutionRRs(baseline,scenario)
 
     return(list(RR.baseline = RR.baseline, RR.scenario = RR.scenario, diseaseBurden = diseaseBurden.scenario, AF = AF, normalizedDiseaseBurden = normalizedDiseaseBurden, AirPollutionRR = APRR))
