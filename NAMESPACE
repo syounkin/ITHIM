@@ -2,6 +2,7 @@
 
 export(AFForList)
 export(MET2RR)
+export(burdenFunction)
 export(compareModels)
 export(computeMeanMatrices)
 export(computeNonTravelMETs)
