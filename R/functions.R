@@ -490,7 +490,7 @@ normalizeDiseaseBurden <- function(diseaseBurden){
 #' @return A list of AFs stratified by age and sex
 #'
 #' @export
-compareModels <- function(baseline,scenario){
+compareModels <- function(baseline,scenario, GBDFile = "~/gbd.csv"){
     RR <- createActiveTransportRRs()
     RR.baseline <- lapply(RR, MET2RR, baseline$quintiles$TotalMET)
     RR.scenario <- lapply(RR, MET2RR, scenario$quintiles$TotalMET)
@@ -500,23 +500,16 @@ compareModels <- function(baseline,scenario){
     AF <- mapply(AFForList, diseaseBurden.scenario,diseaseBurden.baseline, SIMPLIFY = FALSE)
 
     normalizedDiseaseBurden <- lapply(RR.scenario, normalizeDiseaseBurden)
+    GBD <- readGBD(file = GBDFile)
+    NewBurden <- lapply(AF,function(x) 1-x)
+    NewBurdenList <- lapply(NewBurden,function(x) list(M = x[,"M"], F = x[,"F"]))
+    denom <- lapply(normalizedDiseaseBurden, function(x) lapply(x, rowSums))
 
-    ## denom <- lapply(normalizedDiseaseBurden, function(x) lapply(x, rowSums))
+    dproj <- mapply(function(x,y,z) x[,"dproj"] * y * z, GBD$BreastCancer, NewBurdenList$BreastCancer, denom$BreastCancer)
 
-    ## gbd <- list( "BreastCancer" = matrix( c(0,0,0,0,8,3,1,1, 0,0,4,57,215,162,179,213), byrow = FALSE, nrow = 8, ncol = 2, dimnames = list(paste0("ageClass",1:baseline$parameters$nAgeClass),c("M","F"))))
-             
-    
-    ## browser()
-    
-    ## NewBurden <- lapply(AF,function(x) 1-x)
-
-    ## fooFunction <- function(newBurden, denom, gbd) mapply(function(newBurden,denom,gbd) newBurden*gbd/denom , NewBurden, denom, gbd, SIMPLIFY = FALSE)
-    
-    ## gbd1 <- mapply(fooFunction, NewBurden, denom, gbd, SIMPLIFY = FALSE)
-    
     APRR <- createAirPollutionRRs(baseline,scenario)
 
-    return(list(RR.baseline = RR.baseline, RR.scenario = RR.scenario, diseaseBurden = diseaseBurden.scenario, AF = AF, normalizedDiseaseBurden = normalizedDiseaseBurden, AirPollutionRR = APRR))
+    return(list(RR.baseline = RR.baseline, RR.scenario = RR.scenario, diseaseBurden = diseaseBurden.scenario, AF = AF, normalizedDiseaseBurden = normalizedDiseaseBurden, AirPollutionRR = APRR, dproj = dproj))
     }
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -549,4 +542,21 @@ return(p)
 setParameter <- function( parName, parValue, parList ){
     parList[[parName]] <- parValue
     return(parList)
+    }
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#' Read in Global Burden of Disease Data
+#'
+#' Read in Global Burden of Disease Data
+#'
+#' @return A list of lists of matrices with dproj, yll, yld and daly
+#'     by age and sex and disease
+#'
+#' @export
+readGBD <- function(file = "~/gbd.csv"){
+    gbd <- read.csv(file=file)
+    gbdList <- split(gbd,gbd$disease)
+    gbdList2 <- lapply(foobar,function(x) split(x,x$sex))
+    return(gbdList2)
     }
