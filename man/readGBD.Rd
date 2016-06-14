@@ -4,7 +4,7 @@
 \alias{readGBD}
 \title{Read in Global Burden of Disease Data}
 \usage{
-readGBD(file = "~/gbd.csv")
+readGBD(file = "~/ITHIM/R/gbd.csv")
 }
 \value{
 A list of lists of matrices with dproj, yll, yld and daly
