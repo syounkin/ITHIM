@@ -124,7 +124,7 @@ createParameterList <- function(baseline = TRUE){
 #    Rct <- matrix(c(0.29350,0.12305,1.31944,0.82780,1.86938,1.00000,1.56016,0.73770,1.45792,0.24667,0.45162,0.18923,0.49021,0.16502,0.07503,0.02941),byrow=TRUE, ncol = 2, dimnames = list(paste0("ageClass",1:nAgeClass),c("M","F")))
 #    Rws <- matrix(c(1.0663,0.8753,1.0663,0.8753,1.0206,1.0002,1.0590,1.0338,1.0392,0.9474,1.0302,0.9330,0.9510,0.8969,0.9510,0.8969),byrow=TRUE, ncol = 2, dimnames = list(paste0("ageClass",1:nAgeClass),c("M","F")))
 
-    
+
 if(baseline){
 
 
@@ -519,11 +519,11 @@ compareModels <- function(baseline,scenario, GBDFile = "~/ITHIM/R/gbd.csv"){
     GBD <- readGBD(file = GBDFile)
 
     diseases <- intersect(intersect(names(NewBurdenList),names(GBD)),names(normalizedDiseaseBurden))
-    
+
     GBD <- GBD[diseases]
     NewBurdenList <- NewBurdenList[diseases]
     denom <- denom[diseases]
-    
+
     dproj <- mapply(FUN = burdenFunction, GBD, NewBurdenList, denom, MoreArgs = list(burden = "dproj"), SIMPLIFY = FALSE)
     yll <- mapply(FUN = burdenFunction, GBD, NewBurdenList, denom, MoreArgs = list(burden = "yll"), SIMPLIFY = FALSE)
     yld <- mapply(FUN = burdenFunction, GBD, NewBurdenList, denom, MoreArgs = list(burden = "yld"), SIMPLIFY = FALSE)
@@ -554,6 +554,25 @@ return(p)
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#' Plots means
+#'
+#' Plots means
+#'
+#' @return A ggplot object
+#'
+#' @export
+plotMean <- function(means.baseline, means.scenario, var = "meanActiveTransportTime"){
+    D <- melt(list(baseline = means.baseline[[var]], scenario = means.scenario[[var]]), c("age","quint"), value.name = "mean")
+    names(D) <- c("age","sex","mean","vision")
+    p <- ggplot(D, aes(age,  mean)) + geom_bar(aes(fill=vision), stat = "identity", position = "dodge")
+    return(p)
+}
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #' Sets a model parameter
 #'
 #' Sets a model parameter
@@ -576,7 +595,7 @@ setParameter <- function( parName, parValue, parList ){
 #'     by age and sex and disease
 #'
 #' @export
-readGBD <- function(file = "~/gbd.csv"){
+readGBD <- function(file = "~/ITHIM/R/gbd.csv"){
     gbd <- read.csv(file=file)
     gbdList <- split(gbd,gbd$disease)
     gbdList2 <- lapply(gbdList,function(x) split(x,as.factor(x$sex)))
@@ -591,7 +610,7 @@ readGBD <- function(file = "~/gbd.csv"){
 #' ??
 #'
 #' @return ??
-#' 
+#'
 #'
 #' @export
 burdenFunction <- function(x2,y2,z2, burden){
