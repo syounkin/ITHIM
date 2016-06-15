@@ -4,7 +4,7 @@
 \alias{createParameterList}
 \title{Create a list of input parameters}
 \usage{
-createParameterList(baseline = TRUE)
+createParameterList(vision = "baseline", region = "national")
 }
 \arguments{
 \item{baseline}{A logical value indicating if we are using the baseline scenario}
