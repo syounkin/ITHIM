@@ -103,29 +103,40 @@ convertAge <- function(value, unit){
 #' 13. Serious and fatal injuries between a striking vehicle and victim vehicle by severity and modes (-)
 #'
 #' @export
-createParameterList <- function(baseline = TRUE){
+createParameterList <- function(vision = "baseline", region = "national"){
 
     nAgeClass <- 8
 
-    # National Values
-    F <- matrix(c(0.0353518933,0.0337319963,0.0677709111,0.0646090177,0.1082721374,0.1025659595,0.1007813234,0.0996136545,0.1012405253,0.1051998903,0.0429797369,0.047666298,0.0236366386,0.0297455114,0.0130355262,0.0237989804), byrow = TRUE, nrow = nAgeClass, ncol = 2, dimnames = list(paste0("ageClass",1:nAgeClass),c("M","F")))
+    if( region == "national" ){
 
     # National Values
-    Rwt <- matrix(c(0.4305,0.3471,1.0700,0.8200,1.0100,1.0000,0.8600,1.1700,1.0600,1.1700,0.9900,0.9200,0.8000,0.7500,0.8200,0.7800),byrow=TRUE, ncol = 2, dimnames = list(paste0("ageClass",1:nAgeClass),c("M","F")))
+        F <- matrix(c(0.0353518933,0.0337319963,0.0677709111,0.0646090177,0.1082721374,0.1025659595,0.1007813234,0.0996136545,0.1012405253,0.1051998903,0.0429797369,0.047666298,0.0236366386,0.0297455114,0.0130355262,0.0237989804), byrow = TRUE, nrow = nAgeClass, ncol = 2, dimnames = list(paste0("ageClass",1:nAgeClass),c("M","F")))
 
     # National Values
-    Rct <- matrix(c(0.2935,0.1231,6.4500,3.1500,4.0000,1.0000,3.4800,0.8200,4.6700,1.1800,2.7000,0.6100,3.4200,0.2100,0.7000,0.0900),byrow=TRUE, ncol = 2, dimnames = list(paste0("ageClass",1:nAgeClass),c("M","F")))
+        Rwt <- matrix(c(0.4305,0.3471,1.0700,0.8200,1.0100,1.0000,0.8600,1.1700,1.0600,1.1700,0.9900,0.9200,0.8000,0.7500,0.8200,0.7800),byrow=TRUE, ncol = 2, dimnames = list(paste0("ageClass",1:nAgeClass),c("M","F")))
 
     # National Values
-    Rws <- matrix(c(1.0662510447,0.8753344725,1.0662510447,0.8753344725,1.0206231847,1.000210721,1.0590466458,1.0338312494,1.0392345486,0.947378462,1.03022905,0.9329696641,0.9509806615,0.8969476694,0.9509806615,0.8969476694),byrow=TRUE, ncol = 2, dimnames = list(paste0("ageClass",1:nAgeClass),c("M","F")))
+        Rct <- matrix(c(0.2935,0.1231,6.4500,3.1500,4.0000,1.0000,3.4800,0.8200,4.6700,1.1800,2.7000,0.6100,3.4200,0.2100,0.7000,0.0900),byrow=TRUE, ncol = 2, dimnames = list(paste0("ageClass",1:nAgeClass),c("M","F")))
 
-    #    F <- matrix(c(0.0368276992,0.0353723566,0.0746989673,0.0716902674,0.1123490977,0.1104366009,0.1163649132,0.1182206842,0.0808260989,0.0891264801,0.0308720468,0.037493344,0.0223834475,0.0321797163,0.0098989332,0.0212593465), byrow = TRUE, nrow = nAgeClass, ncol = 2, dimnames = list(paste0("ageClass",1:nAgeClass),c("M","F")))
-    #Rwt <- matrix(c(0.43053,0.34715,0.49337,0.48135,0.93248,1.00000,0.76528,0.73350,0.68250,0.65805,0.56376,0.77155,0.58923,0.62678,0.56524,0.39604),byrow=TRUE, ncol = 2, dimnames = list(paste0("ageClass",1:nAgeClass),c("M","F")))
-#    Rct <- matrix(c(0.29350,0.12305,1.31944,0.82780,1.86938,1.00000,1.56016,0.73770,1.45792,0.24667,0.45162,0.18923,0.49021,0.16502,0.07503,0.02941),byrow=TRUE, ncol = 2, dimnames = list(paste0("ageClass",1:nAgeClass),c("M","F")))
-#    Rws <- matrix(c(1.0663,0.8753,1.0663,0.8753,1.0206,1.0002,1.0590,1.0338,1.0392,0.9474,1.0302,0.9330,0.9510,0.8969,0.9510,0.8969),byrow=TRUE, ncol = 2, dimnames = list(paste0("ageClass",1:nAgeClass),c("M","F")))
+    # National Values
+        Rws <- matrix(c(1.0662510447,0.8753344725,1.0662510447,0.8753344725,1.0206231847,1.000210721,1.0590466458,1.0338312494,1.0392345486,0.947378462,1.03022905,0.9329696641,0.9509806615,0.8969476694,0.9509806615,0.8969476694),byrow=TRUE, ncol = 2, dimnames = list(paste0("ageClass",1:nAgeClass),c("M","F")))
 
+    }else if( region == "dane" ){
 
-if(baseline){
+        F <- matrix(c(0.0368276992,0.0353723566,0.0746989673,0.0716902674,0.1123490977,0.1104366009,0.1163649132,0.1182206842,0.0808260989,0.0891264801,0.0308720468,0.037493344,0.0223834475,0.0321797163,0.0098989332,0.0212593465), byrow = TRUE, nrow = nAgeClass, ncol = 2, dimnames = list(paste0("ageClass",1:nAgeClass),c("M","F")))
+
+        Rwt <- matrix(c(0.43053,0.34715,0.49337,0.48135,0.93248,1.00000,0.76528,0.73350,0.68250,0.65805,0.56376,0.77155,0.58923,0.62678,0.56524,0.39604),byrow=TRUE, ncol = 2, dimnames = list(paste0("ageClass",1:nAgeClass),c("M","F")))
+
+        Rct <- matrix(c(0.29350,0.12305,1.31944,0.82780,1.86938,1.00000,1.56016,0.73770,1.45792,0.24667,0.45162,0.18923,0.49021,0.16502,0.07503,0.02941),byrow=TRUE, ncol = 2, dimnames = list(paste0("ageClass",1:nAgeClass),c("M","F")))
+
+        Rws <- matrix(c(1.0663,0.8753,1.0663,0.8753,1.0206,1.0002,1.0590,1.0338,1.0392,0.9474,1.0302,0.9330,0.9510,0.8969,0.9510,0.8969),byrow=TRUE, ncol = 2, dimnames = list(paste0("ageClass",1:nAgeClass),c("M","F")))
+    }else{
+
+        # Put error message here.
+
+    }
+
+if(vision == "baseline"){
 
 
     muwt <- 47.4 # min per week
@@ -133,26 +144,24 @@ if(baseline){
     muct <- 6.2 # min per week
     pm25 <- 10.075 # microns per cubic meter
 
-}else{
-
-    ## Rwt <- matrix(c(0.430529164,0.347145072,0.493373244,0.481350453,0.932484686,1,0.765284191,0.733501073,0.682502249,0.65804925,0.563755831,0.771546332,0.589228976,0.626782877,0.565238338,0.396044894),byrow=TRUE, ncol = 2, dimnames = list(paste0("ageClass",1:nAgeClass),c("M","F")))
-
-    ## Rct <- matrix(c(0.5,0.3,1.1,0.9,1.5,1,1.3,1,1.3,0.8,1,0.6,0.7,0.5,0.25,0.2),byrow=TRUE, ncol = 2, dimnames = list(paste0("ageClass",1:nAgeClass),c("M","F")))
-
-    ## Rws <- matrix(c(1.06625,0.87533,1.06625,0.87533,1.02062,1.00021,1.05905,1.03383,1.03923,0.94738,1.03023,0.93297,0.95098,0.89695,0.95098,0.89695),byrow=TRUE, ncol = 2, dimnames = list(paste0("ageClass",1:nAgeClass),c("M","F")))
+}else if(vision == "scenario"){
 
     muwt <- 57.8 # min per week
     muws <- 2.7 # mph
     muct <- 46.8 # min per week
     pm25 <- 10.072 # microns per cubic meter
 
-}
+    }else{
+
+        # Put error message here.
+
+    }
 
     cv <- 3.03 # coefficient of variation
 
     return(list(F = F, Rwt = Rwt, Rws = Rws, Rct = Rct, muwt = muwt, muws = muws, muct = muct, cv = cv, nAgeClass = nAgeClass, pm25 = pm25))
 
-}
+    }
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
