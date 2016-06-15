@@ -522,9 +522,12 @@ compareModels <- function(baseline,scenario, GBDFile = "~/ITHIM/R/gbd.csv"){
     AF <- mapply(AFForList, diseaseBurden.scenario,diseaseBurden.baseline, SIMPLIFY = FALSE)
 
     normalizedDiseaseBurden <- lapply(RR.scenario, normalizeDiseaseBurden)
+    normalizedDiseaseBurden.baseline <- lapply(RR.baseline, normalizeDiseaseBurden)
+    
     NewBurden <- lapply(AF,function(x) 1-x)
     NewBurdenList <- lapply(NewBurden,function(x) list(M = x[,"M"], F = x[,"F"]))
     denom <- lapply(normalizedDiseaseBurden, function(x) lapply(x, rowSums))
+    denom.baseline <- lapply(normalizedDiseaseBurden.baseline, function(x) lapply(x, rowSums))
     GBD <- readGBD(file = GBDFile)
 
     diseases <- intersect(intersect(names(NewBurdenList),names(GBD)),names(normalizedDiseaseBurden))
@@ -532,15 +535,27 @@ compareModels <- function(baseline,scenario, GBDFile = "~/ITHIM/R/gbd.csv"){
     GBD <- GBD[diseases]
     NewBurdenList <- NewBurdenList[diseases]
     denom <- denom[diseases]
+    denom.baseline <- denom.baseline[diseases]    
+    normalizedDiseaseBurden <- normalizedDiseaseBurden[diseases]
+    normalizedDiseaseBurden.baseline <- normalizedDiseaseBurden.baseline[diseases]    
 
     dproj <- mapply(FUN = burdenFunction, GBD, NewBurdenList, denom, MoreArgs = list(burden = "dproj"), SIMPLIFY = FALSE)
+        dproj.baseline <- mapply(FUN = burdenFunction, GBD, NewBurdenList, denom.baseline, MoreArgs = list(burden = "dproj", baseline = TRUE), SIMPLIFY = FALSE)
     yll <- mapply(FUN = burdenFunction, GBD, NewBurdenList, denom, MoreArgs = list(burden = "yll"), SIMPLIFY = FALSE)
     yld <- mapply(FUN = burdenFunction, GBD, NewBurdenList, denom, MoreArgs = list(burden = "yld"), SIMPLIFY = FALSE)
     daly <- mapply(FUN = burdenFunction, GBD, NewBurdenList, denom, MoreArgs = list(burden = "daly"), SIMPLIFY = FALSE)
 
+    dprojBurden <- calculateBurden(dproj, normalizedDiseaseBurden)
+    dprojBurden.baseline <- calculateBurden(dproj.baseline, normalizedDiseaseBurden.baseline)
+
+    dproj.delta <- mapply(function(x,y){
+        mapply("-",x,y, SIMPLIFY = FALSE)
+        },dprojBurden,dprojBurden.baseline, SIMPLIFY = FALSE)
+    
     APRR <- createAirPollutionRRs(baseline,scenario)
 
-    return(list(RR.baseline = RR.baseline, RR.scenario = RR.scenario, diseaseBurden = diseaseBurden.scenario, AF = AF, normalizedDiseaseBurden = normalizedDiseaseBurden, AirPollutionRR = APRR, dproj = dproj, yll = yll, yld = yld, daly = daly))
+    return(list(RR.baseline = RR.baseline, RR.scenario = RR.scenario, diseaseBurden = diseaseBurden.scenario, AF = AF, normalizedDiseaseBurden = normalizedDiseaseBurden, AirPollutionRR = APRR, dprojBurden = dprojBurden, dprojBurden.baseline = dprojBurden.baseline, dproj.delta = dproj.delta, yll = yll, yld = yld, daly = daly))
+    
     }
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -622,6 +637,41 @@ readGBD <- function(file = "~/ITHIM/R/gbd.csv"){
 #'
 #'
 #' @export
-burdenFunction <- function(x2,y2,z2, burden){
+burdenFunction <- function(x2,y2,z2,burden,baseline=FALSE){
+    if(!baseline){
         mapply(function(x,y,z){x[,burden] * y / z}, x2, y2, z2, SIMPLIFY = FALSE)
+    }else{
+        mapply(function(x,y,z){x[,burden] / z}, x2, y2, z2, SIMPLIFY = FALSE)
     }
+}
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#' Internal function.
+#'
+#' ??
+#'
+#' @return ??
+#'
+#'
+#' @export
+calculateBurden <- function(burden, normalizedDiseaseBurden){
+    
+    foo <- function(x,y){
+        matrix(x, nrow = length(x), ncol = ncol(y)) * y
+        }
+
+    foo2 <- function(x,y){
+        mapply(foo, x, y, SIMPLIFY = FALSE)
+        }
+
+    List <- mapply(foo2, burden, normalizedDiseaseBurden, SIMPLIFY = FALSE)
+
+    Burden <- lapply(List, function(x){
+        lapply(x,rowSums)
+        })
+
+        return(Burden)
+
+        }
+
