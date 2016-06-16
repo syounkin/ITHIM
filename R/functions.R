@@ -636,6 +636,30 @@ plotMean <- function(means.baseline, means.scenario, var = "meanActiveTransportT
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#' Plots burden
+#'
+#' Plots burdens
+#'
+#' @param burden A list like as "comparativeRisk$daly.delta"
+#' @param varName A character string indicating the name to use for
+#'     the y axis label
+#' 
+#' @return A ggplot object
+#'
+#' @export
+plotBurden <- function(burden, varName = "daly"){
+    foo <- cbind(melt(burden),c("0-4","5-14","15-29","30-44","45-59","60-69","70-79","80+"))
+    names(foo) <- c("burden","sex","disease","Age")
+    p <- ggplot(foo, aes(disease, -burden)) + geom_bar(aes(fill=Age), stat = "identity", position = "dodge") + labs( y = varName)
+    p <- p + facet_grid(sex ~ .)
+    return(p)
+}
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #' Sets a model parameter
 #'
 #' Sets a model parameter
