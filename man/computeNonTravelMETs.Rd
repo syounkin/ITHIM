@@ -4,7 +4,10 @@
 \alias{computeNonTravelMETs}
 \title{Generate matrices of non-travel related MET quintiles}
 \usage{
-computeNonTravelMETs()
+computeNonTravelMETs(region)
+}
+\arguments{
+\item{region}{character string; either "national" or "dane"}
 }
 \value{
 A list of two matrices of quintiles of non-transport METs
