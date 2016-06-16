@@ -346,11 +346,11 @@ createActiveTransportRRs <- function(){
     exposure[["Diabetes"]][1:nAgeClass,1:2] <- 10
     RR.lit[["Diabetes"]][1:nAgeClass,1:2] <- 0.83
 
-    exposure[["Depression"]][1:2,1:2] <- 11.25
-    RR.lit[["Depression"]][1:2,1:2] <- 0.927945490148335
+    exposure[["Depression"]][1:3,1:2] <- 11.25
+    RR.lit[["Depression"]][1:3,1:2] <- 0.927945490148335
 
-    exposure[["Depression"]][3:nAgeClass,1:2] <- 11.25
-    RR.lit[["Depression"]][3:nAgeClass,1:2] <- 0.859615572255727
+    exposure[["Depression"]][4:nAgeClass,1:2] <- 11.25
+    RR.lit[["Depression"]][4:nAgeClass,1:2] <- 0.859615572255727
 
     exposure[["Stroke"]] <- exposure[["CVD"]]
     RR.lit[["Stroke"]] <- RR.lit[["CVD"]]
