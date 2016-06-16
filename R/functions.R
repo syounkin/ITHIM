@@ -284,7 +284,7 @@ computeQuintiles <- function( mean, sd ){
 #' @seealso \code{\link{computeMeanMatrices}}
 #'
 #' @export
-getQuintiles <- function(means){
+getQuintiles <- function(means, region){
   with(means,{
     ActiveTransportTime <- computeQuintiles(meanActiveTransportTime, sdActiveTransportTime)
   WalkingTime <- list(M = ActiveTransportTime[["M"]] * (1-propTimeCycling[,"M"]), F = ActiveTransportTime[["F"]] * (1-propTimeCycling[,"F"]))
@@ -293,7 +293,7 @@ getQuintiles <- function(means){
   CyclingMET <- list(M = meanCycleMET[,"M"]*CyclingTime[["M"]]/60, F = meanCycleMET[,"F"]*CyclingTime[["F"]]/60)
     TotalTravelMET <- list(M = WalkingMET[["M"]] + CyclingMET[["M"]], F = WalkingMET[["F"]] + CyclingMET[["F"]])
 
-  TotalMET <- mapply(function(x,y) ifelse(x+y<2.5,0.1,x+y),TotalTravelMET,computeNonTravelMETs(),SIMPLIFY=FALSE)
+  TotalMET <- mapply(function(x,y) ifelse(x+y<2.5,0.1,x+y),TotalTravelMET,computeNonTravelMETs(region = region),SIMPLIFY=FALSE)
 
  return(list(ActiveTransportTime=ActiveTransportTime, WalkingTime=WalkingTime, CyclingTime=CyclingTime, WalkingMET=WalkingMET, CyclingMET = CyclingMET, TotalTravelMET = TotalTravelMET, TotalMET = TotalMET))})
 }
@@ -423,15 +423,23 @@ createATandAPRRs <- function(){
 #' Estimate non-travel related MET quintiles.  Currently we use a
 #' fixed matrix coded into the function.
 #'
+#' @param region character string; either "national" or "dane"
+#' 
 #' @return A list of two matrices of quintiles of non-transport METs
 #'     per week stratified by age class and sex
 #'
 #' @export
-computeNonTravelMETs <- function(){
+computeNonTravelMETs <- function(region){
     nAgeClass <- 8
     dimnames <- list(rep(paste0("ageClass",1:nAgeClass),2),paste0("quint",1:5))
-    #nonTravelMETs <- matrix(c(0,0,0,0,0,0,0,0,0,0,27.21890244,27.21890244,27.21890244,27.21890244,27.21890244,8.42785658,8.42785658,8.42785658,8.42785658,8.42785658,7.600940041,7.600940041,7.600940041,7.600940041,7.600940041,11.33717949,11.33717949,11.33717949,11.33717949,11.33717949,13.06196237,13.06196237,13.06196237,13.06196237,13.06196237,18.10175439,18.10175439,18.10175439,18.10175439,18.10175439,0,0,0,0,0,0,0,0,0,0,6.858209571,6.858209571,6.858209571,6.858209571,6.858209571,10.76793103,10.76793103,10.76793103,10.76793103,10.76793103,5.40369146,5.40369146,5.40369146,5.40369146,5.40369146,1.829166667,1.829166667,1.829166667,1.829166667,1.829166667,3.037973485,3.037973485,3.037973485,3.037973485,3.037973485,4.063888889,4.063888889,4.063888889,4.063888889,4.063888889),nrow=2*nAgeClass,ncol = 5, byrow=TRUE, dimnames=dimnames)
+
+    if( region == "dane" ){
+    nonTravelMETs <- matrix(c(0,0,0,0,0,0,0,0,0,0,27.21890244,27.21890244,27.21890244,27.21890244,27.21890244,8.42785658,8.42785658,8.42785658,8.42785658,8.42785658,7.600940041,7.600940041,7.600940041,7.600940041,7.600940041,11.33717949,11.33717949,11.33717949,11.33717949,11.33717949,13.06196237,13.06196237,13.06196237,13.06196237,13.06196237,18.10175439,18.10175439,18.10175439,18.10175439,18.10175439,0,0,0,0,0,0,0,0,0,0,6.858209571,6.858209571,6.858209571,6.858209571,6.858209571,10.76793103,10.76793103,10.76793103,10.76793103,10.76793103,5.40369146,5.40369146,5.40369146,5.40369146,5.40369146,1.829166667,1.829166667,1.829166667,1.829166667,1.829166667,3.037973485,3.037973485,3.037973485,3.037973485,3.037973485,4.063888889,4.063888889,4.063888889,4.063888889,4.063888889),nrow=2*nAgeClass,ncol = 5, byrow=TRUE, dimnames=dimnames)
+        }else if(region == "national"){
     nonTravelMETs <- matrix(c(0.000,0.000,0.000,0.000,0.000,37.667,26.000,31.667,91.000,62.000,54.000,48.000,46.000,56.000,72.000,30.000,32.000,30.000,32.000,40.000,32.000,22.000,14.000,40.000,48.000,14.000,28.000,16.000,24.000,20.000,8.000,22.000,14.000,10.667,76.000,0.000,7.000,0.000,10.000,56.000,0.000,0.000,0.000,0.000,0.000,26.000,18.000,40.000,18.667,40.000,15.000,12.000,8.000,20.000,24.000,12.000,12.000,9.000,30.000,36.000,10.000,8.000,15.000,8.000,8.000,4.000,12.000,0.000,0.000,36.000,0.000,4.667,0.000,0.000,0.000,0.000,0.000,4.667,0.000,24.000),nrow=2*nAgeClass,ncol = 5, byrow=TRUE, dimnames=dimnames)
+    }else{
+        # error message here
+        }
 
     return(list(M = nonTravelMETs[1:nAgeClass,], F = nonTravelMETs[nAgeClass+(1:nAgeClass),]))
 
