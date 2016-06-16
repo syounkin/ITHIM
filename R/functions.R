@@ -45,9 +45,13 @@ convertAge <- function(value, unit){
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#' Create a list of input parameters
+#' Define ITHIM model parameters
 #'
-#' @param baseline A logical value indicating if we are using the baseline scenario
+#' This function is used to generate a list of parameters describing
+#' both the region and vision of interest.
+#' 
+#' @param vision A character string, either "baseline" or "scenario"
+#' @param region A character string, either "national" or "dane"
 #'
 #' @return A list with parameters and estimates
 #'
