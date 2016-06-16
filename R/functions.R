@@ -546,21 +546,50 @@ compareModels <- function(baseline,scenario, GBDFile = "~/ITHIM/R/gbd.csv"){
     normalizedDiseaseBurden.baseline <- normalizedDiseaseBurden.baseline[diseases]    
 
     dproj <- mapply(FUN = burdenFunction, GBD, NewBurdenList, denom, MoreArgs = list(burden = "dproj"), SIMPLIFY = FALSE)
-        dproj.baseline <- mapply(FUN = burdenFunction, GBD, NewBurdenList, denom.baseline, MoreArgs = list(burden = "dproj", baseline = TRUE), SIMPLIFY = FALSE)
-    yll <- mapply(FUN = burdenFunction, GBD, NewBurdenList, denom, MoreArgs = list(burden = "yll"), SIMPLIFY = FALSE)
-    yld <- mapply(FUN = burdenFunction, GBD, NewBurdenList, denom, MoreArgs = list(burden = "yld"), SIMPLIFY = FALSE)
-    daly <- mapply(FUN = burdenFunction, GBD, NewBurdenList, denom, MoreArgs = list(burden = "daly"), SIMPLIFY = FALSE)
-
+    dproj.baseline <- mapply(FUN = burdenFunction, GBD, NewBurdenList, denom.baseline, MoreArgs = list(burden = "dproj", baseline = TRUE), SIMPLIFY = FALSE)
     dprojBurden <- calculateBurden(dproj, normalizedDiseaseBurden)
     dprojBurden.baseline <- calculateBurden(dproj.baseline, normalizedDiseaseBurden.baseline)
-
     dproj.delta <- mapply(function(x,y){
         mapply("-",x,y, SIMPLIFY = FALSE)
         },dprojBurden,dprojBurden.baseline, SIMPLIFY = FALSE)
-    
+
+    yll <- mapply(FUN = burdenFunction, GBD, NewBurdenList, denom, MoreArgs = list(burden = "yll"), SIMPLIFY = FALSE)
+    yll.baseline <- mapply(FUN = burdenFunction, GBD, NewBurdenList, denom.baseline, MoreArgs = list(burden = "yll", baseline = TRUE), SIMPLIFY = FALSE)
+    yllBurden <- calculateBurden(yll, normalizedDiseaseBurden)
+    yllBurden.baseline <- calculateBurden(yll.baseline, normalizedDiseaseBurden.baseline)
+    yll.delta <- mapply(function(x,y){
+        mapply("-",x,y, SIMPLIFY = FALSE)
+        },yllBurden,yllBurden.baseline, SIMPLIFY = FALSE)
+
+    yld <- mapply(FUN = burdenFunction, GBD, NewBurdenList, denom, MoreArgs = list(burden = "yld"), SIMPLIFY = FALSE)
+    yld.baseline <- mapply(FUN = burdenFunction, GBD, NewBurdenList, denom.baseline, MoreArgs = list(burden = "yld", baseline = TRUE), SIMPLIFY = FALSE)
+    yldBurden <- calculateBurden(yld, normalizedDiseaseBurden)
+    yldBurden.baseline <- calculateBurden(yld.baseline, normalizedDiseaseBurden.baseline)
+    yld.delta <- mapply(function(x,y){
+        mapply("-",x,y, SIMPLIFY = FALSE)
+        },yldBurden,yldBurden.baseline, SIMPLIFY = FALSE)
+
+    daly <- mapply(FUN = burdenFunction, GBD, NewBurdenList, denom, MoreArgs = list(burden = "daly"), SIMPLIFY = FALSE)
+    daly.baseline <- mapply(FUN = burdenFunction, GBD, NewBurdenList, denom.baseline, MoreArgs = list(burden = "daly", baseline = TRUE), SIMPLIFY = FALSE)
+    dalyBurden <- calculateBurden(daly, normalizedDiseaseBurden)
+    dalyBurden.baseline <- calculateBurden(daly.baseline, normalizedDiseaseBurden.baseline)
+    daly.delta <- mapply(function(x,y){
+        mapply("-",x,y, SIMPLIFY = FALSE)
+        },dalyBurden,dalyBurden.baseline, SIMPLIFY = FALSE)
+
     APRR <- createAirPollutionRRs(baseline,scenario)
 
-    return(list(RR.baseline = RR.baseline, RR.scenario = RR.scenario, RRnormalizedToBaseline = RRnormalizedToBaseline.scenario, AF = AF, normalizedDiseaseBurden = normalizedDiseaseBurden, AirPollutionRR = APRR, dprojBurden = dprojBurden, dprojBurden.baseline = dprojBurden.baseline, dproj.delta = dproj.delta, yll = yll, yld = yld, daly = daly))
+    return(list(RR.baseline = RR.baseline,
+                RR.scenario = RR.scenario,
+                RRnormalizedToBaseline = RRnormalizedToBaseline.scenario,
+                AF = AF,
+                normalizedDiseaseBurden = normalizedDiseaseBurden,
+                AirPollutionRR = APRR,
+                dproj.delta = dproj.delta,
+                yll.delta = yll.delta,
+                yld.delta = yld.delta,
+                daly.delta = daly.delta
+                ))
     
     }
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
