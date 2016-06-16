@@ -2,12 +2,14 @@
 % Please edit documentation in R/functions.R
 \name{createParameterList}
 \alias{createParameterList}
-\title{Create a list of input parameters}
+\title{Define ITHIM model parameters}
 \usage{
 createParameterList(vision = "baseline", region = "national")
 }
 \arguments{
-\item{baseline}{A logical value indicating if we are using the baseline scenario}
+\item{vision}{A character string, either "baseline" or "scenario"}
+
+\item{region}{A character string, either "national" or "dane"}
 }
 \value{
 A list with parameters and estimates
@@ -22,7 +24,8 @@ A list with parameters and estimates
 \item{cv}{A numerical value for the coefficient of variation for active transport time}
 }
 \description{
-Create a list of input parameters
+This function is used to generate a list of parameters describing
+both the region and vision of interest.
 }
 \note{
 There are 15 parameters in the ITHIM model;
