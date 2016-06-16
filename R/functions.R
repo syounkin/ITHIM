@@ -143,25 +143,29 @@ createParameterList <- function(vision = "baseline", region = "national"){
 if(vision == "baseline"){
 
 
-    muwt <- 47.4 # min per week
-    muws <- 2.7 # mph
-    muct <- 6.2 # min per week
+    muwt <- 47.3900 # min per week
+    muws <- 2.7474 # mph
+    muct <- 6.1600 # min per week
     pm25 <- 10.075 # microns per cubic meter
+
+    cv <- 3.0288 # coefficient of variation
 
 }else if(vision == "scenario"){
 
-    muwt <- 57.8 # min per week
-    muws <- 2.7 # mph
-    muct <- 46.8 # min per week
+    muwt <- 57.7778 # min per week
+    muws <- 2.7000 # mph
+    muct <- 46.7647 # min per week
     pm25 <- 10.072 # microns per cubic meter
 
+    cv <- 2.9501 # coefficient of variation
+    
     }else{
 
         # Put error message here.
 
     }
 
-    cv <- 3.03 # coefficient of variation
+    
 
     return(list(F = F, Rwt = Rwt, Rws = Rws, Rct = Rct, muwt = muwt, muws = muws, muct = muct, cv = cv, nAgeClass = nAgeClass, pm25 = pm25))
 
@@ -540,7 +544,8 @@ compareModels <- function(baseline,scenario, GBDFile = "~/ITHIM/R/gbd.csv"){
     denom.baseline <- lapply(normalizedDiseaseBurden.baseline, function(x) lapply(x, rowSums))
     GBD <- readGBD(file = GBDFile)
 
-    diseases <- intersect(intersect(names(NewBurdenList),names(GBD)),names(normalizedDiseaseBurden))
+    # diseases <- intersect(intersect(names(NewBurdenList),names(GBD)),names(normalizedDiseaseBurden))
+    diseases <- c("BreastCancer","ColonCancer","Depression","Dementia","Diabetes")
 
     GBD <- GBD[diseases]
     NewBurdenList <- NewBurdenList[diseases]
