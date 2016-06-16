@@ -476,10 +476,16 @@ mapply(FUN = "/", baseline, scenario, SIMPLIFY = FALSE)
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#' Computes AF given baseline and scenario ?disease burdens?
-#'
 #' Computes AF given baseline and scenario
 #'
+#' Computes AF given baseline and scenario RRs relative to baseline.
+#'
+#' @note The name of the variable in the coded is RRnormalizedToBaseline.scenario and RRnormalizedToBaseline.baseline
+#' @note RRnormalizedToBaseline.baseline = 1
+#' 
+#'@note Geoff Whitfield and Neil Reisch compute AF differently.  I am
+#'     not sure if their methods are equivalent.
+#' 
 #' @return A list of AFs stratified by age and sex
 #'
 #' @export
@@ -517,9 +523,9 @@ compareModels <- function(baseline,scenario, GBDFile = "~/ITHIM/R/gbd.csv"){
     RR.baseline <- lapply(RR, MET2RR, baseline$quintiles$TotalMET)
     RR.scenario <- lapply(RR, MET2RR, scenario$quintiles$TotalMET)
 
-    diseaseBurden.scenario <- mapply(ratioForList,RR.baseline, RR.scenario, SIMPLIFY = FALSE)
-    diseaseBurden.baseline <- mapply(ratioForList,RR.baseline, RR.baseline, SIMPLIFY = FALSE) # What!
-    AF <- mapply(AFForList, diseaseBurden.scenario,diseaseBurden.baseline, SIMPLIFY = FALSE)
+    RRnormalizedToBaseline.scenario <- mapply(ratioForList,RR.baseline, RR.scenario, SIMPLIFY = FALSE) # ratioForList simply computes the ratio
+    RRnormalizedToBaseline.baseline <- mapply(ratioForList,RR.baseline, RR.baseline, SIMPLIFY = FALSE) # What!  Always 1!
+    AF <- mapply(AFForList, RRnormalizedToBaseline.scenario,RRnormalizedToBaseline.baseline, SIMPLIFY = FALSE) # Neil and Geoff compute AF diifferently
 
     normalizedDiseaseBurden <- lapply(RR.scenario, normalizeDiseaseBurden)
     normalizedDiseaseBurden.baseline <- lapply(RR.baseline, normalizeDiseaseBurden)
@@ -554,7 +560,7 @@ compareModels <- function(baseline,scenario, GBDFile = "~/ITHIM/R/gbd.csv"){
     
     APRR <- createAirPollutionRRs(baseline,scenario)
 
-    return(list(RR.baseline = RR.baseline, RR.scenario = RR.scenario, diseaseBurden = diseaseBurden.scenario, AF = AF, normalizedDiseaseBurden = normalizedDiseaseBurden, AirPollutionRR = APRR, dprojBurden = dprojBurden, dprojBurden.baseline = dprojBurden.baseline, dproj.delta = dproj.delta, yll = yll, yld = yld, daly = daly))
+    return(list(RR.baseline = RR.baseline, RR.scenario = RR.scenario, RRnormalizedToBaseline = RRnormalizedToBaseline.scenario, AF = AF, normalizedDiseaseBurden = normalizedDiseaseBurden, AirPollutionRR = APRR, dprojBurden = dprojBurden, dprojBurden.baseline = dprojBurden.baseline, dproj.delta = dproj.delta, yll = yll, yld = yld, daly = daly))
     
     }
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
