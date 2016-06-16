@@ -500,8 +500,28 @@ mapply(FUN = "/", baseline, scenario, SIMPLIFY = FALSE)
 AFForList <- function(scenario,baseline){
     mapply(function(scenario,baseline) (rowSums(scenario)-rowSums(baseline))/rowSums(scenario), scenario, baseline)
 }
-
-
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#' Computes AF given baseline and scenario
+#'
+#' Computes AF given baseline and scenario RRs relative to baseline.
+#'
+#' @param scenario RR compared with no exposure
+#'
+#' @param baseline RR compared with no exposure
+#' 
+#' @note The name of the variable in the coded is RRnormalizedToBaseline.scenario and RRnormalizedToBaseline.baseline
+#' @note RRnormalizedToBaseline.baseline = 1
+#' 
+#'@note Geoff Whitfields version
+#' 
+#' @return A list of AFs stratified by age and sex
+#'
+#' @export
+AFForList2 <- function(scenario,baseline){
+    mapply(function(scenario,baseline) 1 - rowSums(scenario)/rowSums(baseline), scenario, baseline)
+}
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -533,7 +553,9 @@ compareModels <- function(baseline,scenario, GBDFile = "~/ITHIM/R/gbd.csv"){
 
     RRnormalizedToBaseline.scenario <- mapply(ratioForList,RR.baseline, RR.scenario, SIMPLIFY = FALSE) # ratioForList simply computes the ratio
     RRnormalizedToBaseline.baseline <- mapply(ratioForList,RR.baseline, RR.baseline, SIMPLIFY = FALSE) # What!  Always 1!
-    AF <- mapply(AFForList, RRnormalizedToBaseline.scenario,RRnormalizedToBaseline.baseline, SIMPLIFY = FALSE) # Neil and Geoff compute AF diifferently
+    
+#    AF <- mapply(AFForList, RRnormalizedToBaseline.scenario,RRnormalizedToBaseline.baseline, SIMPLIFY = FALSE) # Neil and Geoff compute AF diifferently.  This is Neil's way
+    AF <- mapply(AFForList2, RR.scenario,RR.baseline, SIMPLIFY = FALSE) # Neil and Geoff compute AF diifferently.  This is Geoff's way.
 
     normalizedDiseaseBurden <- lapply(RR.scenario, normalizeDiseaseBurden)
     normalizedDiseaseBurden.baseline <- lapply(RR.baseline, normalizeDiseaseBurden)
