@@ -16,3 +16,4 @@ foo.R
 html
 *.tar.gz
 #*
+.~*
