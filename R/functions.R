@@ -113,19 +113,15 @@ createParameterList <- function(vision = "baseline", region = "national"){
 
     if( region == "national" ){
 
-    # National Values
         F <- matrix(c(0.0353518933,0.0337319963,0.0677709111,0.0646090177,0.1082721374,0.1025659595,0.1007813234,0.0996136545,0.1012405253,0.1051998903,0.0429797369,0.047666298,0.0236366386,0.0297455114,0.0130355262,0.0237989804), byrow = TRUE, nrow = nAgeClass, ncol = 2, dimnames = list(paste0("ageClass",1:nAgeClass),c("M","F")))
 
-    # National Values
         Rwt <- matrix(c(0.4305,0.3471,1.0700,0.8200,1.0100,1.0000,0.8600,1.1700,1.0600,1.1700,0.9900,0.9200,0.8000,0.7500,0.8200,0.7800),byrow=TRUE, ncol = 2, dimnames = list(paste0("ageClass",1:nAgeClass),c("M","F")))
 
-    # National Values
         Rct <- matrix(c(0.2935,0.1231,6.4500,3.1500,4.0000,1.0000,3.4800,0.8200,4.6700,1.1800,2.7000,0.6100,3.4200,0.2100,0.7000,0.0900),byrow=TRUE, ncol = 2, dimnames = list(paste0("ageClass",1:nAgeClass),c("M","F")))
 
-    # National Values
         Rws <- matrix(c(1.0662510447,0.8753344725,1.0662510447,0.8753344725,1.0206231847,1.000210721,1.0590466458,1.0338312494,1.0392345486,0.947378462,1.03022905,0.9329696641,0.9509806615,0.8969476694,0.9509806615,0.8969476694),byrow=TRUE, ncol = 2, dimnames = list(paste0("ageClass",1:nAgeClass),c("M","F")))
 
-    }else if( region == "dane" ){
+    }else if( region == "cook" ){
 
         F <- matrix(c(0.0368276992,0.0353723566,0.0746989673,0.0716902674,0.1123490977,0.1104366009,0.1163649132,0.1182206842,0.0808260989,0.0891264801,0.0308720468,0.037493344,0.0223834475,0.0321797163,0.0098989332,0.0212593465), byrow = TRUE, nrow = nAgeClass, ncol = 2, dimnames = list(paste0("ageClass",1:nAgeClass),c("M","F")))
 
@@ -134,6 +130,18 @@ createParameterList <- function(vision = "baseline", region = "national"){
         Rct <- matrix(c(0.29350,0.12305,1.31944,0.82780,1.86938,1.00000,1.56016,0.73770,1.45792,0.24667,0.45162,0.18923,0.49021,0.16502,0.07503,0.02941),byrow=TRUE, ncol = 2, dimnames = list(paste0("ageClass",1:nAgeClass),c("M","F")))
 
         Rws <- matrix(c(1.0663,0.8753,1.0663,0.8753,1.0206,1.0002,1.0590,1.0338,1.0392,0.9474,1.0302,0.9330,0.9510,0.8969,0.9510,0.8969),byrow=TRUE, ncol = 2, dimnames = list(paste0("ageClass",1:nAgeClass),c("M","F")))
+        }else if( region == "SFBayArea" ){
+
+        F <-   matrix(c(0.0320372482,0.0305871883,0.0622948202,0.0596515968,0.1032998128,0.0980824499,0.1122011305,0.1100342216,0.1064347335,0.1079303831,0.0438851145,0.0484215687,0.0221507176,0.0271904764,0.0132966677,0.0225018701), byrow = TRUE, nrow = nAgeClass, ncol = 2, dimnames = list(paste0("ageClass",1:nAgeClass),c("M","F")))
+
+        Rwt <- matrix(c(0.726924085, 0.761665648,0.897072687, 0.933741586,0.751317731, 1,0.908293434, 1.262744773,0.995008157, 0.940270649,0.952044208, 1.082441633,0.616303857, 0.930118251,0.81252564, 0.458965729),byrow=TRUE, ncol = 2, dimnames = list(paste0("ageClass",1:nAgeClass),c("M","F")))
+
+        Rct <- matrix(c(3.451394514,0.862852984,1.897386884,1.434508957,3.515728656,1,2.690863077,1.482061101,3.520959642,1.62020636,2.618334619,0.586650286,1.378204988,0.68058257,0.1,0.1),byrow=TRUE, ncol = 2, dimnames = list(paste0("ageClass",1:nAgeClass),c("M","F")))
+
+        Rws <- matrix(c(1.0662510447,0.8753344725,1.0662510447,0.8753344725,1.0206231847,1.000210721,1.0590466458,1.0338312494,1.0392345486,0.947378462,1.03022905,0.9329696641,0.9509806615,0.8969476694,0.9509806615,0.8969476694),byrow=TRUE, ncol = 2, dimnames = list(paste0("ageClass",1:nAgeClass),c("M","F")))
+
+
+            
     }else{
 
         # Put error message here.
@@ -142,28 +150,55 @@ createParameterList <- function(vision = "baseline", region = "national"){
 
 if(vision == "baseline"){
 
+    if( region == "national" ){
+    
+        muwt <- 47.3900 # min per week
+        muws <- 2.7474 # mph
+        muct <- 6.1600 # min per week
+        pm25 <- 10.075 # microns per cubic meter
 
-    muwt <- 47.3900 # min per week
-    muws <- 2.7474 # mph
-    muct <- 6.1600 # min per week
-    pm25 <- 10.075 # microns per cubic meter
+        cv <- 3.0288 # coefficient of variation
 
-    cv <- 3.0288 # coefficient of variation
+    }else if( region == "SFBayArea" ){
+        muwt <- 57.8 # min per week
+        muws <- 2.890 # mph
+        muct <- 3.0 # min per week
+        pm25 <- 10.075 # microns per cubic meter
+
+        cv <- 1.65 # coefficient of variation
+    }else{
+        #error message
+    }
 
 }else if(vision == "scenario"){
 
-    muwt <- 57.7778 # min per week
-    muws <- 2.7000 # mph
-    muct <- 46.7647 # min per week
-    pm25 <- 10.072 # microns per cubic meter
+    if( region == "national" ){
+        
+        muwt <- 57.7778 # min per week
+        muws <- 2.7000 # mph
+        muct <- 46.7647 # min per week
+        pm25 <- 10.072 # microns per cubic meter
 
-    cv <- 2.9501 # coefficient of variation
+        cv <- 2.9501 # coefficient of variation
+    }else if( region == "SFBayArea" ){
+        muwt <- 57.8 # min per week
+        muws <- 2.890 # mph
+        muct <- 200.5 # min per week
+        pm25 <- 10.075 # microns per cubic meter
+
+        cv <- 1.34 # coefficient of variation
     
+
     }else{
-
-        # Put error message here.
-
+        #error message
     }
+
+        
+}else{
+
+  # Put error message here.
+
+}
 
     
 
@@ -285,17 +320,17 @@ computeQuintiles <- function( mean, sd ){
 #'
 #' @export
 getQuintiles <- function(means, region){
-  with(means,{
-    ActiveTransportTime <- computeQuintiles(meanActiveTransportTime, sdActiveTransportTime)
-  WalkingTime <- list(M = ActiveTransportTime[["M"]] * (1-propTimeCycling[,"M"]), F = ActiveTransportTime[["F"]] * (1-propTimeCycling[,"F"]))
-  CyclingTime <- list(M = ActiveTransportTime[["M"]] * (propTimeCycling[,"M"]), F = ActiveTransportTime[["F"]] * (propTimeCycling[,"F"]))
-  WalkingMET <- list(M = meanWalkMET[,"M"]*WalkingTime[["M"]]/60, F = meanWalkMET[,"F"]*WalkingTime[["F"]]/60)
-  CyclingMET <- list(M = meanCycleMET[,"M"]*CyclingTime[["M"]]/60, F = meanCycleMET[,"F"]*CyclingTime[["F"]]/60)
+#  with(means,{
+    ActiveTransportTime <- computeQuintiles(means$meanActiveTransportTime, means$sdActiveTransportTime)
+  WalkingTime <- list(M = ActiveTransportTime[["M"]] * (1-means$propTimeCycling[,"M"]), F = ActiveTransportTime[["F"]] * (1-means$propTimeCycling[,"F"]))
+  CyclingTime <- list(M = ActiveTransportTime[["M"]] * (means$propTimeCycling[,"M"]), F = ActiveTransportTime[["F"]] * (means$propTimeCycling[,"F"]))
+  WalkingMET <- list(M = means$meanWalkMET[,"M"]*WalkingTime[["M"]]/60, F = means$meanWalkMET[,"F"]*WalkingTime[["F"]]/60)
+  CyclingMET <- list(M = means$meanCycleMET[,"M"]*CyclingTime[["M"]]/60, F = means$meanCycleMET[,"F"]*CyclingTime[["F"]]/60)
     TotalTravelMET <- list(M = WalkingMET[["M"]] + CyclingMET[["M"]], F = WalkingMET[["F"]] + CyclingMET[["F"]])
 
   TotalMET <- mapply(function(x,y) ifelse(x+y<2.5,0.1,x+y),TotalTravelMET,computeNonTravelMETs(region = region),SIMPLIFY=FALSE)
 
- return(list(ActiveTransportTime=ActiveTransportTime, WalkingTime=WalkingTime, CyclingTime=CyclingTime, WalkingMET=WalkingMET, CyclingMET = CyclingMET, TotalTravelMET = TotalTravelMET, TotalMET = TotalMET))})
+ return(list(ActiveTransportTime=ActiveTransportTime, WalkingTime=WalkingTime, CyclingTime=CyclingTime, WalkingMET=WalkingMET, CyclingMET = CyclingMET, TotalTravelMET = TotalTravelMET, TotalMET = TotalMET))
 }
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -433,10 +468,12 @@ computeNonTravelMETs <- function(region){
     nAgeClass <- 8
     dimnames <- list(rep(paste0("ageClass",1:nAgeClass),2),paste0("quint",1:5))
 
-    if( region == "dane" ){
+    if( region == "cook" ){
     nonTravelMETs <- matrix(c(0,0,0,0,0,0,0,0,0,0,27.21890244,27.21890244,27.21890244,27.21890244,27.21890244,8.42785658,8.42785658,8.42785658,8.42785658,8.42785658,7.600940041,7.600940041,7.600940041,7.600940041,7.600940041,11.33717949,11.33717949,11.33717949,11.33717949,11.33717949,13.06196237,13.06196237,13.06196237,13.06196237,13.06196237,18.10175439,18.10175439,18.10175439,18.10175439,18.10175439,0,0,0,0,0,0,0,0,0,0,6.858209571,6.858209571,6.858209571,6.858209571,6.858209571,10.76793103,10.76793103,10.76793103,10.76793103,10.76793103,5.40369146,5.40369146,5.40369146,5.40369146,5.40369146,1.829166667,1.829166667,1.829166667,1.829166667,1.829166667,3.037973485,3.037973485,3.037973485,3.037973485,3.037973485,4.063888889,4.063888889,4.063888889,4.063888889,4.063888889),nrow=2*nAgeClass,ncol = 5, byrow=TRUE, dimnames=dimnames)
         }else if(region == "national"){
     nonTravelMETs <- matrix(c(0.000,0.000,0.000,0.000,0.000,37.667,26.000,31.667,91.000,62.000,54.000,48.000,46.000,56.000,72.000,30.000,32.000,30.000,32.000,40.000,32.000,22.000,14.000,40.000,48.000,14.000,28.000,16.000,24.000,20.000,8.000,22.000,14.000,10.667,76.000,0.000,7.000,0.000,10.000,56.000,0.000,0.000,0.000,0.000,0.000,26.000,18.000,40.000,18.667,40.000,15.000,12.000,8.000,20.000,24.000,12.000,12.000,9.000,30.000,36.000,10.000,8.000,15.000,8.000,8.000,4.000,12.000,0.000,0.000,36.000,0.000,4.667,0.000,0.000,0.000,0.000,0.000,4.667,0.000,24.000),nrow=2*nAgeClass,ncol = 5, byrow=TRUE, dimnames=dimnames)
+        }else if(region == "SFBayArea"){
+    nonTravelMETs <- matrix(c(0,0,0,0,0,0,0,0,0,0,57.8,41,45.5,37.925,41,51.25,51.25,64.75,46.125,44.8,58.275,61.5,53.725,52.2,46.7,41,31.25,44.0833333333,42.5,32.8,4.375,5,8.3333333333,3.75,13.125,0,10,3.75,5.2083333333,0,0,0,0,0,0,0,0,0,0,0,8.8666666667,24.6,29.85,30.4,41,41,35.875,38.85,41,42.2666666667,41.65,43.05,46.0666666667,41,41,32.8,18,31.75,20.5,4.5,5.8333333333,5,2.5,3.75,0,6.5,3.125,0.8333333333,0,0),nrow=2*nAgeClass,ncol = 5, byrow=TRUE, dimnames=dimnames)
     }else{
         # error message here
         }
@@ -553,7 +590,15 @@ normalizeDiseaseBurden <- function(diseaseBurden){
 #' @return A list of AFs stratified by age and sex
 #'
 #' @export
-compareModels <- function(baseline,scenario, GBDFile = "~/ITHIM/R/gbd.csv"){
+compareModels <- function(baseline, scenario, region){
+
+    if( region == "national" ){
+        GBDFile <- "gbd.csv"
+    }else if( region == "SFBayArea" ){
+        GBDFile <- "gbd.SFBayArea.csv"
+    }else{
+        # error message
+    }
 
     RR <- createActiveTransportRRs()
     RR.baseline <- lapply(RR, MET2RR, baseline$quintiles$TotalMET)
@@ -717,8 +762,9 @@ setParameter <- function( parName, parValue, parList ){
 #'     by age and sex and disease
 #'
 #' @export
-readGBD <- function(file = "~/ITHIM/R/gbd.csv"){
-    gbd <- read.csv(file=file)
+readGBD <- function(file = "gbd.csv"){
+    filePath <- system.file(file, package="ITHIM")
+    gbd <- read.csv(file=filePath)
     gbdList <- split(gbd,gbd$disease)
     gbdList2 <- lapply(gbdList,function(x) split(x,as.factor(x$sex)))
     gbdList2 <- lapply(gbdList2, function(x) list(M=x$M,F=x$F))
