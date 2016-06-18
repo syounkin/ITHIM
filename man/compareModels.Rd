@@ -4,7 +4,7 @@
 \alias{compareModels}
 \title{Computes AF given baseline and scenario models}
 \usage{
-compareModels(baseline, scenario, GBDFile = "~/ITHIM/R/gbd.csv")
+compareModels(baseline, scenario)
 }
 \value{
 A list of AFs stratified by age and sex
