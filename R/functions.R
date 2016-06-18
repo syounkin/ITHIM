@@ -200,9 +200,20 @@ if(vision == "baseline"){
 
 }
 
+    NonTravelMETs <- computeNonTravelMETs(region = region)
+
+    if( region == "national" ){
+        GBDFile <- "gbd.csv"
+    }else if( region == "SFBayArea" ){
+        GBDFile <- "gbd.SFBayArea.csv"
+    }else{
+        # error message
+    }
+    GBD <- readGBD(file = GBDFile)
+
     
 
-    return(list(F = F, Rwt = Rwt, Rws = Rws, Rct = Rct, muwt = muwt, muws = muws, muct = muct, cv = cv, nAgeClass = nAgeClass, pm25 = pm25))
+    return(list(F = F, Rwt = Rwt, Rws = Rws, Rct = Rct, muwt = muwt, muws = muws, muct = muct, cv = cv, nAgeClass = nAgeClass, NonTravelMETs = NonTravelMETs, GBD = GBD, pm25 = pm25, region = region, vision = vision))
 
     }
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -319,7 +330,7 @@ computeQuintiles <- function( mean, sd ){
 #' @seealso \code{\link{computeMeanMatrices}}
 #'
 #' @export
-getQuintiles <- function(means, region){
+getQuintiles <- function(means, parameters){
 #  with(means,{
     ActiveTransportTime <- computeQuintiles(means$meanActiveTransportTime, means$sdActiveTransportTime)
   WalkingTime <- list(M = ActiveTransportTime[["M"]] * (1-means$propTimeCycling[,"M"]), F = ActiveTransportTime[["F"]] * (1-means$propTimeCycling[,"F"]))
@@ -328,7 +339,7 @@ getQuintiles <- function(means, region){
   CyclingMET <- list(M = means$meanCycleMET[,"M"]*CyclingTime[["M"]]/60, F = means$meanCycleMET[,"F"]*CyclingTime[["F"]]/60)
     TotalTravelMET <- list(M = WalkingMET[["M"]] + CyclingMET[["M"]], F = WalkingMET[["F"]] + CyclingMET[["F"]])
 
-  TotalMET <- mapply(function(x,y) ifelse(x+y<2.5,0.1,x+y),TotalTravelMET,computeNonTravelMETs(region = region),SIMPLIFY=FALSE)
+  TotalMET <- mapply(function(x,y) ifelse(x+y<2.5,0.1,x+y),TotalTravelMET,parameters$NonTravelMETs,SIMPLIFY=FALSE)
 
  return(list(ActiveTransportTime=ActiveTransportTime, WalkingTime=WalkingTime, CyclingTime=CyclingTime, WalkingMET=WalkingMET, CyclingMET = CyclingMET, TotalTravelMET = TotalTravelMET, TotalMET = TotalMET))
 }
@@ -590,16 +601,14 @@ normalizeDiseaseBurden <- function(diseaseBurden){
 #' @return A list of AFs stratified by age and sex
 #'
 #' @export
-compareModels <- function(baseline, scenario, region){
+compareModels <- function(baseline, scenario){
 
-    if( region == "national" ){
-        GBDFile <- "gbd.csv"
-    }else if( region == "SFBayArea" ){
-        GBDFile <- "gbd.SFBayArea.csv"
-    }else{
-        # error message
-    }
-
+    if( identical(baseline$parameters$GBD,scenario$parameters$GBD) ){
+        GBD <- baseline$parameters$GBD # GBD must be the same between baseline and scenario
+        }else{
+            #error message
+            }
+    
     RR <- createActiveTransportRRs()
     RR.baseline <- lapply(RR, MET2RR, baseline$quintiles$TotalMET)
     RR.scenario <- lapply(RR, MET2RR, scenario$quintiles$TotalMET)
@@ -617,7 +626,7 @@ compareModels <- function(baseline, scenario, region){
     NewBurdenList <- lapply(NewBurden,function(x) list(M = x[,"M"], F = x[,"F"]))
     denom <- lapply(normalizedDiseaseBurden, function(x) lapply(x, rowSums))
     denom.baseline <- lapply(normalizedDiseaseBurden.baseline, function(x) lapply(x, rowSums))
-    GBD <- readGBD(file = GBDFile)
+
 
     # diseases <- intersect(intersect(names(NewBurdenList),names(GBD)),names(normalizedDiseaseBurden))
     diseases <- c("BreastCancer","ColonCancer","Depression","Dementia","Diabetes")
@@ -754,6 +763,25 @@ setParameter <- function( parName, parValue, parList ){
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#' Updates an ITHIM object
+#'
+#' Change a parameter and recreate the object.
+#'
+#' @return An updated ITHIM object
+#'
+#' @export
+updateITHIM <- function( ITHIM, parName, parValue){
+    ITHIM$parameters[[parName]] <- parValue
+    ITHIM <- list(
+            parameters = parameters <- ITHIM$parameters,
+            means = means <- computeMeanMatrices(parameters),
+            quintiles = quintiles <- getQuintiles(means, parameters)
+    )
+    return(ITHIM)
+    }
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #' Read in Global Burden of Disease Data
 #'
 #' Read in Global Burden of Disease Data
@@ -819,3 +847,26 @@ calculateBurden <- function(burden, normalizedDiseaseBurden){
 
         }
 
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#' Create ITHIM object
+#'
+#' Create ITHIM object
+#'
+#' @param vision either "baseline" or "scenario"
+#' @param region either "national" or "SFBayArea"
+#'
+#' @return A list of parameters, means and quintiles.
+#'
+#'
+#' @export
+createITHIM <- function(vision = "baseline", region = "national"){
+    return(
+        list(
+            parameters = parameters <- createParameterList(vision = vision, region = region),
+            means = means <- computeMeanMatrices(parameters),
+            quintiles = quintiles <- getQuintiles(means, parameters)
+            )
+        )
+}
