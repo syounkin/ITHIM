@@ -5,42 +5,52 @@
 #' @name ITHIM-package
 #' @docType package
 #' @author Samuel G. Younkin \email{syounkin@@wisc.edu}
-#' @seealso \code{\link{createParameterList}}, \code{\link{computeMeanMatrices}}
+#' @seealso \code{\link{createITHIM}}
 #' @examples
 #'
-#' ITHIMParameterList <- createParameterList()
-#' meansList <- computeMeanMatrices(ITHIMParameterList)
-#' names(meansList)
-#' meansList$meanActiveTransportTime
-#'
+#' ITHIM.baseline <- createITHIM(vision = "baseline", region = "SFBayArea")
+#' ITHIM.scenario <- createITHIM(vision = "scenario", region = "SFBayArea")
+#' comparativeRisk <- compareModels(ITHIM.baseline, ITHIM.scenario)
+#' names(ITHIM.baseline)
+#' names(ITHIM.baseline$parameters)
+#' ITHIM.baseline$quintiles$TotalMET
+#' names(comparativeRisk)
+#' comparativeRisk$AF$BreastCancer
 NULL
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#' This function coverts the 2001 CDC Age variable to years.
+#' Create an ITHIM object
 #'
-#' @param value The value for age, i.e., characters 2-4 of the code
-#'     (sloppy with class!)
-#' @param unit The units for age, i.e., chatater 1 of the code (sloppy
-#'     with class!)
-#' @note This function is likely only applicable to the 2001 data
-#'     file.
-#' @return A numeric vector of age in years - this is a test
+#' An ITHIM object is a list which contains three elements;
+#' parameters, means and quintiles.  The parameters are listed in
+#' \code{\link{createParameterList}}.  The elements means and
+#' quintiles mimic the computation presented in the original EXCEL
+#' workbook.  Use \code{\link{updateITHIM}} to change values of the
+#' parameters.
 #'
+#' @param vision either "baseline" or "scenario"
+#' @param region either "national" or "SFBayArea"
+#'
+#' @return A list of parameters, means and quintiles.
+#' @seealso \code{\link{updateITHIM}}, \code{\link{createParameterList}}, \code{\link{computeMeanMatrices}}, \code{\link{getQuintiles}}
+#'
+#' @examples
+#'
+#' ITHIM.baseline <- createITHIM(vision = "baseline", region = "SFBayArea")
+#' ITHIM.baseline$parameters$muct
+#' ITHIM.baseline <- updateITHIM(ITHIM.baseline, "muct", 200)
+#' ITHIM.baseline$parameters$muct
+#' 
 #' @export
-convertAge <- function(value, unit){
-
-    value <- ifelse(value == "999", NA, value)
-
-    convertedValue <- ifelse( unit == "1", value,
-    ifelse( unit == "2", value/12,
-    ifelse( unit == "4", value/365,
-    ifelse( unit == "5", value/365/24,
-    ifelse( unit == "6", value/365/24/60,
-    ifelse( unit == "9", NA, 999 ))))))
-
-    return(as.numeric(convertedValue))
-
+createITHIM <- function(vision = "baseline", region = "national"){
+    return(
+        list(
+            parameters = parameters <- createParameterList(vision = vision, region = region),
+            means = means <- computeMeanMatrices(parameters),
+            quintiles = quintiles <- getQuintiles(means, parameters)
+            )
+        )
 }
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -51,7 +61,7 @@ convertAge <- function(value, unit){
 #' both the region and vision of interest.
 #' 
 #' @param vision A character string, either "baseline" or "scenario"
-#' @param region A character string, either "national" or "dane"
+#' @param region A character string, either "national" or "SFBayArea"
 #'
 #' @return A list with parameters and estimates
 #'
@@ -106,6 +116,8 @@ convertAge <- function(value, unit){
 #'
 #' 13. Serious and fatal injuries between a striking vehicle and victim vehicle by severity and modes (-)
 #'
+#' @seealso \code{\link{computeNonTravelMETs}},\code{\link{readGBD}}
+#' 
 #' @export
 createParameterList <- function(vision = "baseline", region = "national"){
 
@@ -211,8 +223,6 @@ if(vision == "baseline"){
     }
     GBD <- readGBD(file = GBDFile)
 
-    
-
     return(list(F = F, Rwt = Rwt, Rws = Rws, Rct = Rct, muwt = muwt, muws = muws, muct = muct, cv = cv, nAgeClass = nAgeClass, NonTravelMETs = NonTravelMETs, GBD = GBD, pm25 = pm25, region = region, vision = vision))
 
     }
@@ -244,7 +254,7 @@ if(vision == "baseline"){
 #'
 #' @note meanCycleMET is constant.  So, it's really a parameter and not a function of parameters.
 #' @note cycling speed has been removed
-#' @seealso \code{\link{createParameterList}}, \code{\link{ITHIM-package}}
+#' @seealso \code{\link{createITHIM}}
 #'
 #' @export
 computeMeanMatrices <- function(parList){
@@ -265,6 +275,42 @@ computeMeanMatrices <- function(parList){
 
         return(list(meanWalkTime = meanWalkTime, meanCycleTime = meanCycleTime, meanWalkSpeed = meanWalkSpeed, meanWalkMET = meanWalkMET, meanCycleMET = meanCycleMET, meanActiveTransportTime = meanActiveTransportTime, sdActiveTransportTime = sdActiveTransportTime, propTimeCycling = propTimeCycling))
         })
+}
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#' Compute Quintiles of Active Transport Time
+#'
+#' Compute Quintiles of Active Transport Time
+#'
+#' @param means A list of means generated by the \code{\link{computeMeanMatrices}}
+#' @param parameters A list of parameters as created with \code{\link{createParameterList}}
+#'
+#' @return A list of lists containing quintiles of active transport
+#'     time and METs, by sex and age class.
+#'
+#' \item{ActiveTransportTime}{Foo}
+#' \item{WalkingTime}{Foo}
+#' \item{CyclingTime}{Foo}
+#' \item{WalkingMET}{Foo}
+#' \item{CyclingMET}{foo}
+#' \item{TotalTravelMET}{foo}
+#'
+#' @seealso \code{\link{computeQuintiles}}
+#'
+#' @export
+getQuintiles <- function(means, parameters){
+
+  ActiveTransportTime <- computeQuintiles(means$meanActiveTransportTime, means$sdActiveTransportTime)
+  WalkingTime <- list(M = ActiveTransportTime[["M"]] * (1-means$propTimeCycling[,"M"]), F = ActiveTransportTime[["F"]] * (1-means$propTimeCycling[,"F"]))
+  CyclingTime <- list(M = ActiveTransportTime[["M"]] * (means$propTimeCycling[,"M"]), F = ActiveTransportTime[["F"]] * (means$propTimeCycling[,"F"]))
+  WalkingMET <- list(M = means$meanWalkMET[,"M"]*WalkingTime[["M"]]/60, F = means$meanWalkMET[,"F"]*WalkingTime[["F"]]/60)
+  CyclingMET <- list(M = means$meanCycleMET[,"M"]*CyclingTime[["M"]]/60, F = means$meanCycleMET[,"F"]*CyclingTime[["F"]]/60)
+  TotalTravelMET <- list(M = WalkingMET[["M"]] + CyclingMET[["M"]], F = WalkingMET[["F"]] + CyclingMET[["F"]])
+
+  TotalMET <- mapply(function(x,y) ifelse(x+y<2.5,0.1,x+y),TotalTravelMET,parameters$NonTravelMETs,SIMPLIFY=FALSE)
+
+ return(list(ActiveTransportTime=ActiveTransportTime, WalkingTime=WalkingTime, CyclingTime=CyclingTime, WalkingMET=WalkingMET, CyclingMET = CyclingMET, TotalTravelMET = TotalTravelMET, TotalMET = TotalMET))
 }
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -311,41 +357,6 @@ computeQuintiles <- function( mean, sd ){
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#' Compute Quintiles of Active Transport Time
-#'
-#' Compute Quintiles of Active Transport Time
-#'
-#' @param means A list of means generated by the \code{\link{computeMeanMatrices}}
-#'
-#' @return A list of lists containing quintiles of active transport
-#'     time and METs, by sex and age class.
-#'
-#' \item{ActiveTransportTime}{Foo}
-#' \item{WalkingTime}{Foo}
-#' \item{CyclingTime}{Foo}
-#' \item{WalkingMET}{Foo}
-#' \item{CyclingMET}{foo}
-#' \item{TotalTravelMET}{foo}
-#'
-#' @seealso \code{\link{computeMeanMatrices}}
-#'
-#' @export
-getQuintiles <- function(means, parameters){
-#  with(means,{
-    ActiveTransportTime <- computeQuintiles(means$meanActiveTransportTime, means$sdActiveTransportTime)
-  WalkingTime <- list(M = ActiveTransportTime[["M"]] * (1-means$propTimeCycling[,"M"]), F = ActiveTransportTime[["F"]] * (1-means$propTimeCycling[,"F"]))
-  CyclingTime <- list(M = ActiveTransportTime[["M"]] * (means$propTimeCycling[,"M"]), F = ActiveTransportTime[["F"]] * (means$propTimeCycling[,"F"]))
-  WalkingMET <- list(M = means$meanWalkMET[,"M"]*WalkingTime[["M"]]/60, F = means$meanWalkMET[,"F"]*WalkingTime[["F"]]/60)
-  CyclingMET <- list(M = means$meanCycleMET[,"M"]*CyclingTime[["M"]]/60, F = means$meanCycleMET[,"F"]*CyclingTime[["F"]]/60)
-    TotalTravelMET <- list(M = WalkingMET[["M"]] + CyclingMET[["M"]], F = WalkingMET[["F"]] + CyclingMET[["F"]])
-
-  TotalMET <- mapply(function(x,y) ifelse(x+y<2.5,0.1,x+y),TotalTravelMET,parameters$NonTravelMETs,SIMPLIFY=FALSE)
-
- return(list(ActiveTransportTime=ActiveTransportTime, WalkingTime=WalkingTime, CyclingTime=CyclingTime, WalkingMET=WalkingMET, CyclingMET = CyclingMET, TotalTravelMET = TotalTravelMET, TotalMET = TotalMET))
-}
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #' Set Risk Ratios for Avctive Transport
 #'
 #' Set risk ratios for a list of diseases given MET exposure.  These
@@ -357,9 +368,7 @@ getQuintiles <- function(means, parameters){
 #' @note To see the default values and how they are computed run
 #'     \code{createActiveTransportRRs} with no parentheses
 #'
-#' @examples
-#'
-#' createActiveTransportRRs
+#' @seealso \code{\link{compareModels}}
 #'
 #' @export
 createActiveTransportRRs <- function(){
@@ -414,62 +423,12 @@ createActiveTransportRRs <- function(){
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#' Set Risk Ratios for Air Pollution
-#'
-#' Set risk ratios for a list of diseases given air pollution exposure.  These
-#' values are used to compute change in disease burden due to air pollution.
-#'
-#' @return A numerical vector of risk ratios given air pollution exposure
-#'
-#' @note Hypertensive HD is done using a combination of RR by METs and RR by air
-#'     pollution.
-#'
-#' @export
-createAirPollutionRRs <- function(baseline, scenario){
-
-    diseaseNames <- c("LungCancer","AcuteRespInfect","InflammatoryHD","RespiratoryDisease", "CVD", "HHD", "Stroke")
-
-    k <- rep(0.008618,length(diseaseNames))
-
-    exposure.baseline <- baseline$parameters$pm25
-    exposure.scenario <- scenario$parameters$pm25
-
-    RR <- exp(k*(exposure.scenario-exposure.baseline))
-    names(RR) <- diseaseNames
-
-    RR.list <- lapply(as.list(RR), function(x) list(M=matrix(x,nrow=8,ncol=5,dimnames=list(paste0("ageClass",1:8),paste0("quint",1:5))),F=matrix(x,nrow=8,ncol=5,dimnames=list(paste0("ageClass",1:8),paste0("quint",1:5)))))
-
-    return(RR.list)
-
-}
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#' Set Risk Ratios for Active Transport and Air Pollution
-#'
-#' Set risk ratios for a list of diseases given air pollution exposure and active transport exposure.  These
-#' values are used to compute change in disease burden..
-#'
-#' @return A numerical vector of risk ratios given air pollution exposure and active transport exposure
-#'
-#' @export
-createATandAPRRs <- function(){
-
-    diseaseNames <- c("Hypertensive HD", "CVD")
-    RR <- rep(1.02, length(diseaseNames))
-    names(RR) <- diseaseNames
-    return(RR)
-
-}
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #' Generate matrices of non-travel related MET quintiles
 #'
 #' Estimate non-travel related MET quintiles.  Currently we use a
 #' fixed matrix coded into the function.
 #'
-#' @param region character string; either "national" or "dane"
+#' @param region character string; either "national" or "SFBayArea"
 #' 
 #' @return A list of two matrices of quintiles of non-transport METs
 #'     per week stratified by age class and sex
@@ -495,21 +454,6 @@ computeNonTravelMETs <- function(region){
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#' Transforms the RR object
-#'
-#' Transforms the RR object into something more convenient.
-#'
-#' @return A list of two matrices of RRs stratified by age class and
-#'     sex
-#'
-#' @export
-reshapeRR <- function(RR){
-    nAgeClass <- 8
-    list( M = matrix(RR[,"M"], nrow = nAgeClass, ncol = 5, dimnames = list(paste0("ageClass",1:nAgeClass), paste0("quint",1:5))),F = matrix(RR[,"F"], nrow = nAgeClass, ncol = 5, dimnames = list(paste0("ageClass",1:nAgeClass), paste0("quint",1:5))))
-    }
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #' Computes the RR for an exposure of x MET
 #'
 #' We use the transformation RR_x = RR_1^(x^k), where RR_1 is the
@@ -523,38 +467,6 @@ reshapeRR <- function(RR){
 #' @export
 MET2RR <- function(RR,MET){
     mapply(FUN = function(x, y) x^(y^0.5), RR, MET, SIMPLIFY = FALSE)
-}
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#' Computes a ratio of elements in two lists
-#'
-#' Computes a ratio of elements in two lists.
-#'
-#' @return A list of ratios
-#'
-#' @export
-ratioForList <- function(baseline,scenario){
-mapply(FUN = "/", baseline, scenario, SIMPLIFY = FALSE)
-}
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#' Computes AF given baseline and scenario
-#'
-#' Computes AF given baseline and scenario RRs relative to baseline.
-#'
-#' @note The name of the variable in the coded is RRnormalizedToBaseline.scenario and RRnormalizedToBaseline.baseline
-#' @note RRnormalizedToBaseline.baseline = 1
-#' 
-#'@note Geoff Whitfield and Neil Reisch compute AF differently.  I am
-#'     not sure if their methods are equivalent.
-#' 
-#' @return A list of AFs stratified by age and sex
-#'
-#' @export
-AFForList <- function(scenario,baseline){
-    mapply(function(scenario,baseline) (rowSums(scenario)-rowSums(baseline))/rowSums(scenario), scenario, baseline)
 }
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -578,19 +490,6 @@ AFForList <- function(scenario,baseline){
 AFForList2 <- function(scenario,baseline){
     mapply(function(scenario,baseline) 1 - rowSums(scenario)/rowSums(baseline), scenario, baseline)
 }
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#' Foo
-#'
-#' Foo
-#'
-#' @return Foo
-#'
-#' @export
-normalizeDiseaseBurden <- function(diseaseBurden){
-    lapply(diseaseBurden, function(x) x/x[,1])
-    }
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -688,6 +587,71 @@ compareModels <- function(baseline, scenario){
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#' Sets a model parameter
+#'
+#' Sets a model parameter
+#'
+#' @return An updated list of parameters
+#'
+#' @export
+setParameter <- function( parName, parValue, parList ){
+    parList[[parName]] <- parValue
+    return(parList)
+    }
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#' Updates an ITHIM object
+#'
+#' Change a parameter and recreate the object.
+#'
+#' @return An updated ITHIM object
+#'
+#' @export
+updateITHIM <- function( ITHIM, parName, parValue){
+    ITHIM$parameters[[parName]] <- parValue
+    ITHIM <- list(
+            parameters = parameters <- ITHIM$parameters,
+            means = means <- computeMeanMatrices(parameters),
+            quintiles = quintiles <- getQuintiles(means, parameters)
+    )
+    return(ITHIM)
+    }
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#' Read in Global Burden of Disease Data
+#'
+#' Read in Global Burden of Disease Data
+#'
+#' @return A list of lists of matrices with dproj, yll, yld and daly
+#'     by age and sex and disease
+#'
+#' @export
+readGBD <- function(file = "gbd.csv"){
+    filePath <- system.file(file, package="ITHIM")
+    gbd <- read.csv(file=filePath)
+    gbdList <- split(gbd,gbd$disease)
+    gbdList2 <- lapply(gbdList,function(x) split(x,as.factor(x$sex)))
+    gbdList2 <- lapply(gbdList2, function(x) list(M=x$M,F=x$F))
+    return(gbdList2)
+    }
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#' Foo
+#'
+#' Foo
+#'
+#' @return Foo
+#'
+#' @export
+normalizeDiseaseBurden <- function(diseaseBurden){
+    lapply(diseaseBurden, function(x) x/x[,1])
+    }
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #' Plots a RR matrix
 #'
 #' Plots a RR matrix
@@ -749,58 +713,6 @@ plotBurden <- function(burden, varName = "daly"){
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#' Sets a model parameter
-#'
-#' Sets a model parameter
-#'
-#' @return An updated list of parameters
-#'
-#' @export
-setParameter <- function( parName, parValue, parList ){
-    parList[[parName]] <- parValue
-    return(parList)
-    }
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#' Updates an ITHIM object
-#'
-#' Change a parameter and recreate the object.
-#'
-#' @return An updated ITHIM object
-#'
-#' @export
-updateITHIM <- function( ITHIM, parName, parValue){
-    ITHIM$parameters[[parName]] <- parValue
-    ITHIM <- list(
-            parameters = parameters <- ITHIM$parameters,
-            means = means <- computeMeanMatrices(parameters),
-            quintiles = quintiles <- getQuintiles(means, parameters)
-    )
-    return(ITHIM)
-    }
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#' Read in Global Burden of Disease Data
-#'
-#' Read in Global Burden of Disease Data
-#'
-#' @return A list of lists of matrices with dproj, yll, yld and daly
-#'     by age and sex and disease
-#'
-#' @export
-readGBD <- function(file = "gbd.csv"){
-    filePath <- system.file(file, package="ITHIM")
-    gbd <- read.csv(file=filePath)
-    gbdList <- split(gbd,gbd$disease)
-    gbdList2 <- lapply(gbdList,function(x) split(x,as.factor(x$sex)))
-    gbdList2 <- lapply(gbdList2, function(x) list(M=x$M,F=x$F))
-    return(gbdList2)
-    }
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #' ??
 #'
 #' ??
@@ -846,27 +758,128 @@ calculateBurden <- function(burden, normalizedDiseaseBurden){
         return(Burden)
 
         }
-
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#' Create ITHIM object
+#' This function coverts the 2001 CDC Age variable to years.
 #'
-#' Create ITHIM object
-#'
-#' @param vision either "baseline" or "scenario"
-#' @param region either "national" or "SFBayArea"
-#'
-#' @return A list of parameters, means and quintiles.
-#'
+#' @param value The value for age, i.e., characters 2-4 of the code
+#'     (sloppy with class!)
+#' @param unit The units for age, i.e., chatater 1 of the code (sloppy
+#'     with class!)
+#' @note This function is likely only applicable to the 2001 data
+#'     file.
+#' @return A numeric vector of age in years - this is a test
 #'
 #' @export
-createITHIM <- function(vision = "baseline", region = "national"){
-    return(
-        list(
-            parameters = parameters <- createParameterList(vision = vision, region = region),
-            means = means <- computeMeanMatrices(parameters),
-            quintiles = quintiles <- getQuintiles(means, parameters)
-            )
-        )
+convertAge <- function(value, unit){
+
+    value <- ifelse(value == "999", NA, value)
+
+    convertedValue <- ifelse( unit == "1", value,
+    ifelse( unit == "2", value/12,
+    ifelse( unit == "4", value/365,
+    ifelse( unit == "5", value/365/24,
+    ifelse( unit == "6", value/365/24/60,
+    ifelse( unit == "9", NA, 999 ))))))
+
+    return(as.numeric(convertedValue))
+
+}
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#' Set Risk Ratios for Air Pollution
+#'
+#' Set risk ratios for a list of diseases given air pollution exposure.  These
+#' values are used to compute change in disease burden due to air pollution.
+#'
+#' @return A numerical vector of risk ratios given air pollution exposure
+#'
+#' @note Hypertensive HD is done using a combination of RR by METs and RR by air
+#'     pollution.
+#'
+#' @export
+createAirPollutionRRs <- function(baseline, scenario){
+
+    diseaseNames <- c("LungCancer","AcuteRespInfect","InflammatoryHD","RespiratoryDisease", "CVD", "HHD", "Stroke")
+
+    k <- rep(0.008618,length(diseaseNames))
+
+    exposure.baseline <- baseline$parameters$pm25
+    exposure.scenario <- scenario$parameters$pm25
+
+    RR <- exp(k*(exposure.scenario-exposure.baseline))
+    names(RR) <- diseaseNames
+
+    RR.list <- lapply(as.list(RR), function(x) list(M=matrix(x,nrow=8,ncol=5,dimnames=list(paste0("ageClass",1:8),paste0("quint",1:5))),F=matrix(x,nrow=8,ncol=5,dimnames=list(paste0("ageClass",1:8),paste0("quint",1:5)))))
+
+    return(RR.list)
+
+}
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#' Set Risk Ratios for Active Transport and Air Pollution
+#'
+#' Set risk ratios for a list of diseases given air pollution exposure and active transport exposure.  These
+#' values are used to compute change in disease burden..
+#'
+#' @return A numerical vector of risk ratios given air pollution exposure and active transport exposure
+#'
+#' @export
+createATandAPRRs <- function(){
+
+    diseaseNames <- c("Hypertensive HD", "CVD")
+    RR <- rep(1.02, length(diseaseNames))
+    names(RR) <- diseaseNames
+    return(RR)
+
+}
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#' Transforms the RR object
+#'
+#' Transforms the RR object into something more convenient.
+#'
+#' @return A list of two matrices of RRs stratified by age class and
+#'     sex
+#'
+#' @export
+reshapeRR <- function(RR){
+    nAgeClass <- 8
+    list( M = matrix(RR[,"M"], nrow = nAgeClass, ncol = 5, dimnames = list(paste0("ageClass",1:nAgeClass), paste0("quint",1:5))),F = matrix(RR[,"F"], nrow = nAgeClass, ncol = 5, dimnames = list(paste0("ageClass",1:nAgeClass), paste0("quint",1:5))))
+    }
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#' Computes a ratio of elements in two lists
+#'
+#' Computes a ratio of elements in two lists.
+#'
+#' @return A list of ratios
+#'
+#' @export
+ratioForList <- function(baseline,scenario){
+mapply(FUN = "/", baseline, scenario, SIMPLIFY = FALSE)
+}
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#' Computes AF given baseline and scenario
+#'
+#' Computes AF given baseline and scenario RRs relative to baseline.
+#'
+#' @note The name of the variable in the coded is RRnormalizedToBaseline.scenario and RRnormalizedToBaseline.baseline
+#' @note RRnormalizedToBaseline.baseline = 1
+#' 
+#'@note Geoff Whitfield and Neil Reisch compute AF differently.  I am
+#'     not sure if their methods are equivalent.
+#' 
+#' @return A list of AFs stratified by age and sex
+#'
+#' @export
+AFForList <- function(scenario,baseline){
+    mapply(function(scenario,baseline) (rowSums(scenario)-rowSums(baseline))/rowSums(scenario), scenario, baseline)
 }
