@@ -36,6 +36,6 @@ meanCycleMET is constant.  So, it's really a parameter and not a function of par
 cycling speed has been removed
 }
 \seealso{
-\code{\link{createParameterList}}, \code{\link{ITHIM-package}}
+\code{\link{createITHIM}}
 }
 

@@ -18,9 +18,7 @@ transport increase.
 To see the default values and how they are computed run
     \code{createActiveTransportRRs} with no parentheses
 }
-\examples{
-
-createActiveTransportRRs
-
+\seealso{
+\code{\link{compareModels}}
 }
 

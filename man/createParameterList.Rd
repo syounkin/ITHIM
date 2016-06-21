@@ -9,7 +9,7 @@ createParameterList(vision = "baseline", region = "national")
 \arguments{
 \item{vision}{A character string, either "baseline" or "scenario"}
 
-\item{region}{A character string, either "national" or "dane"}
+\item{region}{A character string, either "national" or "SFBayArea"}
 }
 \value{
 A list with parameters and estimates
@@ -69,5 +69,8 @@ Air Pollution
 Road Injuries
 
 13. Serious and fatal injuries between a striking vehicle and victim vehicle by severity and modes (-)
+}
+\seealso{
+\code{\link{computeNonTravelMETs}},\code{\link{readGBD}}
 }
 

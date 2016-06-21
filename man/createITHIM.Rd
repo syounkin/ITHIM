@@ -2,7 +2,7 @@
 % Please edit documentation in R/functions.R
 \name{createITHIM}
 \alias{createITHIM}
-\title{Create ITHIM object}
+\title{Create an ITHIM object}
 \usage{
 createITHIM(vision = "baseline", region = "national")
 }
@@ -15,6 +15,22 @@ createITHIM(vision = "baseline", region = "national")
 A list of parameters, means and quintiles.
 }
 \description{
-Create ITHIM object
+An ITHIM object is a list which contains three elements;
+parameters, means and quintiles.  The parameters are listed in
+\code{\link{createParameterList}}.  The elements means and
+quintiles mimic the computation presented in the original EXCEL
+workbook.  Use \code{\link{updateITHIM}} to change values of the
+parameters.
+}
+\examples{
+
+ITHIM.baseline <- createITHIM(vision = "baseline", region = "SFBayArea")
+ITHIM.baseline$parameters$muct
+ITHIM.baseline <- updateITHIM(ITHIM.baseline, "muct", 200)
+ITHIM.baseline$parameters$muct
+
+}
+\seealso{
+\code{\link{updateITHIM}}, \code{\link{createParameterList}}, \code{\link{computeMeanMatrices}}, \code{\link{getQuintiles}}
 }
 

@@ -7,7 +7,7 @@
 computeNonTravelMETs(region)
 }
 \arguments{
-\item{region}{character string; either "national" or "dane"}
+\item{region}{character string; either "national" or "SFBayArea"}
 }
 \value{
 A list of two matrices of quintiles of non-transport METs

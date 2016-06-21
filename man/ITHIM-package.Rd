@@ -9,16 +9,19 @@ Implementation in R
 }
 \examples{
 
-ITHIMParameterList <- createParameterList()
-meansList <- computeMeanMatrices(ITHIMParameterList)
-names(meansList)
-meansList$meanActiveTransportTime
-
+ITHIM.baseline <- createITHIM(vision = "baseline", region = "SFBayArea")
+ITHIM.scenario <- createITHIM(vision = "scenario", region = "SFBayArea")
+comparativeRisk <- compareModels(ITHIM.baseline, ITHIM.scenario)
+names(ITHIM.baseline)
+names(ITHIM.baseline$parameters)
+ITHIM.baseline$quintiles$TotalMET
+names(comparativeRisk)
+comparativeRisk$AF$BreastCancer
 }
 \author{
 Samuel G. Younkin \email{syounkin@wisc.edu}
 }
 \seealso{
-\code{\link{createParameterList}}, \code{\link{computeMeanMatrices}}
+\code{\link{createITHIM}}
 }
 
