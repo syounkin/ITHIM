@@ -12,12 +12,4 @@ A list of AFs stratified by age and sex
 \description{
 Computes AF given baseline and scenario RRs relative to baseline.
 }
-\note{
-The name of the variable in the coded is RRnormalizedToBaseline.scenario and RRnormalizedToBaseline.baseline
-
-RRnormalizedToBaseline.baseline = 1
-
-Geoff Whitfield and Neil Reisch compute AF differently.  I am
-    not sure if their methods are equivalent.
-}
 

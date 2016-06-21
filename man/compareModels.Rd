@@ -2,14 +2,37 @@
 % Please edit documentation in R/functions.R
 \name{compareModels}
 \alias{compareModels}
-\title{Computes AF given baseline and scenario models}
+\title{Estimates change in disease burden}
 \usage{
 compareModels(baseline, scenario)
 }
+\arguments{
+\item{baseline}{An ITHIM object created with
+code{\link{createITHIM}} representing the baseline}
+
+\item{scenario}{An ITHIM object representing the scenario}
+}
 \value{
-A list of AFs stratified by age and sex
+A list of estimates from the ITHIM model
+
+\item{RR.baseline}{Baseline relative risk compared with no exposure}
+\item{RR.scenario}{Scenario relative risk compared with no exposure}
+\item{RRnormalizedToBaseline}{}
+\item{AF}{Attributable fraction.  Computed with \code{\link{AFForList2}}}
+\item{normalizedDiseaseBurden}{}
+\item{AirPollutionRR}{Not in use.}
+\item{dproj.delta}{Change in number of deaths. (the variable name dproj comes from Geoff's projected data)}
+\item{yll.delta}{Change in YLL}
+\item{yld.delta}{Change in YLD}
+\item{daly.delta}{Change in DALY}
 }
 \description{
-Computes AF given baseline and scenario
+Performs the ITHIM model analysis using two ITHIM objects; baseline
+and scenario.  These objects were created with
+\code{\link{createITHIM}} and updated with
+\code{\link{updateITHIM}}.
+}
+\seealso{
+\code{\link{createITHIM}}, \code{\link{AFForList2}}
 }
 
