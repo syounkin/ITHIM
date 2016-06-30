@@ -5,8 +5,15 @@
 #' emissions, and disease and injuries. Based on population and travel
 #' scenarios. The model has been used to calculate the health impacts
 #' of walking and bicycling short distances usually traveled by car or
-#' driving low-emission automobiles.
-#' Please Cite: Woodcock, J., Givoni, M., & Morgan, A. S. (2013). Health impact modelling of active travel visions for England and Wales using an Integrated Transport and Health Impact Modelling Tool (ITHIM). PLoS One, 8(1), e51462. and Maizlish, N., Woodcock, J., Co, S., Ostro, B., Fanai, A., & Fairley, D. (2013). Health cobenefits and transportation-related reductions in greenhouse gas emissions in the San Francisco Bay area. American Journal of Public Health, 103(4), 703-709.)
+#' driving low-emission automobiles.  Please Cite: Woodcock, J.,
+#' Givoni, M., & Morgan, A. S. (2013). Health impact modelling of
+#' active travel visions for England and Wales using an Integrated
+#' Transport and Health Impact Modelling Tool (ITHIM). PLoS One, 8(1),
+#' e51462. and Maizlish, N., Woodcock, J., Co, S., Ostro, B., Fanai,
+#' A., & Fairley, D. (2013). Health cobenefits and
+#' transportation-related reductions in greenhouse gas emissions in
+#' the San Francisco Bay area. American Journal of Public Health,
+#' 103(4), 703-709.)
 #'
 #' The model uses comparative risk assessment through which it
 #' formulates a change in the disease burden, resulting from the shift
@@ -187,7 +194,7 @@ createParameterList <- function(vision = "baseline", region = "national"){
 
     }else if( region == "cook" ){
 
-#' How is the Cook County being used? is this another set of parameters for a run that is not currently in the UI?
+# How is the Cook County being used? is this another set of parameters for a run that is not currently in the UI?
 
         F <- matrix(c(0.0368276992,0.0353723566,0.0746989673,0.0716902674,0.1123490977,0.1104366009,0.1163649132,0.1182206842,0.0808260989,0.0891264801,0.0308720468,0.037493344,0.0223834475,0.0321797163,0.0098989332,0.0212593465), byrow = TRUE, nrow = nAgeClass, ncol = 2, dimnames = list(paste0("ageClass",1:nAgeClass),c("M","F")))
 
@@ -488,9 +495,11 @@ createActiveTransportRRs <- function(){
 #'     per week stratified by age class and sex
 #'
 #' @export
-computeNonTravelMETs <- function(region){
+computeNonTravelMETs <- function(region = NA, propActive = NA, mean = NA, cv = NA, knownValues = FALSE){
     nAgeClass <- 8
     dimnames <- list(rep(paste0("ageClass",1:nAgeClass),2),paste0("quint",1:5))
+
+    if( knownValues ){
 
     if( region == "cook" ){
     nonTravelMETs <- matrix(c(0,0,0,0,0,0,0,0,0,0,27.21890244,27.21890244,27.21890244,27.21890244,27.21890244,8.42785658,8.42785658,8.42785658,8.42785658,8.42785658,7.600940041,7.600940041,7.600940041,7.600940041,7.600940041,11.33717949,11.33717949,11.33717949,11.33717949,11.33717949,13.06196237,13.06196237,13.06196237,13.06196237,13.06196237,18.10175439,18.10175439,18.10175439,18.10175439,18.10175439,0,0,0,0,0,0,0,0,0,0,6.858209571,6.858209571,6.858209571,6.858209571,6.858209571,10.76793103,10.76793103,10.76793103,10.76793103,10.76793103,5.40369146,5.40369146,5.40369146,5.40369146,5.40369146,1.829166667,1.829166667,1.829166667,1.829166667,1.829166667,3.037973485,3.037973485,3.037973485,3.037973485,3.037973485,4.063888889,4.063888889,4.063888889,4.063888889,4.063888889),nrow=2*nAgeClass,ncol = 5, byrow=TRUE, dimnames=dimnames)
@@ -502,7 +511,18 @@ computeNonTravelMETs <- function(region){
         # error message here
         }
 
-    return(list(M = nonTravelMETs[1:nAgeClass,], F = nonTravelMETs[nAgeClass+(1:nAgeClass),]))
+        return(list(M = nonTravelMETs[1:nAgeClass,], F = nonTravelMETs[nAgeClass+(1:nAgeClass),]))
+    }else{
+
+        relativeMETs <- matrix(c(0.0000000,0.0000000,1.4774036,0.9174753,0.8070258,0.6548583,0.5872301,0.5568559,0.0000000,0.0000000,1.0000000,0.7421562,0.6413120,0.5372390,0.4628888,0.4040676),ncol = 2)
+        meanMETReferent <- mean
+
+        METQuintiles <- t(mapply(getMETQuintiles, relativeMETs*meanMETReferent, MoreArgs = list(cv = cv, p = propActive, size = 1e4), SIMPLIFY = TRUE))
+        dimnames(METQuintiles) <- list(paste0("ageClass",rep(1:8,2)), paste0("quint",1:5))
+
+        return(list(M = METQuintiles[1:8,], F = METQuintiles[9:16,]))
+
+        }
 
 }
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -777,7 +797,7 @@ plotMean <- function(means.baseline, means.scenario, var = "meanActiveTransportT
 plotBurden <- function(burden, varName = "daly"){
     foo <- cbind(melt(burden),c("00-04","05-14","15-29","30-44","45-59","60-69","70-79","80+"))
     names(foo) <- c("burden","sex","disease","Age")
-#' what does geom_freqpoly(aes(group = Age, color = Age)) look like? may allow us to bring back in the quintiles?
+# what does geom_freqpoly(aes(group = Age, color = Age)) look like? may allow us to bring back in the quintiles?
     p <- ggplot(foo, aes(disease, -burden)) + geom_bar(aes(fill=Age), stat = "identity", position = "dodge") + labs( y = varName, x = "")
     p <- p + facet_grid(sex ~ .)
     return(p)
