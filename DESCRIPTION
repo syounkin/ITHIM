@@ -1,8 +1,8 @@
 Package: ITHIM
 Type: Package
 Title: ITHIM
-Version: 0.1.3
-Date: Tue 21 Jun 2016 11:45:52 AM CDT
+Version: 0.1.4
+Date: Tue 29 Jun 2016 12:10:52 AM CDT
 Author: Samuel G. Younkin
 Maintainer: Samuel G. Younkin <syounkin@wisc.edu>
 Description: This package implements the Integrated Transport and Health Impacts Model (ITHIM) developed by James Woodcock. Citation for use of the model is: Woodcock J, Givoni M, Morgan AS. Health Impact Modelling of Active Travel Visions for England and Wales Using an Integrated Transport and Health Impact Modelling Tool (ITHIM). For the California version please also reference: Maizlish NA, Woodcock JD, Co S, Ostro B, Fairley D, Fanai A. Health cobenefits and transportation-related reductions in greenhouse gas emissions in the San Francisco Bay Area. Am J Public Health. Published online ahead of print February 14, 2013
