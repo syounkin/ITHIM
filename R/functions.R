@@ -5,7 +5,7 @@
 #' emissions, and disease and injuries. Based on population and travel
 #' scenarios. The model has been used to calculate the health impacts
 #' of walking and bicycling short distances usually traveled by car or
-#' driving low-emission automobiles. 
+#' driving low-emission automobiles.
 #' Please Cite: Woodcock, J., Givoni, M., & Morgan, A. S. (2013). Health impact modelling of active travel visions for England and Wales using an Integrated Transport and Health Impact Modelling Tool (ITHIM). PLoS One, 8(1), e51462. and Maizlish, N., Woodcock, J., Co, S., Ostro, B., Fanai, A., & Fairley, D. (2013). Health cobenefits and transportation-related reductions in greenhouse gas emissions in the San Francisco Bay area. American Journal of Public Health, 103(4), 703-709.)
 #'
 #' The model uses comparative risk assessment through which it
@@ -93,7 +93,7 @@ NULL
 #' ITHIM.baseline$parameters$muct
 #' ITHIM.baseline <- updateITHIM(ITHIM.baseline, "muct", 200)
 #' ITHIM.baseline$parameters$muct
-#' 
+#'
 #' @export
 createITHIM <- function(vision = "baseline", region = "national"){
     return(
@@ -111,7 +111,7 @@ createITHIM <- function(vision = "baseline", region = "national"){
 #'
 #' This function is used to generate a list of parameters describing
 #' both the region and vision of interest.
-#' 
+#'
 #' @param vision A character string, either "baseline" or "scenario"
 #' @param region A character string, either "national" or "SFBayArea"
 #'
@@ -169,7 +169,7 @@ createITHIM <- function(vision = "baseline", region = "national"){
 #' 13. Serious and fatal injuries between a striking vehicle and victim vehicle by severity and modes (-)
 #'
 #' @seealso \code{\link{computeNonTravelMETs}},\code{\link{readGBD}}
-#' 
+#'
 #' @export
 createParameterList <- function(vision = "baseline", region = "national"){
 
@@ -187,7 +187,7 @@ createParameterList <- function(vision = "baseline", region = "national"){
 
     }else if( region == "cook" ){
 
-#' How is the Cook County being used? is this another set of parameters for a run that is not currently in the UI? 
+#' How is the Cook County being used? is this another set of parameters for a run that is not currently in the UI?
 
         F <- matrix(c(0.0368276992,0.0353723566,0.0746989673,0.0716902674,0.1123490977,0.1104366009,0.1163649132,0.1182206842,0.0808260989,0.0891264801,0.0308720468,0.037493344,0.0223834475,0.0321797163,0.0098989332,0.0212593465), byrow = TRUE, nrow = nAgeClass, ncol = 2, dimnames = list(paste0("ageClass",1:nAgeClass),c("M","F")))
 
@@ -207,7 +207,7 @@ createParameterList <- function(vision = "baseline", region = "national"){
         Rws <- matrix(c(1.0662510447,0.8753344725,1.0662510447,0.8753344725,1.0206231847,1.000210721,1.0590466458,1.0338312494,1.0392345486,0.947378462,1.03022905,0.9329696641,0.9509806615,0.8969476694,0.9509806615,0.8969476694),byrow=TRUE, ncol = 2, dimnames = list(paste0("ageClass",1:nAgeClass),c("M","F")))
 
 
-            
+
     }else{
 
         # Put error message here.
@@ -217,7 +217,7 @@ createParameterList <- function(vision = "baseline", region = "national"){
 if(vision == "baseline"){
 
     if( region == "national" ){
-    
+
         muwt <- 47.3900 # min per week
         muws <- 2.7474 # mph
         muct <- 6.1600 # min per week
@@ -239,7 +239,7 @@ if(vision == "baseline"){
 }else if(vision == "scenario"){
 
     if( region == "national" ){
-        
+
         muwt <- 57.7778 # min per week
         muws <- 2.7000 # mph
         muct <- 46.7647 # min per week
@@ -253,13 +253,13 @@ if(vision == "baseline"){
         pm25 <- 10.075 # microns per cubic meter
 
         cv <- 1.34 # coefficient of variation
-    
+
 
     }else{
         #error message
     }
 
-        
+
 }else{
 
   # Put error message here.
@@ -483,7 +483,7 @@ createActiveTransportRRs <- function(){
 #' fixed matrix coded into the function.
 #'
 #' @param region character string; either "national" or "SFBayArea"
-#' 
+#'
 #' @return A list of two matrices of quintiles of non-transport METs
 #'     per week stratified by age class and sex
 #'
@@ -532,7 +532,7 @@ MET2RR <- function(RR,MET){
 #' @param scenario RR compared with no exposure
 #'
 #' @param baseline RR compared with no exposure
-#' 
+#'
 #' @return A list of AFs stratified by age and sex
 #'
 #' @export
@@ -549,12 +549,12 @@ AFForList2 <- function(scenario,baseline){
 #' \code{\link{createITHIM}} and updated with
 #' \code{\link{updateITHIM}}.
 #'
-#' 
+#'
 #' @param baseline An ITHIM object created with
 #'     code{\link{createITHIM}} representing the baseline
 #'
 #' @param scenario An ITHIM object representing the scenario
-#' 
+#'
 #' @return A list of estimates from the ITHIM model
 #'
 #' \item{RR.baseline}{Baseline relative risk compared with no exposure}
@@ -578,20 +578,20 @@ compareModels <- function(baseline, scenario){
         }else{
             #error message
             }
-    
+
     RR <- createActiveTransportRRs()
     RR.baseline <- lapply(RR, MET2RR, baseline$quintiles$TotalMET)
     RR.scenario <- lapply(RR, MET2RR, scenario$quintiles$TotalMET)
 
     RRnormalizedToBaseline.scenario <- mapply(ratioForList,RR.baseline, RR.scenario, SIMPLIFY = FALSE) # ratioForList simply computes the ratio
     RRnormalizedToBaseline.baseline <- mapply(ratioForList,RR.baseline, RR.baseline, SIMPLIFY = FALSE) # What!  Always 1!
-    
+
 #    AF <- mapply(AFForList, RRnormalizedToBaseline.scenario,RRnormalizedToBaseline.baseline, SIMPLIFY = FALSE) # Neil and Geoff compute AF diifferently.  This is Neil's way
     AF <- mapply(AFForList2, RR.scenario,RR.baseline, SIMPLIFY = FALSE) # Neil and Geoff compute AF diifferently.  This is Geoff's way.
 
     normalizedDiseaseBurden <- lapply(RR.scenario, normalizeDiseaseBurden)
     normalizedDiseaseBurden.baseline <- lapply(RR.baseline, normalizeDiseaseBurden)
-    
+
     NewBurden <- lapply(AF,function(x) 1-x)
     NewBurdenList <- lapply(NewBurden,function(x) list(M = x[,"M"], F = x[,"F"]))
     denom <- lapply(normalizedDiseaseBurden, function(x) lapply(x, rowSums))
@@ -604,9 +604,9 @@ compareModels <- function(baseline, scenario){
     GBD <- GBD[diseases]
     NewBurdenList <- NewBurdenList[diseases]
     denom <- denom[diseases]
-    denom.baseline <- denom.baseline[diseases]    
+    denom.baseline <- denom.baseline[diseases]
     normalizedDiseaseBurden <- normalizedDiseaseBurden[diseases]
-    normalizedDiseaseBurden.baseline <- normalizedDiseaseBurden.baseline[diseases]    
+    normalizedDiseaseBurden.baseline <- normalizedDiseaseBurden.baseline[diseases]
 
     dproj <- mapply(FUN = burdenFunction, GBD, NewBurdenList, denom, MoreArgs = list(burden = "dproj"), SIMPLIFY = FALSE)
     dproj.baseline <- mapply(FUN = burdenFunction, GBD, NewBurdenList, denom.baseline, MoreArgs = list(burden = "dproj", baseline = TRUE), SIMPLIFY = FALSE)
@@ -653,7 +653,7 @@ compareModels <- function(baseline, scenario){
                 yld.delta = yld.delta,
                 daly.delta = daly.delta
                 ))
-    
+
     }
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -770,7 +770,7 @@ plotMean <- function(means.baseline, means.scenario, var = "meanActiveTransportT
 #' @param burden A list like as "comparativeRisk$daly.delta"
 #' @param varName A character string indicating the name to use for
 #'     the y axis label
-#' 
+#'
 #' @return A ggplot object
 #'
 #' @export
@@ -812,7 +812,7 @@ burdenFunction <- function(x2,y2,z2,burden,baseline=FALSE){
 #'
 #' @export
 calculateBurden <- function(burden, normalizedDiseaseBurden){
-    
+
     foo <- function(x,y){
         matrix(x, nrow = length(x), ncol = ncol(y)) * y
         }
@@ -948,4 +948,21 @@ mapply(FUN = "/", baseline, scenario, SIMPLIFY = FALSE)
 #' @export
 AFForList <- function(scenario,baseline){
     mapply(function(scenario,baseline) (rowSums(scenario)-rowSums(baseline))/rowSums(scenario), scenario, baseline)
+}
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#' Computes MET quintiles
+#'
+#' Uses a mixture distribution to estimate non-travel METs
+#'
+#' @return A vector of quintiles.
+#'
+#' @export
+getMETQuintiles <- function(mu, p, cv, size = 1e3){
+    mu <- ifelse(mu == 0, 0.01, mu)
+    sd <- mu*cv
+    simLogNorm <- rlnorm(size, log(mu/sqrt(1+sd^2/mu^2)), sqrt(log(1+sd^2/mu^2)))
+    simData <- ifelse(sample(0:1, size = size, prob = c(1-p,p), replace = TRUE) == 1, simLogNorm, 0)
+    return(quantile(simData, probs = c(0.1,0.3,0.5,0.7,0.9)))
 }
