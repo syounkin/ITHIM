@@ -4,7 +4,7 @@
 \alias{computeNonTravelMETs}
 \title{Generate matrices of non-travel related MET quintiles}
 \usage{
-computeNonTravelMETs(region)
+computeNonTravelMETs(region, propActive, mean, cv, knownValues = TRUE)
 }
 \arguments{
 \item{region}{character string; either "national" or "SFBayArea"}
