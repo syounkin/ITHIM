@@ -10,7 +10,8 @@ patterns, physical activity, fine particulate matter, GHG
 emissions, and disease and injuries. Based on population and travel
 scenarios. The model has been used to calculate the health impacts
 of walking and bicycling short distances usually traveled by car or
-driving low-emission automobiles. (add citations)
+driving low-emission automobiles.
+Please Cite: Woodcock, J., Givoni, M., & Morgan, A. S. (2013). Health impact modelling of active travel visions for England and Wales using an Integrated Transport and Health Impact Modelling Tool (ITHIM). PLoS One, 8(1), e51462. and Maizlish, N., Woodcock, J., Co, S., Ostro, B., Fanai, A., & Fairley, D. (2013). Health cobenefits and transportation-related reductions in greenhouse gas emissions in the San Francisco Bay area. American Journal of Public Health, 103(4), 703-709.)
 }
 \details{
 The model uses comparative risk assessment through which it
@@ -20,8 +21,7 @@ alternative scenario.
 
 ITHIM characterizes exposure distributions in several ways:
 
-Physical Activity
-
+-- Physical Activity --
 Described as quintiles of a log-normal distribution on the basis of
 the mean weekly active transport time per person, its standard
 deviation and coefficient of variation (the standard deviation
@@ -35,8 +35,7 @@ Descriptive statistics were obtained from published research on
 walking and bicycling speeds and analysis of travel and health
 surveys with large probability samples for the Bay Area.
 
-Air Pollution
-
+-- Air Pollution --
 To estimate exposure to air pollution, they used
 population-weighted means of airborne fine particulate matter
 (PM2.5), based on models calibrated for Bay Area automobile
@@ -44,8 +43,7 @@ emissions and air shed. The RR-PM2.5 gradient in the comparative
 risk assessment analysis reflected the change in risk over an
 increment of 10 micrograms per cubic meter PM2.5.
 
-Traffic Injuries
-
+-- Traffic Injuries --
 Data on injuries was extracted from from a geocoded collision
 database of fatal and serious collisions reported to police.
 
