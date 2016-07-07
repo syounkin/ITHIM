@@ -986,3 +986,93 @@ getMETQuintiles <- function(mu, p, cv, size = 1e3){
     simData <- ifelse(sample(0:1, size = size, prob = c(1-p,p), replace = TRUE) == 1, simLogNorm, 0)
     return(quantile(simData, probs = c(0.1,0.3,0.5,0.7,0.9)))
 }
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#' Computes simulated distribution of nonTravel METs
+#'
+#' Computes simulated distribution of nonTravel METs
+#'
+#' @return A random sample from the distribution.
+#'
+#' @export
+getNonTravelDistribution <- function(mu, p, cv, size = 1e3){
+    mu <- ifelse(mu == 0, 0.01, mu)
+    sd <- mu*cv
+    simLogNorm <- rlnorm(size, log(mu/sqrt(1+sd^2/mu^2)), sqrt(log(1+sd^2/mu^2)))
+    simData <- ifelse(sample(0:1, size = size, prob = c(1-p,p), replace = TRUE) == 1, simLogNorm, 0)
+
+    return(simData)
+}
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#' Computes simulated distribution of Travel METs
+#'
+#' Computes simulated distribution of Travel METs
+#'
+#' @return A random sample from the distribution.
+#'
+#' @export
+getTravelDistribution <- function(mu, cv, pWalk, vWalk, size = 1e3){
+    mu <- ifelse(mu == 0, 0.01, mu)
+    sd <- mu*cv
+    activeTransportTime <- rlnorm(size, log(mu/sqrt(1+sd^2/mu^2)), sqrt(log(1+sd^2/mu^2)))
+
+    walkingTime <- activeTransportTime*pWalk
+    cyclingTime <- activeTransportTime*(1-pWalk)
+
+    walkingMETs <- computeWalkingMETs(vWalk)*walkingTime/60
+    cyclingMETs <- computeCyclingMETs()*cyclingTime/60
+
+    travelMETs <- walkingMETs + cyclingMETs
+
+    return(travelMETs)
+}
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#' Compute METs given walking speed
+#'
+#' Compute METs given walking speed
+#'
+#' @return An estimate for MET expenditure
+#'
+#' @export
+computeWalkingMETs <- function(v){
+
+    METs <- 1.2216*v + 0.0838
+
+    return(ifelse( METs < 2.5, 2.5, METs ))
+
+}
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#' Compute cycling METs
+#'
+#' Compute METs
+#'
+#' @return An estimate for MET expenditure
+#'
+#' @export
+computeCyclingMETs <- function(){
+
+    return(6)
+
+}
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#' Compute distribution of Total METs
+#'
+#' Compute distribution of Total METs
+#'
+#' @return An estimate for total MET distribution
+#'
+#' @export
+getTotalDistribution <- function( muTravel, cvTravel, muNonTravel, cvNonTravel, pWalk, vWalk, p, size ){
+
+    return(getTravelDistribution( mu = muTravel, cv=cvTravel, pWalk = pWalk, vWalk = vWalk, size = size) + getNonTravelDistribution(mu = muNonTravel, p = p, cv = cvNonTravel, size = size))
+
+}
