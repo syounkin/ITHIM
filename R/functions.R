@@ -273,7 +273,7 @@ if(vision == "baseline"){
 
 }
 
-    NonTravelMETs <- computeNonTravelMETs(region = region)
+    NonTravelMETs <- computeNonTravelMETs(region = region, knownValue = TRUE)
 
     if( region == "national" ){
         GBDFile <- "gbd.csv"
@@ -368,6 +368,18 @@ getQuintiles <- function(means, parameters){
   WalkingMET <- list(M = means$meanWalkMET[,"M"]*WalkingTime[["M"]]/60, F = means$meanWalkMET[,"F"]*WalkingTime[["F"]]/60)
   CyclingMET <- list(M = means$meanCycleMET[,"M"]*CyclingTime[["M"]]/60, F = means$meanCycleMET[,"F"]*CyclingTime[["F"]]/60)
   TotalTravelMET <- list(M = WalkingMET[["M"]] + CyclingMET[["M"]], F = WalkingMET[["F"]] + CyclingMET[["F"]])
+
+  ## TotalTravelMETSample <- mapply(getTotalDistribution,
+  ##                                muTravel = means$meanActiveTransportTime,
+  ##                                cvTravel = parameters$cv,
+  ##                                muNonTravel = matrix(100,nrow = 8, ncol = 2),
+  ##                                cvNonTravel = 1/2,
+  ##                                p = 1,
+  ##                                pWalk = rep(54.4/64.2,2),
+  ##                                vWalk = rep(2.88,2),
+  ##                                size = 1e5, SIMPLIFY = FALSE)
+
+    
 
   TotalMET <- mapply(function(x,y) ifelse(x+y<2.5,0.1,x+y),TotalTravelMET,parameters$NonTravelMETs,SIMPLIFY=FALSE)
 
@@ -514,10 +526,12 @@ computeNonTravelMETs <- function(region = NA, propActive = NA, mean = NA, cv = N
         return(list(M = nonTravelMETs[1:nAgeClass,], F = nonTravelMETs[nAgeClass+(1:nAgeClass),]))
     }else{
 
-        relativeMETs <- matrix(c(0.0000000,0.0000000,1.4774036,0.9174753,0.8070258,0.6548583,0.5872301,0.5568559,0.0000000,0.0000000,1.0000000,0.7421562,0.6413120,0.5372390,0.4628888,0.4040676),ncol = 2)
+        #relativeMETs <- matrix(c(0.0000000,0.0000000,1.4774036,0.9174753,0.8070258,0.6548583,0.5872301,0.5568559,0.0000000,0.0000000,1.0000000,0.7421562,0.6413120,0.5372390,0.4628888,0.4040676),ncol = 2)
+
+        relativeMETs <- matrix(1, nrow = 8, ncol = 2)
         meanMETReferent <- mean
 
-        METQuintiles <- t(mapply(getMETQuintiles, relativeMETs*meanMETReferent, MoreArgs = list(cv = cv, p = propActive, size = 1e4), SIMPLIFY = TRUE))
+        METQuintiles <- t(mapply(getMETQuintiles, relativeMETs*meanMETReferent, MoreArgs = list(cv = cv, p = propActive, size = 1e5), SIMPLIFY = TRUE))
         dimnames(METQuintiles) <- list(paste0("ageClass",rep(1:8,2)), paste0("quint",1:5))
 
         return(list(M = METQuintiles[1:8,], F = METQuintiles[9:16,]))
@@ -1075,4 +1089,21 @@ getTotalDistribution <- function( muTravel, cvTravel, muNonTravel, cvNonTravel, 
 
     return(getTravelDistribution( mu = muTravel, cv=cvTravel, pWalk = pWalk, vWalk = vWalk, size = size) + getNonTravelDistribution(mu = muNonTravel, p = p, cv = cvNonTravel, size = size))
 
+}
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#' Retrieve a density vector for a logNormal distribution
+#'
+#' Retrieve a density vector for a logNormal distribution
+#'
+#' @param mu The mean (on log scale or not?  Figure this out.
+#' @param sd The standard deviation (on log scale or not?  Figure this out.
+#'
+#' @return A vector of length 2000 with density values over the
+#'     interval 0 to 2000
+#'
+#' @export
+getLogNormal <- function(mu,sd){
+    dlnorm(seq(0,2000,length.out=1e3), log(mu/sqrt(1+sd^2/mu^2)), sqrt(log(1+sd^2/mu^2)))
 }
