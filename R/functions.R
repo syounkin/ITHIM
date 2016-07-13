@@ -369,19 +369,20 @@ getQuintiles <- function(means, parameters){
   CyclingMET <- list(M = means$meanCycleMET[,"M"]*CyclingTime[["M"]]/60, F = means$meanCycleMET[,"F"]*CyclingTime[["F"]]/60)
   TotalTravelMET <- list(M = WalkingMET[["M"]] + CyclingMET[["M"]], F = WalkingMET[["F"]] + CyclingMET[["F"]])
 
-  ## TotalTravelMETSample <- mapply(getTotalDistribution,
-  ##                                muTravel = means$meanActiveTransportTime,
-  ##                                cvTravel = parameters$cv,
-  ##                                muNonTravel = matrix(100,nrow = 8, ncol = 2),
-  ##                                cvNonTravel = 1/2,
-  ##                                p = 1,
-  ##                                pWalk = rep(54.4/64.2,2),
-  ##                                vWalk = rep(2.88,2),
-  ##                                size = 1e5, SIMPLIFY = FALSE)
-
+  TotalMETSample <- mapply(getTotalDistribution,
+                                 muTravel = means$meanActiveTransportTime,
+                                 cvTravel = parameters$cv,
+                                 muNonTravel = matrix(75,nrow = 8, ncol = 2),
+                                 cvNonTravel = 1/2,
+                                 pWalk = rep(54.4/64.2,2),
+                                 vWalk = rep(2.88,2),
+                                 size = 1e5, SIMPLIFY = FALSE)
+  TotalMETQuintiles <- lapply(TotalMETSample,function(x) quantile(x, seq(0.1,0.9,0.2)))
     
 
-  TotalMET <- mapply(function(x,y) ifelse(x+y<2.5,0.1,x+y),TotalTravelMET,parameters$NonTravelMETs,SIMPLIFY=FALSE)
+TotalMET <- list( M = matrix(unlist(TotalMETQuintiles[1:8]),ncol = 5, byrow = TRUE), F = matrix(unlist(TotalMETQuintiles[9:16]),ncol = 5, byrow = TRUE ) )
+    
+  TotalMET <- mapply(function(x,y) ifelse(x<2.5,0.1,x),TotalMET,SIMPLIFY=FALSE)
 
  return(list(ActiveTransportTime=ActiveTransportTime, WalkingTime=WalkingTime, CyclingTime=CyclingTime, WalkingMET=WalkingMET, CyclingMET = CyclingMET, TotalTravelMET = TotalTravelMET, TotalMET = TotalMET))
 }
@@ -1010,12 +1011,12 @@ getMETQuintiles <- function(mu, p, cv, size = 1e3){
 #' @return A random sample from the distribution.
 #'
 #' @export
-getNonTravelDistribution <- function(mu, p, cv, size = 1e3){
+getNonTravelDistribution <- function(mu, cv, size = 1e3){
     mu <- ifelse(mu == 0, 0.01, mu)
     sd <- mu*cv
     simLogNorm <- rlnorm(size, log(mu/sqrt(1+sd^2/mu^2)), sqrt(log(1+sd^2/mu^2)))
-    simData <- ifelse(sample(0:1, size = size, prob = c(1-p,p), replace = TRUE) == 1, simLogNorm, 0)
-
+    #simData <- ifelse(sample(0:1, size = size, prob = c(1-p,p), replace = TRUE) == 1, simLogNorm, 0)
+    simData <- simLogNorm
     return(simData)
 }
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1085,9 +1086,9 @@ computeCyclingMETs <- function(){
 #' @return An estimate for total MET distribution
 #'
 #' @export
-getTotalDistribution <- function( muTravel, cvTravel, muNonTravel, cvNonTravel, pWalk, vWalk, p, size ){
+getTotalDistribution <- function( muTravel, cvTravel, muNonTravel, cvNonTravel, pWalk, vWalk, size ){
 
-    return(getTravelDistribution( mu = muTravel, cv=cvTravel, pWalk = pWalk, vWalk = vWalk, size = size) + getNonTravelDistribution(mu = muNonTravel, p = p, cv = cvNonTravel, size = size))
+    return(getTravelDistribution( mu = muTravel, cv=cvTravel, pWalk = pWalk, vWalk = vWalk, size = size) + getNonTravelDistribution(mu = muNonTravel, cv = cvNonTravel, size = size))
 
 }
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
