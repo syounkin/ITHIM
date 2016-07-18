@@ -284,7 +284,9 @@ if(vision == "baseline"){
     }
     GBD <- readGBD(file = GBDFile)
 
-    return(list(F = F, Rwt = Rwt, Rws = Rws, Rct = Rct, muwt = muwt, muws = muws, muct = muct, cv = cv, nAgeClass = nAgeClass, NonTravelMETs = NonTravelMETs, GBD = GBD, pm25 = pm25, region = region, vision = vision))
+    muNonTravel <- 100 # Magic number
+
+    return(list(F = F, Rwt = Rwt, Rws = Rws, Rct = Rct, muwt = muwt, muws = muws, muct = muct, cv = cv, nAgeClass = nAgeClass, NonTravelMETs = NonTravelMETs, muNonTravel = muNonTravel, GBD = GBD, pm25 = pm25, region = region, vision = vision))
 
     }
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -369,19 +371,22 @@ getQuintiles <- function(means, parameters){
   CyclingMET <- list(M = means$meanCycleMET[,"M"]*CyclingTime[["M"]]/60, F = means$meanCycleMET[,"F"]*CyclingTime[["F"]]/60)
   TotalTravelMET <- list(M = WalkingMET[["M"]] + CyclingMET[["M"]], F = WalkingMET[["F"]] + CyclingMET[["F"]])
 
+  muNonTravel <- parameters$muNonTravel
+  muNonTravelMatrix <- matrix(c(0.0000000,0.0000000,0.9715051,1.0354205,0.9505718,0.8999381,0.8315675,0.7180636,0.0000000,0.0000000,1.0000000,1.1171469,0.9878429,0.9434823,0.8782254,0.7737818), ncol = 2)
+
   TotalMETSample <- mapply(getTotalDistribution,
                                  muTravel = means$meanActiveTransportTime,
                                  cvTravel = parameters$cv,
-                                 muNonTravel = matrix(75,nrow = 8, ncol = 2),
+                                 muNonTravel = muNonTravelMatrix*muNonTravel,
                                  cvNonTravel = 1/2,
                                  pWalk = rep(54.4/64.2,2),
                                  vWalk = rep(2.88,2),
                                  size = 1e5, SIMPLIFY = FALSE)
   TotalMETQuintiles <- lapply(TotalMETSample,function(x) quantile(x, seq(0.1,0.9,0.2)))
-    
+
 
 TotalMET <- list( M = matrix(unlist(TotalMETQuintiles[1:8]),ncol = 5, byrow = TRUE), F = matrix(unlist(TotalMETQuintiles[9:16]),ncol = 5, byrow = TRUE ) )
-    
+
   TotalMET <- mapply(function(x,y) ifelse(x<2.5,0.1,x),TotalMET,SIMPLIFY=FALSE)
 
  return(list(ActiveTransportTime=ActiveTransportTime, WalkingTime=WalkingTime, CyclingTime=CyclingTime, WalkingMET=WalkingMET, CyclingMET = CyclingMET, TotalTravelMET = TotalTravelMET, TotalMET = TotalMET))
