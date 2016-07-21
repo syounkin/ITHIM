@@ -369,7 +369,7 @@ getQuintiles <- function(means, parameters){
   CyclingTime <- list(M = ActiveTransportTime[["M"]] * (means$propTimeCycling[,"M"]), F = ActiveTransportTime[["F"]] * (means$propTimeCycling[,"F"]))
   WalkingMET <- list(M = means$meanWalkMET[,"M"]*WalkingTime[["M"]]/60, F = means$meanWalkMET[,"F"]*WalkingTime[["F"]]/60)
   CyclingMET <- list(M = means$meanCycleMET[,"M"]*CyclingTime[["M"]]/60, F = means$meanCycleMET[,"F"]*CyclingTime[["F"]]/60)
-  TotalTravelMET <- list(M = WalkingMET[["M"]] + CyclingMET[["M"]], F = WalkingMET[["F"]] + CyclingMET[["F"]])
+  TravelMET <- list(M = WalkingMET[["M"]] + CyclingMET[["M"]], F = WalkingMET[["F"]] + CyclingMET[["F"]])
 
   muNonTravel <- parameters$muNonTravel
   muNonTravelMatrix <- matrix(c(0.0000000,0.0000000,0.9715051,1.0354205,0.9505718,0.8999381,0.8315675,0.7180636,0.0000000,0.0000000,1.0000000,1.1171469,0.9878429,0.9434823,0.8782254,0.7737818), ncol = 2)
@@ -384,12 +384,13 @@ getQuintiles <- function(means, parameters){
                                  size = 1e5, SIMPLIFY = FALSE)
   TotalMETQuintiles <- lapply(TotalMETSample,function(x) quantile(x, seq(0.1,0.9,0.2)))
 
-
-TotalMET <- list( M = matrix(unlist(TotalMETQuintiles[1:8]),ncol = 5, byrow = TRUE), F = matrix(unlist(TotalMETQuintiles[9:16]),ncol = 5, byrow = TRUE ) )
+  TotalMET <- list( M = matrix(unlist(TotalMETQuintiles[1:8]),ncol = 5, byrow = TRUE), F = matrix(unlist(TotalMETQuintiles[9:16]),ncol = 5, byrow = TRUE ) )
 
   TotalMET <- mapply(function(x,y) ifelse(x<2.5,0.1,x),TotalMET,SIMPLIFY=FALSE)
 
- return(list(ActiveTransportTime=ActiveTransportTime, WalkingTime=WalkingTime, CyclingTime=CyclingTime, WalkingMET=WalkingMET, CyclingMET = CyclingMET, TotalTravelMET = TotalTravelMET, TotalMET = TotalMET))
+  #TotalMET <- mapply(function(x,y) ifelse(x+y<2.5,0.1,x+y),TravelMET,parameters$NonTravelMETs,SIMPLIFY=FALSE) # This is the old way of doing things.
+
+ return(list(ActiveTransportTime=ActiveTransportTime, WalkingTime=WalkingTime, CyclingTime=CyclingTime, WalkingMET=WalkingMET, CyclingMET = CyclingMET, TravelMET = TravelMET, TotalMET = TotalMET))
 }
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
