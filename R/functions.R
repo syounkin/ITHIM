@@ -186,6 +186,8 @@ createParameterList <- function(vision = "baseline", region = "national"){
 
         regionalParams <- createRegionalParameters(region, nAgeClass)
 
+    } else {
+        message("region is neither national, cook, or SFBayArea")
         }
 
     if(vision == "baseline"){
@@ -1129,7 +1131,7 @@ createRegionalParameters <- function(region, nAgeClass){
         Rws <- matrix(c(1.0662510447,0.8753344725,1.0662510447,0.8753344725,1.0206231847,1.000210721,1.0590466458,1.0338312494,1.0392345486,0.947378462,1.03022905,0.9329696641,0.9509806615,0.8969476694,0.9509806615,0.8969476694),byrow=TRUE, ncol = 2, dimnames = list(paste0("ageClass",1:nAgeClass),c("M","F")))
 
     }else{
-                                        # error message here
+        message("region is neither national, cook, or SFBayArea")
     }
 
 return(list(F = F, Rwt = Rwt, Rct = Rct, Rws = Rws))
