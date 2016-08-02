@@ -1137,3 +1137,20 @@ createRegionalParameters <- function(region, nAgeClass){
 return(list(F = F, Rwt = Rwt, Rct = Rct, Rws = Rws))
 
 }
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#' Converts age to ITHIM age class
+#'
+#' Converts age to ITHIM age class
+#'
+#' @param age A vector of ages.  This vector will be coerced to numeric.
+#'
+#' @return A character vector of ITHIM age categories
+#'
+#' @export
+convertToAgeClass <- function(age){
+  age <- as.numeric(age)
+  agecat <- ifelse( age <= 4, "00-04", ifelse( age <= 14, "05-14", ifelse( age <= 29, "15-29", ifelse( age <= 44, "30-44", ifelse( age <= 59, "45-59", ifelse( age <= 69, "60-69", ifelse( age <= 79, "70-79", ifelse( age > 80, "80+", NA))))))))
+  return(agecat)
+}
