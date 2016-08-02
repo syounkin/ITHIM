@@ -34,6 +34,8 @@ Currently all age by sex classes are assigned 6 for weekly
 meanCycleMET is constant.  So, it's really a parameter and not a function of parameters.
 
 cycling speed has been removed
+
+We use a constant coefficient of variation across strata to compute standard deviations
 }
 \seealso{
 \code{\link{createITHIM}}
