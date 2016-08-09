@@ -224,7 +224,9 @@ createParameterList <- function(vision = "baseline", region = "national"){
 
     muNonTravel <- 75 # Magic number
 
-    return(c(regionalParams, list(muwt = muwt, muws = muws, muct = muct, cv = cv, nAgeClass = nAgeClass, muNonTravel = muNonTravel, GBD = GBD, pm25 = pm25, region = region, vision = vision)))
+    meanType <- "referent"
+
+    return(c(regionalParams, list(muwt = muwt, muws = muws, muct = muct, cv = cv, nAgeClass = nAgeClass, muNonTravel = muNonTravel, GBD = GBD, pm25 = pm25, meanType = meanType, region = region, vision = vision)))
 
     ##    if( region == "national" ){
     ## }else if( region == "SFBayArea" ){
@@ -286,14 +288,21 @@ createParameterList <- function(vision = "baseline", region = "national"){
 #' @export
 computeMeanMatrices <- function(parList){
     with(parList, {
-        alphawt <- sum(F*Rwt)
-        alphact <- sum(F*Rct)
-        alphaws <- sum(F*Rws)
-
-        meanWalkTime <- muwt/alphawt*Rwt
-        meanCycleTime <- muct/alphact*Rct
+        if( meanType == "overall" ){
+            alphawt <- sum(F*Rwt)
+            alphact <- sum(F*Rct)
+            alphaws <- sum(F*Rws)
+            meanWalkTime <- muwt/alphawt*Rwt
+            meanCycleTime <- muct/alphact*Rct
+            meanWalkSpeed <- muws/alphaws*Rws
+        } else if (meanType == "referent" ){
+            meanWalkTime <- muwt*Rwt
+            meanCycleTime <- muct*Rct
+            meanWalkSpeed <- muws*Rws
+        }else{
+            message("Wrong mean type.")
+            }
         propTimeCycling <-  meanCycleTime/(meanCycleTime+meanWalkTime)
-        meanWalkSpeed <- muws/alphaws*Rws
 
         meanWalkMET <- ifelse(1.2216*meanWalkSpeed + 0.0838 < 2.5, 2.5,  1.2216*meanWalkSpeed + 0.0838)
         meanCycleMET <- matrix(6, byrow=TRUE, ncol = 2, nrow =nrow(F),dimnames = list(paste0("ageClass",1:nAgeClass),c("M","F")))
@@ -578,11 +587,13 @@ AFForList2 <- function(scenario,baseline){
 #' @export
 compareModels <- function(baseline, scenario){
 
-    if( identical(baseline$parameters$GBD,scenario$parameters$GBD) ){
-        GBD <- baseline$parameters$GBD # GBD must be the same between baseline and scenario
-        }else{
-            #error message
-            }
+    ## if( identical(baseline$parameters$GBD,scenario$parameters$GBD) ){
+    ##     GBD <- baseline$parameters$GBD # GBD must be the same between baseline and scenario
+    ##     }else{
+    ##         #error message
+    ##         }
+
+    GBD <- baseline$parameters$GBD
 
     RR <- createActiveTransportRRs()
     RR.baseline <- lapply(RR, MET2RR, baseline$quintiles$TotalMET)
