@@ -992,7 +992,7 @@ getMETQuintiles <- function(mu, p, cv, size = 1e3){
 #' @return A random sample from the distribution.
 #'
 #' @export
-getNonTravelDistribution <- function(mu, cv, size = 1e3){
+getNonTravelDistribution <- function(mu, cv, size = 1e4){
     mu <- ifelse(mu == 0, 0.01, mu)
     sd <- mu*cv
     simLogNorm <- rlnorm(size, log(mu/sqrt(1+sd^2/mu^2)), sqrt(log(1+sd^2/mu^2)))
