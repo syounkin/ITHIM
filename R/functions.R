@@ -1010,7 +1010,7 @@ getNonTravelDistribution <- function(mu, cv, size = 1e4){
 #' @return A random sample from the distribution.
 #'
 #' @export
-getTravelDistribution <- function(mu, cv, pWalk, vWalk, size = 1e3){
+getTravelDistribution <- function(mu, cv, pWalk, vWalk, size = 1e4){
     mu <- ifelse(mu == 0, 0.01, mu)
     sd <- mu*cv
     activeTransportTime <- rlnorm(size, log(mu/sqrt(1+sd^2/mu^2)), sqrt(log(1+sd^2/mu^2)))
