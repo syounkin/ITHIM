@@ -222,11 +222,13 @@ createParameterList <- function(vision = "baseline", region = "national"){
 
     GBD <- readGBD(file = GBDFile)
 
-    muNonTravel <- 75 # Magic number
-
+    muNonTravel <- 2 # Magic number
+    cvNonTravel <- 1 # Magic number
+    pWalk <- 54.4/64.2 # Magic number
+    
     meanType <- "referent"
 
-    return(c(regionalParams, list(muwt = muwt, muws = muws, muct = muct, cv = cv, nAgeClass = nAgeClass, muNonTravel = muNonTravel, GBD = GBD, pm25 = pm25, meanType = meanType, region = region, vision = vision)))
+    return(c(regionalParams, list(muwt = muwt, muws = muws, muct = muct, cv = cv, cvNonTravel = cvNonTravel, pWalk = pWalk, nAgeClass = nAgeClass, muNonTravel = muNonTravel, GBD = GBD, pm25 = pm25, meanType = meanType, region = region, vision = vision)))
 
     ##    if( region == "national" ){
     ## }else if( region == "SFBayArea" ){
@@ -351,8 +353,8 @@ getQuintiles <- function(means, parameters){
                                  muTravel = means$meanActiveTransportTime,
                                  cvTravel = parameters$cv,
                                  muNonTravel = muNonTravelMatrix*muNonTravel,
-                                 cvNonTravel = 1/2,
-                                 pWalk = rep(54.4/64.2,2),
+                                 cvNonTravel = parameters$cvNonTravel,
+                                 pWalk = parameters$pWalk,
                                  vWalk = means$meanWalkSpeed,
                                  size = 1e5, SIMPLIFY = FALSE)
   TotalMETQuintiles <- lapply(TotalMETSample,function(x) quantile(x, seq(0.1,0.9,0.2)))
