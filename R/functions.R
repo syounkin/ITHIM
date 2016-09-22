@@ -228,7 +228,9 @@ createParameterList <- function(vision = "baseline", region = "national"){
     
     meanType <- "referent"
 
-    return(c(regionalParams, list(muwt = muwt, muws = muws, muct = muct, cv = cv, cvNonTravel = cvNonTravel, pWalk = pWalk, nAgeClass = nAgeClass, muNonTravel = muNonTravel, GBD = GBD, pm25 = pm25, meanType = meanType, region = region, vision = vision)))
+    quantiles <- seq(0.1,0.9,0.3)
+
+    return(c(regionalParams, list(muwt = muwt, muws = muws, muct = muct, cv = cv, cvNonTravel = cvNonTravel, pWalk = pWalk, nAgeClass = nAgeClass, muNonTravel = muNonTravel, GBD = GBD, pm25 = pm25, meanType = meanType, region = region, vision = vision, quantiles = quantiles)))
 
     ##    if( region == "national" ){
     ## }else if( region == "SFBayArea" ){
@@ -339,7 +341,7 @@ computeMeanMatrices <- function(parList){
 #' @export
 getQuintiles <- function(means, parameters){
 
-  ActiveTransportTime <- computeQuintiles(means$meanActiveTransportTime, means$sdActiveTransportTime)
+  ActiveTransportTime <- computeQuintiles(means$meanActiveTransportTime, means$sdActiveTransportTime, parameters$quantiles)
   WalkingTime <- list(M = ActiveTransportTime[["M"]] * (1-means$propTimeCycling[,"M"]), F = ActiveTransportTime[["F"]] * (1-means$propTimeCycling[,"F"]))
   CyclingTime <- list(M = ActiveTransportTime[["M"]] * (means$propTimeCycling[,"M"]), F = ActiveTransportTime[["F"]] * (means$propTimeCycling[,"F"]))
   WalkingMET <- list(M = means$meanWalkMET[,"M"]*WalkingTime[["M"]]/60, F = means$meanWalkMET[,"F"]*WalkingTime[["F"]]/60)
@@ -357,9 +359,9 @@ getQuintiles <- function(means, parameters){
                                  pWalk = parameters$pWalk,
                                  vWalk = means$meanWalkSpeed,
                                  size = 1e5, SIMPLIFY = FALSE)
-  TotalMETQuintiles <- lapply(TotalMETSample,function(x) quantile(x, seq(0.1,0.9,0.2)))
+  TotalMETQuintiles <- lapply(TotalMETSample,function(x) quantile(x, parameters$quantiles))
 
-  TotalMET <- list( M = matrix(unlist(TotalMETQuintiles[1:8]),ncol = 5, byrow = TRUE), F = matrix(unlist(TotalMETQuintiles[9:16]),ncol = 5, byrow = TRUE ) )
+  TotalMET <- list( M = matrix(unlist(TotalMETQuintiles[1:8]),ncol = length(parameters$quantiles), byrow = TRUE), F = matrix(unlist(TotalMETQuintiles[9:16]),ncol = length(parameters$quantiles), byrow = TRUE ) )
 
   TotalMET <- mapply(function(x,y) ifelse(x<2.5,0.1,x),TotalMET,SIMPLIFY=FALSE)
 
@@ -389,20 +391,22 @@ getQuintiles <- function(means, parameters){
 #' @seealso \code{\link{getQuintiles}}
 #'
 #' @export
-computeQuintiles <- function( mean, sd ){
+computeQuintiles <- function( mean, sd, quantiles ){
 
     nAgeClass <- nrow(mean)
-    ncol <- 5
+    ncol <- length(quantiles)
 
     logMean <- log(mean)-1/2*log(1+(sd/mean)^2)
     logSD <- sqrt(log(1+(sd/mean)^2))
 
-    quintVec <- c(mapply(qlnorm, logMean, logSD, p = 0.1),
-    mapply(qlnorm, logMean, logSD, p = 0.3),
-    mapply(qlnorm, logMean, logSD, p = 0.5),
-    mapply(qlnorm, logMean, logSD, p = 0.7),
-    mapply(qlnorm, logMean, logSD, p = 0.9))
+    quintVec <- c()
+    
+    for( quant in quantiles ){
 
+        quintVec <- c(quintVec, mapply(qlnorm, logMean, logSD, p = quant))
+
+    }
+    
     quintMat <- matrix(quintVec, nrow = 2*nAgeClass, ncol = ncol, dimnames = list(paste0("ageClass", rep(1:nAgeClass,2)),paste0("q",1:ncol)))
 
     quintList = list(M = quintMat[1:nAgeClass,], F = quintMat[nAgeClass+1:8,])
@@ -426,7 +430,7 @@ computeQuintiles <- function( mean, sd ){
 #' @seealso \code{\link{compareModels}}
 #'
 #' @export
-createActiveTransportRRs <- function(){
+createActiveTransportRRs <- function(nQuantiles = 5){
 
     diseaseNames <- c("BreastCancer","ColonCancer","CVD","Dementia","Depression","Diabetes")
     nAgeClass <- 8
@@ -470,7 +474,7 @@ createActiveTransportRRs <- function(){
 
     k <- 0.5
     RR <- mapply(function(x,y,k) x^(1/y)^k, RR.lit, exposure, 0.5, SIMPLIFY=FALSE)
-    RR <- lapply(RR, reshapeRR)
+    RR <- lapply(RR, reshapeRR, nQuantiles = nQuantiles)
 
     return(RR)
 
@@ -597,7 +601,7 @@ compareModels <- function(baseline, scenario){
 
     GBD <- baseline$parameters$GBD
 
-    RR <- createActiveTransportRRs()
+    RR <- createActiveTransportRRs(nQuantiles = length(baseline$parameters$quantiles))
     RR.baseline <- lapply(RR, MET2RR, baseline$quintiles$TotalMET)
     RR.scenario <- lapply(RR, MET2RR, scenario$quintiles$TotalMET)
 
@@ -937,9 +941,9 @@ createATandAPRRs <- function(){
 #'     sex
 #'
 #' @export
-reshapeRR <- function(RR){
+reshapeRR <- function(RR, nQuantiles = 5){
     nAgeClass <- 8
-    list( M = matrix(RR[,"M"], nrow = nAgeClass, ncol = 5, dimnames = list(paste0("ageClass",1:nAgeClass), paste0("quint",1:5))),F = matrix(RR[,"F"], nrow = nAgeClass, ncol = 5, dimnames = list(paste0("ageClass",1:nAgeClass), paste0("quint",1:5))))
+    list( M = matrix(RR[,"M"], nrow = nAgeClass, ncol = nQuantiles, dimnames = list(paste0("ageClass",1:nAgeClass), paste0("quint",1:nQuantiles))),F = matrix(RR[,"F"], nrow = nAgeClass, ncol = nQuantiles, dimnames = list(paste0("ageClass",1:nAgeClass), paste0("quint",1:nQuantiles))))
     }
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -977,12 +981,12 @@ AFForList <- function(scenario,baseline){
 #' @return A vector of quintiles.
 #'
 #' @export
-getMETQuintiles <- function(mu, p, cv, size = 1e3){
+getMETQuintiles <- function(mu, p, cv, quantiles = seq(0.1,0.9,0.1), size = 1e3){
     mu <- ifelse(mu == 0, 0.01, mu)
     sd <- mu*cv
     simLogNorm <- rlnorm(size, log(mu/sqrt(1+sd^2/mu^2)), sqrt(log(1+sd^2/mu^2)))
     simData <- ifelse(sample(0:1, size = size, prob = c(1-p,p), replace = TRUE) == 1, simLogNorm, 0)
-    return(quantile(simData, probs = c(0.1,0.3,0.5,0.7,0.9)))
+    return(quantile(simData, probs = quantiles))
 }
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
