@@ -313,7 +313,9 @@ computeMeanMatrices <- function(parList){
         meanActiveTransportTime <- meanWalkTime + meanCycleTime
         sdActiveTransportTime <- meanActiveTransportTime*cv
 
-        return(list(meanWalkTime = meanWalkTime, meanCycleTime = meanCycleTime, meanWalkSpeed = meanWalkSpeed, meanWalkMET = meanWalkMET, meanCycleMET = meanCycleMET, meanActiveTransportTime = meanActiveTransportTime, sdActiveTransportTime = sdActiveTransportTime, propTimeCycling = propTimeCycling))
+        pWalk <- meanWalkTime/(meanWalkTime + meanCycleTime)
+
+        return(list(meanWalkTime = meanWalkTime, meanCycleTime = meanCycleTime, meanWalkSpeed = meanWalkSpeed, meanWalkMET = meanWalkMET, meanCycleMET = meanCycleMET, meanActiveTransportTime = meanActiveTransportTime, sdActiveTransportTime = sdActiveTransportTime, propTimeCycling = propTimeCycling, pWalk = pWalk))
         })
 }
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -356,10 +358,10 @@ getQuintiles <- function(means, parameters){
                                  cvTravel = parameters$cv,
                                  muNonTravel = muNonTravelMatrix*muNonTravel,
                                  cvNonTravel = parameters$cvNonTravel,
-                                 pWalk = parameters$pWalk,
+                                 pWalk = means$pWalk, # parameters$pWalk
                                  vWalk = means$meanWalkSpeed,
                                  size = 1e5, SIMPLIFY = FALSE)
-  TotalMETQuintiles <- lapply(TotalMETSample,function(x) quantile(x, parameters$quantiles))
+  TotalMETQuintiles <- lapply(TotalMETSample,function(x) quantile(x, parameters$quantiles, na.rm = TRUE))
 
   TotalMET <- list( M = matrix(unlist(TotalMETQuintiles[1:8]),ncol = length(parameters$quantiles), byrow = TRUE), F = matrix(unlist(TotalMETQuintiles[9:16]),ncol = length(parameters$quantiles), byrow = TRUE ) )
 
@@ -986,7 +988,7 @@ getMETQuintiles <- function(mu, p, cv, quantiles = seq(0.1,0.9,0.1), size = 1e3)
     sd <- mu*cv
     simLogNorm <- rlnorm(size, log(mu/sqrt(1+sd^2/mu^2)), sqrt(log(1+sd^2/mu^2)))
     simData <- ifelse(sample(0:1, size = size, prob = c(1-p,p), replace = TRUE) == 1, simLogNorm, 0)
-    return(quantile(simData, probs = quantiles))
+    return(quantile(simData, probs = quantiles, na.rm = TRUE))
 }
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
