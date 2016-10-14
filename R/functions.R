@@ -67,8 +67,8 @@
 #' @seealso \code{\link{createITHIM}}, \code{\link{compareModels}}
 #' @examples
 #'
-#' ITHIM.baseline <- createITHIM(vision = "baseline", region = "SFBayArea")
-#' ITHIM.scenario <- createITHIM(vision = "scenario", region = "SFBayArea")
+#' ITHIM.baseline <- createITHIM(region = "SFBayArea")
+#' ITHIM.scenario <- createITHIM(region = "SFBayArea")
 #' comparativeRisk <- compareModels(ITHIM.baseline, ITHIM.scenario)
 #' names(ITHIM.baseline)
 #' names(ITHIM.baseline$parameters)
@@ -88,7 +88,6 @@ NULL
 #' workbook.  Use \code{\link{updateITHIM}} to change values of the
 #' parameters.
 #'
-#' @param vision either "baseline" or "scenario"
 #' @param region either "national" or "SFBayArea"
 #'
 #' @return A list of parameters, means and quintiles.
@@ -96,7 +95,7 @@ NULL
 #'
 #' @examples
 #'
-#' ITHIM.baseline <- createITHIM(vision = "baseline", region = "SFBayArea")
+#' ITHIM.baseline <- createITHIM(region = "SFBayArea")
 #' ITHIM.baseline$parameters$muct
 #' ITHIM.baseline <- updateITHIM(ITHIM.baseline, "muct", 200)
 #' ITHIM.baseline$parameters$muct
@@ -105,7 +104,7 @@ NULL
 createITHIM <- function(vision = "baseline", region = "national"){
     return(
         list(
-            parameters = parameters <- createParameterList(vision = vision, region = region),
+            parameters = parameters <- createParameterList(region = region),
             means = means <- computeMeanMatrices(parameters),
             quintiles = quintiles <- getQuintiles(means, parameters)
             )
@@ -119,7 +118,6 @@ createITHIM <- function(vision = "baseline", region = "national"){
 #' This function is used to generate a list of parameters describing
 #' both the region and vision of interest.
 #'
-#' @param vision A character string, either "baseline" or "scenario"
 #' @param region A character string, either "national" or "SFBayArea"
 #'
 #' @return A list with parameters and estimates
@@ -178,38 +176,14 @@ createITHIM <- function(vision = "baseline", region = "national"){
 #' @seealso \code{\link{computeNonTravelMETs}},\code{\link{readGBD}}
 #'
 #' @export
-createParameterList <- function(vision = "baseline", region = "national"){
+createParameterList <- function(region = "national"){
 
     nAgeClass <- 8
 
     if( region %in% c("national","cook","SFBayArea")){
-
         regionalParams <- createRegionalParameters(region, nAgeClass)
-
     } else {
         message("region is neither national, cook, or SFBayArea")
-        }
-
-    if(vision == "baseline"){
-
-        muwt <- 47.3900 # min per week
-        muws <- 2.7474 # mph
-        muct <- 6.1600 # min per week
-        cv <- 3.0288 # coefficient of variation
-        pm25 <- 10.075 # microns per cubic meter
-
-    }else if(vision == "scenario"){
-
-        muwt <- 57.7778 # min per week
-        muws <- 2.7000 # mph
-        muct <- 46.7647 # min per week
-        cv <- 2.9501 # coefficient of variation
-        pm25 <- 10.072 # microns per cubic meter
-
-    }else{
-
-        message("vision parameter was neither baseline nor scenario")
-
     }
 
     if( region == "national" ){
@@ -222,15 +196,40 @@ createParameterList <- function(vision = "baseline", region = "national"){
 
     GBD <- readGBD(file = GBDFile)
 
+#    if(vision == "baseline"){
+
+        muwt <- 47.3900 # min per week
+        muws <- 2.7474 # mph
+        muct <- 6.1600 # min per week
+        cv <- 3.0288 # coefficient of variation
+#        pm25 <- 10.075 # microns per cubic meter
+
+#    }else if(vision == "scenario"){
+
+#        muwt <- 57.7778 # min per week
+#        muws <- 2.7000 # mph
+#        muct <- 46.7647 # min per week
+#        cv <- 2.9501 # coefficient of variation
+#        pm25 <- 10.072 # microns per cubic meter
+
+#    }else{
+
+#        message("vision parameter was neither baseline nor scenario")
+
+#    }
+
+    muNonTravelMatrix <- matrix(c(0.0000000,0.0000000,0.9715051,1.0354205,0.9505718,0.8999381,0.8315675,0.7180636,0.0000000,0.0000000,1.0000000,1.1171469,0.9878429,0.9434823,0.8782254,0.7737818), ncol = 2)
+
+
     muNonTravel <- 2 # Magic number
     cvNonTravel <- 1 # Magic number
-    pWalk <- 54.4/64.2 # Magic number
-    
+    #pWalk <- 54.4/64.2 # Magic number
+
     meanType <- "referent"
 
     quantiles <- seq(0.1,0.9,0.3)
 
-    return(c(regionalParams, list(muwt = muwt, muws = muws, muct = muct, cv = cv, cvNonTravel = cvNonTravel, pWalk = pWalk, nAgeClass = nAgeClass, muNonTravel = muNonTravel, GBD = GBD, pm25 = pm25, meanType = meanType, region = region, vision = vision, quantiles = quantiles)))
+    return(c(regionalParams, list(muwt = muwt, muws = muws, muct = muct, cv = cv, cvNonTravel = cvNonTravel, pWalk = pWalk, nAgeClass = nAgeClass, muNonTravel = muNonTravel, muNonTravelMatrix = muNonTravelMatrix, GBD = GBD, pm25 = pm25, meanType = meanType, region = region, quantiles = quantiles)))
 
     ##    if( region == "national" ){
     ## }else if( region == "SFBayArea" ){
@@ -351,7 +350,7 @@ getQuintiles <- function(means, parameters){
   TravelMET <- list(M = WalkingMET[["M"]] + CyclingMET[["M"]], F = WalkingMET[["F"]] + CyclingMET[["F"]])
 
   muNonTravel <- parameters$muNonTravel
-  muNonTravelMatrix <- matrix(c(0.0000000,0.0000000,0.9715051,1.0354205,0.9505718,0.8999381,0.8315675,0.7180636,0.0000000,0.0000000,1.0000000,1.1171469,0.9878429,0.9434823,0.8782254,0.7737818), ncol = 2)
+  muNonTravelMatrix <- parameters$muNonTravelMatrix
 
   TotalMETSample <- mapply(getTotalDistribution,
                                  muTravel = means$meanActiveTransportTime,
@@ -402,13 +401,13 @@ computeQuintiles <- function( mean, sd, quantiles ){
     logSD <- sqrt(log(1+(sd/mean)^2))
 
     quintVec <- c()
-    
+
     for( quant in quantiles ){
 
         quintVec <- c(quintVec, mapply(qlnorm, logMean, logSD, p = quant))
 
     }
-    
+
     quintMat <- matrix(quintVec, nrow = 2*nAgeClass, ncol = ncol, dimnames = list(paste0("ageClass", rep(1:nAgeClass,2)),paste0("q",1:ncol)))
 
     quintList = list(M = quintMat[1:nAgeClass,], F = quintMat[nAgeClass+1:8,])
