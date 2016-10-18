@@ -6,67 +6,41 @@
 \usage{
 createParameterList()
 }
-\arguments{
-\item{region}{A character string, either "national" or "SFBayArea"}
-}
 \value{
 A list with parameters and estimates
 
-\item{F}{A numerical matrix for the population density, stratified by age class and sex}
 \item{Rwt}{A numerical matrix for the walking time, relative to ?value?}
-\item{Rws}{A numerical matrix for the walking speed, relative to ?value?}
 \item{Rct}{A numerical matrix for the cycling time, relative to ?value?}
+\item{Rws}{A numerical matrix for the walking speed, relative to ?value?}
 \item{muwt}{A numerical value for the mean walking time}
 \item{muws}{A numerical value for the mean walking speed}
 \item{muct}{A numerical value for the mean cycling time}
 \item{cv}{A numerical value for the coefficient of variation for active transport time}
+\item{cvNonTravel}{A numerical value for the coefficient of variation for leisure activity}
+\item{muNonTravel}{}
+\item{muNonTravelMatrix}{}
+\item{GBD}{}
+\item{meanType}{}
+\item{quantiles}{}
 }
 \description{
-This function is used to generate a list of parameters describing
-both the region and vision of interest.
+This function is used to generate a complete list of default
+parameters
 }
 \note{
-There are 15 parameters in the ITHIM model;
+There are 11 parameters in the ITHIM active transport component;
 
-Active Transport
+1-4. mean walking and cycling times (muwt, muct, Rwt, Rct)
 
-1. mean travel distance (muwt,muws,Rws,Rwt)
+5. standard deviation of active travel time (cv),
 
-3. ratio of active travel time to reference group (Rwt, Rct)
+6-7. walk speed (muws, Rws)
 
-4. standard deviation of active travel time (cv),
+8. ratio of regional disease-specific mortality to national disease-specific mortality (GBD)
 
-5. distribution of population by age and sex (F)
+9-10. non-travel related physical activity means by age and sex (muNonTravel, muNonTravelMatrix)
 
-8. walk speed (muws)
-
-15. Ratio of daily per capita bicycling to walking time (?)
-
-Disease Burden
-
-6. ratio of regional disease-specific mortality to national disease-specific mortality (-)
-
-7. proportion of colon cancers from colo-rectal cancer (-)
-
-Non-travel METs
-
-9. non-travel related physical activity by age and sex (fixed)
-
-Air Pollution
-
-2. mean travel time by mode (-)
-
-10. Personal travel distance by facility type and travel mode (-)
-
-11. Vehicle distance traveled by facility type and travel mode (-)
-
-12. CO2 emitted per distance traveled by vehicle (-)
-
-14. Emissions of primary and secondary sources of PM 2.5 (-)
-
-Road Injuries
-
-13. Serious and fatal injuries between a striking vehicle and victim vehicle by severity and modes (-)
+11. standard deviation of leisure activity (cvNonTravel),
 }
 \seealso{
 \code{\link{computeNonTravelMETs}},\code{\link{readGBD}}

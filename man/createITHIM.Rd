@@ -4,10 +4,7 @@
 \alias{createITHIM}
 \title{Create an ITHIM object}
 \usage{
-createITHIM(vision = "baseline", region = "national")
-}
-\arguments{
-\item{region}{either "national" or "SFBayArea"}
+createITHIM()
 }
 \value{
 A list of parameters, means and quintiles.
@@ -22,13 +19,15 @@ parameters.
 }
 \examples{
 
-ITHIM.baseline <- createITHIM(region = "SFBayArea")
+ITHIM.baseline <- createITHIM()
 ITHIM.baseline$parameters$muct
 ITHIM.baseline <- updateITHIM(ITHIM.baseline, "muct", 200)
 ITHIM.baseline$parameters$muct
 
 }
 \seealso{
-\code{\link{updateITHIM}}, \code{\link{createParameterList}}, \code{\link{computeMeanMatrices}}, \code{\link{getQuintiles}}
+\code{\link{updateITHIM}},
+    \code{\link{createParameterList}},
+    \code{\link{computeMeanMatrices}}, \code{\link{getQuintiles}}
 }
 
