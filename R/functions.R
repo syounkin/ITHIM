@@ -88,23 +88,23 @@ NULL
 #' workbook.  Use \code{\link{updateITHIM}} to change values of the
 #' parameters.
 #'
-#' @param region either "national" or "SFBayArea"
-#'
 #' @return A list of parameters, means and quintiles.
-#' @seealso \code{\link{updateITHIM}}, \code{\link{createParameterList}}, \code{\link{computeMeanMatrices}}, \code{\link{getQuintiles}}
+#' @seealso \code{\link{updateITHIM}},
+#'     \code{\link{createParameterList}},
+#'     \code{\link{computeMeanMatrices}}, \code{\link{getQuintiles}}
 #'
 #' @examples
 #'
-#' ITHIM.baseline <- createITHIM(region = "SFBayArea")
+#' ITHIM.baseline <- createITHIM()
 #' ITHIM.baseline$parameters$muct
 #' ITHIM.baseline <- updateITHIM(ITHIM.baseline, "muct", 200)
 #' ITHIM.baseline$parameters$muct
 #'
 #' @export
-createITHIM <- function(vision = "baseline", region = "national"){
+createITHIM <- function(){
     return(
         list(
-            parameters = parameters <- createParameterList(region = region),
+            parameters = parameters <- createParameterList(),
             means = means <- computeMeanMatrices(parameters),
             quintiles = quintiles <- getQuintiles(means, parameters)
             )
@@ -115,93 +115,137 @@ createITHIM <- function(vision = "baseline", region = "national"){
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #' Define ITHIM model parameters
 #'
-#' This function is used to generate a list of parameters describing
-#' both the region and vision of interest.
-#'
-#' @param region A character string, either "national" or "SFBayArea"
+#' This function is used to generate a complete list of default
+#' parameters
 #'
 #' @return A list with parameters and estimates
 #'
-#' \item{F}{A numerical matrix for the population density, stratified by age class and sex}
 #' \item{Rwt}{A numerical matrix for the walking time, relative to ?value?}
-#' \item{Rws}{A numerical matrix for the walking speed, relative to ?value?}
 #' \item{Rct}{A numerical matrix for the cycling time, relative to ?value?}
+#' \item{Rws}{A numerical matrix for the walking speed, relative to ?value?}
 #' \item{muwt}{A numerical value for the mean walking time}
 #' \item{muws}{A numerical value for the mean walking speed}
 #' \item{muct}{A numerical value for the mean cycling time}
 #' \item{cv}{A numerical value for the coefficient of variation for active transport time}
+#' \item{cvNonTravel}{A numerical value for the coefficient of variation for leisure activity}
+#' \item{muNonTravel}{}
+#' \item{muNonTravelMatrix}{}
+#' \item{GBD}{}
+#' \item{meanType}{}
+#' \item{quantiles}{}
 #'
-#' @note There are 15 parameters in the ITHIM model;
+#' @note There are 11 parameters in the ITHIM active transport component;
 #'
-#' Active Transport
+#' 1-4. mean walking and cycling times (muwt, muct, Rwt, Rct)
 #'
-#' 1. mean travel distance (muwt,muws,Rws,Rwt)
+#' 5. standard deviation of active travel time (cv),
 #'
-#' 3. ratio of active travel time to reference group (Rwt, Rct)
+#' 6-7. walk speed (muws, Rws)
 #'
-#' 4. standard deviation of active travel time (cv),
+#' 8. ratio of regional disease-specific mortality to national disease-specific mortality (GBD)
 #'
-#' 5. distribution of population by age and sex (F)
+#' 9-10. non-travel related physical activity means by age and sex (muNonTravel, muNonTravelMatrix)
 #'
-#' 8. walk speed (muws)
-#'
-#' 15. Ratio of daily per capita bicycling to walking time (?)
-#'
-#' Disease Burden
-#'
-#' 6. ratio of regional disease-specific mortality to national disease-specific mortality (-)
-#'
-#' 7. proportion of colon cancers from colo-rectal cancer (-)
-#'
-#' Non-travel METs
-#'
-#' 9. non-travel related physical activity by age and sex (fixed)
-#'
-#' Air Pollution
-#'
-#' 2. mean travel time by mode (-)
-#'
-#' 10. Personal travel distance by facility type and travel mode (-)
-#'
-#' 11. Vehicle distance traveled by facility type and travel mode (-)
-#'
-#' 12. CO2 emitted per distance traveled by vehicle (-)
-#'
-#' 14. Emissions of primary and secondary sources of PM 2.5 (-)
-#'
-#' Road Injuries
-#'
-#' 13. Serious and fatal injuries between a striking vehicle and victim vehicle by severity and modes (-)
+#' 11. standard deviation of leisure activity (cvNonTravel),
 #'
 #' @seealso \code{\link{computeNonTravelMETs}},\code{\link{readGBD}}
 #'
 #' @export
-createParameterList <- function(region = "national"){
+createParameterList <- function(){
 
     nAgeClass <- 8
 
-    if( region %in% c("national","cook","SFBayArea")){
-        regionalParams <- createRegionalParameters(region, nAgeClass)
-    } else {
-        message("region is neither national, cook, or SFBayArea")
-    }
+    Rwt <- matrix(c(0.4305,0.3471,1.0700,0.8200,1.0100,1.0000,0.8600,1.1700,1.0600,1.1700,0.9900,0.9200,0.8000,0.7500,0.8200,0.7800),byrow=TRUE, ncol = 2, dimnames = list(paste0("ageClass",1:nAgeClass),c("M","F")))
 
-    if( region == "national" ){
-        GBDFile <- "gbd.csv"
-    }else if( region == "SFBayArea" ){
-        GBDFile <- "gbd.SFBayArea.csv"
-    }else{
-        message("region neither national nor SFBayArea")
-    }
+    Rct <- matrix(c(0.2935,0.1231,6.4500,3.1500,4.0000,1.0000,3.4800,0.8200,4.6700,1.1800,2.7000,0.6100,3.4200,0.2100,0.7000,0.0900),byrow=TRUE, ncol = 2, dimnames = list(paste0("ageClass",1:nAgeClass),c("M","F")))
 
+    Rws <- matrix(c(1.0662510447,0.8753344725,1.0662510447,0.8753344725,1.0206231847,1.000210721,1.0590466458,1.0338312494,1.0392345486,0.947378462,1.03022905,0.9329696641,0.9509806615,0.8969476694,0.9509806615,0.8969476694),byrow=TRUE, ncol = 2, dimnames = list(paste0("ageClass",1:nAgeClass),c("M","F")))
+
+    muNonTravelMatrix <- matrix(c(0.0000000,0.0000000,0.9715051,1.0354205,0.9505718,0.8999381,0.8315675,0.7180636,0.0000000,0.0000000,1.0000000,1.1171469,0.9878429,0.9434823,0.8782254,0.7737818), ncol = 2, dimnames = list(paste0("ageClass",1:nAgeClass),c("M","F")))
+
+    meanType <- "referent"
+    quantiles <- seq(0.1,0.9,0.3)
+    GBDFile <- "gbd.csv"
     GBD <- readGBD(file = GBDFile)
+    muwt <- 47.3900 # min per week
+    muws <- 2.7474 # mph
+    muct <- 6.1600 # min per week
+    cv <- 3.0288 # coefficient of variation for active transport time
+
+    muNonTravel <- 2 # MET-hrs./week leisure activity
+    cvNonTravel <- 1 # coefficient of variation for leisure activity
+
+    return( list(
+        Rwt = Rwt,
+        Rct = Rct,
+        Rws = Rws,
+        muwt = muwt,
+        muws = muws,
+        muct = muct,
+        cv = cv,
+        cvNonTravel = cvNonTravel,
+        nAgeClass = nAgeClass,
+        muNonTravel = muNonTravel,
+        muNonTravelMatrix = muNonTravelMatrix,
+        GBD = GBD,
+        meanType = meanType,
+        quantiles = quantiles
+    ))
+}
+
+
+
+## if( region %in% c("national","cook","SFBayArea")){
+    ##     regionalParams <- createRegionalParameters(region, nAgeClass)
+    ## } else {
+    ##     message("region is neither national, cook, or SFBayArea")
+    ## }
+
+
+
+
+
+
+#    if(region == "national"){
+
+
+    ## }else if( region == "cook" ){
+    ##     # How is the Cook County being used? is this another set of parameters for a run that is not currently in the UI?
+
+    ##     F <- matrix(c(0.0368276992,0.0353723566,0.0746989673,0.0716902674,0.1123490977,0.1104366009,0.1163649132,0.1182206842,0.0808260989,0.0891264801,0.0308720468,0.037493344,0.0223834475,0.0321797163,0.0098989332,0.0212593465), byrow = TRUE, nrow = nAgeClass, ncol = 2, dimnames = list(paste0("ageClass",1:nAgeClass),c("M","F")))
+
+    ##     Rwt <- matrix(c(0.43053,0.34715,0.49337,0.48135,0.93248,1.00000,0.76528,0.73350,0.68250,0.65805,0.56376,0.77155,0.58923,0.62678,0.56524,0.39604),byrow=TRUE, ncol = 2, dimnames = list(paste0("ageClass",1:nAgeClass),c("M","F")))
+
+    ##     Rct <- matrix(c(0.29350,0.12305,1.31944,0.82780,1.86938,1.00000,1.56016,0.73770,1.45792,0.24667,0.45162,0.18923,0.49021,0.16502,0.07503,0.02941),byrow=TRUE, ncol = 2, dimnames = list(paste0("ageClass",1:nAgeClass),c("M","F")))
+
+    ##     Rws <- matrix(c(1.0663,0.8753,1.0663,0.8753,1.0206,1.0002,1.0590,1.0338,1.0392,0.9474,1.0302,0.9330,0.9510,0.8969,0.9510,0.8969),byrow=TRUE, ncol = 2, dimnames = list(paste0("ageClass",1:nAgeClass),c("M","F")))
+
+    ## }else if( region == "SFBayArea" ){
+
+    ##     F <-   matrix(c(0.0320372482,0.0305871883,0.0622948202,0.0596515968,0.1032998128,0.0980824499,0.1122011305,0.1100342216,0.1064347335,0.1079303831,0.0438851145,0.0484215687,0.0221507176,0.0271904764,0.0132966677,0.0225018701), byrow = TRUE, nrow = nAgeClass, ncol = 2, dimnames = list(paste0("ageClass",1:nAgeClass),c("M","F")))
+
+    ##     Rwt <- matrix(c(0.726924085, 0.761665648,0.897072687, 0.933741586,0.751317731, 1,0.908293434, 1.262744773,0.995008157, 0.940270649,0.952044208, 1.082441633,0.616303857, 0.930118251,0.81252564, 0.458965729),byrow=TRUE, ncol = 2, dimnames = list(paste0("ageClass",1:nAgeClass),c("M","F")))
+
+    ##     Rct <- matrix(c(3.451394514,0.862852984,1.897386884,1.434508957,3.515728656,1,2.690863077,1.482061101,3.520959642,1.62020636,2.618334619,0.586650286,1.378204988,0.68058257,0.1,0.1),byrow=TRUE, ncol = 2, dimnames = list(paste0("ageClass",1:nAgeClass),c("M","F")))
+
+    ##     Rws <- matrix(c(1.0662510447,0.8753344725,1.0662510447,0.8753344725,1.0206231847,1.000210721,1.0590466458,1.0338312494,1.0392345486,0.947378462,1.03022905,0.9329696641,0.9509806615,0.8969476694,0.9509806615,0.8969476694),byrow=TRUE, ncol = 2, dimnames = list(paste0("ageClass",1:nAgeClass),c("M","F")))
+
+    ## }else{
+    ##     message("region is neither national, cook, or SFBayArea")
+    ## }
+
+
+
+    ## if( region == "national" ){
+    ## }else if( region == "SFBayArea" ){
+    ##     GBDFile <- "gbd.SFBayArea.csv"
+    ## }else{
+    ##     message("region neither national nor SFBayArea")
+    ## }
+
 
 #    if(vision == "baseline"){
 
-        muwt <- 47.3900 # min per week
-        muws <- 2.7474 # mph
-        muct <- 6.1600 # min per week
-        cv <- 3.0288 # coefficient of variation
 #        pm25 <- 10.075 # microns per cubic meter
 
 #    }else if(vision == "scenario"){
@@ -217,20 +261,7 @@ createParameterList <- function(region = "national"){
 #        message("vision parameter was neither baseline nor scenario")
 
 #    }
-
-    muNonTravelMatrix <- matrix(c(0.0000000,0.0000000,0.9715051,1.0354205,0.9505718,0.8999381,0.8315675,0.7180636,0.0000000,0.0000000,1.0000000,1.1171469,0.9878429,0.9434823,0.8782254,0.7737818), ncol = 2)
-
-
-    muNonTravel <- 2 # Magic number
-    cvNonTravel <- 1 # Magic number
     #pWalk <- 54.4/64.2 # Magic number
-
-    meanType <- "referent"
-
-    quantiles <- seq(0.1,0.9,0.3)
-
-    return(c(regionalParams, list(muwt = muwt, muws = muws, muct = muct, cv = cv, cvNonTravel = cvNonTravel, pWalk = pWalk, nAgeClass = nAgeClass, muNonTravel = muNonTravel, muNonTravelMatrix = muNonTravelMatrix, GBD = GBD, pm25 = pm25, meanType = meanType, region = region, quantiles = quantiles)))
-
     ##    if( region == "national" ){
     ## }else if( region == "SFBayArea" ){
     ##     muwt <- 57.8 # min per week
@@ -256,7 +287,7 @@ createParameterList <- function(region = "national"){
     ##     #error message
     ## }
 
-    }
+
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1099,62 +1130,7 @@ getLogNormal <- function(mu,sd){
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#' Creates a list of Regional Parameters
-#'
-#' Creates a list of Regional Parameters
-#'
-#' @param region See \code{\link{createParameterList}}
-#'
-#' @return A list with four ITHIM parameters
-#'
-#' \item{F}{A numerical matrix for the population density, stratified by age class and sex}
-#' \item{Rwt}{A numerical matrix for the walking time, relative to referent group}
-#' \item{Rws}{A numerical matrix for the walking speed, relative to referent group}
-#' \item{Rct}{A numerical matrix for the cycling time, relative to referent group}
-#'
-#' @note The referent group is women age class 3.
-#'
-#' @export
-createRegionalParameters <- function(region, nAgeClass){
 
-    if(region == "national"){
-
-    F <- matrix(c(0.0353518933,0.0337319963,0.0677709111,0.0646090177,0.1082721374,0.1025659595,0.1007813234,0.0996136545,0.1012405253,0.1051998903,0.0429797369,0.047666298,0.0236366386,0.0297455114,0.0130355262,0.0237989804), byrow = TRUE, nrow = nAgeClass, ncol = 2, dimnames = list(paste0("ageClass",1:nAgeClass),c("M","F")))
-
-        Rwt <- matrix(c(0.4305,0.3471,1.0700,0.8200,1.0100,1.0000,0.8600,1.1700,1.0600,1.1700,0.9900,0.9200,0.8000,0.7500,0.8200,0.7800),byrow=TRUE, ncol = 2, dimnames = list(paste0("ageClass",1:nAgeClass),c("M","F")))
-
-        Rct <- matrix(c(0.2935,0.1231,6.4500,3.1500,4.0000,1.0000,3.4800,0.8200,4.6700,1.1800,2.7000,0.6100,3.4200,0.2100,0.7000,0.0900),byrow=TRUE, ncol = 2, dimnames = list(paste0("ageClass",1:nAgeClass),c("M","F")))
-
-        Rws <- matrix(c(1.0662510447,0.8753344725,1.0662510447,0.8753344725,1.0206231847,1.000210721,1.0590466458,1.0338312494,1.0392345486,0.947378462,1.03022905,0.9329696641,0.9509806615,0.8969476694,0.9509806615,0.8969476694),byrow=TRUE, ncol = 2, dimnames = list(paste0("ageClass",1:nAgeClass),c("M","F")))
-
-    }else if( region == "cook" ){
-        # How is the Cook County being used? is this another set of parameters for a run that is not currently in the UI?
-
-        F <- matrix(c(0.0368276992,0.0353723566,0.0746989673,0.0716902674,0.1123490977,0.1104366009,0.1163649132,0.1182206842,0.0808260989,0.0891264801,0.0308720468,0.037493344,0.0223834475,0.0321797163,0.0098989332,0.0212593465), byrow = TRUE, nrow = nAgeClass, ncol = 2, dimnames = list(paste0("ageClass",1:nAgeClass),c("M","F")))
-
-        Rwt <- matrix(c(0.43053,0.34715,0.49337,0.48135,0.93248,1.00000,0.76528,0.73350,0.68250,0.65805,0.56376,0.77155,0.58923,0.62678,0.56524,0.39604),byrow=TRUE, ncol = 2, dimnames = list(paste0("ageClass",1:nAgeClass),c("M","F")))
-
-        Rct <- matrix(c(0.29350,0.12305,1.31944,0.82780,1.86938,1.00000,1.56016,0.73770,1.45792,0.24667,0.45162,0.18923,0.49021,0.16502,0.07503,0.02941),byrow=TRUE, ncol = 2, dimnames = list(paste0("ageClass",1:nAgeClass),c("M","F")))
-
-        Rws <- matrix(c(1.0663,0.8753,1.0663,0.8753,1.0206,1.0002,1.0590,1.0338,1.0392,0.9474,1.0302,0.9330,0.9510,0.8969,0.9510,0.8969),byrow=TRUE, ncol = 2, dimnames = list(paste0("ageClass",1:nAgeClass),c("M","F")))
-
-    }else if( region == "SFBayArea" ){
-
-        F <-   matrix(c(0.0320372482,0.0305871883,0.0622948202,0.0596515968,0.1032998128,0.0980824499,0.1122011305,0.1100342216,0.1064347335,0.1079303831,0.0438851145,0.0484215687,0.0221507176,0.0271904764,0.0132966677,0.0225018701), byrow = TRUE, nrow = nAgeClass, ncol = 2, dimnames = list(paste0("ageClass",1:nAgeClass),c("M","F")))
-
-        Rwt <- matrix(c(0.726924085, 0.761665648,0.897072687, 0.933741586,0.751317731, 1,0.908293434, 1.262744773,0.995008157, 0.940270649,0.952044208, 1.082441633,0.616303857, 0.930118251,0.81252564, 0.458965729),byrow=TRUE, ncol = 2, dimnames = list(paste0("ageClass",1:nAgeClass),c("M","F")))
-
-        Rct <- matrix(c(3.451394514,0.862852984,1.897386884,1.434508957,3.515728656,1,2.690863077,1.482061101,3.520959642,1.62020636,2.618334619,0.586650286,1.378204988,0.68058257,0.1,0.1),byrow=TRUE, ncol = 2, dimnames = list(paste0("ageClass",1:nAgeClass),c("M","F")))
-
-        Rws <- matrix(c(1.0662510447,0.8753344725,1.0662510447,0.8753344725,1.0206231847,1.000210721,1.0590466458,1.0338312494,1.0392345486,0.947378462,1.03022905,0.9329696641,0.9509806615,0.8969476694,0.9509806615,0.8969476694),byrow=TRUE, ncol = 2, dimnames = list(paste0("ageClass",1:nAgeClass),c("M","F")))
-
-    }else{
-        message("region is neither national, cook, or SFBayArea")
-    }
-
-return(list(F = F, Rwt = Rwt, Rct = Rct, Rws = Rws))
-
-}
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

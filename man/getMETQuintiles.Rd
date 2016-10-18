@@ -4,7 +4,7 @@
 \alias{getMETQuintiles}
 \title{Computes MET quintiles}
 \usage{
-getMETQuintiles(mu, p, cv, size = 1000)
+getMETQuintiles(mu, p, cv, quantiles = seq(0.1, 0.9, 0.1), size = 1000)
 }
 \value{
 A vector of quintiles.

@@ -7,8 +7,6 @@
 createITHIM(vision = "baseline", region = "national")
 }
 \arguments{
-\item{vision}{either "baseline" or "scenario"}
-
 \item{region}{either "national" or "SFBayArea"}
 }
 \value{
@@ -24,7 +22,7 @@ parameters.
 }
 \examples{
 
-ITHIM.baseline <- createITHIM(vision = "baseline", region = "SFBayArea")
+ITHIM.baseline <- createITHIM(region = "SFBayArea")
 ITHIM.baseline$parameters$muct
 ITHIM.baseline <- updateITHIM(ITHIM.baseline, "muct", 200)
 ITHIM.baseline$parameters$muct

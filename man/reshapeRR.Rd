@@ -4,7 +4,7 @@
 \alias{reshapeRR}
 \title{Transforms the RR object}
 \usage{
-reshapeRR(RR)
+reshapeRR(RR, nQuantiles = 5)
 }
 \value{
 A list of two matrices of RRs stratified by age class and

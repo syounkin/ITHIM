@@ -4,7 +4,7 @@
 \alias{getTravelDistribution}
 \title{Computes simulated distribution of Travel METs}
 \usage{
-getTravelDistribution(mu, cv, pWalk, vWalk, size = 1000)
+getTravelDistribution(mu, cv, pWalk, vWalk, size = 10000)
 }
 \value{
 A random sample from the distribution.

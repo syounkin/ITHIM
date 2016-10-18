@@ -4,11 +4,9 @@
 \alias{createParameterList}
 \title{Define ITHIM model parameters}
 \usage{
-createParameterList(vision = "baseline", region = "national")
+createParameterList()
 }
 \arguments{
-\item{vision}{A character string, either "baseline" or "scenario"}
-
 \item{region}{A character string, either "national" or "SFBayArea"}
 }
 \value{

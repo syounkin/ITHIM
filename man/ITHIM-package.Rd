@@ -67,8 +67,8 @@ the 2000 Bay Area Travel Survey.
 }
 \examples{
 
-ITHIM.baseline <- createITHIM(vision = "baseline", region = "SFBayArea")
-ITHIM.scenario <- createITHIM(vision = "scenario", region = "SFBayArea")
+ITHIM.baseline <- createITHIM(region = "SFBayArea")
+ITHIM.scenario <- createITHIM(region = "SFBayArea")
 comparativeRisk <- compareModels(ITHIM.baseline, ITHIM.scenario)
 names(ITHIM.baseline)
 names(ITHIM.baseline$parameters)

@@ -4,7 +4,7 @@
 \alias{createActiveTransportRRs}
 \title{Set Risk Ratios for Avctive Transport}
 \usage{
-createActiveTransportRRs()
+createActiveTransportRRs(nQuantiles = 5)
 }
 \value{
 A numerical vector of risk ratios given MET exposure

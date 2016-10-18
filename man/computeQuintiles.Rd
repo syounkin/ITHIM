@@ -4,7 +4,7 @@
 \alias{computeQuintiles}
 \title{Compute Quintiles of the Lognormal Distribution}
 \usage{
-computeQuintiles(mean, sd)
+computeQuintiles(mean, sd, quantiles)
 }
 \arguments{
 \item{mean}{A numerical matrix of means for active transport time}

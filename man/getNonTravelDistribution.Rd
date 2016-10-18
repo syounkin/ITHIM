@@ -4,7 +4,7 @@
 \alias{getNonTravelDistribution}
 \title{Computes simulated distribution of nonTravel METs}
 \usage{
-getNonTravelDistribution(mu, cv, size = 1000)
+getNonTravelDistribution(mu, cv, size = 10000)
 }
 \value{
 A random sample from the distribution.
