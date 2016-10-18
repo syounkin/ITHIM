@@ -43,6 +43,6 @@ There are 11 parameters in the ITHIM active transport component;
 11. standard deviation of leisure activity (cvNonTravel),
 }
 \seealso{
-\code{\link{computeNonTravelMETs}},\code{\link{readGBD}}
+\code{\link{readGBD}}
 }
 

@@ -18,9 +18,6 @@ A list of lists containing quintiles of active transport
 \item{ActiveTransportTime}{Foo}
 \item{WalkingTime}{Foo}
 \item{CyclingTime}{Foo}
-\item{WalkingMET}{Foo}
-\item{CyclingMET}{foo}
-\item{TotalTravelMET}{foo}
 }
 \description{
 Compute Quintiles of Active Transport Time

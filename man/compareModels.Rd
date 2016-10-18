@@ -20,7 +20,6 @@ A list of estimates from the ITHIM model
 \item{RRnormalizedToBaseline}{}
 \item{AF}{Attributable fraction.  Computed with \code{\link{AFForList2}}}
 \item{normalizedDiseaseBurden}{}
-\item{AirPollutionRR}{Not in use.}
 \item{dproj.delta}{Change in number of deaths. (the variable name dproj comes from Geoff's projected data)}
 \item{yll.delta}{Change in YLL}
 \item{yld.delta}{Change in YLD}
