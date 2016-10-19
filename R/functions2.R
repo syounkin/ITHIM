@@ -226,8 +226,16 @@ convertToAgeClass <- function(age){
 #' @return A numerical matrix of mean walk time
 #'
 #' @export
-getWalkTime <- function(ITHIM){
-    return(with(ITHIM.default$parameters, Rwt*muwt))
+getWalkTime <- function(ITHIM, form = 2){
+    if( form == 1 ){
+        walkTime <- with(ITHIM$parameters, Rwt*muwt)
+    }else if (form == 2){
+        walkTime <- with(ITHIM$parameters, melt(Rwt*muwt))
+        names(walkTime) <- c("ageClass","sex","mu")
+    }else{
+        message("Bad form for getWalkTime()")
+    }
+    return(data.frame(walkTime, type = "walk time"))
 }
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -241,6 +249,60 @@ getWalkTime <- function(ITHIM){
 #' @return A numerical matrix of mean cycle time
 #'
 #' @export
-getCycleTime <- function(ITHIM){
-    return(with(ITHIM.default$parameters, Rct*muct))
+getCycleTime <- function(ITHIM, form = 2){
+    if( form == 1 ){
+        cycleTime <- with(ITHIM$parameters, Rct*muct)
+    }else if (form == 2){
+        cycleTime <- with(ITHIM$parameters, melt(Rct*muct))
+        names(cycleTime) <- c("ageClass","sex","mu")
+    }else{
+        message("Bad form for getCycleTime()")
+    }
+    return(data.frame(cycleTime, type = "cycle time"))
+}
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#' Returns the non-travel METs matrix
+#'
+#' Returns the non-travel METs matrix
+#'
+#' @param ITHIM An ITHIM object
+#'
+#' @return A numerical matrix of mean non-travel means
+#'
+#' @export
+getNonTravelMETs <- function(ITHIM, form = 2){
+    if( form == 1 ){
+        nonTravelMETs <- with(ITHIM$parameters, muNonTravelMatrix*muNonTravel)
+    }else if (form == 2){
+        nonTravelMETs <- with(ITHIM$parameters, melt(muNonTravelMatrix*muNonTravel))
+        names(nonTravelMETs) <- c("ageClass","sex","mu")
+    }else{
+        message("Bad form for getCycleTime()")
+    }
+    return(data.frame(nonTravelMETs, type = "non-travel METs"))
+}
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#' Returns the mean walk speed matrix
+#'
+#' Returns the mean walk speed matrix
+#'
+#' @param ITHIM An ITHIM object
+#'
+#' @return A numerical matrix of mean walk speed
+#'
+#' @export
+getWalkSpeed <- function(ITHIM, form = 2){
+    if( form == 1 ){
+        walkSpeed <- with(ITHIM$parameters, Rws*muws)
+    }else if (form == 2){
+        walkSpeed <- with(ITHIM$parameters, melt(Rws*muws))
+        names(walkSpeed) <- c("ageClass","sex","mu")
+    }else{
+        message("Bad form for getWalkSpeed()")
+    }
+    return(data.frame(walkSpeed, type = "walk speed"))
 }

@@ -4,7 +4,7 @@
 \alias{getWalkTime}
 \title{Returns the mean walk time matrix}
 \usage{
-getWalkTime(ITHIM)
+getWalkTime(ITHIM, form = 2)
 }
 \arguments{
 \item{ITHIM}{An ITHIM object}

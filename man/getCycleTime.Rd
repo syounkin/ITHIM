@@ -4,7 +4,7 @@
 \alias{getCycleTime}
 \title{Returns the mean cycle time matrix}
 \usage{
-getCycleTime(ITHIM)
+getCycleTime(ITHIM, form = 2)
 }
 \arguments{
 \item{ITHIM}{An ITHIM object}
