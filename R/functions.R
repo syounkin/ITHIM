@@ -164,7 +164,8 @@ createParameterList <- function(){
     muNonTravelMatrix <- matrix(c(0.0000000,0.0000000,0.9715051,1.0354205,0.9505718,0.8999381,0.8315675,0.7180636,0.0000000,0.0000000,1.0000000,1.1171469,0.9878429,0.9434823,0.8782254,0.7737818), ncol = 2, dimnames = list(paste0("ageClass",1:nAgeClass),c("M","F")))
 
     meanType <- "referent"
-    quantiles <- seq(0.1,0.9,0.3)
+    n <- 100
+    quantiles <- seq(1/n, (n-1)/n, by = 1/n)
     GBDFile <- "gbd.csv"
     GBD <- readGBD(file = GBDFile)
     muwt <- 47.3900 # min per week
