@@ -17,14 +17,6 @@ quintiles mimic the computation presented in the original EXCEL
 workbook.  Use \code{\link{updateITHIM}} to change values of the
 parameters.
 }
-\examples{
-
-ITHIM.baseline <- createITHIM()
-ITHIM.baseline$parameters$muct
-ITHIM.baseline <- updateITHIM(ITHIM.baseline, "muct", 200)
-ITHIM.baseline$parameters$muct
-
-}
 \seealso{
 \code{\link{updateITHIM}},
     \code{\link{createParameterList}},
