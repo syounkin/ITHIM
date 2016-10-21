@@ -67,8 +67,8 @@
 #' @seealso \code{\link{createITHIM}}, \code{\link{compareModels}}
 #' @examples
 #'
-#' ITHIM.baseline <- createITHIM(region = "SFBayArea")
-#' ITHIM.scenario <- createITHIM(region = "SFBayArea")
+#' ITHIM.baseline <- createITHIM()
+#' ITHIM.scenario <- updateITHIM(ITHIM.baseline, "muwt", 120)
 #' comparativeRisk <- compareModels(ITHIM.baseline, ITHIM.scenario)
 #' names(ITHIM.baseline)
 #' names(ITHIM.baseline$parameters)
@@ -92,13 +92,6 @@ NULL
 #' @seealso \code{\link{updateITHIM}},
 #'     \code{\link{createParameterList}},
 #'     \code{\link{computeMeanMatrices}}, \code{\link{getQuintiles}}
-#'
-#' @examples
-#'
-#' ITHIM.baseline <- createITHIM()
-#' ITHIM.baseline$parameters$muct
-#' ITHIM.baseline <- updateITHIM(ITHIM.baseline, "muct", 200)
-#' ITHIM.baseline$parameters$muct
 #'
 #' @export
 createITHIM <- function(){
