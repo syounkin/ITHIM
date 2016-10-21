@@ -72,7 +72,6 @@ ITHIM.scenario <- updateITHIM(ITHIM.baseline, "muwt", 120)
 comparativeRisk <- compareModels(ITHIM.baseline, ITHIM.scenario)
 names(ITHIM.baseline)
 names(ITHIM.baseline$parameters)
-ITHIM.baseline$quintiles$TotalMET
 names(comparativeRisk)
 comparativeRisk$AF$BreastCancer
 }
