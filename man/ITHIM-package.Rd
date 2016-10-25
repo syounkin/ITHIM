@@ -79,7 +79,7 @@ comparativeRisk$AF$BreastCancer
 Samuel G. Younkin \email{syounkin@wisc.edu}
 }
 \references{
-\url{http://www.cedar.iph.cam.ac.uk/research/modelling/ithim/}
+\url{http://www.cedar.iph.cam.ac.uk/research/modelling/ithim/}, \url{https://ithim.ghi.wisc.edu/}
 }
 \seealso{
 \code{\link{createITHIM}}, \code{\link{compareModels}}

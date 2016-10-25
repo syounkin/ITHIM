@@ -63,7 +63,7 @@
 #' @name ITHIM-package
 #' @docType package
 #' @author Samuel G. Younkin \email{syounkin@@wisc.edu}
-#' @references \url{http://www.cedar.iph.cam.ac.uk/research/modelling/ithim/}
+#' @references \url{http://www.cedar.iph.cam.ac.uk/research/modelling/ithim/}, \url{https://ithim.ghi.wisc.edu/}
 #' @seealso \code{\link{createITHIM}}, \code{\link{compareModels}}
 #' @examples
 #'
