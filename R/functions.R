@@ -464,9 +464,8 @@ compareModels <- function(baseline, scenario){
     denom <- lapply(normalizedDiseaseBurden, function(x) lapply(x, rowSums))
     denom.baseline <- lapply(normalizedDiseaseBurden.baseline, function(x) lapply(x, rowSums))
 
-
     # diseases <- intersect(intersect(names(NewBurdenList),names(GBD)),names(normalizedDiseaseBurden))
-    diseases <- c("BreastCancer","ColonCancer","Depression","Dementia","Diabetes")
+    diseases <- c("BreastCancer","ColonCancer","Depression","Dementia","Diabetes", "CVD")
 
     GBD <- GBD[diseases]
     NewBurdenList <- NewBurdenList[diseases]
@@ -555,6 +554,7 @@ readGBD <- function(file = "gbd.csv"){
     filePath <- system.file(file, package="ITHIM")
     gbd <- read.csv(file=filePath)
     gbdList <- split(gbd,gbd$disease)
+    gbdList[["CVD"]] <- data.frame(disease = "CVD", gbdList$IHD[,c("sex",  "ageClass")], gbdList$IHD[,c("dproj","yll","yld","daly")] + gbdList$InflammatoryHD[,c("dproj","yll","yld","daly")] + gbdList$HHD[,c("dproj","yll","yld","daly")])
     gbdList2 <- lapply(gbdList,function(x) split(x,as.factor(x$sex)))
     gbdList2 <- lapply(gbdList2, function(x) list(M=x$M,F=x$F))
     return(gbdList2)
