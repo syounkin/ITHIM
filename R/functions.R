@@ -226,20 +226,16 @@ computeMeanMatrices <- function(parList){
             meanWalkTime <- muwt/alphawt*Rwt
             meanCycleTime <- muct/alphact*Rct
             meanWalkSpeed <- muws/alphaws*Rws
-        } else if (meanType == "referent" ){
+        }else if( meanType == "referent" ){
             meanWalkTime <- muwt*Rwt
             meanCycleTime <- muct*Rct
             meanWalkSpeed <- muws*Rws
         }else{
             message("Wrong mean type.")
-            }
+        }
         propTimeCycling <-  meanCycleTime/(meanCycleTime+meanWalkTime)
-
-#        meanWalkMET <- ifelse(1.2216*meanWalkSpeed + 0.0838 < 2.5, 2.5,  1.2216*meanWalkSpeed + 0.0838)
-#        meanCycleMET <- matrix(6, byrow=TRUE, ncol = 2, nrow = nAgeClass, dimnames = list(paste0("ageClass",1:nAgeClass),c("M","F")))
         meanActiveTransportTime <- meanWalkTime + meanCycleTime
         sdActiveTransportTime <- meanActiveTransportTime*cv
-
         pWalk <- 1 - propTimeCycling #meanWalkTime/(meanWalkTime + meanCycleTime)
 
         return(list(meanWalkTime = meanWalkTime, meanCycleTime = meanCycleTime, meanWalkSpeed = meanWalkSpeed, meanActiveTransportTime = meanActiveTransportTime, sdActiveTransportTime = sdActiveTransportTime, propTimeCycling = propTimeCycling, pWalk = pWalk)) # meanWalkMET = meanWalkMET, meanCycleMET = meanCycleMET,
