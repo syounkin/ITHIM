@@ -524,10 +524,13 @@ compareModels <- function(baseline, scenario){
 #' @export
 updateITHIM <- function( ITHIM, parName, parValue){
     ITHIM$parameters[[parName]] <- parValue
+    parameters <- ITHIM$parameters
+    means <- computeMeanMatrices(parameters)
+    quintiles <- getQuintiles(means, parameters)
     ITHIM <- list(
-            parameters = parameters <- ITHIM$parameters,
-            means = means <- computeMeanMatrices(parameters),
-            quintiles = quintiles <- getQuintiles(means, parameters)
+            parameters = parameters,
+            means = means,
+            quintiles = quintiles
     )
     return(ITHIM)
     }
