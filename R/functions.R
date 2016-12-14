@@ -94,13 +94,9 @@ NULL
 #'
 #' @export
 createITHIM <- function(){
-    return(
-        list(
-            parameters = parameters <- createParameterList(),
-            means = means <- computeMeanMatrices(parameters),
-            quintiles = quintiles <- getQuintiles(means, parameters)
-            )
-        )
+
+        new("ITHIM", parameters = parameters <- createParameterList(), means = means <- computeMeanMatrices(parameters), quintiles = getQuintiles(means, parameters))
+    
 }
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
