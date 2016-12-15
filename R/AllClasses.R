@@ -1,3 +1,23 @@
+#' The ITHIM ParameterSet class
+#'
+#' This is the secondary class in the ITHIM package.
+#'
+#' This line and the next ones go into the details.
+#' This line thus appears in the details as well.
+#'
+#'@section Slots:
+#' \describe{
+#' \item{\code{}:}{}
+#' }
+#'
+#' @name ParameterSet
+#' @rdname ParameterSet
+#' @aliases ParameterSet-class
+#' @exportClass ParameterSet
+setClass("ParameterSet", representation(muwt = "numeric",
+                                 muct = "numeric"
+                                 ))
+
 #' The ITHIM class
 #'
 #' This is the primary class in the ITHIM package.
@@ -16,10 +36,11 @@
 #' @rdname ITHIM
 #' @aliases ITHIM-class
 #' @exportClass ITHIM
-setClass("ITHIM", representation(parameters = "list",
+setClass("ITHIM", representation(parameters = "ParameterSet",
                                  means = "list",
                                  quintiles = "list"
                                  ))
+
 
 
 
