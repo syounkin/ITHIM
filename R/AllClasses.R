@@ -14,9 +14,21 @@
 #' @rdname ParameterSet
 #' @aliases ParameterSet-class
 #' @exportClass ParameterSet
-setClass("ParameterSet", representation(muwt = "numeric",
-                                 muct = "numeric"
-                                 ))
+setClass("ParameterSet", representation(Rwt = "matrix",
+                                        Rct = "matrix",
+                                        Rws = "matrix",
+                                        muwt = "numeric",
+                                        muws = "numeric",
+                                        muct = "numeric",
+                                        cv = "numeric",
+                                        cvNonTravel = "numeric",
+                                        nAgeClass = "integer",
+                                        muNonTravel = "numeric",
+                                        muNonTravelMatrix = "matrix",
+                                        GBD = "list",
+                                        meanType = "character",
+                                        quantiles = "vector"
+                                        ))
 
 #' The ITHIM class
 #'

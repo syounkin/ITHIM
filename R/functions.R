@@ -95,7 +95,7 @@ NULL
 #' @export
 createITHIM <- function(){
 
-        new("ITHIM", parameters = parameters <- createParameterList(), means = means <- computeMeanMatrices(parameters), quintiles = getQuintiles(means, parameters))
+        new("ITHIM", parameters = parameters <- createParameterList(), means = means <- computeMeanMatrices(as(parameters,"list")), quintiles = getQuintiles(means, as(parameters,"list")))
     
 }
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -141,7 +141,7 @@ createITHIM <- function(){
 #' @export
 createParameterList <- function(){
 
-    nAgeClass <- 8
+    nAgeClass <- 8L
 
     Rwt <- matrix(c(0.4305,0.3471,1.0700,0.8200,1.0100,1.0000,0.8600,1.1700,1.0600,1.1700,0.9900,0.9200,0.8000,0.7500,0.8200,0.7800),byrow=TRUE, ncol = 2, dimnames = list(paste0("ageClass",1:nAgeClass),c("M","F")))
 
@@ -164,7 +164,7 @@ createParameterList <- function(){
     muNonTravel <- 2 # MET-hrs./week leisure activity
     cvNonTravel <- 1 # coefficient of variation for leisure activity
 
-    return( list(
+    return( new("ParameterSet",
         Rwt = Rwt,
         Rct = Rct,
         Rws = Rws,
