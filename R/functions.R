@@ -430,6 +430,10 @@ createActiveTransportRRs <- function(nQuantiles = 5){
 #' @export
 compareModels <- function(baseline, scenario){
 
+    baseline <- as(baseline, "list")
+    scenario <- as(scenario, "list")
+    baseline$parameters <- as(baseline$parameters, "list")
+    scenario$parameters <- as(scenario$parameters, "list")    
     ## if( identical(baseline$parameters$GBD,scenario$parameters$GBD) ){
     ##     GBD <- baseline$parameters$GBD # GBD must be the same between baseline and scenario
     ##     }else{

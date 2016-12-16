@@ -306,3 +306,129 @@ getWalkSpeed <- function(ITHIM, form = 2){
     }
     return(data.frame(walkSpeed, type = "walk speed"))
 }
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#' Returns 
+#'
+#' Returns 
+#'
+#' @param ITHIM.baseline An ITHIM object
+#' @param ITHIM.scenario An ITHIM object
+#'
+#' @return 
+#'
+#' @export
+sumDALY <- function(ITHIM.baseline, ITHIM.scenario){
+    ITHIM.baseline <- as(ITHIM.baseline, "list")
+    ITHIM.scenario <- as(ITHIM.scenario, "list")    
+  return(sum(unlist(data.frame(compareModels(ITHIM.baseline,ITHIM.scenario)$daly.delta)[-1,]))) # AgeClass 1 is removed from totals
+}
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#' Returns 
+#'
+#' Returns 
+#'
+#' @param ITHIM.baseline An ITHIM object
+#' @param ITHIM.scenario An ITHIM object
+#'
+#' @return 
+#'
+#' @export
+sumCVD <- function(ITHIM.baseline, ITHIM.scenario){
+    ITHIM.baseline <- as(ITHIM.baseline, "list")
+    ITHIM.scenario <- as(ITHIM.scenario, "list")    
+  return(sum(unlist(data.frame(compareModels(ITHIM.baseline,ITHIM.scenario)$daly.delta$CVD)[-1,]))) # AgeClass 1 is removed from totals
+}
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#' Returns 
+#'
+#' Returns 
+#'
+#' @param ITHIM.baseline An ITHIM object
+#' @param ITHIM.scenario An ITHIM object
+#'
+#' @return 
+#'
+#' @export
+sumDiabetes <- function(ITHIM.baseline, ITHIM.scenario){
+    ITHIM.baseline <- as(ITHIM.baseline, "list")
+    ITHIM.scenario <- as(ITHIM.scenario, "list")    
+  return(sum(unlist(data.frame(compareModels(ITHIM.baseline,ITHIM.scenario)$daly.delta$Diabetes)[-1,]))) # AgeClass 1 is removed from totals
+}
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#' Returns 
+#'
+#' Returns 
+#'
+#' @param ITHIM.baseline An ITHIM object
+#' @param ITHIM.scenario An ITHIM object
+#'
+#' @return 
+#'
+#' @export
+sumDepression <- function(ITHIM.baseline, ITHIM.scenario){
+    ITHIM.baseline <- as(ITHIM.baseline, "list")
+    ITHIM.scenario <- as(ITHIM.scenario, "list")    
+  return(sum(unlist(data.frame(compareModels(ITHIM.baseline,ITHIM.scenario)$daly.delta$Depression)[-1,]))) # AgeClass 1 is removed from totals
+}
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#' Returns 
+#'
+#' Returns 
+#'
+#' @param ITHIM.baseline An ITHIM object
+#' @param ITHIM.scenario An ITHIM object
+#'
+#' @return 
+#'
+#' @export
+sumBreastCancer <- function(ITHIM.baseline, ITHIM.scenario){
+    ITHIM.baseline <- as(ITHIM.baseline, "list")
+    ITHIM.scenario <- as(ITHIM.scenario, "list")    
+  return(sum(unlist(data.frame(compareModels(ITHIM.baseline,ITHIM.scenario)$daly.delta$BreastCancer)[-1,]))) # AgeClass 1 is removed from totals
+}
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#' Returns 
+#'
+#' Returns 
+#'
+#' @param ITHIM.baseline An ITHIM object
+#' @param ITHIM.scenario An ITHIM object
+#'
+#' @return 
+#'
+#' @export
+sumColonCancer <- function(ITHIM.baseline, ITHIM.scenario){
+    ITHIM.baseline <- as(ITHIM.baseline, "list")
+    ITHIM.scenario <- as(ITHIM.scenario, "list")    
+  return(sum(unlist(data.frame(compareModels(ITHIM.baseline,ITHIM.scenario)$daly.delta$ColonCancer)[-1,]))) # AgeClass 1 is removed from totals
+}
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#' Returns 
+#'
+#' Returns 
+#'
+#' @param ITHIM.baseline An ITHIM object
+#' @param ITHIM.scenario An ITHIM object
+#'
+#' @return 
+#'
+#' @export
+sumDementia <- function(ITHIM.baseline, ITHIM.scenario){
+    ITHIM.baseline <- as(ITHIM.baseline, "list")
+    ITHIM.scenario <- as(ITHIM.scenario, "list")    
+  return(sum(unlist(data.frame(compareModels(ITHIM.baseline,ITHIM.scenario)$daly.delta$Dementia)[-1,]))) # AgeClass 1 is removed from totals
+}
