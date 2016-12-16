@@ -34,32 +34,35 @@ setAs("ITHIM", "list", function(from) list(parameters = from@parameters,
 #' @export
 setMethod("tilePlot", signature(x = "ITHIM", n = "numeric"), function(x, n){
 
-ITHIM.baseline <- as(x, "list")
-ITHIM.baseline$parameters <- as(ITHIM.baseline$parameters, "list")
-baseWalk <- ITHIM.baseline$parameters$muwt
-baseCycle <- ITHIM.baseline$parameters$muct
-results <- data.frame()
-wVec <- seq(0,210,length.out = n)
-cVec <- wVec
+    ITHIM.baseline <- as(x, "list")
+    ITHIM.baseline$parameters <- as(ITHIM.baseline$parameters, "list")
+    baseWalk <- ITHIM.baseline$parameters$muwt
+    baseCycle <- ITHIM.baseline$parameters$muct
+    upper <- 5*max(c(baseWalk,baseCycle))
+    results <- data.frame()
+    wVec <- seq(0,upper,length.out = n)
+    cVec <- wVec
 
-for(muwt in wVec){
-  for(muct in cVec){
-    ITHIM.scenario <- updateITHIM(ITHIM.baseline, "muwt", muwt)
-    ITHIM.scenario <- updateITHIM(ITHIM.scenario, "muct", muct)
-    comparativeRisk <- data.frame(cycleTime = muct, walkTime= muwt, 
-                                  DALYS = sumDALY(ITHIM.baseline, ITHIM.scenario), 
-                                  BreastCancer= sumBreastCancer(ITHIM.baseline, ITHIM.scenario), 
-                                  ColonCancer= sumColonCancer(ITHIM.baseline, ITHIM.scenario), 
-                                  CVD = sumCVD(ITHIM.baseline, ITHIM.scenario), 
-                                  Dementia = sumDementia(ITHIM.baseline, ITHIM.scenario), 
-                                  Depression = sumDepression(ITHIM.baseline, ITHIM.scenario),
-                                  Diabetes = sumDiabetes(ITHIM.baseline, ITHIM.scenario))
-  
-    results <- rbind(comparativeRisk, results)    
-  }  
-} 
+    for(muwt in wVec){
+        for(muct in cVec){
+            ITHIM.scenario <- updateITHIM(ITHIM.baseline, "muwt", muwt)
+            ITHIM.scenario <- updateITHIM(ITHIM.scenario, "muct", muct)
+            comparativeRisk <- data.frame(cycleTime = muct,
+                                          walkTime= muwt, 
+                                          DALYS = sumDALY(ITHIM.baseline, ITHIM.scenario)
+                                          )
+            ## BreastCancer= sumBreastCancer(ITHIM.baseline, ITHIM.scenario), 
+            ## ColonCancer= sumColonCancer(ITHIM.baseline, ITHIM.scenario), 
+            ## CVD = sumCVD(ITHIM.baseline, ITHIM.scenario), 
+            ## Dementia = sumDementia(ITHIM.baseline, ITHIM.scenario), 
+            ## Depression = sumDepression(ITHIM.baseline, ITHIM.scenario),
+            ## Diabetes = sumDiabetes(ITHIM.baseline, ITHIM.scenario))
+            
+            results <- rbind(comparativeRisk, results)    
+        }
+    }
 
-p <- ggplot(results,aes(x = walkTime,y = cycleTime, fill = DALYS))
-    p + geom_tile() + scale_fill_gradient2() + geom_hline(yintercept=baseCycle)+ geom_vline(xintercept=baseWalk)
+    p <- ggplot(results, aes(x = walkTime, y = cycleTime, fill = DALYS))
+    p + geom_tile() + geom_hline(yintercept=baseCycle) + geom_vline(xintercept=baseWalk)
 
 })
