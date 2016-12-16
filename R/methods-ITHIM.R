@@ -38,14 +38,14 @@ setMethod("tilePlot", signature(x = "ITHIM", n = "numeric"), function(x, n){
     ITHIM.baseline$parameters <- as(ITHIM.baseline$parameters, "list")
     baseWalk <- ITHIM.baseline$parameters$muwt
     baseCycle <- ITHIM.baseline$parameters$muct
-    upper <- 5*max(c(baseWalk,baseCycle))
+    upper <- 3*max(c(baseWalk,baseCycle))
     results <- data.frame()
     wVec <- seq(0,upper,length.out = n)
     cVec <- wVec
 
     for(muwt in wVec){
-        for(muct in cVec){
             ITHIM.scenario <- updateITHIM(ITHIM.baseline, "muwt", muwt)
+        for(muct in cVec){
             ITHIM.scenario <- updateITHIM(ITHIM.scenario, "muct", muct)
             comparativeRisk <- data.frame(cycleTime = muct,
                                           walkTime= muwt, 
