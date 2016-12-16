@@ -38,31 +38,35 @@ setMethod("tilePlot", signature(x = "ITHIM", n = "numeric"), function(x, n){
     ITHIM.baseline$parameters <- as(ITHIM.baseline$parameters, "list")
     baseWalk <- ITHIM.baseline$parameters$muwt
     baseCycle <- ITHIM.baseline$parameters$muct
-    upper <- 3*max(c(baseWalk,baseCycle))
+    upper <- 4*max(c(baseWalk,baseCycle))
     results <- data.frame()
     wVec <- seq(0,upper,length.out = n)
     cVec <- wVec
-
+    
     for(muwt in wVec){
-            ITHIM.scenario <- updateITHIM(ITHIM.baseline, "muwt", muwt)
+        ITHIM.scenario <- updateITHIM(ITHIM.baseline, "muwt", muwt)
         for(muct in cVec){
-            ITHIM.scenario <- updateITHIM(ITHIM.scenario, "muct", muct)
-            comparativeRisk <- data.frame(cycleTime = muct,
-                                          walkTime= muwt, 
-                                          DALYS = sumDALY(ITHIM.baseline, ITHIM.scenario)
-                                          )
-            ## BreastCancer= sumBreastCancer(ITHIM.baseline, ITHIM.scenario), 
-            ## ColonCancer= sumColonCancer(ITHIM.baseline, ITHIM.scenario), 
-            ## CVD = sumCVD(ITHIM.baseline, ITHIM.scenario), 
-            ## Dementia = sumDementia(ITHIM.baseline, ITHIM.scenario), 
-            ## Depression = sumDepression(ITHIM.baseline, ITHIM.scenario),
-            ## Diabetes = sumDiabetes(ITHIM.baseline, ITHIM.scenario))
-            
-            results <- rbind(comparativeRisk, results)    
+            if(muwt !=0 | muct !=0){
+                ITHIM.scenario <- updateITHIM(ITHIM.scenario, "muct", muct)
+                comparativeRisk <- data.frame(cycleTime = muct,
+                                              walkTime= muwt, 
+                                              DALYS = sumDALY(ITHIM.baseline, ITHIM.scenario)
+                                              )
+                results <- rbind(comparativeRisk, results)
+            }
         }
     }
 
-    p <- ggplot(results, aes(x = walkTime, y = cycleTime, fill = DALYS))
-    p + geom_tile() + geom_hline(yintercept=baseCycle) + geom_vline(xintercept=baseWalk)
+    p <- ggplot(results, aes(x = walkTime, y = cycleTime, fill = (DALYS + getDALYs(x))/1e6))
+    p + geom_tile() + geom_hline(yintercept=baseCycle, linetype = 2) + geom_vline(xintercept=baseWalk, linetype = 2) + scale_fill_gradientn(colours = terrain.colors(10),name = "DALYs (millions)")
 
 })
+
+
+#' @export
+setMethod("getDALYs", signature(x = "ITHIM"), function(x){
+
+    sum(subset(melt(x@parameters@GBD,),variable == "daly")$value) # very shaky
+
+}
+)
