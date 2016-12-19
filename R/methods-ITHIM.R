@@ -45,10 +45,19 @@ setMethod("update", signature(x = "ITHIM", parName = "character", parValue = "li
 })
 
 #' @export
+setMethod("update", signature(x = "ITHIM", parName = "list", parValue = "missing"), function(x, parName, parValue){
+    for( i in 1:length(parName) ){
+        x2 <- update(x, parName = names(parName)[i], parValue = parName[[i]])
+        }
+    pSet <- createParameterSet(as(x2@parameters,"list"))
+    x4 <- new("ITHIM", parameters = pSet, means = x2@means, quintiles = x2@quintiles)    
+    return(x4)
+})
+
+#' @export
 setAs("ITHIM", "list", function(from) list(parameters = as(from@parameters,"list"),
                                            means = from@means,
                                            quintiles = from@quintiles))
-
 
 #' @export
 setMethod("tilePlot", signature(x = "ITHIM", n = "numeric"), function(x, n){
