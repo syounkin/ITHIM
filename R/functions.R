@@ -214,6 +214,7 @@ createParameterList <- function(){
 #'
 #' @export
 computeMeanMatrices <- function(parList){
+
     with(parList, {
         if( meanType == "overall" ){
             alphawt <- sum(F*Rwt)
@@ -527,6 +528,7 @@ compareModels <- function(baseline, scenario){
 #'
 #' @export
 updateITHIM <- function( ITHIM, parName, parValue){
+
     ITHIM$parameters[[parName]] <- parValue
     parameters <- ITHIM$parameters
     means <- computeMeanMatrices(parameters)

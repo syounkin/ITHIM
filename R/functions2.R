@@ -228,9 +228,9 @@ convertToAgeClass <- function(age){
 #' @export
 getWalkTime <- function(ITHIM, form = 2){
     if( form == 1 ){
-        walkTime <- with(ITHIM$parameters, Rwt*muwt)
+        walkTime <- with(as(ITHIM@parameters,"list"), Rwt*muwt)
     }else if (form == 2){
-        walkTime <- with(ITHIM$parameters, melt(Rwt*muwt))
+        walkTime <- with(as(ITHIM@parameters,"list"), melt(Rwt*muwt))
         names(walkTime) <- c("ageClass","sex","mu")
     }else{
         message("Bad form for getWalkTime()")
@@ -251,9 +251,9 @@ getWalkTime <- function(ITHIM, form = 2){
 #' @export
 getCycleTime <- function(ITHIM, form = 2){
     if( form == 1 ){
-        cycleTime <- with(ITHIM$parameters, Rct*muct)
+        cycleTime <- with(as(ITHIM@parameters,"list"), Rct*muct)
     }else if (form == 2){
-        cycleTime <- with(ITHIM$parameters, melt(Rct*muct))
+        cycleTime <- with(as(ITHIM@parameters,"list"), melt(Rct*muct))
         names(cycleTime) <- c("ageClass","sex","mu")
     }else{
         message("Bad form for getCycleTime()")
@@ -274,9 +274,9 @@ getCycleTime <- function(ITHIM, form = 2){
 #' @export
 getNonTravelMETs <- function(ITHIM, form = 2){
     if( form == 1 ){
-        nonTravelMETs <- with(ITHIM$parameters, muNonTravelMatrix*muNonTravel)
+        nonTravelMETs <- with(as(ITHIM@parameters,"list"), muNonTravelMatrix*muNonTravel)
     }else if (form == 2){
-        nonTravelMETs <- with(ITHIM$parameters, melt(muNonTravelMatrix*muNonTravel))
+        nonTravelMETs <- with(as(ITHIM@parameters,"list"), melt(muNonTravelMatrix*muNonTravel))
         names(nonTravelMETs) <- c("ageClass","sex","mu")
     }else{
         message("Bad form for getCycleTime()")
@@ -297,9 +297,9 @@ getNonTravelMETs <- function(ITHIM, form = 2){
 #' @export
 getWalkSpeed <- function(ITHIM, form = 2){
     if( form == 1 ){
-        walkSpeed <- with(ITHIM$parameters, Rws*muws)
+        walkSpeed <- with(as(ITHIM@parameters,"list"), Rws*muws)
     }else if (form == 2){
-        walkSpeed <- with(ITHIM$parameters, melt(Rws*muws))
+        walkSpeed <- with(as(ITHIM@parameters,"list"), melt(Rws*muws))
         names(walkSpeed) <- c("ageClass","sex","mu")
     }else{
         message("Bad form for getWalkSpeed()")
@@ -432,3 +432,23 @@ sumDementia <- function(ITHIM.baseline, ITHIM.scenario){
     ITHIM.scenario <- as(ITHIM.scenario, "list")    
   return(sum(unlist(data.frame(compareModels(ITHIM.baseline,ITHIM.scenario)$daly.delta$Dementia)[-1,]))) # AgeClass 1 is removed from totals
 }
+
+#'@export
+createParameterSet <- function(x){
+    pSet <- new("ParameterSet",Rwt = x$Rwt,
+                                        Rct = x$Rct,
+                                        Rws = x$Rws,
+                                        muwt = x$muwt,
+                                        muws = x$muws,
+                                        muct = x$muct,
+                                        cv = x$cv,
+                                        cvNonTravel = x$cvNonTravel,
+                                        nAgeClass = x$nAgeClass,
+                                        muNonTravel = x$muNonTravel,
+                                        muNonTravelMatrix = x$muNonTravelMatrix,
+                                        GBD = x$GBD,
+                                        meanType = x$meanType,
+                                        quantiles = x$quantiles
+                )
+    return(pSet)
+    }

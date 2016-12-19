@@ -5,28 +5,47 @@ setMethod("show", signature(object="ITHIM"), function(object){
 
 #' @export
 setMethod("plot", signature(x = "ITHIM"), function(x){
-  barplot(x@parameters$Rwt)
+  tilePlot(x, n = 5)
 })
 
 #' @export
 setMethod("update", signature(x = "ITHIM", parName = "character", parValue = "numeric"), function(x, parName, parValue){
-    x <-  as(x, "list")
-    x <- updateITHIM(x, parName = parName, parValue = parValue)
-    x <- new("ITHIM", parameters = x$parameters, means = x$means, quintiles = x$quintiles)    
-    return(x)
+    x2 <-  as(x, "list")
+    x3 <- updateITHIM(x2, parName = parName, parValue = parValue)
+    pSet <- createParameterSet(x3$parameters)
+    x4 <- new("ITHIM", parameters = pSet, means = x3$means, quintiles = x3$quintiles)    
+    return(x4)
 })
 
 #' @export
 setMethod("update", signature(x = "ITHIM", parName = "character", parValue = "character"), function(x, parName, parValue){
-    x <-  as(x, "list")
-    x <- updateITHIM(x, parName = parName, parValue = parValue)
-    x <- new("ITHIM", parameters = x$parameters, means = x$means, quintiles = x$quintiles)
-    return(x)
+    x2 <-  as(x, "list")
+    x3 <- updateITHIM(x2, parName = parName, parValue = parValue)
+    pSet <- createParameterSet(x3$parameters)
+    x4 <- new("ITHIM", parameters = pSet, means = x3$means, quintiles = x3$quintiles)    
+    return(x4)
 })
 
+#' @export
+setMethod("update", signature(x = "ITHIM", parName = "character", parValue = "matrix"), function(x, parName, parValue){
+    x2 <-  as(x, "list")
+    x3 <- updateITHIM(x2, parName = parName, parValue = parValue)
+    pSet <- createParameterSet(x3$parameters)
+    x4 <- new("ITHIM", parameters = pSet, means = x3$means, quintiles = x3$quintiles)    
+    return(x4)
+})
 
 #' @export
-setAs("ITHIM", "list", function(from) list(parameters = from@parameters,
+setMethod("update", signature(x = "ITHIM", parName = "character", parValue = "list"), function(x, parName, parValue){
+    x2 <-  as(x, "list")
+    x3 <- updateITHIM(x2, parName = parName, parValue = parValue)
+    pSet <- createParameterSet(x3$parameters)
+    x4 <- new("ITHIM", parameters = pSet, means = x3$means, quintiles = x3$quintiles)    
+    return(x4)
+})
+
+#' @export
+setAs("ITHIM", "list", function(from) list(parameters = as(from@parameters,"list"),
                                            means = from@means,
                                            quintiles = from@quintiles))
 
