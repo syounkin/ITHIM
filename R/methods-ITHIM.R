@@ -25,7 +25,7 @@ setMethod("update", signature(x = "ITHIM", parList = "ParameterSet"), function(x
 #' @export
 setMethod("update", signature(x = "ITHIM", parList = "list"), function(x, parList){
 
-    parList <- createParameterSet(parList)
+    parList <- update(x@parameters, parList)
     x <- update(x, parList)
 
     return(x)

@@ -29,7 +29,7 @@ setMethod("createITHIM", signature(x = "missing"), function(x){
 setMethod("update", signature(x = "ParameterSet", parList = "list"), function(x, parList){
     x <- as(x, "list")
     for(i in 1:length(parList) ){
-        x[[names(parList)[i]]] <- parList[[i]] # Also kind of slow
+        x[[names(parList)[i]]] <- parList[[i]]
     }
     return(createParameterSet(x))
 })
