@@ -1,8 +1,8 @@
 #' @export
 setMethod("show", signature(object="ParameterSet"), function(object){
     cat("Hello vargo, this is a ParameterSet object.  The parameter names are listed below.\n", sep = "")
-    cat(c(slotNames(getParameterSet(foo)), "\n"), sep = ", ")
-    cat("Any questions?")
+    cat(c(slotNames(object), "\n"), sep = ", ")
+    cat("Enjoy.\n")
 })
 
 #' @export
