@@ -54,7 +54,20 @@ setClass("ITHIM", representation(parameters = "ParameterSet",
                                  ))
 
 
-
+#' The ITHIMList class
+#'
+#' Foo.
+#'
+#' This line and the next ones go into the details.
+#' This line thus appears in the details as well.
+#'
+#' @name ITHIMList
+#' @rdname ITHIMList
+#' @aliases ITHIMList-class
+#' @exportClass ITHIMList
+setClass("ITHIMList",
+         prototype = prototype(elementType = "ITHIM"),
+         contains = "list")
 
 ## setClass("MosaicsBinDataList",
 ##          prototype = prototype(elementType = "BinData"),
