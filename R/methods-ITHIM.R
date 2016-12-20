@@ -9,61 +9,84 @@ setMethod("plot", signature(x = "ITHIM"), function(x){
 })
 
 #' @export
-setMethod("update", signature(x = "ITHIM", parName = "character", parValue = "numeric"), function(x, parName, parValue){
-    x2 <-  as(x, "list")
-    x3 <- updateITHIM(x2, parName = parName, parValue = parValue)
-    pSet <- createParameterSet(x3$parameters)
-    x4 <- new("ITHIM", parameters = pSet, means = x3$means, quintiles = x3$quintiles)
-    return(x4)
+setMethod("update", signature(x = "ITHIM", parList = "missing"), function(x, parList){
+    x <- new("ITHIM", parameters = parameters <- x@parameters, means = means <- computeMeanMatrices(as(parameters,"list")), quintiles = getQuintiles(means, as(parameters,"list")))
+
+    return(x)
 })
 
 #' @export
-setMethod("update", signature(x = "ITHIM", parName = "character", parValue = "character"), function(x, parName, parValue){
-    x2 <-  as(x, "list")
-    x3 <- updateITHIM(x2, parName = parName, parValue = parValue)
-    pSet <- createParameterSet(x3$parameters)
-    x4 <- new("ITHIM", parameters = pSet, means = x3$means, quintiles = x3$quintiles)
-    return(x4)
+setMethod("update", signature(x = "ITHIM", parList = "ParameterSet"), function(x, parList){
+    x@parameters <- parList
+    x <- update(x)
+    return(x)
 })
 
 #' @export
-setMethod("update", signature(x = "ITHIM", parName = "character", parValue = "matrix"), function(x, parName, parValue){
-    x2 <-  as(x, "list")
-    x3 <- updateITHIM(x2, parName = parName, parValue = parValue)
-    pSet <- createParameterSet(x3$parameters)
-    x4 <- new("ITHIM", parameters = pSet, means = x3$means, quintiles = x3$quintiles)
-    return(x4)
+setMethod("update", signature(x = "ITHIM", parList = "list"), function(x, parList){
+
+    parList <- createParameterSet(parList)
+    x <- update(x, parList)
+
+    return(x)
 })
 
-#' @export
-setMethod("update", signature(x = "ITHIM", parName = "character", parValue = "list"), function(x, parName, parValue){
-    x2 <-  as(x, "list")
-    x3 <- updateITHIM(x2, parName = parName, parValue = parValue)
-    pSet <- createParameterSet(x3$parameters)
-    x4 <- new("ITHIM", parameters = pSet, means = x3$means, quintiles = x3$quintiles)
-    return(x4)
-})
+## #' @export
+## setMethod("update", signature(x = "ITHIM", parName = "character", parValue = "numeric"), function(x, parName, parValue){
+##     x2 <-  as(x, "list")
+##     x3 <- updateITHIM(x2, parName = parName, parValue = parValue)
+##     pSet <- createParameterSet(x3$parameters)
+##     x4 <- new("ITHIM", parameters = pSet, means = x3$means, quintiles = x3$quintiles)
+##     return(x4)
+## })
 
-#' @export
-setMethod("update", signature(x = "ITHIM", parName = "list", parValue = "missing"), function(x, parName, parValue){
-    for( i in 1:length(parName) ){
-        x2 <- update(x, parName = names(parName)[i], parValue = parName[[i]])
-        }
-    pSet <- createParameterSet(as(x2@parameters,"list"))
-    x4 <- new("ITHIM", parameters = pSet, means = x2@means, quintiles = x2@quintiles)
-    return(x4)
-})
+## #' @export
+## setMethod("update", signature(x = "ITHIM", parName = "character", parValue = "character"), function(x, parName, parValue){
+##     x2 <-  as(x, "list")
+##     x3 <- updateITHIM(x2, parName = parName, parValue = parValue)
+##     pSet <- createParameterSet(x3$parameters)
+##     x4 <- new("ITHIM", parameters = pSet, means = x3$means, quintiles = x3$quintiles)
+##     return(x4)
+## })
 
-#' @export
-setMethod("update", signature(x = "ITHIM", parName = "ParameterSet", parValue = "missing"), function(x, parName, parValue){
-    parName <- as(parName, "list")
-    for( i in 1:length(parName) ){
-        x2 <- update(x, parName = names(parName)[i], parValue = parName[[i]])
-        }
-    pSet <- createParameterSet(as(x2@parameters,"list"))
-    x4 <- new("ITHIM", parameters = pSet, means = x2@means, quintiles = x2@quintiles)
-    return(x4)
-})
+## #' @export
+## setMethod("update", signature(x = "ITHIM", parName = "character", parValue = "matrix"), function(x, parName, parValue){
+##     x2 <-  as(x, "list")
+##     x3 <- updateITHIM(x2, parName = parName, parValue = parValue)
+##     pSet <- createParameterSet(x3$parameters)
+##     x4 <- new("ITHIM", parameters = pSet, means = x3$means, quintiles = x3$quintiles)
+##     return(x4)
+## })
+
+## #' @export
+## setMethod("update", signature(x = "ITHIM", parName = "character", parValue = "list"), function(x, parName, parValue){
+##     x2 <-  as(x, "list")
+##     x3 <- updateITHIM(x2, parName = parName, parValue = parValue)
+##     pSet <- createParameterSet(x3$parameters)
+##     x4 <- new("ITHIM", parameters = pSet, means = x3$means, quintiles = x3$quintiles)
+##     return(x4)
+## })
+
+## #' @export
+## setMethod("update", signature(x = "ITHIM", parName = "list", parValue = "missing"), function(x, parName, parValue){
+##     for( i in 1:length(parName) ){
+##         x2 <- update(x, parName = names(parName)[i], parValue = parName[[i]])
+##         }
+##     pSet <- createParameterSet(as(x2@parameters,"list"))
+##     x4 <- new("ITHIM", parameters = pSet, means = x2@means, quintiles = x2@quintiles)
+##     return(x4)
+## })
+
+## #' @export
+## setMethod("update", signature(x = "ITHIM", parName = "ParameterSet", parValue = "missing"), function(x, parName, parValue){
+##     parName <- as(parName, "list")
+##     for( i in 1:length(parName) ){
+##         x2 <- update(x, parName = names(parName)[i], parValue = parName[[i]])
+##         }
+##     pSet <- createParameterSet(as(x2@parameters,"list"))
+##     x4 <- new("ITHIM", parameters = pSet, means = x2@means, quintiles = x2@quintiles)
+##     return(x4)
+## })
 
 #' @export
 setAs("ITHIM", "list", function(from) list(parameters = as(from@parameters,"list"),

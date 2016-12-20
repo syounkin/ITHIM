@@ -309,146 +309,152 @@ getWalkSpeed <- function(ITHIM, form = 2){
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#' Returns 
+#' Returns
 #'
-#' Returns 
+#' Returns
 #'
 #' @param ITHIM.baseline An ITHIM object
 #' @param ITHIM.scenario An ITHIM object
 #'
-#' @return 
+#' @return
 #'
 #' @export
 sumDALY <- function(ITHIM.baseline, ITHIM.scenario){
     ITHIM.baseline <- as(ITHIM.baseline, "list")
-    ITHIM.scenario <- as(ITHIM.scenario, "list")    
+    ITHIM.scenario <- as(ITHIM.scenario, "list")
   return(sum(unlist(data.frame(compareModels(ITHIM.baseline,ITHIM.scenario)$daly.delta)[-1,]))) # AgeClass 1 is removed from totals
 }
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#' Returns 
+#' Returns
 #'
-#' Returns 
+#' Returns
 #'
 #' @param ITHIM.baseline An ITHIM object
 #' @param ITHIM.scenario An ITHIM object
 #'
-#' @return 
+#' @return
 #'
 #' @export
 sumCVD <- function(ITHIM.baseline, ITHIM.scenario){
     ITHIM.baseline <- as(ITHIM.baseline, "list")
-    ITHIM.scenario <- as(ITHIM.scenario, "list")    
+    ITHIM.scenario <- as(ITHIM.scenario, "list")
   return(sum(unlist(data.frame(compareModels(ITHIM.baseline,ITHIM.scenario)$daly.delta$CVD)[-1,]))) # AgeClass 1 is removed from totals
 }
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#' Returns 
+#' Returns
 #'
-#' Returns 
+#' Returns
 #'
 #' @param ITHIM.baseline An ITHIM object
 #' @param ITHIM.scenario An ITHIM object
 #'
-#' @return 
+#' @return
 #'
 #' @export
 sumDiabetes <- function(ITHIM.baseline, ITHIM.scenario){
     ITHIM.baseline <- as(ITHIM.baseline, "list")
-    ITHIM.scenario <- as(ITHIM.scenario, "list")    
+    ITHIM.scenario <- as(ITHIM.scenario, "list")
   return(sum(unlist(data.frame(compareModels(ITHIM.baseline,ITHIM.scenario)$daly.delta$Diabetes)[-1,]))) # AgeClass 1 is removed from totals
 }
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#' Returns 
+#' Returns
 #'
-#' Returns 
+#' Returns
 #'
 #' @param ITHIM.baseline An ITHIM object
 #' @param ITHIM.scenario An ITHIM object
 #'
-#' @return 
+#' @return
 #'
 #' @export
 sumDepression <- function(ITHIM.baseline, ITHIM.scenario){
     ITHIM.baseline <- as(ITHIM.baseline, "list")
-    ITHIM.scenario <- as(ITHIM.scenario, "list")    
+    ITHIM.scenario <- as(ITHIM.scenario, "list")
   return(sum(unlist(data.frame(compareModels(ITHIM.baseline,ITHIM.scenario)$daly.delta$Depression)[-1,]))) # AgeClass 1 is removed from totals
 }
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#' Returns 
+#' Returns
 #'
-#' Returns 
+#' Returns
 #'
 #' @param ITHIM.baseline An ITHIM object
 #' @param ITHIM.scenario An ITHIM object
 #'
-#' @return 
+#' @return
 #'
 #' @export
 sumBreastCancer <- function(ITHIM.baseline, ITHIM.scenario){
     ITHIM.baseline <- as(ITHIM.baseline, "list")
-    ITHIM.scenario <- as(ITHIM.scenario, "list")    
+    ITHIM.scenario <- as(ITHIM.scenario, "list")
   return(sum(unlist(data.frame(compareModels(ITHIM.baseline,ITHIM.scenario)$daly.delta$BreastCancer)[-1,]))) # AgeClass 1 is removed from totals
 }
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#' Returns 
+#' Returns
 #'
-#' Returns 
+#' Returns
 #'
 #' @param ITHIM.baseline An ITHIM object
 #' @param ITHIM.scenario An ITHIM object
 #'
-#' @return 
+#' @return
 #'
 #' @export
 sumColonCancer <- function(ITHIM.baseline, ITHIM.scenario){
     ITHIM.baseline <- as(ITHIM.baseline, "list")
-    ITHIM.scenario <- as(ITHIM.scenario, "list")    
+    ITHIM.scenario <- as(ITHIM.scenario, "list")
   return(sum(unlist(data.frame(compareModels(ITHIM.baseline,ITHIM.scenario)$daly.delta$ColonCancer)[-1,]))) # AgeClass 1 is removed from totals
 }
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#' Returns 
+#' Returns
 #'
-#' Returns 
+#' Returns
 #'
 #' @param ITHIM.baseline An ITHIM object
 #' @param ITHIM.scenario An ITHIM object
 #'
-#' @return 
+#' @return
 #'
 #' @export
 sumDementia <- function(ITHIM.baseline, ITHIM.scenario){
     ITHIM.baseline <- as(ITHIM.baseline, "list")
-    ITHIM.scenario <- as(ITHIM.scenario, "list")    
+    ITHIM.scenario <- as(ITHIM.scenario, "list")
   return(sum(unlist(data.frame(compareModels(ITHIM.baseline,ITHIM.scenario)$daly.delta$Dementia)[-1,]))) # AgeClass 1 is removed from totals
 }
 
 #'@export
 createParameterSet <- function(x){
-    pSet <- new("ParameterSet",Rwt = x$Rwt,
-                                        Rct = x$Rct,
-                                        Rws = x$Rws,
-                                        muwt = x$muwt,
-                                        muws = x$muws,
-                                        muct = x$muct,
-                                        cv = x$cv,
-                                        cvNonTravel = x$cvNonTravel,
-                                        nAgeClass = x$nAgeClass,
-                                        muNonTravel = x$muNonTravel,
-                                        muNonTravelMatrix = x$muNonTravelMatrix,
-                                        GBD = x$GBD,
-                                        meanType = x$meanType,
-                                        quantiles = x$quantiles
+
+    parList <- as(createParameterList(),"list")
+    for(name in names(x)){
+        parList[[name]] <- x[[name]]
+        }
+
+    pSet <- new("ParameterSet",Rwt = parList$Rwt,
+                                        Rct = parList$Rct,
+                                        Rws = parList$Rws,
+                                        muwt = parList$muwt,
+                                        muws = parList$muws,
+                                        muct = parList$muct,
+                                        cv = parList$cv,
+                                        cvNonTravel = parList$cvNonTravel,
+                                        nAgeClass = parList$nAgeClass,
+                                        muNonTravel = parList$muNonTravel,
+                                        muNonTravelMatrix = parList$muNonTravelMatrix,
+                                        GBD = parList$GBD,
+                                        meanType = parList$meanType,
+                                        quantiles = parList$quantiles
                 )
     return(pSet)
     }
