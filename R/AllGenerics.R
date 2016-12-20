@@ -8,3 +8,5 @@ setGeneric("getDALYs", function(x, n) standardGeneric("getDALYs"))
 setGeneric("createITHIM", function(x) standardGeneric("createITHIM"))
 #' @export
 setGeneric("getParameterSet", function(x) standardGeneric("getParameterSet"))
+#' @export
+setGeneric("getMeans", function(x) standardGeneric("getMeans"))

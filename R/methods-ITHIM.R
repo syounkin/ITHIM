@@ -39,31 +39,30 @@ setAs("ITHIM", "list", function(from) list(parameters = as(from@parameters,"list
 #' @export
 setMethod("tilePlot", signature(x = "ITHIM", n = "numeric"), function(x, n){
 
-    ITHIM.baseline <- as(x, "list")
-    ITHIM.baseline$parameters <- as(ITHIM.baseline$parameters, "list")
-    baseWalk <- ITHIM.baseline$parameters$muwt
-    baseCycle <- ITHIM.baseline$parameters$muct
+    baseWalk <- getMeans(x)$walk
+    baseCycle <- getMeans(x)$cycle
+    
     upper <- 4*max(c(baseWalk,baseCycle))
     results <- data.frame()
     wVec <- seq(0,upper,length.out = n)
     cVec <- wVec
 
     for(muwt in wVec){
-        ITHIM.scenario <- updateITHIM(ITHIM.baseline, "muwt", muwt)
+        ITHIM.scenario <- update(x, list(muwt = muwt))
         for(muct in cVec){
             if(muwt !=0 | muct !=0){
-                ITHIM.scenario <- updateITHIM(ITHIM.scenario, "muct", muct)
+                ITHIM.scenario <- update(ITHIM.scenario, list(muct = muct))
                 comparativeRisk <- data.frame(cycleTime = muct,
                                               walkTime= muwt,
-                                              DALYS = sumDALY(ITHIM.baseline, ITHIM.scenario)
+                                              DALYS = sumDALY(x, ITHIM.scenario)
                                               )
                 results <- rbind(comparativeRisk, results)
             }
         }
     }
 
-    p <- ggplot(results, aes(x = walkTime, y = cycleTime, fill = (DALYS + getDALYs(x))/1e6))
-    p + geom_tile() + geom_hline(yintercept=baseCycle, linetype = 2) + geom_vline(xintercept=baseWalk, linetype = 2) + scale_fill_gradientn(colours = terrain.colors(10),name = "DALYs (millions)")
+    p <- ggplot(results, aes(x = walkTime, y = cycleTime, fill = (DALYS + getDALYs(x))))
+    p + geom_tile() + geom_hline(yintercept=baseCycle, linetype = 2) + geom_vline(xintercept=baseWalk, linetype = 2) + scale_fill_gradientn(colours = terrain.colors(10),name = "DALYs")
 
 })
 
@@ -71,7 +70,7 @@ setMethod("tilePlot", signature(x = "ITHIM", n = "numeric"), function(x, n){
 #' @export
 setMethod("getDALYs", signature(x = "ITHIM"), function(x){
 
-    sum(subset(melt(x@parameters@GBD,),variable == "daly")$value) # very shaky
+    sum(subset(melt(x@parameters@GBD,),variable == "daly")$value, na.rm = TRUE)
 
 }
 )
@@ -79,5 +78,11 @@ setMethod("getDALYs", signature(x = "ITHIM"), function(x){
 #' @export
 setMethod("getParameterSet", signature(x = "ITHIM"), function(x){
     return(x@parameters)
+}
+)
+
+#' @export
+setMethod("getMeans", signature(x = "ITHIM"), function(x){
+    return(getMeans(getParameterSet(x)))
 }
 )

@@ -33,3 +33,8 @@ setMethod("update", signature(x = "ParameterSet", parList = "list"), function(x,
     }
     return(createParameterSet(x))
 })
+
+#' @export
+setMethod("getMeans", signature(x = "ParameterSet"), function(x){
+    return(data.frame(walk = x@muwt, cycle = x@muct, nonTravel = x@muNonTravel))
+})
