@@ -13,7 +13,7 @@ setMethod("update", signature(x = "ITHIM", parName = "character", parValue = "nu
     x2 <-  as(x, "list")
     x3 <- updateITHIM(x2, parName = parName, parValue = parValue)
     pSet <- createParameterSet(x3$parameters)
-    x4 <- new("ITHIM", parameters = pSet, means = x3$means, quintiles = x3$quintiles)    
+    x4 <- new("ITHIM", parameters = pSet, means = x3$means, quintiles = x3$quintiles)
     return(x4)
 })
 
@@ -22,7 +22,7 @@ setMethod("update", signature(x = "ITHIM", parName = "character", parValue = "ch
     x2 <-  as(x, "list")
     x3 <- updateITHIM(x2, parName = parName, parValue = parValue)
     pSet <- createParameterSet(x3$parameters)
-    x4 <- new("ITHIM", parameters = pSet, means = x3$means, quintiles = x3$quintiles)    
+    x4 <- new("ITHIM", parameters = pSet, means = x3$means, quintiles = x3$quintiles)
     return(x4)
 })
 
@@ -31,7 +31,7 @@ setMethod("update", signature(x = "ITHIM", parName = "character", parValue = "ma
     x2 <-  as(x, "list")
     x3 <- updateITHIM(x2, parName = parName, parValue = parValue)
     pSet <- createParameterSet(x3$parameters)
-    x4 <- new("ITHIM", parameters = pSet, means = x3$means, quintiles = x3$quintiles)    
+    x4 <- new("ITHIM", parameters = pSet, means = x3$means, quintiles = x3$quintiles)
     return(x4)
 })
 
@@ -40,7 +40,7 @@ setMethod("update", signature(x = "ITHIM", parName = "character", parValue = "li
     x2 <-  as(x, "list")
     x3 <- updateITHIM(x2, parName = parName, parValue = parValue)
     pSet <- createParameterSet(x3$parameters)
-    x4 <- new("ITHIM", parameters = pSet, means = x3$means, quintiles = x3$quintiles)    
+    x4 <- new("ITHIM", parameters = pSet, means = x3$means, quintiles = x3$quintiles)
     return(x4)
 })
 
@@ -50,7 +50,18 @@ setMethod("update", signature(x = "ITHIM", parName = "list", parValue = "missing
         x2 <- update(x, parName = names(parName)[i], parValue = parName[[i]])
         }
     pSet <- createParameterSet(as(x2@parameters,"list"))
-    x4 <- new("ITHIM", parameters = pSet, means = x2@means, quintiles = x2@quintiles)    
+    x4 <- new("ITHIM", parameters = pSet, means = x2@means, quintiles = x2@quintiles)
+    return(x4)
+})
+
+#' @export
+setMethod("update", signature(x = "ITHIM", parName = "ParameterSet", parValue = "missing"), function(x, parName, parValue){
+    parName <- as(parName, "list")
+    for( i in 1:length(parName) ){
+        x2 <- update(x, parName = names(parName)[i], parValue = parName[[i]])
+        }
+    pSet <- createParameterSet(as(x2@parameters,"list"))
+    x4 <- new("ITHIM", parameters = pSet, means = x2@means, quintiles = x2@quintiles)
     return(x4)
 })
 
@@ -70,14 +81,14 @@ setMethod("tilePlot", signature(x = "ITHIM", n = "numeric"), function(x, n){
     results <- data.frame()
     wVec <- seq(0,upper,length.out = n)
     cVec <- wVec
-    
+
     for(muwt in wVec){
         ITHIM.scenario <- updateITHIM(ITHIM.baseline, "muwt", muwt)
         for(muct in cVec){
             if(muwt !=0 | muct !=0){
                 ITHIM.scenario <- updateITHIM(ITHIM.scenario, "muct", muct)
                 comparativeRisk <- data.frame(cycleTime = muct,
-                                              walkTime= muwt, 
+                                              walkTime= muwt,
                                               DALYS = sumDALY(ITHIM.baseline, ITHIM.scenario)
                                               )
                 results <- rbind(comparativeRisk, results)

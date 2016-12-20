@@ -93,10 +93,10 @@ NULL
 #'     \code{\link{computeMeanMatrices}}, \code{\link{getQuintiles}}
 #'
 #' @export
-createITHIM <- function(){
+createITHIMFunction <- function(){
 
         new("ITHIM", parameters = parameters <- createParameterList(), means = means <- computeMeanMatrices(as(parameters,"list")), quintiles = getQuintiles(means, as(parameters,"list")))
-    
+
 }
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -434,7 +434,7 @@ compareModels <- function(baseline, scenario){
     baseline <- as(baseline, "list")
     scenario <- as(scenario, "list")
     baseline$parameters <- as(baseline$parameters, "list")
-    scenario$parameters <- as(scenario$parameters, "list")    
+    scenario$parameters <- as(scenario$parameters, "list")
     ## if( identical(baseline$parameters$GBD,scenario$parameters$GBD) ){
     ##     GBD <- baseline$parameters$GBD # GBD must be the same between baseline and scenario
     ##     }else{
