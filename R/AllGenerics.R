@@ -6,3 +6,5 @@ setGeneric("tilePlot", function(x, n) standardGeneric("tilePlot"))
 setGeneric("getDALYs", function(x, n) standardGeneric("getDALYs"))
 #' @export
 setGeneric("createITHIM", function(x) standardGeneric("createITHIM"))
+#' @export
+setGeneric("getParameterSet", function(x) standardGeneric("getParameterSet"))

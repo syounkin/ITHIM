@@ -1,6 +1,6 @@
 #' @export
 setMethod("show", signature(object="ParameterSet"), function(object){
-  cat("Hello vargo.\n", sep = "")
+  cat("Hello vargo, this is a ParameterSet object.\n", sep = "")
 })
 
 #' @export
