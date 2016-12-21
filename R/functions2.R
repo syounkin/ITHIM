@@ -458,3 +458,21 @@ createParameterSet <- function(x){
                 )
     return(pSet)
     }
+#'@export
+s4Methods <- function(class)
+{
+    methods <-
+      showMethods(classes = class, printTo = FALSE)
+    methods <- methods[grep("^Function:", methods)]
+    sapply(strsplit(methods, " "), "[", 2)
+}
+
+#'@export
+getMethodsITHIM <- function()
+{
+    class <- "ITHIM"
+    methods <-
+      showMethods(classes = class, printTo = FALSE)
+    methods <- methods[grep("^Function:", methods)]
+    sapply(strsplit(methods, " "), "[", 2)
+}
