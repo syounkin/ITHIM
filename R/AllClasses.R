@@ -1,9 +1,9 @@
 #' The ITHIM ParameterSet class
 #'
-#' This is the secondary class in the ITHIM package.
+#' This class defines the set of parameters needed for an
+#' ITHIM analysis.
 #'
-#' This line and the next ones go into the details.
-#' This line thus appears in the details as well.
+#'
 #'
 #'@section Slots:
 #' \describe{
