@@ -6,11 +6,8 @@
 \alias{ParameterSet-class}
 \title{The ITHIM ParameterSet class}
 \description{
-This is the secondary class in the ITHIM package.
-}
-\details{
-This line and the next ones go into the details.
-This line thus appears in the details as well.
+This class defines the set of parameters needed for an
+ITHIM analysis.
 }
 \section{Slots}{
 
