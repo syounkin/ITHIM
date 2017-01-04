@@ -1,15 +1,15 @@
 #' @export
 setMethod("show", signature(object="ParameterSet"), function(object){
-    cat("\n~~~~~ ITHIM Parameters ~~~~\n")
-    cat(c("Walking Time:\n  Mean = ", object@muwt, " min./week\n"), sep = "")
+##    cat("\n~~~~~ ITHIM Parameters ~~~~\n")
+    cat(c("Walking Time:\n  Mean = ", round(object@muwt,2), " min./week\n"), sep = "")
     cat("  Relative Means = ")
     cat(round(object@Rwt,2), sep = ", ")
     cat("\n~~~~~~~~~~~~~~~~~~~~~~~~~~~\n")
-    cat(c("Cycling Time:\n  Mean = ", object@muct, " min./week\n"), sep = "")
+    cat(c("Cycling Time:\n  Mean = ", round(object@muct,2), " min./week\n"), sep = "")
     cat("  Relative Means = ")
     cat(round(object@Rct,2), sep = ", ")
     cat("\n~~~~~~~~~~~~~~~~~~~~~~~~~~~\n")
-    cat(c("Walking Speed:\n  Mean = ", object@muws, " mph\n"), sep = "")
+    cat(c("Walking Speed:\n  Mean = ", round(object@muws,2), " mph\n"), sep = "")
     cat("  Relative Means = ")
     cat(round(object@Rws,2), sep = ", ")
     cat("\n~~~~~~~~~~~~~~~~~~~~~~~~~~~\n")
@@ -18,12 +18,19 @@ setMethod("show", signature(object="ParameterSet"), function(object){
     cat(round(object@muNonTravelMatrix,2), sep = ", ")
     cat("\n~~~~~~~~~~~~~~~~~~~~~~~~~~~\n")
     cat("Coefficients of Variation:\n")
-    cat(c("  Active Transport: ", object@cv, "\n"), sep = "")
-    cat(c("  Physical Activity (non-travel): ", object@cvNonTravel), sep = "")
+    cat(c("  Active Transport: ", round(object@cv,2), "\n"), sep = "")
+    cat(c("  Physical Activity (non-travel): ", round(object@cvNonTravel,2)), sep = "")
     cat("\n~~~~~~~~~~~~~~~~~~~~~~~~~~~\n")
-    cat("Parameter names: ", sep = "")
+    if( object@meanType == "referent" ){
+        cat("Means given above are for the referent class (women aged 15-30 yrs.).  ")
+    } else if( object@meanType == "overall" ){
+        cat("Means given above are overall means.  ")
+    }else{
+        message("Problem with meanType parameter")
+        }
+    cat("\n~~~~~~~~~~~~~~~~~~~~~~~~~~~\n")
+    cat("All parameter names: ", sep = "")
     cat(c(slotNames(object), "\n"), sep = ", ")
-    cat("Enjoy.\n")
 })
 
 #' @export
