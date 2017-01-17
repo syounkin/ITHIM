@@ -68,8 +68,23 @@ setMethod("tilePlot", signature(x = "ITHIM", n = "numeric"), function(x, n){
 
 
 #' @export
-setMethod("getDALYs", signature(x = "ITHIM"), function(x){
-    sum(subset(getGBD(x),variable == "daly")$value, na.rm = TRUE)
+setMethod("getDALYs", signature(x = "ITHIM", bur = "character", dis = "character"), function(x, bur, dis){
+    suppressMessages(
+        if( dis == "all" ){
+        return(sum(subset(getGBD(x), variable == bur)$value, na.rm = TRUE))
+    }else{
+        return(sum(subset(getGBD(x), variable == bur & disease %in% dis)$value, na.rm = TRUE))
+    })
+})
+
+#' @export
+setMethod("getDALYs", signature(x = "ITHIM", bur = "character", dis = "missing"), function(x, bur){
+    return(getDALYs(x, bur = bur, dis = "all"))
+})
+
+#' @export
+setMethod("getDALYs", signature(x = "ITHIM", bur = "missing", dis = "missing"), function(x){
+    return(getDALYs(x, bur = "daly", dis = "all"))
 })
 
 #' @export
