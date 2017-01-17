@@ -69,26 +69,31 @@ setMethod("tilePlot", signature(x = "ITHIM", n = "numeric"), function(x, n){
 
 #' @export
 setMethod("getDALYs", signature(x = "ITHIM"), function(x){
-
-    sum(subset(melt(x@parameters@GBD,),variable == "daly")$value, na.rm = TRUE)
-
-}
-)
+    sum(subset(getGBD(x),variable == "daly")$value, na.rm = TRUE)
+})
 
 #' @export
 setMethod("getParameterSet", signature(x = "ITHIM"), function(x){
     return(x@parameters)
-}
-)
+})
 
 #' @export
 setMethod("getMeans", signature(x = "ITHIM"), function(x){
     return(getMeans(getParameterSet(x)))
-}
-)
+})
 
 #' @export
-setMethod("getGBD", signature(x = "ITHIM"), function(x){
-    return(x@parameters@GBD)
-}
-)
+setMethod("getGBD", signature(x = "ITHIM", format = "character"), function(x, format){
+    if(format == "list"){
+        return(x@parameters@GBD)
+    }else if(format == "data.frame"){
+        return(melt(x@parameters@GBD))
+    }else{
+        message("Error with getGBD format argument.")
+        }
+})
+
+#' @export
+setMethod("getGBD", signature(x = "ITHIM", format = "missing"), function(x){
+    getGBD(x, format = "data.frame")
+})
