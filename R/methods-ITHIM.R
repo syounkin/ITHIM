@@ -41,7 +41,7 @@ setMethod("tilePlot", signature(x = "ITHIM", n = "numeric"), function(x, n){
 
     baseWalk <- getMeans(x)$walk
     baseCycle <- getMeans(x)$cycle
-    
+
     upper <- 4*max(c(baseWalk,baseCycle))
     results <- data.frame()
     wVec <- seq(0,upper,length.out = n)
@@ -84,5 +84,11 @@ setMethod("getParameterSet", signature(x = "ITHIM"), function(x){
 #' @export
 setMethod("getMeans", signature(x = "ITHIM"), function(x){
     return(getMeans(getParameterSet(x)))
+}
+)
+
+#' @export
+setMethod("getGBD", signature(x = "ITHIM"), function(x){
+    return(x@parameters@GBD)
 }
 )

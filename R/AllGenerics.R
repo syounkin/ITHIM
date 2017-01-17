@@ -10,3 +10,5 @@ setGeneric("createITHIM", function(x) standardGeneric("createITHIM"))
 setGeneric("getParameterSet", function(x) standardGeneric("getParameterSet"))
 #' @export
 setGeneric("getMeans", function(x) standardGeneric("getMeans"))
+#' @export
+setGeneric("getGBD", function(x) standardGeneric("getGBD"))
