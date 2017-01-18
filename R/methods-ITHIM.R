@@ -83,6 +83,11 @@ setMethod("getDALYs", signature(x = "ITHIM", bur = "character", dis = "missing")
 })
 
 #' @export
+setMethod("getDALYs", signature(x = "ITHIM", bur = "missing", dis = "character"), function(x, dis){
+    return(getDALYs(x, bur = "daly", dis = dis))
+})
+
+#' @export
 setMethod("getDALYs", signature(x = "ITHIM", bur = "missing", dis = "missing"), function(x){
     return(getDALYs(x, bur = "daly", dis = "all"))
 })
