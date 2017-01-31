@@ -27,7 +27,11 @@ setClass("ParameterSet", representation(Rwt = "matrix",
                                         muNonTravelMatrix = "matrix",
                                         GBD = "list",
                                         meanType = "character",
-                                        quantiles = "vector"
+                                        quantiles = "vector",
+                                        roadInjuries = "list",
+                                        strikingVehicleSafetyRR = "numeric",
+                                        speedSafety = "numeric",
+                                        otherSafetyFactor = "numeric"
                                         ))
 
 #' The ITHIM class

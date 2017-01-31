@@ -454,7 +454,8 @@ createParameterSet <- function(x){
                                         muNonTravelMatrix = parList$muNonTravelMatrix,
                                         GBD = parList$GBD,
                                         meanType = parList$meanType,
-                                        quantiles = parList$quantiles
+                quantiles = parList$quantiles,
+                roadInjuries = parList$roadInjuries
                 )
     return(pSet)
     }

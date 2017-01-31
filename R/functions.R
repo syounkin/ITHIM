@@ -164,6 +164,14 @@ createParameterList <- function(){
     muNonTravel <- 2 # MET-hrs./week leisure activity
     cvNonTravel <- 1 # coefficient of variation for leisure activity
 
+    filename <- system.file( "roadInjuries.csv", package = "ITHIM")
+ roadInjuries <- read.csv(file = filename, header = FALSE)
+
+roadInjuries <- rbind(roadInjuries,rep(NA,9))
+roadInjuries <- split(roadInjuries, c(t(matrix(1:6, nrow = 6, ncol = 8))))
+    names(roadInjuries) <- c("FatalLocal","FatalArterial","FatalHighway","SeriousLocal","SeriousArterial","SeriousHighway")
+    roadInjuries <- lapply(ri,function(x){dimnames(x) <- list(c("walk","cycle","bus","car","HGV","LGV","mbike","ebike"),c("walk","cycle","bus","car","HGV","LGV","mbike","ebike","NOV"));x})
+
     return( new("ParameterSet",
         Rwt = Rwt,
         Rct = Rct,
@@ -178,7 +186,11 @@ createParameterList <- function(){
         muNonTravelMatrix = muNonTravelMatrix,
         GBD = GBD,
         meanType = meanType,
-        quantiles = quantiles
+        quantiles = quantiles,
+        roadInjuries = roadInjuries,
+        strikingVehicleSafetyRR = 0.5,
+        speedSafety = 1,
+        otherSafetyFactor = 1
     ))
 }
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
