@@ -190,7 +190,8 @@ roadInjuries <- split(roadInjuries, c(t(matrix(1:6, nrow = 6, ncol = 8))))
         roadInjuries = roadInjuries,
         strikingVehicleSafetyRR = 0.5,
         speedSafety = 1,
-        otherSafetyFactor = 1
+        otherSafetyFactor = 1,
+        safetyInNumbers = 0.5
     ))
 }
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

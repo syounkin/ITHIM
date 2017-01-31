@@ -31,7 +31,8 @@ setClass("ParameterSet", representation(Rwt = "matrix",
                                         roadInjuries = "list",
                                         strikingVehicleSafetyRR = "numeric",
                                         speedSafety = "numeric",
-                                        otherSafetyFactor = "numeric"
+                                        otherSafetyFactor = "numeric",
+                                        safetyInNumbers = "numeric"
                                         ))
 
 #' The ITHIM class
