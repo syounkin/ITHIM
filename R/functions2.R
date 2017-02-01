@@ -477,3 +477,9 @@ getMethodsITHIM <- function()
     methods <- methods[grep("^Function:", methods)]
     sapply(strsplit(methods, " "), "[", 2)
 }
+#'@export
+computeMultiplier <- function(base, scenario){
+    perRatio <- (scenario$perMiles[,"Arterial"]/base$perMiles[,"Arterial"])^0.5
+    vehRatio <- (scenario$vehMiles[,"Arterial"]/base$vehMiles[,"Arterial"])^0.5
+    arterial <- outer(perRatio,vehRatio,"*")*1*1 # Hard-coded parameters
+    }
