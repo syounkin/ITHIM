@@ -170,7 +170,9 @@ createParameterList <- function(){
 roadInjuries <- rbind(roadInjuries,rep(NA,9))
 roadInjuries <- split(roadInjuries, c(t(matrix(1:6, nrow = 6, ncol = 8))))
     names(roadInjuries) <- c("FatalLocal","FatalArterial","FatalHighway","SeriousLocal","SeriousArterial","SeriousHighway")
-    roadInjuries <- lapply(ri,function(x){dimnames(x) <- list(c("walk","cycle","bus","car","HGV","LGV","mbike","ebike"),c("walk","cycle","bus","car","HGV","LGV","mbike","ebike","NOV"));x})
+    roadInjuries <- lapply(roadInjuries,function(x){dimnames(x) <- list(c("walk","cycle","bus","car","HGV","LGV","mbike","ebike"),c("walk","cycle","bus","car","HGV","LGV","mbike","ebike","NOV"));x})
+
+    distRoadType <- list()
 
     return( new("ParameterSet",
         Rwt = Rwt,
@@ -188,6 +190,7 @@ roadInjuries <- split(roadInjuries, c(t(matrix(1:6, nrow = 6, ncol = 8))))
         meanType = meanType,
         quantiles = quantiles,
         roadInjuries = roadInjuries,
+        distRoadType = distRoadType,
         strikingVehicleSafetyRR = 0.5,
         speedSafety = 1,
         otherSafetyFactor = 1,

@@ -455,7 +455,8 @@ createParameterSet <- function(x){
                                         GBD = parList$GBD,
                                         meanType = parList$meanType,
                 quantiles = parList$quantiles,
-                roadInjuries = parList$roadInjuries
+                roadInjuries = parList$roadInjuries,
+                distRoadType = parList$distRoadType
                 )
     return(pSet)
     }
