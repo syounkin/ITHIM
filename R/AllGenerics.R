@@ -12,3 +12,7 @@ setGeneric("getParameterSet", function(x) standardGeneric("getParameterSet"))
 setGeneric("getMeans", function(x) standardGeneric("getMeans"))
 #' @export
 setGeneric("getGBD", function(x, format = "data.frame") standardGeneric("getGBD"))
+#' @export
+setGeneric("getRoadInjuries", function(x) standardGeneric("getRoadInjuries"))
+#' @export
+setGeneric("getDistRoadType", function(x, format = "data.frame") standardGeneric("getDistRoadType"))

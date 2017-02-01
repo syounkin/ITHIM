@@ -103,6 +103,16 @@ setMethod("getMeans", signature(x = "ITHIM"), function(x){
 })
 
 #' @export
+setMethod("getRoadInjuries", signature(x = "ITHIM"), function(x){
+    return(getRoadInjuries(getParameterSet(x)))
+})
+
+#' @export
+setMethod("getDistRoadType", signature(x = "ITHIM"), function(x){
+    return(getDistRoadType(getParameterSet(x)))
+})
+
+#' @export
 setMethod("getGBD", signature(x = "ITHIM", format = "character"), function(x, format){
     if(format == "list"){
         return(x@parameters@GBD)
