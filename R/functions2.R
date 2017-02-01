@@ -479,7 +479,12 @@ getMethodsITHIM <- function()
 }
 #'@export
 computeMultiplier <- function(base, scenario){
-    perRatio <- (scenario$perMiles[,"Arterial"]/base$perMiles[,"Arterial"])^0.5
-    vehRatio <- (scenario$vehMiles[,"Arterial"]/base$vehMiles[,"Arterial"])^0.5
-    arterial <- outer(perRatio,vehRatio,"*")*1*1 # Hard-coded parameters
-    }
+        local <- outer((scenario$perMiles[,"Local"]/base$perMiles[,"Local"])^0.5,(scenario$vehMiles[,"Local"]/base$vehMiles[,"Local"])^0.5,"*")
+        arterial <- outer((scenario$perMiles[,"Arterial"]/base$perMiles[,"Arterial"])^0.5,(scenario$vehMiles[,"Arterial"]/base$vehMiles[,"Arterial"])^0.5,"*")
+        highway <- outer((scenario$perMiles[,"Highway"]/base$perMiles[,"Highway"])^0.5,(scenario$vehMiles[,"Highway"]/base$vehMiles[,"Highway"])^0.5,"*")
+        local <- cbind(local, NOV = (scenario$perMiles[,"Local"]/base$perMiles[,"Local"])^0.5)
+        arterial <- cbind(arterial, NOV = (scenario$perMiles[,"Arterial"]/base$perMiles[,"Arterial"])^0.5)
+        highway <- cbind(highway, NOV = (scenario$perMiles[,"Highway"]/base$perMiles[,"Highway"])^0.5)
+
+    list(local = local,arterial = arterial,highway = highway)
+}
