@@ -489,3 +489,94 @@ computeMultiplier <- function(base, scenario){
 
     list(local = local,arterial = arterial,highway = highway)
 }
+#'@export
+computeInjuryRR <- function(RI.baseline, RI.scenario){
+# written by Tomek
+injuryTypes <- c("Fatal", "Serious")
+roadTypes <- c("Local","Arterial","Highway")
+dsNames <- c("Baseline", "Scenario")
+injuryResultsTotals <- as.data.frame(matrix(nrow = length(injuryTypes),
+                              ncol = length(dsNames),
+                              dimnames = list(injuryTypes, dsNames)))
+
+injuryRRbyModes <- injuryRR <- vector(mode="list", length=length(injuryTypes))
+names(injuryRRbyModes) <- injuryTypes
+names(injuryRR) <- injuryTypes
+
+# for every injuryType
+
+for (it in injuryTypes){
+
+  # generate combinations of injuryTypes - roadTypes
+
+  injuryRoadTypes <- paste0(it, roadTypes)
+
+  # for every dataSource
+    i <- 0
+    for (ds in list(RI.baseline, RI.scenario)){
+        i <- i+1
+
+    # get data source variable from env
+
+    dsVar <- ds
+
+    dsResults <- NULL
+
+    # iterate over injuryRoadTypes - sum matrices
+
+    for (irt in injuryRoadTypes){
+
+      if(is.null(dsResults)){
+        dsResults <- dsVar[[irt]]
+      } else {
+        dsResults <- dsResults + dsVar[[irt]]
+      }
+
+    }
+
+    # row totals
+
+    dsResults <- transform(dsResults, total=rowSums(dsResults, na.rm = T))
+
+    # save matrix with totals in corresponding cell
+
+    injuryResultsTotals[[it, dsNames[i]]] <- dsResults[,c("total"), drop = F]
+
+  }
+}
+
+# RR by modes
+
+# for every injuryType
+
+for (it in injuryTypes){
+  injuryRRbyModes[[it]] <- injuryResultsTotals[[it, "Scenario"]] / injuryResultsTotals[[it, "Baseline"]]
+}
+
+# RR
+
+# for every injuryType
+
+for (it in injuryTypes){
+  injuryRR[[it]] <- sum(injuryResultsTotals[[it, "Scenario"]], na.rm = T) / sum(injuryResultsTotals[[it, "Baseline"]], na.rm = T)
+}
+return(injuryRR)
+}
+#'@export
+multiplyInjuries <- function(ITHIM.baseline, ITHIM.scenario){
+
+multiplier <- computeMultiplier(getDistRoadType(ITHIM.baseline),getDistRoadType(ITHIM.scenario))
+
+RI <- getRoadInjuries(ITHIM.baseline)
+
+RI.scenario <- list(
+     FatalLocal = RI$FatalLocal*multiplier$local,
+     FatalArterial = RI$FatalArterial*multiplier$arterial,
+     FatalHighway = RI$FatalHighway*multiplier$highway,
+     SeriousLocal = RI$SeriousLocal*multiplier$local,
+     SeriousArterial = RI$SeriousArterial*multiplier$arterial,
+     SeriousHighway = RI$SeriousHighway*multiplier$highway
+     )
+return(RI.scenario)
+
+}
