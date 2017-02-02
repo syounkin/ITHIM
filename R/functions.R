@@ -174,6 +174,9 @@ roadInjuries <- split(roadInjuries, c(t(matrix(1:6, nrow = 6, ncol = 8))))
 
     distRoadType <- list()
 
+    modeNames <- c("walk","cycle","bus","car","HGV","LGV","mbike","ebike")
+sinMatrix <- matrix(0.5, nrow = length(modeNames), ncol = length(modeNames), dimnames = list(modeNames, modeNames))
+
     return( new("ParameterSet",
         Rwt = Rwt,
         Rct = Rct,
@@ -191,7 +194,7 @@ roadInjuries <- split(roadInjuries, c(t(matrix(1:6, nrow = 6, ncol = 8))))
         quantiles = quantiles,
         roadInjuries = roadInjuries,
         distRoadType = distRoadType,
-        safetyInNumbers = 0.5
+        safetyInNumbers = sinMatrix
     ))
 }
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

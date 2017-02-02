@@ -30,7 +30,7 @@ setClass("ParameterSet", representation(Rwt = "matrix",
                                         quantiles = "vector",
                                         roadInjuries = "list",
                                         distRoadType = "list",
-                                        safetyInNumbers = "numeric"
+                                        safetyInNumbers = "matrix"
                                         ))
 
 #' The ITHIM class
