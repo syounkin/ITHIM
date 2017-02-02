@@ -580,3 +580,15 @@ RI.scenario <- list(
 return(RI.scenario)
 
 }
+#'@export
+computeRoadInjuryBurden <- function(ITHIM.baseline, ITHIM.scenario){
+  injuryRR <- computeInjuryRR(getRoadInjuries(ITHIM.baseline), getRoadInjuries(ITHIM.scenario))
+  RTI.GBD <- subset(getGBD(ITHIM.baseline),disease == "RTIs")
+  RIburden <- data.frame(ageClass = RTI.GBD$ageClass, sex = RTI.GBD$sex, burden = RTI.GBD$variable,delta = RTI.GBD$value*(1-injuryRR$Fatal))
+  return(RIburden)
+}
+#'@export
+updateRoadInjuries <- function(ITHIM.baseline, ITHIM.scenario){
+ITHIM.scenario <- update(ITHIM.scenario, list(roadInjuries = multiplyInjuries(ITHIM.baseline, ITHIM.scenario)))
+return(ITHIM.scenario)
+}

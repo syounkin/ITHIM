@@ -191,9 +191,6 @@ roadInjuries <- split(roadInjuries, c(t(matrix(1:6, nrow = 6, ncol = 8))))
         quantiles = quantiles,
         roadInjuries = roadInjuries,
         distRoadType = distRoadType,
-        strikingVehicleSafetyRR = 0.5,
-        speedSafety = 1,
-        otherSafetyFactor = 1,
         safetyInNumbers = 0.5
     ))
 }

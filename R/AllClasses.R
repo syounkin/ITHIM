@@ -30,9 +30,6 @@ setClass("ParameterSet", representation(Rwt = "matrix",
                                         quantiles = "vector",
                                         roadInjuries = "list",
                                         distRoadType = "list",
-                                        strikingVehicleSafetyRR = "numeric",
-                                        speedSafety = "numeric",
-                                        otherSafetyFactor = "numeric",
                                         safetyInNumbers = "numeric"
                                         ))
 
