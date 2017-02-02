@@ -4,7 +4,7 @@
 \alias{computeMultiplier}
 \title{Computes road injury multiplier}
 \usage{
-computeMultiplier(base, scenario)
+computeMultiplier(base, scenario, safetyInNumbers)
 }
 \arguments{
 \item{base}{a list containing two data frames (one for person-miles

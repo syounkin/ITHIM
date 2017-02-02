@@ -456,7 +456,8 @@ createParameterSet <- function(x){
                                         meanType = parList$meanType,
                 quantiles = parList$quantiles,
                 roadInjuries = parList$roadInjuries,
-                distRoadType = parList$distRoadType
+                distRoadType = parList$distRoadType,
+                safetyInNumbers = parList$safetyInNumbers
                 )
     return(pSet)
     }
@@ -498,13 +499,13 @@ getMethodsITHIM <- function()
 #' @return A list of multipliers.
 #'
 #'@export
-computeMultiplier <- function(base, scenario){
-        local <- outer((scenario$perMiles[,"Local"]/base$perMiles[,"Local"])^0.5,(scenario$vehMiles[,"Local"]/base$vehMiles[,"Local"])^0.5,"*")
-        arterial <- outer((scenario$perMiles[,"Arterial"]/base$perMiles[,"Arterial"])^0.5,(scenario$vehMiles[,"Arterial"]/base$vehMiles[,"Arterial"])^0.5,"*")
-        highway <- outer((scenario$perMiles[,"Highway"]/base$perMiles[,"Highway"])^0.5,(scenario$vehMiles[,"Highway"]/base$vehMiles[,"Highway"])^0.5,"*")
-        local <- cbind(local, NOV = (scenario$perMiles[,"Local"]/base$perMiles[,"Local"])^0.5)
-        arterial <- cbind(arterial, NOV = (scenario$perMiles[,"Arterial"]/base$perMiles[,"Arterial"])^0.5)
-        highway <- cbind(highway, NOV = (scenario$perMiles[,"Highway"]/base$perMiles[,"Highway"])^0.5)
+computeMultiplier <- function(base, scenario, safetyInNumbers){
+        local <- outer((scenario$perMiles[,"Local"]/base$perMiles[,"Local"])^safetyInNumbers[,1],(scenario$vehMiles[,"Local"]/base$vehMiles[,"Local"])^safetyInNumbers[,2],"*")
+        arterial <- outer((scenario$perMiles[,"Arterial"]/base$perMiles[,"Arterial"])^safetyInNumbers[,1],(scenario$vehMiles[,"Arterial"]/base$vehMiles[,"Arterial"])^safetyInNumbers[,2],"*")
+        highway <- outer((scenario$perMiles[,"Highway"]/base$perMiles[,"Highway"])^safetyInNumbers[,1],(scenario$vehMiles[,"Highway"]/base$vehMiles[,"Highway"])^safetyInNumbers[,2],"*")
+        local <- cbind(local, NOV = (scenario$perMiles[,"Local"]/base$perMiles[,"Local"])^safetyInNumbers[,1])
+        arterial <- cbind(arterial, NOV = (scenario$perMiles[,"Arterial"]/base$perMiles[,"Arterial"])^safetyInNumbers[,1])
+        highway <- cbind(highway, NOV = (scenario$perMiles[,"Highway"]/base$perMiles[,"Highway"])^safetyInNumbers[,1])
 
     list(local = local,arterial = arterial,highway = highway)
 }
@@ -584,7 +585,7 @@ return(injuryRR)
 #'@export
 multiplyInjuries <- function(ITHIM.baseline, ITHIM.scenario){
 
-multiplier <- computeMultiplier(getDistRoadType(ITHIM.baseline),getDistRoadType(ITHIM.scenario))
+multiplier <- computeMultiplier(base = getDistRoadType(ITHIM.baseline), scenario = getDistRoadType(ITHIM.scenario), safetyInNumbers = getParameterSet(ITHIM.baseline)@safetyInNumbers)
 
 RI <- getRoadInjuries(ITHIM.baseline)
 
