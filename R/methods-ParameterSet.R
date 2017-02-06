@@ -1,6 +1,11 @@
 #' @export
 setMethod("show", signature(object="ParameterSet"), function(object){
-##    cat("\n~~~~~ ITHIM Parameters ~~~~\n")
+    cat("\n~~~~~ Road Injury Parameters ~~~~\n")
+    cat(c("Safety in Numbers: ", round(object@safetyInNumbers,2)), "\n")
+    cat(c("Person Distance by Road Type: ", object@distRoadType$perMiles ,"\n"))
+    cat(c("Vehicle Distance by Road Type: ", object@distRoadType$vehMiles, "\n"))
+    cat("Road Injury Count: Too big to display, use getRoadInjuried()")
+    cat("\n~~~~~ Physical Activity Parameters ~~~~\n")
     cat(c("Walking Time:\n  Mean = ", round(object@muwt,2), " min./week\n"), sep = "")
     cat("  Relative Means = ")
     cat(round(object@Rwt,2), sep = ", ")
