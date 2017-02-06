@@ -500,12 +500,14 @@ getMethodsITHIM <- function()
 #'
 #'@export
 computeMultiplier <- function(base, scenario, safetyInNumbers){
-        local <- outer((scenario$perMiles[,"Local"]/base$perMiles[,"Local"])^safetyInNumbers[,1],(scenario$vehMiles[,"Local"]/base$vehMiles[,"Local"])^safetyInNumbers[,2],"*")
-        arterial <- outer((scenario$perMiles[,"Arterial"]/base$perMiles[,"Arterial"])^safetyInNumbers[,1],(scenario$vehMiles[,"Arterial"]/base$vehMiles[,"Arterial"])^safetyInNumbers[,2],"*")
-        highway <- outer((scenario$perMiles[,"Highway"]/base$perMiles[,"Highway"])^safetyInNumbers[,1],(scenario$vehMiles[,"Highway"]/base$vehMiles[,"Highway"])^safetyInNumbers[,2],"*")
-        local <- cbind(local, NOV = (scenario$perMiles[,"Local"]/base$perMiles[,"Local"])^safetyInNumbers[,1])
-        arterial <- cbind(arterial, NOV = (scenario$perMiles[,"Arterial"]/base$perMiles[,"Arterial"])^safetyInNumbers[,1])
-        highway <- cbind(highway, NOV = (scenario$perMiles[,"Highway"]/base$perMiles[,"Highway"])^safetyInNumbers[,1])
+
+    local <- outer((scenario$perMiles[,"Local"]/base$perMiles[,"Local"])^safetyInNumbers[,"victim"],(scenario$vehMiles[,"Local"]/base$vehMiles[,"Local"])^safetyInNumbers[,"striking"],"*")
+        arterial <- outer((scenario$perMiles[,"Arterial"]/base$perMiles[,"Arterial"])^safetyInNumbers[,"victim"],(scenario$vehMiles[,"Arterial"]/base$vehMiles[,"Arterial"])^safetyInNumbers[,"striking"],"*")
+        highway <- outer((scenario$perMiles[,"Highway"]/base$perMiles[,"Highway"])^safetyInNumbers[,"victim"],(scenario$vehMiles[,"Highway"]/base$vehMiles[,"Highway"])^safetyInNumbers[,"striking"],"*")
+
+        local <- cbind(local, NOV = (scenario$perMiles[,"Local"]/base$perMiles[,"Local"])^safetyInNumbers[,"NOV"])
+        arterial <- cbind(arterial, NOV = (scenario$perMiles[,"Arterial"]/base$perMiles[,"Arterial"])^safetyInNumbers[,"NOV"])
+        highway <- cbind(highway, NOV = (scenario$perMiles[,"Highway"]/base$perMiles[,"Highway"])^safetyInNumbers[,"NOV"])
 
     list(local = local,arterial = arterial,highway = highway)
 }

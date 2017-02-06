@@ -175,7 +175,12 @@ roadInjuries <- split(roadInjuries, c(t(matrix(1:6, nrow = 6, ncol = 8))))
     distRoadType <- list()
 
     modeNames <- c("walk","cycle","bus","car","HGV","LGV","mbike","ebike")
-sinMatrix <- matrix(0.5, nrow = length(modeNames), ncol = 2, dimnames = list(modeNames, c("victim","striking")))
+
+    victimVec <- c(0.432,0.511,rep(0.4999,6))
+    strikingVec <- victimVec
+    NOVVec <- c(0.64,0.64,rep(0.8,6))
+
+sinMatrix <- matrix(c(victimVec,strikingVec,NOVVec), nrow = length(modeNames), ncol = 3, dimnames = list(modeNames, c("victim","striking","NOV")))
 
     return( new("ParameterSet",
         Rwt = Rwt,
