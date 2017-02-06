@@ -532,9 +532,34 @@ for (it in injuryTypes){
   injuryRoadTypes <- paste0(it, roadTypes)
 
   # for every dataSource
-    i <- 0
-    for (ds in list(RI.baseline, RI.scenario)){
-        i <- i+1
+  i <- 0
+  for (ds in list(RI.baseline, RI.scenario)){
+    
+    # run some checks regarding structure of input (passed via method args) data
+    
+    # check data type (should be list)
+    
+    if (is.list(ds)){
+      
+      # check if needed injury-road type combinations are here
+      
+      if(length(setdiff(injuryRoadTypes, names(ds))) == 0){
+        
+        # check data type of every entry (should be data.frame)
+        
+        lapply(ds, function(irtentry) if(!(is.data.frame(irtentry))){
+          stop('computeInjuryRR: wrong entry data type: data.frame check')
+          })
+        
+      } else {
+        stop('computeInjuryRR: lack of needed injury-road type combinations')
+      }
+      
+    } else {
+      stop('computeInjuryRR: wrong input data type: list check')
+    }
+    
+    i <- i+1
 
     # get data source variable from env
 
