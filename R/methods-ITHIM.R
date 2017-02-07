@@ -42,10 +42,9 @@ setMethod("tilePlot", signature(x = "ITHIM", n = "numeric"), function(x, n){
     baseWalk <- getMeans(x)$walk
     baseCycle <- getMeans(x)$cycle
 
-    upper <- 4*max(c(baseWalk,baseCycle))
     results <- data.frame()
-    wVec <- seq(0,upper,length.out = n)
-    cVec <- wVec
+    wVec <- seq(0,2*baseWalk,length.out = n)
+    cVec <- seq(0,2*baseCycle,length.out = n)
 
     for(muwt in wVec){
         ITHIM.scenario <- update(x, list(muwt = muwt))
