@@ -536,31 +536,31 @@ for (it in injuryTypes){
   # for every dataSource
   i <- 0
   for (ds in list(RI.baseline, RI.scenario)){
-    
+
     # run some checks regarding structure of input (passed via method args) data
-    
+
     # check data type (should be list)
-    
+
     if (is.list(ds)){
-      
+
       # check if needed injury-road type combinations are here
-      
+
       if(length(setdiff(injuryRoadTypes, names(ds))) == 0){
-        
+
         # check data type of every entry (should be data.frame)
-        
+
         lapply(ds, function(irtentry) if(!(is.data.frame(irtentry))){
           stop('computeInjuryRR: wrong entry data type: data.frame check')
           })
-        
+
       } else {
         stop('computeInjuryRR: lack of needed injury-road type combinations')
       }
-      
+
     } else {
       stop('computeInjuryRR: wrong input data type: list check')
     }
-    
+
     i <- i+1
 
     # get data source variable from env
@@ -639,3 +639,43 @@ updateRoadInjuries <- function(ITHIM.baseline, ITHIM.scenario){
 ITHIM.scenario <- update(ITHIM.scenario, list(roadInjuries = multiplyInjuries(ITHIM.baseline, ITHIM.scenario)))
 return(ITHIM.scenario)
 }
+#'@export
+readRoadInjuries <- function(filename){
+#    filename <- system.file( filename, package = "ITHIM")
+    roadInjuries <- read.csv(file = filename, header = TRUE)
+    roadInjuries <- split(roadInjuries, roadInjuries$SeverityByRoadType)
+#    names(roadInjuries) <- c("FatalLocal","FatalArterial","FatalHighway","SeriousLocal","SeriousArterial","SeriousHighway")
+ #   roadInjuries <- lapply(roadInjuries,function(x){dimnames(x) <- list(c("walk","cycle","bus","car","HGV","LGV","mbike","ebike"),c("walk","cycle","bus","car","HGV","LGV","mbike","ebike","NOV"));x})
+return(roadInjuries)
+}
+#'@export
+readActiveTransportTime <- function(filename){
+    activeTravel <- read.csv(file = filename, header = TRUE)
+    activeTravelList <- split(activeTravel, activeTravel$mode)
+    activeTravelList <- lapply(activeTravelList, function(x) {
+        activeTravelMatrix <- as.matrix(x[,-(1:2)])
+        dimnames(activeTravelMatrix) <- list(paste0("AgeClass",1:8), c("M","F"))
+        activeTravelMatrix
+        })
+    return(activeTravelList)
+}
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#' Read in Global Burden of Disease Data
+#'
+#' Read in Global Burden of Disease Data
+#'
+#' @return A list of lists of matrices with dproj, yll, yld and daly
+#'     by age and sex and disease
+#'
+#' @export
+readGBD <- function(filename){
+    #filePath <- system.file(file, package="ITHIM")
+    gbd <- read.csv(file=filename)
+    gbdList <- split(gbd,gbd$disease)
+    gbdList[["CVD"]] <- data.frame(disease = "CVD", gbdList$IHD[,c("sex",  "ageClass")], gbdList$IHD[,c("dproj","yll","yld","daly")] + gbdList$InflammatoryHD[,c("dproj","yll","yld","daly")] + gbdList$HHD[,c("dproj","yll","yld","daly")])
+    gbdList2 <- lapply(gbdList,function(x) split(x,as.factor(x$sex)))
+    gbdList2 <- lapply(gbdList2, function(x) list(M=x$M,F=x$F))
+    return(gbdList2)
+    }

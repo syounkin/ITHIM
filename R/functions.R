@@ -93,9 +93,9 @@ NULL
 #'     \code{\link{computeMeanMatrices}}, \code{\link{getQuintiles}}
 #'
 #' @export
-createITHIMFunction <- function(){
+createITHIMFunction <- function(roadInjuriesFile = system.file("roadInjuries.csv", package = "ITHIM"), activeTransportTimeFile = system.file("activeTransportTime.csv",package = "ITHIM"), GBDFile = system.file("gbd.csv",package = "ITHIM")){
 
-        new("ITHIM", parameters = parameters <- createParameterList(), means = means <- computeMeanMatrices(as(parameters,"list")), quintiles = getQuintiles(means, as(parameters,"list")))
+        new("ITHIM", parameters = parameters <- createParameterList(roadInjuriesFile = roadInjuriesFile, activeTransportTimeFile = activeTransportTimeFile, GBDFile = GBDFile), means = means <- computeMeanMatrices(as(parameters,"list")), quintiles = getQuintiles(means, as(parameters,"list")))
 
 }
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -139,13 +139,27 @@ createITHIMFunction <- function(){
 #' @seealso \code{\link{readGBD}}
 #'
 #' @export
-createParameterList <- function(){
+createParameterList <- function(roadInjuriesFile = system.file("roadInjuries.csv", package = "ITHIM"), activeTransportTimeFile = system.file("activeTransportTime.csv", package = "ITHIM"), GBDFile = system.file("gbd.csv", package = "ITHIM")){
 
     nAgeClass <- 8L
 
-    Rwt <- matrix(c(0.4305,0.3471,1.0700,0.8200,1.0100,1.0000,0.8600,1.1700,1.0600,1.1700,0.9900,0.9200,0.8000,0.7500,0.8200,0.7800),byrow=TRUE, ncol = 2, dimnames = list(paste0("ageClass",1:nAgeClass),c("M","F")))
+    activeTransportTimeList <- readActiveTransportTime(activeTransportTimeFile)
 
-    Rct <- matrix(c(0.2935,0.1231,6.4500,3.1500,4.0000,1.0000,3.4800,0.8200,4.6700,1.1800,2.7000,0.6100,3.4200,0.2100,0.7000,0.0900),byrow=TRUE, ncol = 2, dimnames = list(paste0("ageClass",1:nAgeClass),c("M","F")))
+    Mwt <- activeTransportTimeList$walk
+    Mct <- activeTransportTimeList$cycle
+
+    muwt <- Mwt[3,2] #47.3900 # min per week
+    muct <- Mwt[3,2] # 6.1600 # min per week
+
+    Rwt <- Mwt/muwt
+    Rct <- Mct/muct
+
+    muws <- 2.7474 # mph
+
+
+    #Rwt <- matrix(c(0.4305,0.3471,1.0700,0.8200,1.0100,1.0000,0.8600,1.1700,1.0600,1.1700,0.9900,0.9200,0.8000,0.7500,0.8200,0.7800),byrow=TRUE, ncol = 2, dimnames = list(paste0("ageClass",1:nAgeClass),c("M","F")))
+
+    #Rct <- matrix(c(0.2935,0.1231,6.4500,3.1500,4.0000,1.0000,3.4800,0.8200,4.6700,1.1800,2.7000,0.6100,3.4200,0.2100,0.7000,0.0900),byrow=TRUE, ncol = 2, dimnames = list(paste0("ageClass",1:nAgeClass),c("M","F")))
 
     Rws <- matrix(c(1.0662510447,0.8753344725,1.0662510447,0.8753344725,1.0206231847,1.000210721,1.0590466458,1.0338312494,1.0392345486,0.947378462,1.03022905,0.9329696641,0.9509806615,0.8969476694,0.9509806615,0.8969476694),byrow=TRUE, ncol = 2, dimnames = list(paste0("ageClass",1:nAgeClass),c("M","F")))
 
@@ -154,23 +168,21 @@ createParameterList <- function(){
     meanType <- "referent"
     n <- 100
     quantiles <- seq(1/n, (n-1)/n, by = 1/n)
-    GBDFile <- "gbd.csv"
+
     GBD <- readGBD(file = GBDFile)
-    muwt <- 47.3900 # min per week
-    muws <- 2.7474 # mph
-    muct <- 6.1600 # min per week
     cv <- 3.0288 # coefficient of variation for active transport time
 
     muNonTravel <- 2 # MET-hrs./week leisure activity
     cvNonTravel <- 1 # coefficient of variation for leisure activity
 
-    filename <- system.file( "roadInjuries.csv", package = "ITHIM")
- roadInjuries <- read.csv(file = filename, header = FALSE)
+#    filename <- system.file( "roadInjuries.csv", package = "ITHIM")
+#    roadInjuries <- read.csv(file = filename, header = FALSE)
+#    roadInjuries <- rbind(roadInjuries,rep(NA,9))
+#    roadInjuries <- split(roadInjuries, c(t(matrix(1:6, nrow = 6, ncol = 8))))
+#    names(roadInjuries) <- c("FatalLocal","FatalArterial","FatalHighway","SeriousLocal","SeriousArterial","SeriousHighway")
+#    roadInjuries <- lapply(roadInjuries,function(x){dimnames(x) <- list(c("walk","cycle","bus","car","HGV","LGV","mbike","ebike"),c("walk","cycle","bus","car","HGV","LGV","mbike","ebike","NOV"));x})
 
-roadInjuries <- rbind(roadInjuries,rep(NA,9))
-roadInjuries <- split(roadInjuries, c(t(matrix(1:6, nrow = 6, ncol = 8))))
-    names(roadInjuries) <- c("FatalLocal","FatalArterial","FatalHighway","SeriousLocal","SeriousArterial","SeriousHighway")
-    roadInjuries <- lapply(roadInjuries,function(x){dimnames(x) <- list(c("walk","cycle","bus","car","HGV","LGV","mbike","ebike"),c("walk","cycle","bus","car","HGV","LGV","mbike","ebike","NOV"));x})
+    roadInjuries <- readRoadInjuries(roadInjuriesFile)
 
     distRoadType <- list()
 
@@ -560,26 +572,6 @@ updateITHIM <- function( ITHIM, parName, parValue){
             quintiles = quintiles
     )
     return(ITHIM)
-    }
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#' Read in Global Burden of Disease Data
-#'
-#' Read in Global Burden of Disease Data
-#'
-#' @return A list of lists of matrices with dproj, yll, yld and daly
-#'     by age and sex and disease
-#'
-#' @export
-readGBD <- function(file = "gbd.csv"){
-    filePath <- system.file(file, package="ITHIM")
-    gbd <- read.csv(file=filePath)
-    gbdList <- split(gbd,gbd$disease)
-    gbdList[["CVD"]] <- data.frame(disease = "CVD", gbdList$IHD[,c("sex",  "ageClass")], gbdList$IHD[,c("dproj","yll","yld","daly")] + gbdList$InflammatoryHD[,c("dproj","yll","yld","daly")] + gbdList$HHD[,c("dproj","yll","yld","daly")])
-    gbdList2 <- lapply(gbdList,function(x) split(x,as.factor(x$sex)))
-    gbdList2 <- lapply(gbdList2, function(x) list(M=x$M,F=x$F))
-    return(gbdList2)
     }
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

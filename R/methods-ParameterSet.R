@@ -59,6 +59,12 @@ setMethod("createITHIM", signature(x = "missing"), function(x){
 })
 
 #' @export
+setMethod("createITHIM", signature(x = "list"), function(x){
+    ITHIM <- createITHIMFunction(activeTransportTimeFile=x$activeTransportTimeFile, roadInjuriesFile = x$roadInjuriesFile)
+    return(ITHIM)
+})
+
+#' @export
 setMethod("update", signature(x = "ParameterSet", parList = "list"), function(x, parList){
     x <- as(x, "list")
     for(i in 1:length(parList) ){
