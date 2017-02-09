@@ -642,7 +642,7 @@ return(ITHIM.scenario)
 #'@export
 readRoadInjuries <- function(filename){
 #    filename <- system.file( filename, package = "ITHIM")
-    roadInjuries <- read.csv(file = filename, header = TRUE)
+    roadInjuries <- read.csv(file = filename, header = TRUE, stringsAsFactors = FALSE)
     roadInjuries <- split(roadInjuries, roadInjuries$SeverityByRoadType)
 #    names(roadInjuries) <- c("FatalLocal","FatalArterial","FatalHighway","SeriousLocal","SeriousArterial","SeriousHighway")
  #   roadInjuries <- lapply(roadInjuries,function(x){dimnames(x) <- list(c("walk","cycle","bus","car","HGV","LGV","mbike","ebike"),c("walk","cycle","bus","car","HGV","LGV","mbike","ebike","NOV"));x})
