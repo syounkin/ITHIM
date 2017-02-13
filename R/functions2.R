@@ -614,7 +614,11 @@ multiplyInjuries <- function(ITHIM.baseline, ITHIM.scenario){
 
 multiplier <- computeMultiplier(base = getDistRoadType(ITHIM.baseline), scenario = getDistRoadType(ITHIM.scenario), safetyInNumbers = getParameterSet(ITHIM.baseline)@safetyInNumbers)
 
-RI <- getRoadInjuries(ITHIM.baseline)
+multiplier <- lapply(multiplier, function(x) ifelse(is.na(x),1,x))
+
+    RI <- getRoadInjuries(ITHIM.baseline)
+
+    RI <- lapply(RI, function(x) x[,-c(1,2)])
 
 RI.scenario <- list(
      FatalLocal = RI$FatalLocal*multiplier$local,
@@ -643,6 +647,10 @@ return(ITHIM.scenario)
 readRoadInjuries <- function(filename){
 #    filename <- system.file( filename, package = "ITHIM")
     roadInjuries <- read.csv(file = filename, header = TRUE, stringsAsFactors = FALSE)
+    roadInjuries <- within(roadInjuries, ebike <- as.numeric(ebike))
+    roadInjuries <- within(roadInjuries, NOV <- as.numeric(NOV))
+
+
     roadInjuries <- split(roadInjuries, roadInjuries$SeverityByRoadType)
 #    names(roadInjuries) <- c("FatalLocal","FatalArterial","FatalHighway","SeriousLocal","SeriousArterial","SeriousHighway")
  #   roadInjuries <- lapply(roadInjuries,function(x){dimnames(x) <- list(c("walk","cycle","bus","car","HGV","LGV","mbike","ebike"),c("walk","cycle","bus","car","HGV","LGV","mbike","ebike","NOV"));x})
