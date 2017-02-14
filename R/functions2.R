@@ -531,7 +531,7 @@ multiplier <- lapply(multiplier, function(x) ifelse(is.na(x),1,x))
 
     RI <- getRoadInjuries(ITHIM.baseline)
 
-    RI <- lapply(RI, function(x) x[,-c(1,2)])
+    #RI <- lapply(RI, function(x) x[,-c(1,2)])
 
 RI.scenario <- list(
      FatalLocal = RI$FatalLocal*multiplier$local,
