@@ -53,21 +53,21 @@ setMethod("tilePlot", signature(x = "ITHIM", n = "numeric"), function(x, n){
                 ITHIM.scenario <- update(ITHIM.scenario, list(muct = muct))
                 comparativeRisk <- data.frame(cycleTime = muct,
                                               walkTime= muwt,
-                                              DALYS = sumDALY(x, ITHIM.scenario)
+                                              DALYS = deltaBurden(x, ITHIM.scenario)
                                               )
                 results <- rbind(comparativeRisk, results)
             }
         }
     }
 
-    p <- ggplot(results, aes(x = walkTime, y = cycleTime, fill = (DALYS + getDALYs(x))))
+    p <- ggplot(results, aes(x = walkTime, y = cycleTime, fill = (DALYS + getBurden(x))))
     p + geom_tile() + geom_hline(yintercept=baseCycle, linetype = 2) + geom_vline(xintercept=baseWalk, linetype = 2) + scale_fill_gradientn(colours = terrain.colors(10),name = "DALYs")
 
 })
 
 
 #' @export
-setMethod("getDALYs", signature(x = "ITHIM", bur = "character", dis = "character"), function(x, bur, dis){
+setMethod("getBurden", signature(x = "ITHIM", bur = "character", dis = "character"), function(x, bur, dis){
     suppressMessages(
         if( dis[1] == "all" ){
         return(sum(subset(getGBD(x), variable == bur)$value, na.rm = TRUE))
@@ -77,18 +77,18 @@ setMethod("getDALYs", signature(x = "ITHIM", bur = "character", dis = "character
 })
 
 #' @export
-setMethod("getDALYs", signature(x = "ITHIM", bur = "character", dis = "missing"), function(x, bur){
-    return(getDALYs(x, bur = bur, dis = "all"))
+setMethod("getBurden", signature(x = "ITHIM", bur = "character", dis = "missing"), function(x, bur){
+    return(getBurden(x, bur = bur, dis = "all"))
 })
 
 #' @export
-setMethod("getDALYs", signature(x = "ITHIM", bur = "missing", dis = "character"), function(x, dis){
-    return(getDALYs(x, bur = "daly", dis = dis))
+setMethod("getBurden", signature(x = "ITHIM", bur = "missing", dis = "character"), function(x, dis){
+    return(getBurden(x, bur = "daly", dis = dis))
 })
 
 #' @export
-setMethod("getDALYs", signature(x = "ITHIM", bur = "missing", dis = "missing"), function(x){
-    return(getDALYs(x, bur = "daly", dis = "all"))
+setMethod("getBurden", signature(x = "ITHIM", bur = "missing", dis = "missing"), function(x){
+    return(getBurden(x, bur = "daly", dis = "all"))
 })
 
 #' @export

@@ -2,8 +2,21 @@
 setGeneric("update", function(x, parList) standardGeneric("update"))
 #' @export
 setGeneric("tilePlot", function(x, n) standardGeneric("tilePlot"))
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#' Gets Burden
+#'
+#' Gets burden
+#'
+#' @param x ITHIM object
+#' @param bur ?
+#' @param dis ?
+#'
+#' @return A burden value
+#'
 #' @export
-setGeneric("getDALYs", function(x, bur, dis) standardGeneric("getDALYs"))
+setGeneric("getBurden", function(x, bur, dis) standardGeneric("getBurden"))
 #' @export
 setGeneric("createITHIM", function(x) standardGeneric("createITHIM"))
 #' @export
