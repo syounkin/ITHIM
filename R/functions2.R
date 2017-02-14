@@ -298,139 +298,52 @@ getNonTravelMETs <- function(ITHIM, form = 2){
 getWalkSpeed <- function(ITHIM, form = 2){
     if( form == 1 ){
         walkSpeed <- with(as(ITHIM@parameters,"list"), Rws*muws)
-    }else if (form == 2){
+    }else if(form == 2){
         walkSpeed <- with(as(ITHIM@parameters,"list"), melt(Rws*muws))
         names(walkSpeed) <- c("ageClass","sex","mu")
     }else{
         message("Bad form for getWalkSpeed()")
     }
-    return(data.frame(walkSpeed, type = "walk speed"))
+    return(data.frame(walkSpeed,type = "walk speed"))
 }
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#' Returns
+#' Performs the comparitive risk assesment for the physical activity
+#' component
 #'
-#' Returns
-#'
-#' @param ITHIM.baseline An ITHIM object
-#' @param ITHIM.scenario An ITHIM object
-#'
-#' @return
-#'
-#' @export
-sumDALY <- function(ITHIM.baseline, ITHIM.scenario){
-    ITHIM.baseline <- as(ITHIM.baseline, "list")
-    ITHIM.scenario <- as(ITHIM.scenario, "list")
-  return(sum(unlist(data.frame(compareModels(ITHIM.baseline,ITHIM.scenario)$daly.delta)[-1,]))) # AgeClass 1 is removed from totals
-}
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#' Returns
-#'
-#' Returns
+#' This function performs the CRA and returns the change in disease burden.  The user may specify among four burden types and disease (or total).
 #'
 #' @param ITHIM.baseline An ITHIM object
 #' @param ITHIM.scenario An ITHIM object
+#' @param bur A chatacter string indicating the type of burden.
+#'     Acceptable values are daly.delta, yll.delta, yld.delta,
+#'     dproj.delta (projected deaths).
+#' @param dis A character string indicating which disease is of interest.  Acceptable values are BreastCancer, ColonCancer, CVD, Dementia, Depression, Diabetes, Stroke, HHD or total.  The default value is tot
 #'
-#' @return
-#'
-#' @export
-sumCVD <- function(ITHIM.baseline, ITHIM.scenario){
-    ITHIM.baseline <- as(ITHIM.baseline, "list")
-    ITHIM.scenario <- as(ITHIM.scenario, "list")
-  return(sum(unlist(data.frame(compareModels(ITHIM.baseline,ITHIM.scenario)$daly.delta$CVD)[-1,]))) # AgeClass 1 is removed from totals
-}
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#' Returns
-#'
-#' Returns
-#'
-#' @param ITHIM.baseline An ITHIM object
-#' @param ITHIM.scenario An ITHIM object
-#'
-#' @return
+#' @return A numerical value for the chnage in disease burden between
+#'     baseline and scenario.  Physical activity component only.
 #'
 #' @export
-sumDiabetes <- function(ITHIM.baseline, ITHIM.scenario){
+deltaBurden <- function(ITHIM.baseline, ITHIM.scenario, bur = "daly.delta", dis = "total"){
+    
     ITHIM.baseline <- as(ITHIM.baseline, "list")
     ITHIM.scenario <- as(ITHIM.scenario, "list")
-  return(sum(unlist(data.frame(compareModels(ITHIM.baseline,ITHIM.scenario)$daly.delta$Diabetes)[-1,]))) # AgeClass 1 is removed from totals
-}
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#' Returns
-#'
-#' Returns
-#'
-#' @param ITHIM.baseline An ITHIM object
-#' @param ITHIM.scenario An ITHIM object
-#'
-#' @return
-#'
-#' @export
-sumDepression <- function(ITHIM.baseline, ITHIM.scenario){
-    ITHIM.baseline <- as(ITHIM.baseline, "list")
-    ITHIM.scenario <- as(ITHIM.scenario, "list")
-  return(sum(unlist(data.frame(compareModels(ITHIM.baseline,ITHIM.scenario)$daly.delta$Depression)[-1,]))) # AgeClass 1 is removed from totals
-}
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#' Returns
-#'
-#' Returns
-#'
-#' @param ITHIM.baseline An ITHIM object
-#' @param ITHIM.scenario An ITHIM object
-#'
-#' @return
-#'
-#' @export
-sumBreastCancer <- function(ITHIM.baseline, ITHIM.scenario){
-    ITHIM.baseline <- as(ITHIM.baseline, "list")
-    ITHIM.scenario <- as(ITHIM.scenario, "list")
-  return(sum(unlist(data.frame(compareModels(ITHIM.baseline,ITHIM.scenario)$daly.delta$BreastCancer)[-1,]))) # AgeClass 1 is removed from totals
-}
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#' Returns
-#'
-#' Returns
-#'
-#' @param ITHIM.baseline An ITHIM object
-#' @param ITHIM.scenario An ITHIM object
-#'
-#' @return
-#'
-#' @export
-sumColonCancer <- function(ITHIM.baseline, ITHIM.scenario){
-    ITHIM.baseline <- as(ITHIM.baseline, "list")
-    ITHIM.scenario <- as(ITHIM.scenario, "list")
-  return(sum(unlist(data.frame(compareModels(ITHIM.baseline,ITHIM.scenario)$daly.delta$ColonCancer)[-1,]))) # AgeClass 1 is removed from totals
-}
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#' Returns
-#'
-#' Returns
-#'
-#' @param ITHIM.baseline An ITHIM object
-#' @param ITHIM.scenario An ITHIM object
-#'
-#' @return
-#'
-#' @export
-sumDementia <- function(ITHIM.baseline, ITHIM.scenario){
-    ITHIM.baseline <- as(ITHIM.baseline, "list")
-    ITHIM.scenario <- as(ITHIM.scenario, "list")
-  return(sum(unlist(data.frame(compareModels(ITHIM.baseline,ITHIM.scenario)$daly.delta$Dementia)[-1,]))) # AgeClass 1 is removed from totals
+
+    CRA <- compareModels(ITHIM.baseline,ITHIM.scenario)
+    
+    index <- which(bur == names(CRA))
+
+    CRA <- CRA[[index]]
+
+    if( dis == "total" ){
+        burdenValue <- sum(unlist(CRA))
+    }else{
+        index <- which(dis == names(CRA))
+        burdenValue <- sum(unlist(CRA[[index]]))
+    }
+
+  return(burdenValue) # AgeClass 1 is NOT removed from totals
 }
 
 #'@export
