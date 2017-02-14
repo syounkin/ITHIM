@@ -80,7 +80,12 @@ setMethod("getMeans", signature(x = "ParameterSet"), function(x){
 
 #' @export
 setMethod("getRoadInjuries", signature(x = "ParameterSet"), function(x){
-    return(x@roadInjuries)
+    RI <- lapply(x@roadInjuries, function(df) {
+        df <- data.frame(walk = df$walk,cycle = df$cycle,bus = df$bus,car = df$car,HGV = df$HGV,LGV = df$LGV,mbike = df$mbike,ebike = df$ebike,NOV = df$NOV)
+        dimnames(df) <- list(c("walk","cycle","bus","car","HGV","LGV","mbike","ebike"),c("walk","cycle","bus","car","HGV","LGV","mbike","ebike","NOV"))
+        return(df)
+        })
+        return(RI)
 })
 
 #' @export
