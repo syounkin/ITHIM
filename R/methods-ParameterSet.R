@@ -1,6 +1,11 @@
 #' @export
 setMethod("show", signature(object="ParameterSet"), function(object){
-##    cat("\n~~~~~ ITHIM Parameters ~~~~\n")
+    cat("\n~~~~~ Road Injury Parameters ~~~~\n")
+    cat(c("Safety in Numbers: ", round(object@safetyInNumbers,2)), "\n")
+    cat(c("Person Distance by Road Type: ", object@distRoadType$perMiles ,"\n"))
+    cat(c("Vehicle Distance by Road Type: ", object@distRoadType$vehMiles, "\n"))
+    cat("Road Injury Count: Too big to display, use getRoadInjuried()")
+    cat("\n~~~~~ Physical Activity Parameters ~~~~\n")
     cat(c("Walking Time:\n  Mean = ", round(object@muwt,2), " min./week\n"), sep = "")
     cat("  Relative Means = ")
     cat(round(object@Rwt,2), sep = ", ")
@@ -37,7 +42,7 @@ setMethod("show", signature(object="ParameterSet"), function(object){
 setAs("ParameterSet", "list", function(from) list(Rwt = from@Rwt, Rct = from@Rct, Rws = from@Rws, muwt = from@muwt,
     muws = from@muws, muct = from@muct, cv = from@cv, cvNonTravel = from@cvNonTravel,
     nAgeClass = from@nAgeClass, muNonTravel = from@muNonTravel, muNonTravelMatrix = from@muNonTravelMatrix,
-    GBD = from@GBD, meanType = from@meanType, quantiles = from@quantiles)
+    GBD = from@GBD, meanType = from@meanType, quantiles = from@quantiles, roadInjuries = from@roadInjuries, distRoadType = from@distRoadType, safetyInNumbers = from@safetyInNumbers)
     )
 
 #' @export
@@ -54,6 +59,12 @@ setMethod("createITHIM", signature(x = "missing"), function(x){
 })
 
 #' @export
+setMethod("createITHIM", signature(x = "list"), function(x){
+    ITHIM <- createITHIMFunction(activeTransportTimeFile=x$activeTransportTimeFile, roadInjuriesFile = x$roadInjuriesFile)
+    return(ITHIM)
+})
+
+#' @export
 setMethod("update", signature(x = "ParameterSet", parList = "list"), function(x, parList){
     x <- as(x, "list")
     for(i in 1:length(parList) ){
@@ -65,4 +76,19 @@ setMethod("update", signature(x = "ParameterSet", parList = "list"), function(x,
 #' @export
 setMethod("getMeans", signature(x = "ParameterSet"), function(x){
     return(data.frame(walk = x@muwt, cycle = x@muct, nonTravel = x@muNonTravel))
+})
+
+#' @export
+setMethod("getRoadInjuries", signature(x = "ParameterSet"), function(x){
+    RI <- lapply(x@roadInjuries, function(df) {
+        df <- data.frame(walk = df$walk,cycle = df$cycle,bus = df$bus,car = df$car,HGV = df$HGV,LGV = df$LGV,mbike = df$mbike,ebike = df$ebike,NOV = df$NOV)
+        dimnames(df) <- list(c("walk","cycle","bus","car","HGV","LGV","mbike","ebike"),c("walk","cycle","bus","car","HGV","LGV","mbike","ebike","NOV"))
+        return(df)
+        })
+        return(RI)
+})
+
+#' @export
+setMethod("getDistRoadType", signature(x = "ParameterSet"), function(x){
+    return(x@distRoadType)
 })
