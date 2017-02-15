@@ -4,7 +4,7 @@
 \alias{computeWalkingMETs}
 \title{Compute METs given walking speed}
 \usage{
-computeWalkingMETs(v)
+computeWalkingMETs()
 }
 \value{
 An estimate for MET expenditure

@@ -4,8 +4,7 @@
 \alias{getTotalDistribution}
 \title{Compute distribution of Total METs}
 \usage{
-getTotalDistribution(muTravel, cvTravel, muNonTravel, cvNonTravel, pWalk, vWalk,
-  size)
+getTotalDistribution(muTravel, cvTravel, muNonTravel, cvNonTravel, pWalk, size)
 }
 \value{
 An estimate for total MET distribution

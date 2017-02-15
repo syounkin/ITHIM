@@ -16,9 +16,7 @@
 #' @exportClass ParameterSet
 setClass("ParameterSet", representation(Rwt = "matrix",
                                         Rct = "matrix",
-                                        Rws = "matrix",
                                         muwt = "numeric",
-                                        muws = "numeric",
                                         muct = "numeric",
                                         cv = "numeric",
                                         cvNonTravel = "numeric",

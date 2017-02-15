@@ -13,9 +13,7 @@ A list with parameters and estimates
 
 \item{Rwt}{A numerical matrix for the walking time, relative to ?value?}
 \item{Rct}{A numerical matrix for the cycling time, relative to ?value?}
-\item{Rws}{A numerical matrix for the walking speed, relative to ?value?}
 \item{muwt}{A numerical value for the mean walking time}
-\item{muws}{A numerical value for the mean walking speed}
 \item{muct}{A numerical value for the mean cycling time}
 \item{cv}{A numerical value for the coefficient of variation for active transport time}
 \item{cvNonTravel}{A numerical value for the coefficient of variation for leisure activity}
@@ -35,8 +33,6 @@ There are 11 parameters in the ITHIM active transport component;
 1-4. mean walking and cycling times (muwt, muct, Rwt, Rct)
 
 5. standard deviation of active travel time (cv),
-
-6-7. walk speed (muws, Rws)
 
 8. ratio of regional disease-specific mortality to national disease-specific mortality (GBD)
 

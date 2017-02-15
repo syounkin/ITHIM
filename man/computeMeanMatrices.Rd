@@ -14,7 +14,6 @@ computeMeanMatrices(parList)
 A list with matrices of means
 
 \item{meanWalkTime}{A numerical matrix of mean weekly time (hours?) for walking as transport}
-\item{meanWalkSpeed}{A numerical matrix of mean weekly speed for walking as transport}
 \item{meanCycleTime}{A numerical matrix of mean weekly time for cycling as transport}
 \item{meanWalkMET}{A numerical matrix of mean weekly METs for walking as transport}
 \item{meanCycleMET}{A numerical matrix of mean weekly METs for cycling as transport}

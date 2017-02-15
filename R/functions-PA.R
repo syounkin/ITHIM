@@ -36,7 +36,6 @@ readActiveTransportTime <- function(filename){
 #' @return A list with matrices of means
 #'
 #' \item{meanWalkTime}{A numerical matrix of mean weekly time (hours?) for walking as transport}
-#' \item{meanWalkSpeed}{A numerical matrix of mean weekly speed for walking as transport}
 #' \item{meanCycleTime}{A numerical matrix of mean weekly time for cycling as transport}
 #' \item{meanWalkMET}{A numerical matrix of mean weekly METs for walking as transport}
 #' \item{meanCycleMET}{A numerical matrix of mean weekly METs for cycling as transport}
@@ -60,14 +59,11 @@ computeMeanMatrices <- function(parList){
         if( meanType == "overall" ){
             alphawt <- sum(F*Rwt)
             alphact <- sum(F*Rct)
-            alphaws <- sum(F*Rws)
             meanWalkTime <- muwt/alphawt*Rwt
             meanCycleTime <- muct/alphact*Rct
-            meanWalkSpeed <- muws/alphaws*Rws
         }else if( meanType == "referent" ){
             meanWalkTime <- muwt*Rwt
             meanCycleTime <- muct*Rct
-            meanWalkSpeed <- muws*Rws
         }else{
             message("Wrong mean type.")
         }
@@ -76,7 +72,7 @@ computeMeanMatrices <- function(parList){
         sdActiveTransportTime <- meanActiveTransportTime*cv
         pWalk <- 1 - propTimeCycling #meanWalkTime/(meanWalkTime + meanCycleTime)
 
-        return(list(meanWalkTime = meanWalkTime, meanCycleTime = meanCycleTime, meanWalkSpeed = meanWalkSpeed, meanActiveTransportTime = meanActiveTransportTime, sdActiveTransportTime = sdActiveTransportTime, propTimeCycling = propTimeCycling, pWalk = pWalk)) # meanWalkMET = meanWalkMET, meanCycleMET = meanCycleMET,
+        return(list(meanWalkTime = meanWalkTime, meanCycleTime = meanCycleTime, meanActiveTransportTime = meanActiveTransportTime, sdActiveTransportTime = sdActiveTransportTime, propTimeCycling = propTimeCycling, pWalk = pWalk)) # meanWalkMET = meanWalkMET, meanCycleMET = meanCycleMET,
         })
 }
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -153,7 +149,6 @@ getQuintiles <- function(means, parameters){
                                  muNonTravel = muNonTravelMatrix*muNonTravel,
                                  cvNonTravel = parameters$cvNonTravel,
                                  pWalk = means$pWalk, # parameters$pWalk
-                                 vWalk = means$meanWalkSpeed,
                                  size = 1e5, SIMPLIFY = FALSE)
   TotalMETQuintiles <- lapply(TotalMETSample,function(x) quantile(x, parameters$quantiles, na.rm = TRUE))
 
@@ -411,7 +406,7 @@ getNonTravelDistribution <- function(mu, cv, size = 1e4){
 #' @return A random sample from the distribution.
 #'
 #' @export
-getTravelDistribution <- function(mu, cv, pWalk, vWalk, size = 1e4){
+getTravelDistribution <- function(mu, cv, pWalk, size = 1e4){
     mu <- ifelse(mu == 0, 0.01, mu)
     sd <- mu*cv
     activeTransportTime <- rlnorm(size, log(mu/sqrt(1+sd^2/mu^2)), sqrt(log(1+sd^2/mu^2)))
@@ -419,7 +414,7 @@ getTravelDistribution <- function(mu, cv, pWalk, vWalk, size = 1e4){
     walkingTime <- activeTransportTime*pWalk
     cyclingTime <- activeTransportTime*(1-pWalk)
 
-    walkingMETs <- computeWalkingMETs(vWalk)*walkingTime/60
+    walkingMETs <- computeWalkingMETs()*walkingTime/60
     cyclingMETs <- computeCyclingMETs()*cyclingTime/60
 
     travelMETs <- walkingMETs + cyclingMETs
@@ -436,7 +431,7 @@ getTravelDistribution <- function(mu, cv, pWalk, vWalk, size = 1e4){
 #' @return An estimate for MET expenditure
 #'
 #' @export
-computeWalkingMETs <- function(v){
+computeWalkingMETs <- function(){
 
     #METs <- 1.2216*v + 0.0838
     #return(ifelse( METs < 2.5, 2.5, METs ))
@@ -468,8 +463,8 @@ computeCyclingMETs <- function(){
 #' @return An estimate for total MET distribution
 #'
 #' @export
-getTotalDistribution <- function( muTravel, cvTravel, muNonTravel, cvNonTravel, pWalk, vWalk, size ){
+getTotalDistribution <- function( muTravel, cvTravel, muNonTravel, cvNonTravel, pWalk, size ){
 
-    return(getTravelDistribution( mu = muTravel, cv=cvTravel, pWalk = pWalk, vWalk = vWalk, size = size) + getNonTravelDistribution(mu = muNonTravel, cv = cvNonTravel, size = size))
+    return(getTravelDistribution( mu = muTravel, cv=cvTravel, pWalk = pWalk, size = size) + getNonTravelDistribution(mu = muNonTravel, cv = cvNonTravel, size = size))
 
 }

@@ -9,9 +9,7 @@ createParameterSet <- function(x){
 
     pSet <- new("ParameterSet",Rwt = parList$Rwt,
                                         Rct = parList$Rct,
-                                        Rws = parList$Rws,
                                         muwt = parList$muwt,
-                                        muws = parList$muws,
                                         muct = parList$muct,
                                         cv = parList$cv,
                                         cvNonTravel = parList$cvNonTravel,

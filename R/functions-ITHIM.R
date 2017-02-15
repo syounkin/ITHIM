@@ -33,9 +33,7 @@ createITHIMFunction <- function(roadInjuriesFile = system.file("roadInjuries.csv
 #'
 #' \item{Rwt}{A numerical matrix for the walking time, relative to ?value?}
 #' \item{Rct}{A numerical matrix for the cycling time, relative to ?value?}
-#' \item{Rws}{A numerical matrix for the walking speed, relative to ?value?}
 #' \item{muwt}{A numerical value for the mean walking time}
-#' \item{muws}{A numerical value for the mean walking speed}
 #' \item{muct}{A numerical value for the mean cycling time}
 #' \item{cv}{A numerical value for the coefficient of variation for active transport time}
 #' \item{cvNonTravel}{A numerical value for the coefficient of variation for leisure activity}
@@ -50,8 +48,6 @@ createITHIMFunction <- function(roadInjuriesFile = system.file("roadInjuries.csv
 #' 1-4. mean walking and cycling times (muwt, muct, Rwt, Rct)
 #'
 #' 5. standard deviation of active travel time (cv),
-#'
-#' 6-7. walk speed (muws, Rws)
 #'
 #' 8. ratio of regional disease-specific mortality to national disease-specific mortality (GBD)
 #'
@@ -79,10 +75,6 @@ createParameterList <- function(
 
     Rwt <- Mwt/muwt
     Rct <- Mct/muct
-
-    muws <- 2.7474 # mph
-
-    Rws <- matrix(c(1.0662510447,0.8753344725,1.0662510447,0.8753344725,1.0206231847,1.000210721,1.0590466458,1.0338312494,1.0392345486,0.947378462,1.03022905,0.9329696641,0.9509806615,0.8969476694,0.9509806615,0.8969476694),byrow=TRUE, ncol = 2, dimnames = list(paste0("ageClass",1:nAgeClass),c("M","F")))
 
     muNonTravelMatrix <- matrix(c(0.0000000,0.0000000,0.9715051,1.0354205,0.9505718,0.8999381,0.8315675,0.7180636,0.0000000,0.0000000,1.0000000,1.1171469,0.9878429,0.9434823,0.8782254,0.7737818), ncol = 2, dimnames = list(paste0("ageClass",1:nAgeClass),c("M","F")))
 
@@ -112,9 +104,7 @@ sinMatrix <- matrix(c(victimVec,strikingVec,NOVVec), nrow = length(modeNames), n
     return( new("ParameterSet",
         Rwt = Rwt,
         Rct = Rct,
-        Rws = Rws,
         muwt = muwt,
-        muws = muws,
         muct = muct,
         cv = cv,
         cvNonTravel = cvNonTravel,

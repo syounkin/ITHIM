@@ -67,26 +67,3 @@ getNonTravelMETs <- function(ITHIM, form = 2){
     }
     return(data.frame(nonTravelMETs, type = "non-travel METs"))
 }
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#' Returns the mean walk speed matrix
-#'
-#' Returns the mean walk speed matrix
-#'
-#' @param ITHIM An ITHIM object
-#'
-#' @return A numerical matrix of mean walk speed
-#'
-#' @export
-getWalkSpeed <- function(ITHIM, form = 2){
-    if( form == 1 ){
-        walkSpeed <- with(as(ITHIM@parameters,"list"), Rws*muws)
-    }else if(form == 2){
-        walkSpeed <- with(as(ITHIM@parameters,"list"), melt(Rws*muws))
-        names(walkSpeed) <- c("ageClass","sex","mu")
-    }else{
-        message("Bad form for getWalkSpeed()")
-    }
-    return(data.frame(walkSpeed,type = "walk speed"))
-}
