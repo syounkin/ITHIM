@@ -1,208 +1,3 @@
-#' Integrated Transport and Health Impacts Model (ITHIM)
-#'
-#' ITHIM is a mathematical model that integrates data on travel
-#' patterns, physical activity, fine particulate matter, GHG
-#' emissions, and disease and injuries. Based on population and travel
-#' scenarios. The model has been used to calculate the health impacts
-#' of walking and bicycling short distances usually traveled by car or
-#' driving low-emission automobiles.  Please Cite: Woodcock, J.,
-#' Givoni, M., & Morgan, A. S. (2013). Health impact modelling of
-#' active travel visions for England and Wales using an Integrated
-#' Transport and Health Impact Modelling Tool (ITHIM). PLoS One, 8(1),
-#' e51462. and Maizlish, N., Woodcock, J., Co, S., Ostro, B., Fanai,
-#' A., & Fairley, D. (2013). Health cobenefits and
-#' transportation-related reductions in greenhouse gas emissions in
-#' the San Francisco Bay area. American Journal of Public Health,
-#' 103(4), 703-709.)
-#'
-#' The model uses comparative risk assessment through which it
-#' formulates a change in the disease burden, resulting from the shift
-#' in the exposure distribution from a baseline scenario to an
-#' alternative scenario.
-#'
-#' ITHIM characterizes exposure distributions in several ways:
-#'
-#' -- Physical Activity --
-#' Described as quintiles of a log-normal distribution on the basis of
-#' the mean weekly active transport time per person, its standard
-#' deviation and coefficient of variation (the standard deviation
-#' divided by the mean), mean weekly non-transport physical activity,
-#' and the ratio between bicycling and walking times. The activity
-#' times were multiplied by weights to give metabolic-equivalent task
-#' hours (METS), which reflect energy expenditures for walking and
-#' cycling at average speeds and for performing occupational tasks.
-#'
-#' Descriptive statistics were obtained from published research on
-#' walking and bicycling speeds and analysis of travel and health
-#' surveys with large probability samples for the Bay Area.
-#'
-#'
-#' -- Air Pollution --
-#' To estimate exposure to air pollution, they used
-#' population-weighted means of airborne fine particulate matter
-#' (PM2.5), based on models calibrated for Bay Area automobile
-#' emissions and air shed. The RR-PM2.5 gradient in the comparative
-#' risk assessment analysis reflected the change in risk over an
-#' increment of 10 micrograms per cubic meter PM2.5.
-#'
-#' -- Traffic Injuries --
-#' Data on injuries was extracted from from a geocoded collision
-#' database of fatal and serious collisions reported to police.
-#'
-#' Roadway type: determined roadway type associated with the collision
-#' by a spatial join in mapping software (ArcGIS 10, ESRI, Redlands,
-#' CA) to a street layer and categorized it as highway, arterial, or
-#' local on the basis of federal and state classifications of facility
-#' type.
-#'
-#' Daily distances walked, bicycled, and driven by drivers and
-#' passengers of cars, buses, and rail from geocoded coordinates of
-#' trip origins and estimations recorded in diaries of participants of
-#' the 2000 Bay Area Travel Survey.
-#'
-#' @name ITHIM-package
-#' @docType package
-#' @author Samuel G. Younkin \email{syounkin@@wisc.edu}
-#' @references \url{http://www.cedar.iph.cam.ac.uk/research/modelling/ithim/}, \url{https://ithim.ghi.wisc.edu/}
-#' @seealso \code{\link{createITHIM}}, \code{\link{compareModels}}
-#' @examples
-#'
-#' ITHIM.baseline <- createITHIM()
-#' ITHIM.scenario <- updateITHIM(ITHIM.baseline, "muwt", 120)
-#' comparativeRisk <- compareModels(ITHIM.baseline, ITHIM.scenario)
-#' names(ITHIM.baseline)
-#' names(ITHIM.baseline$parameters)
-#' names(comparativeRisk)
-#' comparativeRisk$AF$BreastCancer
-NULL
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#' Create an ITHIM object
-#'
-#' An ITHIM object is a list which contains three elements;
-#' parameters, means and quintiles.  The parameters are listed in
-#' \code{\link{createParameterList}}.  The elements means and
-#' quintiles mimic the computation presented in the original EXCEL
-#' workbook.  Use \code{\link{updateITHIM}} to change values of the
-#' parameters.
-#'
-#' @return A list of parameters, means and quintiles.
-#' @seealso \code{\link{updateITHIM}},
-#'     \code{\link{createParameterList}},
-#'     \code{\link{computeMeanMatrices}}, \code{\link{getQuintiles}}
-#'
-#' @export
-createITHIMFunction <- function(roadInjuriesFile = system.file("roadInjuries.csv", package = "ITHIM"), activeTransportTimeFile = system.file("activeTransportTime.csv",package = "ITHIM"), GBDFile = system.file("gbd.csv",package = "ITHIM")){
-
-        new("ITHIM", parameters = parameters <- createParameterList(roadInjuriesFile = roadInjuriesFile, activeTransportTimeFile = activeTransportTimeFile, GBDFile = GBDFile), means = means <- computeMeanMatrices(as(parameters,"list")), quintiles = getQuintiles(means, as(parameters,"list")))
-
-}
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#' Define ITHIM model parameters
-#'
-#' This function is used to generate a complete list of default
-#' parameters
-#'
-#' @return A list with parameters and estimates
-#'
-#' \item{Rwt}{A numerical matrix for the walking time, relative to ?value?}
-#' \item{Rct}{A numerical matrix for the cycling time, relative to ?value?}
-#' \item{Rws}{A numerical matrix for the walking speed, relative to ?value?}
-#' \item{muwt}{A numerical value for the mean walking time}
-#' \item{muws}{A numerical value for the mean walking speed}
-#' \item{muct}{A numerical value for the mean cycling time}
-#' \item{cv}{A numerical value for the coefficient of variation for active transport time}
-#' \item{cvNonTravel}{A numerical value for the coefficient of variation for leisure activity}
-#' \item{muNonTravel}{}
-#' \item{muNonTravelMatrix}{}
-#' \item{GBD}{}
-#' \item{meanType}{}
-#' \item{quantiles}{}
-#'
-#' @note There are 11 parameters in the ITHIM active transport component;
-#'
-#' 1-4. mean walking and cycling times (muwt, muct, Rwt, Rct)
-#'
-#' 5. standard deviation of active travel time (cv),
-#'
-#' 6-7. walk speed (muws, Rws)
-#'
-#' 8. ratio of regional disease-specific mortality to national disease-specific mortality (GBD)
-#'
-#' 9-10. non-travel related physical activity means by age and sex (muNonTravel, muNonTravelMatrix)
-#'
-#' 11. standard deviation of leisure activity (cvNonTravel),
-#'
-#' @seealso \code{\link{readGBD}}
-#'
-#' @export
-createParameterList <- function(roadInjuriesFile = system.file("roadInjuries.csv", package = "ITHIM"), activeTransportTimeFile = system.file("activeTransportTime.csv", package = "ITHIM"), GBDFile = system.file("gbd.csv", package = "ITHIM")){
-
-    nAgeClass <- 8L
-
-    activeTransportTimeList <- readActiveTransportTime(activeTransportTimeFile)
-
-    Mwt <- activeTransportTimeList$walk
-    Mct <- activeTransportTimeList$cycle
-
-    muwt <- Mwt[3,2] #47.3900 # min per week
-    muct <- Mwt[3,2] # 6.1600 # min per week
-
-    Rwt <- Mwt/muwt
-    Rct <- Mct/muct
-
-    muws <- 2.7474 # mph
-
-    Rws <- matrix(c(1.0662510447,0.8753344725,1.0662510447,0.8753344725,1.0206231847,1.000210721,1.0590466458,1.0338312494,1.0392345486,0.947378462,1.03022905,0.9329696641,0.9509806615,0.8969476694,0.9509806615,0.8969476694),byrow=TRUE, ncol = 2, dimnames = list(paste0("ageClass",1:nAgeClass),c("M","F")))
-
-    muNonTravelMatrix <- matrix(c(0.0000000,0.0000000,0.9715051,1.0354205,0.9505718,0.8999381,0.8315675,0.7180636,0.0000000,0.0000000,1.0000000,1.1171469,0.9878429,0.9434823,0.8782254,0.7737818), ncol = 2, dimnames = list(paste0("ageClass",1:nAgeClass),c("M","F")))
-
-    meanType <- "referent"
-    n <- 100
-    quantiles <- seq(1/n, (n-1)/n, by = 1/n)
-
-    GBD <- readGBD(file = GBDFile)
-    
-    cv <- 3.0288 # coefficient of variation for active transport time
-
-    muNonTravel <- 2 # MET-hrs./week leisure activity
-    cvNonTravel <- 1 # coefficient of variation for leisure activity
-
-    roadInjuries <- readRoadInjuries(roadInjuriesFile)
-
-    distRoadType <- list()
-
-    modeNames <- c("walk","cycle","bus","car","HGV","LGV","mbike","ebike")
-
-    victimVec <- c(0.432,0.511,rep(0.4999,6))
-    strikingVec <- victimVec
-    NOVVec <- c(0.64,0.64,rep(0.8,6))
-
-sinMatrix <- matrix(c(victimVec,strikingVec,NOVVec), nrow = length(modeNames), ncol = 3, dimnames = list(modeNames, c("victim","striking","NOV")))
-
-    return( new("ParameterSet",
-        Rwt = Rwt,
-        Rct = Rct,
-        Rws = Rws,
-        muwt = muwt,
-        muws = muws,
-        muct = muct,
-        cv = cv,
-        cvNonTravel = cvNonTravel,
-        nAgeClass = nAgeClass,
-        muNonTravel = muNonTravel,
-        muNonTravelMatrix = muNonTravelMatrix,
-        GBD = GBD,
-        meanType = meanType,
-        quantiles = quantiles,
-        roadInjuries = roadInjuries,
-        distRoadType = distRoadType,
-        safetyInNumbers = sinMatrix
-    ))
-}
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -259,6 +54,56 @@ computeMeanMatrices <- function(parList){
 
         return(list(meanWalkTime = meanWalkTime, meanCycleTime = meanCycleTime, meanWalkSpeed = meanWalkSpeed, meanActiveTransportTime = meanActiveTransportTime, sdActiveTransportTime = sdActiveTransportTime, propTimeCycling = propTimeCycling, pWalk = pWalk)) # meanWalkMET = meanWalkMET, meanCycleMET = meanCycleMET,
         })
+}
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#' Performs the comparitive risk assesment for the physical activity
+#' component
+#'
+#' This function performs the CRA and returns the change in disease burden.  The user may specify among four burden types and disease (or total).
+#'
+#' @param ITHIM.baseline An ITHIM object
+#' @param ITHIM.scenario An ITHIM object
+#' @param bur A chatacter string indicating the type of burden.
+#'     Acceptable values are daly.delta, yll.delta, yld.delta,
+#'     dproj.delta (projected deaths).
+#' @param dis A character string indicating which disease is of interest.  Acceptable values are BreastCancer, ColonCancer, CVD, Dementia, Depression, Diabetes, Stroke, HHD or total.  The default value is tot
+#'
+#' @return A numerical value for the chnage in disease burden between
+#'     baseline and scenario.  Physical activity component only.
+#'
+#' @export
+deltaBurden <- function(ITHIM.baseline, ITHIM.scenario, bur = "daly.delta", dis = "total"){
+    
+    ITHIM.baseline <- as(ITHIM.baseline, "list")
+    ITHIM.scenario <- as(ITHIM.scenario, "list")
+
+    CRA <- compareModels(ITHIM.baseline,ITHIM.scenario)
+    
+    index <- which(bur == names(CRA))
+
+    CRA <- CRA[[index]]
+
+    if( dis == "total" ){
+        burdenValue <- sum(unlist(CRA))
+    }else{
+        index <- which(dis == names(CRA))
+        burdenValue <- sum(unlist(CRA[[index]]))
+    }
+
+  return(burdenValue) # AgeClass 1 is NOT removed from totals
+}
+#'@export
+readActiveTransportTime <- function(filename){
+    activeTravel <- read.csv(file = filename, header = TRUE)
+    activeTravelList <- split(activeTravel, activeTravel$mode)
+    activeTravelList <- lapply(activeTravelList, function(x) {
+        activeTravelMatrix <- as.matrix(x[,-(1:2)])
+        dimnames(activeTravelMatrix) <- list(paste0("AgeClass",1:8), c("M","F"))
+        activeTravelMatrix
+        })
+    return(activeTravelList)
 }
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -525,29 +370,6 @@ compareModels <- function(baseline, scenario){
                 daly.delta = daly.delta
                 ))
 
-    }
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#' Updates an ITHIM object
-#'
-#' Change a parameter and recreate the object.
-#'
-#' @return An updated ITHIM object
-#'
-#' @export
-updateITHIM <- function( ITHIM, parName, parValue){
-
-    ITHIM$parameters[[parName]] <- parValue
-    parameters <- ITHIM$parameters
-    means <- computeMeanMatrices(parameters)
-    quintiles <- getQuintiles(means, parameters)
-    ITHIM <- list(
-            parameters = parameters,
-            means = means,
-            quintiles = quintiles
-    )
-    return(ITHIM)
     }
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
