@@ -156,11 +156,6 @@ createParameterList <- function(roadInjuriesFile = system.file("roadInjuries.csv
 
     muws <- 2.7474 # mph
 
-
-    #Rwt <- matrix(c(0.4305,0.3471,1.0700,0.8200,1.0100,1.0000,0.8600,1.1700,1.0600,1.1700,0.9900,0.9200,0.8000,0.7500,0.8200,0.7800),byrow=TRUE, ncol = 2, dimnames = list(paste0("ageClass",1:nAgeClass),c("M","F")))
-
-    #Rct <- matrix(c(0.2935,0.1231,6.4500,3.1500,4.0000,1.0000,3.4800,0.8200,4.6700,1.1800,2.7000,0.6100,3.4200,0.2100,0.7000,0.0900),byrow=TRUE, ncol = 2, dimnames = list(paste0("ageClass",1:nAgeClass),c("M","F")))
-
     Rws <- matrix(c(1.0662510447,0.8753344725,1.0662510447,0.8753344725,1.0206231847,1.000210721,1.0590466458,1.0338312494,1.0392345486,0.947378462,1.03022905,0.9329696641,0.9509806615,0.8969476694,0.9509806615,0.8969476694),byrow=TRUE, ncol = 2, dimnames = list(paste0("ageClass",1:nAgeClass),c("M","F")))
 
     muNonTravelMatrix <- matrix(c(0.0000000,0.0000000,0.9715051,1.0354205,0.9505718,0.8999381,0.8315675,0.7180636,0.0000000,0.0000000,1.0000000,1.1171469,0.9878429,0.9434823,0.8782254,0.7737818), ncol = 2, dimnames = list(paste0("ageClass",1:nAgeClass),c("M","F")))
@@ -175,13 +170,6 @@ createParameterList <- function(roadInjuriesFile = system.file("roadInjuries.csv
 
     muNonTravel <- 2 # MET-hrs./week leisure activity
     cvNonTravel <- 1 # coefficient of variation for leisure activity
-
-#    filename <- system.file( "roadInjuries.csv", package = "ITHIM")
-#    roadInjuries <- read.csv(file = filename, header = FALSE)
-#    roadInjuries <- rbind(roadInjuries,rep(NA,9))
-#    roadInjuries <- split(roadInjuries, c(t(matrix(1:6, nrow = 6, ncol = 8))))
-#    names(roadInjuries) <- c("FatalLocal","FatalArterial","FatalHighway","SeriousLocal","SeriousArterial","SeriousHighway")
-#    roadInjuries <- lapply(roadInjuries,function(x){dimnames(x) <- list(c("walk","cycle","bus","car","HGV","LGV","mbike","ebike"),c("walk","cycle","bus","car","HGV","LGV","mbike","ebike","NOV"));x})
 
     roadInjuries <- readRoadInjuries(roadInjuriesFile)
 
@@ -297,9 +285,6 @@ getQuintiles <- function(means, parameters){
   ActiveTransportTime <- computeQuintiles(means$meanActiveTransportTime, means$sdActiveTransportTime, parameters$quantiles)
   WalkingTime <- list(M = ActiveTransportTime[["M"]] * (1-means$propTimeCycling[,"M"]), F = ActiveTransportTime[["F"]] * (1-means$propTimeCycling[,"F"]))
   CyclingTime <- list(M = ActiveTransportTime[["M"]] * (means$propTimeCycling[,"M"]), F = ActiveTransportTime[["F"]] * (means$propTimeCycling[,"F"]))
-  #WalkingMET <- list(M = means$meanWalkMET[,"M"]*WalkingTime[["M"]]/60, F = means$meanWalkMET[,"F"]*WalkingTime[["F"]]/60)
-  #CyclingMET <- list(M = means$meanCycleMET[,"M"]*CyclingTime[["M"]]/60, F = means$meanCycleMET[,"F"]*CyclingTime[["F"]]/60)
-  #TravelMET <- list(M = WalkingMET[["M"]] + CyclingMET[["M"]], F = WalkingMET[["F"]] + CyclingMET[["F"]])
 
   muNonTravel <- parameters$muNonTravel
   muNonTravelMatrix <- parameters$muNonTravelMatrix
@@ -317,8 +302,6 @@ getQuintiles <- function(means, parameters){
   TotalMET <- list( M = matrix(unlist(TotalMETQuintiles[1:8]),ncol = length(parameters$quantiles), byrow = TRUE), F = matrix(unlist(TotalMETQuintiles[9:16]),ncol = length(parameters$quantiles), byrow = TRUE ) )
 
   TotalMET <- mapply(function(x,y) ifelse(x < 0.1, 0.1, x), TotalMET, SIMPLIFY=FALSE)
-
-  #TotalMET <- mapply(function(x,y) ifelse(x+y<2.5,0.1,x+y),TravelMET,parameters$NonTravelMETs,SIMPLIFY=FALSE) # This is the old way of doing things.
 
  return(list(ActiveTransportTime=ActiveTransportTime, WalkingTime=WalkingTime, CyclingTime=CyclingTime, TotalMET = TotalMET)) # WalkingMET=WalkingMET, CyclingMET = CyclingMET, TravelMET = TravelMET,
 }
@@ -469,11 +452,6 @@ compareModels <- function(baseline, scenario){
     scenario <- as(scenario, "list")
     baseline$parameters <- as(baseline$parameters, "list")
     scenario$parameters <- as(scenario$parameters, "list")
-    ## if( identical(baseline$parameters$GBD,scenario$parameters$GBD) ){
-    ##     GBD <- baseline$parameters$GBD # GBD must be the same between baseline and scenario
-    ##     }else{
-    ##         #error message
-    ##         }
 
     GBD <- baseline$parameters$GBD
 
@@ -484,7 +462,7 @@ compareModels <- function(baseline, scenario){
     RRnormalizedToBaseline.scenario <- mapply(ratioForList,RR.baseline, RR.scenario, SIMPLIFY = FALSE) # ratioForList simply computes the ratio
     RRnormalizedToBaseline.baseline <- mapply(ratioForList,RR.baseline, RR.baseline, SIMPLIFY = FALSE) # What!  Always 1!
 
-#    AF <- mapply(AFForList, RRnormalizedToBaseline.scenario,RRnormalizedToBaseline.baseline, SIMPLIFY = FALSE) # Neil and Geoff compute AF diifferently.  This is Neil's way
+#   AF <- mapply(AFForList, RRnormalizedToBaseline.scenario,RRnormalizedToBaseline.baseline, SIMPLIFY = FALSE) # Neil and Geoff compute AF diifferently.  This is Neil's way
     AF <- mapply(AFForList2, RR.scenario,RR.baseline, SIMPLIFY = FALSE) # Neil and Geoff compute AF diifferently.  This is Geoff's way.
 
     normalizedDiseaseBurden <- lapply(RR.scenario, normalizeDiseaseBurden)
@@ -495,7 +473,6 @@ compareModels <- function(baseline, scenario){
     denom <- lapply(normalizedDiseaseBurden, function(x) lapply(x, rowSums))
     denom.baseline <- lapply(normalizedDiseaseBurden.baseline, function(x) lapply(x, rowSums))
 
-    # diseases <- intersect(intersect(names(NewBurdenList),names(GBD)),names(normalizedDiseaseBurden))
     diseases <- c("BreastCancer","ColonCancer","Depression","Dementia","Diabetes", "CVD")
 
     GBD <- GBD[diseases]
@@ -536,8 +513,6 @@ compareModels <- function(baseline, scenario){
     daly.delta <- mapply(function(x,y){
         mapply("-",x,y, SIMPLIFY = FALSE)
         },dalyBurden,dalyBurden.baseline, SIMPLIFY = FALSE)
-
-#    APRR <- createAirPollutionRRs(baseline,scenario)
 
     return(list(RR.baseline = RR.baseline,
                 RR.scenario = RR.scenario,
@@ -588,7 +563,6 @@ getNonTravelDistribution <- function(mu, cv, size = 1e4){
     mu <- ifelse(mu == 0, 0.01, mu)
     sd <- mu*cv
     simLogNorm <- rlnorm(size, log(mu/sqrt(1+sd^2/mu^2)), sqrt(log(1+sd^2/mu^2)))
-    #simData <- ifelse(sample(0:1, size = size, prob = c(1-p,p), replace = TRUE) == 1, simLogNorm, 0)
     simData <- simLogNorm
     return(simData)
 }
@@ -664,284 +638,3 @@ getTotalDistribution <- function( muTravel, cvTravel, muNonTravel, cvNonTravel, 
     return(getTravelDistribution( mu = muTravel, cv=cvTravel, pWalk = pWalk, vWalk = vWalk, size = size) + getNonTravelDistribution(mu = muNonTravel, cv = cvNonTravel, size = size))
 
 }
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#~~~~~~~ Deprecated functions ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-## #' Generate matrices of non-travel related MET quintiles
-## #'
-## #' Estimate non-travel related MET quintiles.  Currently we use a
-## #' fixed matrix coded into the function.
-## #'
-## #' @param region character string; either "national" or "SFBayArea"
-## #'
-## #' @return A list of two matrices of quintiles of non-transport METs
-## #'     per week stratified by age class and sex
-## #'
-## #' @export
-## computeNonTravelMETs <- function(region = NA, propActive = NA, mean = NA, cv = NA, knownValues = FALSE){
-##     nAgeClass <- 8
-##     dimnames <- list(rep(paste0("ageClass",1:nAgeClass),2),paste0("quint",1:5))
-
-##     if( knownValues ){
-
-##     if( region == "cook" ){
-##     nonTravelMETs <- matrix(c(0,0,0,0,0,0,0,0,0,0,27.21890244,27.21890244,27.21890244,27.21890244,27.21890244,8.42785658,8.42785658,8.42785658,8.42785658,8.42785658,7.600940041,7.600940041,7.600940041,7.600940041,7.600940041,11.33717949,11.33717949,11.33717949,11.33717949,11.33717949,13.06196237,13.06196237,13.06196237,13.06196237,13.06196237,18.10175439,18.10175439,18.10175439,18.10175439,18.10175439,0,0,0,0,0,0,0,0,0,0,6.858209571,6.858209571,6.858209571,6.858209571,6.858209571,10.76793103,10.76793103,10.76793103,10.76793103,10.76793103,5.40369146,5.40369146,5.40369146,5.40369146,5.40369146,1.829166667,1.829166667,1.829166667,1.829166667,1.829166667,3.037973485,3.037973485,3.037973485,3.037973485,3.037973485,4.063888889,4.063888889,4.063888889,4.063888889,4.063888889),nrow=2*nAgeClass,ncol = 5, byrow=TRUE, dimnames=dimnames)
-##         }else if(region == "national"){
-##     nonTravelMETs <- matrix(c(0.000,0.000,0.000,0.000,0.000,37.667,26.000,31.667,91.000,62.000,54.000,48.000,46.000,56.000,72.000,30.000,32.000,30.000,32.000,40.000,32.000,22.000,14.000,40.000,48.000,14.000,28.000,16.000,24.000,20.000,8.000,22.000,14.000,10.667,76.000,0.000,7.000,0.000,10.000,56.000,0.000,0.000,0.000,0.000,0.000,26.000,18.000,40.000,18.667,40.000,15.000,12.000,8.000,20.000,24.000,12.000,12.000,9.000,30.000,36.000,10.000,8.000,15.000,8.000,8.000,4.000,12.000,0.000,0.000,36.000,0.000,4.667,0.000,0.000,0.000,0.000,0.000,4.667,0.000,24.000),nrow=2*nAgeClass,ncol = 5, byrow=TRUE, dimnames=dimnames)
-##         }else if(region == "SFBayArea"){
-##     nonTravelMETs <- matrix(c(0,0,0,0,0,0,0,0,0,0,57.8,41,45.5,37.925,41,51.25,51.25,64.75,46.125,44.8,58.275,61.5,53.725,52.2,46.7,41,31.25,44.0833333333,42.5,32.8,4.375,5,8.3333333333,3.75,13.125,0,10,3.75,5.2083333333,0,0,0,0,0,0,0,0,0,0,0,8.8666666667,24.6,29.85,30.4,41,41,35.875,38.85,41,42.2666666667,41.65,43.05,46.0666666667,41,41,32.8,18,31.75,20.5,4.5,5.8333333333,5,2.5,3.75,0,6.5,3.125,0.8333333333,0,0),nrow=2*nAgeClass,ncol = 5, byrow=TRUE, dimnames=dimnames)
-##     }else{
-##         # error message here
-##         }
-
-##         return(list(M = nonTravelMETs[1:nAgeClass,], F = nonTravelMETs[nAgeClass+(1:nAgeClass),]))
-##     }else{
-
-##         #relativeMETs <- matrix(c(0.0000000,0.0000000,1.4774036,0.9174753,0.8070258,0.6548583,0.5872301,0.5568559,0.0000000,0.0000000,1.0000000,0.7421562,0.6413120,0.5372390,0.4628888,0.4040676),ncol = 2)
-
-##         relativeMETs <- matrix(1, nrow = 8, ncol = 2)
-##         meanMETReferent <- mean
-
-##         METQuintiles <- t(mapply(getMETQuintiles, relativeMETs*meanMETReferent, MoreArgs = list(cv = cv, p = propActive, size = 1e5), SIMPLIFY = TRUE))
-##         dimnames(METQuintiles) <- list(paste0("ageClass",rep(1:8,2)), paste0("quint",1:5))
-
-##         return(list(M = METQuintiles[1:8,], F = METQuintiles[9:16,]))
-
-##         }
-
-## }
-## #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-## #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-## #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-## #' Sets a model parameter
-## #'
-## #' Sets a model parameter
-## #'
-## #' @return An updated list of parameters
-## #'
-## #' @export
-## setParameter <- function( parName, parValue, parList ){
-##     parList[[parName]] <- parValue
-##     return(parList)
-##     }
-## #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-## #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-## #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-## #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-## #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-## #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-## #' Plots means
-## #'
-## #' Plots means
-## #'
-## #' @return A ggplot object
-## #'
-## #' @export
-## plotMean <- function(means.baseline, means.scenario, var = "meanActiveTransportTime"){
-##     D <- melt(list(baseline = means.baseline[[var]], scenario = means.scenario[[var]]), c("age","quint"), value.name = "mean")
-##     names(D) <- c("age","sex","mean","vision")
-##     p <- ggplot(D, aes(age,  mean)) + geom_bar(aes(fill=vision), stat = "identity", position = "dodge")
-##     return(p)
-## }
-## #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-## #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-## #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-## #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-## #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-## #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-## #' Plots burden
-## #'
-## #' Plots burdens
-## #'
-## #' @param burden A list like as "comparativeRisk$daly.delta"
-## #' @param varName A character string indicating the name to use for
-## #'     the y axis label
-## #'
-## #' @return A ggplot object
-## #'
-## #' @export
-## plotBurden <- function(burden, varName = "daly"){
-##     foo <- cbind(melt(burden),c("00-04","05-14","15-29","30-44","45-59","60-69","70-79","80+"))
-##     names(foo) <- c("burden","sex","disease","Age")
-## # what does geom_freqpoly(aes(group = Age, color = Age)) look like? may allow us to bring back in the quintiles?
-##     p <- ggplot(foo, aes(disease, -burden)) + geom_bar(aes(fill=Age), stat = "identity", position = "dodge") + labs( y = varName, x = "")
-##     p <- p + facet_grid(sex ~ .)
-##     return(p)
-## }
-## #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-## #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-## #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-## #' Set Risk Ratios for Air Pollution
-## #'
-## #' Set risk ratios for a list of diseases given air pollution exposure.  These
-## #' values are used to compute change in disease burden due to air pollution.
-## #'
-## #' @return A numerical vector of risk ratios given air pollution exposure
-## #'
-## #' @note Hypertensive HD is done using a combination of RR by METs and RR by air
-## #'     pollution.
-## #'
-## #' @export
-## createAirPollutionRRs <- function(baseline, scenario){
-
-##     diseaseNames <- c("LungCancer","AcuteRespInfect","InflammatoryHD","RespiratoryDisease", "CVD", "HHD", "Stroke")
-
-##     k <- rep(0.008618,length(diseaseNames))
-
-##     exposure.baseline <- baseline$parameters$pm25
-##     exposure.scenario <- scenario$parameters$pm25
-
-##     RR <- exp(k*(exposure.scenario-exposure.baseline))
-##     names(RR) <- diseaseNames
-
-##     RR.list <- lapply(as.list(RR), function(x) list(M=matrix(x,nrow=8,ncol=5,dimnames=list(paste0("ageClass",1:8),paste0("quint",1:5))),F=matrix(x,nrow=8,ncol=5,dimnames=list(paste0("ageClass",1:8),paste0("quint",1:5)))))
-
-##     return(RR.list)
-
-## }
-## #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-## #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-## #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-## #' Set Risk Ratios for Active Transport and Air Pollution
-## #'
-## #' Set risk ratios for a list of diseases given air pollution exposure and active transport exposure.  These
-## #' values are used to compute change in disease burden..
-## #'
-## #' @return A numerical vector of risk ratios given air pollution exposure and active transport exposure
-## #'
-## #' @export
-## createATandAPRRs <- function(){
-
-##     diseaseNames <- c("Hypertensive HD", "CVD")
-##     RR <- rep(1.02, length(diseaseNames))
-##     names(RR) <- diseaseNames
-##     return(RR)
-
-## }
-## #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-## #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-## #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-## #' Computes MET quintiles
-## #'
-## #' Uses a mixture distribution to estimate non-travel METs
-## #'
-## #' @return A vector of quintiles.
-## #'
-## #' @export
-## getMETQuintiles <- function(mu, p, cv, quantiles = seq(0.1,0.9,0.1), size = 1e3){
-##     mu <- ifelse(mu == 0, 0.01, mu)
-##     sd <- mu*cv
-##     simLogNorm <- rlnorm(size, log(mu/sqrt(1+sd^2/mu^2)), sqrt(log(1+sd^2/mu^2)))
-##     simData <- ifelse(sample(0:1, size = size, prob = c(1-p,p), replace = TRUE) == 1, simLogNorm, 0)
-##     return(quantile(simData, probs = quantiles, na.rm = TRUE))
-## }
-## #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-## #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-## #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-## #' Returns
-## #'
-## #' Returns
-## #'
-## #' @param ITHIM.baseline An ITHIM object
-## #' @param ITHIM.scenario An ITHIM object
-## #'
-## #' @return
-## #'
-## #' @export
-## sumCVD <- function(ITHIM.baseline, ITHIM.scenario){
-##     ITHIM.baseline <- as(ITHIM.baseline, "list")
-##     ITHIM.scenario <- as(ITHIM.scenario, "list")
-##   return(sum(unlist(data.frame(compareModels(ITHIM.baseline,ITHIM.scenario)$daly.delta$CVD)[-1,]))) # AgeClass 1 is removed from totals
-## }
-## #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-## #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-## #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-## #' Returns
-## #'
-## #' Returns
-## #'
-## #' @param ITHIM.baseline An ITHIM object
-## #' @param ITHIM.scenario An ITHIM object
-## #'
-## #' @return
-## #'
-## #' @export
-## sumDiabetes <- function(ITHIM.baseline, ITHIM.scenario){
-##     ITHIM.baseline <- as(ITHIM.baseline, "list")
-##     ITHIM.scenario <- as(ITHIM.scenario, "list")
-##   return(sum(unlist(data.frame(compareModels(ITHIM.baseline,ITHIM.scenario)$daly.delta$Diabetes)[-1,]))) # AgeClass 1 is removed from totals
-## }
-## #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-## #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-## #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-## #' Returns
-## #'
-## #' Returns
-## #'
-## #' @param ITHIM.baseline An ITHIM object
-## #' @param ITHIM.scenario An ITHIM object
-## #'
-## #' @return
-## #'
-## #' @export
-## sumDepression <- function(ITHIM.baseline, ITHIM.scenario){
-##     ITHIM.baseline <- as(ITHIM.baseline, "list")
-##     ITHIM.scenario <- as(ITHIM.scenario, "list")
-##   return(sum(unlist(data.frame(compareModels(ITHIM.baseline,ITHIM.scenario)$daly.delta$Depression)[-1,]))) # AgeClass 1 is removed from totals
-## }
-## #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-## #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-## #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-## #' Returns
-## #'
-## #' Returns
-## #'
-## #' @param ITHIM.baseline An ITHIM object
-## #' @param ITHIM.scenario An ITHIM object
-## #'
-## #' @return
-## #'
-## #' @export
-## sumBreastCancer <- function(ITHIM.baseline, ITHIM.scenario){
-##     ITHIM.baseline <- as(ITHIM.baseline, "list")
-##     ITHIM.scenario <- as(ITHIM.scenario, "list")
-##   return(sum(unlist(data.frame(compareModels(ITHIM.baseline,ITHIM.scenario)$daly.delta$BreastCancer)[-1,]))) # AgeClass 1 is removed from totals
-## }
-## #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-## #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-## #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-## #' Returns
-## #'
-## #' Returns
-## #'
-## #' @param ITHIM.baseline An ITHIM object
-## #' @param ITHIM.scenario An ITHIM object
-## #'
-## #' @return
-## #'
-## #' @export
-## sumColonCancer <- function(ITHIM.baseline, ITHIM.scenario){
-##     ITHIM.baseline <- as(ITHIM.baseline, "list")
-##     ITHIM.scenario <- as(ITHIM.scenario, "list")
-##   return(sum(unlist(data.frame(compareModels(ITHIM.baseline,ITHIM.scenario)$daly.delta$ColonCancer)[-1,]))) # AgeClass 1 is removed from totals
-## }
-## #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-## #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-## #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-## #' Returns
-## #'
-## #' Returns
-## #'
-## #' @param ITHIM.baseline An ITHIM object
-## #' @param ITHIM.scenario An ITHIM object
-## #'
-## #' @return
-## #'
-## #' @export
-## sumDementia <- function(ITHIM.baseline, ITHIM.scenario){
-##     ITHIM.baseline <- as(ITHIM.baseline, "list")
-##     ITHIM.scenario <- as(ITHIM.scenario, "list")
-##   return(sum(unlist(data.frame(compareModels(ITHIM.baseline,ITHIM.scenario)$daly.delta$Dementia)[-1,]))) # AgeClass 1 is removed from totals
-## }
