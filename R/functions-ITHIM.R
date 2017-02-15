@@ -62,7 +62,10 @@ createITHIMFunction <- function(roadInjuriesFile = system.file("roadInjuries.csv
 #' @seealso \code{\link{readGBD}}
 #'
 #' @export
-createParameterList <- function(roadInjuriesFile = system.file("roadInjuries.csv", package = "ITHIM"), activeTransportTimeFile = system.file("activeTransportTime.csv", package = "ITHIM"), GBDFile = system.file("gbd.csv", package = "ITHIM")){
+createParameterList <- function(
+                                roadInjuriesFile = system.file("roadInjuries.csv", package = "ITHIM"),
+                                activeTransportTimeFile = system.file("activeTransportTime.csv", package = "ITHIM"),
+                                GBDFile = system.file("gbd.csv", package = "ITHIM")){
 
     nAgeClass <- 8L
 
@@ -71,8 +74,8 @@ createParameterList <- function(roadInjuriesFile = system.file("roadInjuries.csv
     Mwt <- activeTransportTimeList$walk
     Mct <- activeTransportTimeList$cycle
 
-    muwt <- Mwt[3,2] #47.3900 # min per week
-    muct <- Mwt[3,2] # 6.1600 # min per week
+    muwt <- Mwt[3,2] # min per week
+    muct <- Mwt[3,2] # min per week
 
     Rwt <- Mwt/muwt
     Rct <- Mct/muct

@@ -1,6 +1,30 @@
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#' Read Active Transport File
+#'
+#' This function reads in a csv file with mean values for walking and
+#' cycling times, stratified by age and sex.  The format of this file
+#' is described at \url{https://ithim.ghi.wisc.edu/}.
+#'
+#' @param filename A character string with the name of the active transport csv file.
+#'
+#' @return A list of...
+#'
+#'@export
+readActiveTransportTime <- function(filename){
+    activeTravel <- read.csv(file = filename, header = TRUE)
+    activeTravelList <- split(activeTravel, activeTravel$mode)
+    activeTravelList <- lapply(activeTravelList, function(x) {
+        activeTravelMatrix <- as.matrix(x[,-(1:2)])
+        dimnames(activeTravelMatrix) <- list(paste0("AgeClass",1:8), c("M","F"))
+        activeTravelMatrix
+        })
+    return(activeTravelList)
+}
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #' Compute Matrices of Active Transport Means
 #'
 #' This function computes mean walking/cycling time/speed, as well as
@@ -93,17 +117,6 @@ deltaBurden <- function(ITHIM.baseline, ITHIM.scenario, bur = "daly.delta", dis 
     }
 
   return(burdenValue) # AgeClass 1 is NOT removed from totals
-}
-#'@export
-readActiveTransportTime <- function(filename){
-    activeTravel <- read.csv(file = filename, header = TRUE)
-    activeTravelList <- split(activeTravel, activeTravel$mode)
-    activeTravelList <- lapply(activeTravelList, function(x) {
-        activeTravelMatrix <- as.matrix(x[,-(1:2)])
-        dimnames(activeTravelMatrix) <- list(paste0("AgeClass",1:8), c("M","F"))
-        activeTravelMatrix
-        })
-    return(activeTravelList)
 }
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
