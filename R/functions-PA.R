@@ -7,19 +7,33 @@
 #' cycling times, stratified by age and sex.  The format of this file
 #' is described at \url{https://ithim.ghi.wisc.edu/}.
 #'
-#' @param filename A character string with the name of the active transport csv file.
+#' @param filename A character string with the name of the active
+#'     transport csv file.  There is no default value.  The order of
+#'     the rows matters.  ageClass must be given in increasing order.
+#' @note This function is called from createITHIM and is not needed
+#'     directly by the user.
 #'
-#' @return A list of...
+#' @return A list of two matrices; mean walking time and mean cycling
+#'     time in minutes per week.
 #'
 #'@export
 readActiveTransportTime <- function(filename){
-    activeTravel <- read.csv(file = filename, header = TRUE)
+    activeTravel <- read.csv(file = filename, header = TRUE, stringsAsFactors = FALSE)
+    
     activeTravelList <- split(activeTravel, activeTravel$mode)
+
+    nAgeClass <- unique(unlist(lapply(activeTravelList, function(x) length(x$ageClass))))/2
+
+    if (length(nAgeClass)>1){
+        stop("Problem with Active Transport File age classes")
+        }
+
     activeTravelList <- lapply(activeTravelList, function(x) {
-        activeTravelMatrix <- as.matrix(x[,-(1:2)])
-        dimnames(activeTravelMatrix) <- list(paste0("AgeClass",1:8), c("M","F"))
+        activeTravelMatrix <- cbind(x[x[,"sex"]=="M","value"],x[x[,"sex"]=="F","value"])
+        dimnames(activeTravelMatrix) <- list(paste0("ageClass",1:nAgeClass), c("M","F"))
         activeTravelMatrix
-        })
+    })
+    
     return(activeTravelList)
 }
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
