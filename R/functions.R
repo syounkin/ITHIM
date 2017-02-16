@@ -93,9 +93,9 @@ NULL
 #'     \code{\link{computeMeanMatrices}}, \code{\link{getQuintiles}}
 #'
 #' @export
-createITHIMFunction <- function(){
+createITHIMFunction <- function(roadInjuriesFile = system.file("roadInjuries.csv", package = "ITHIM"), activeTransportTimeFile = system.file("activeTransportTime.csv",package = "ITHIM"), GBDFile = system.file("gbd.csv",package = "ITHIM")){
 
-        new("ITHIM", parameters = parameters <- createParameterList(), means = means <- computeMeanMatrices(as(parameters,"list")), quintiles = getQuintiles(means, as(parameters,"list")))
+        new("ITHIM", parameters = parameters <- createParameterList(roadInjuriesFile = roadInjuriesFile, activeTransportTimeFile = activeTransportTimeFile, GBDFile = GBDFile), means = means <- computeMeanMatrices(as(parameters,"list")), quintiles = getQuintiles(means, as(parameters,"list")))
 
 }
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -139,13 +139,27 @@ createITHIMFunction <- function(){
 #' @seealso \code{\link{readGBD}}
 #'
 #' @export
-createParameterList <- function(){
+createParameterList <- function(roadInjuriesFile = system.file("roadInjuries.csv", package = "ITHIM"), activeTransportTimeFile = system.file("activeTransportTime.csv", package = "ITHIM"), GBDFile = system.file("gbd.csv", package = "ITHIM")){
 
     nAgeClass <- 8L
 
-    Rwt <- matrix(c(0.4305,0.3471,1.0700,0.8200,1.0100,1.0000,0.8600,1.1700,1.0600,1.1700,0.9900,0.9200,0.8000,0.7500,0.8200,0.7800),byrow=TRUE, ncol = 2, dimnames = list(paste0("ageClass",1:nAgeClass),c("M","F")))
+    activeTransportTimeList <- readActiveTransportTime(activeTransportTimeFile)
 
-    Rct <- matrix(c(0.2935,0.1231,6.4500,3.1500,4.0000,1.0000,3.4800,0.8200,4.6700,1.1800,2.7000,0.6100,3.4200,0.2100,0.7000,0.0900),byrow=TRUE, ncol = 2, dimnames = list(paste0("ageClass",1:nAgeClass),c("M","F")))
+    Mwt <- activeTransportTimeList$walk
+    Mct <- activeTransportTimeList$cycle
+
+    muwt <- Mwt[3,2] #47.3900 # min per week
+    muct <- Mwt[3,2] # 6.1600 # min per week
+
+    Rwt <- Mwt/muwt
+    Rct <- Mct/muct
+
+    muws <- 2.7474 # mph
+
+
+    #Rwt <- matrix(c(0.4305,0.3471,1.0700,0.8200,1.0100,1.0000,0.8600,1.1700,1.0600,1.1700,0.9900,0.9200,0.8000,0.7500,0.8200,0.7800),byrow=TRUE, ncol = 2, dimnames = list(paste0("ageClass",1:nAgeClass),c("M","F")))
+
+    #Rct <- matrix(c(0.2935,0.1231,6.4500,3.1500,4.0000,1.0000,3.4800,0.8200,4.6700,1.1800,2.7000,0.6100,3.4200,0.2100,0.7000,0.0900),byrow=TRUE, ncol = 2, dimnames = list(paste0("ageClass",1:nAgeClass),c("M","F")))
 
     Rws <- matrix(c(1.0662510447,0.8753344725,1.0662510447,0.8753344725,1.0206231847,1.000210721,1.0590466458,1.0338312494,1.0392345486,0.947378462,1.03022905,0.9329696641,0.9509806615,0.8969476694,0.9509806615,0.8969476694),byrow=TRUE, ncol = 2, dimnames = list(paste0("ageClass",1:nAgeClass),c("M","F")))
 
@@ -154,15 +168,32 @@ createParameterList <- function(){
     meanType <- "referent"
     n <- 100
     quantiles <- seq(1/n, (n-1)/n, by = 1/n)
-    GBDFile <- "gbd.csv"
+
     GBD <- readGBD(file = GBDFile)
-    muwt <- 47.3900 # min per week
-    muws <- 2.7474 # mph
-    muct <- 6.1600 # min per week
+    
     cv <- 3.0288 # coefficient of variation for active transport time
 
     muNonTravel <- 2 # MET-hrs./week leisure activity
     cvNonTravel <- 1 # coefficient of variation for leisure activity
+
+#    filename <- system.file( "roadInjuries.csv", package = "ITHIM")
+#    roadInjuries <- read.csv(file = filename, header = FALSE)
+#    roadInjuries <- rbind(roadInjuries,rep(NA,9))
+#    roadInjuries <- split(roadInjuries, c(t(matrix(1:6, nrow = 6, ncol = 8))))
+#    names(roadInjuries) <- c("FatalLocal","FatalArterial","FatalHighway","SeriousLocal","SeriousArterial","SeriousHighway")
+#    roadInjuries <- lapply(roadInjuries,function(x){dimnames(x) <- list(c("walk","cycle","bus","car","HGV","LGV","mbike","ebike"),c("walk","cycle","bus","car","HGV","LGV","mbike","ebike","NOV"));x})
+
+    roadInjuries <- readRoadInjuries(roadInjuriesFile)
+
+    distRoadType <- list()
+
+    modeNames <- c("walk","cycle","bus","car","HGV","LGV","mbike","ebike")
+
+    victimVec <- c(0.432,0.511,rep(0.4999,6))
+    strikingVec <- victimVec
+    NOVVec <- c(0.64,0.64,rep(0.8,6))
+
+sinMatrix <- matrix(c(victimVec,strikingVec,NOVVec), nrow = length(modeNames), ncol = 3, dimnames = list(modeNames, c("victim","striking","NOV")))
 
     return( new("ParameterSet",
         Rwt = Rwt,
@@ -178,7 +209,10 @@ createParameterList <- function(){
         muNonTravelMatrix = muNonTravelMatrix,
         GBD = GBD,
         meanType = meanType,
-        quantiles = quantiles
+        quantiles = quantiles,
+        roadInjuries = roadInjuries,
+        distRoadType = distRoadType,
+        safetyInNumbers = sinMatrix
     ))
 }
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -543,26 +577,6 @@ updateITHIM <- function( ITHIM, parName, parValue){
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#' Read in Global Burden of Disease Data
-#'
-#' Read in Global Burden of Disease Data
-#'
-#' @return A list of lists of matrices with dproj, yll, yld and daly
-#'     by age and sex and disease
-#'
-#' @export
-readGBD <- function(file = "gbd.csv"){
-    filePath <- system.file(file, package="ITHIM")
-    gbd <- read.csv(file=filePath)
-    gbdList <- split(gbd,gbd$disease)
-    gbdList[["CVD"]] <- data.frame(disease = "CVD", gbdList$IHD[,c("sex",  "ageClass")], gbdList$IHD[,c("dproj","yll","yld","daly")] + gbdList$InflammatoryHD[,c("dproj","yll","yld","daly")] + gbdList$HHD[,c("dproj","yll","yld","daly")])
-    gbdList2 <- lapply(gbdList,function(x) split(x,as.factor(x$sex)))
-    gbdList2 <- lapply(gbdList2, function(x) list(M=x$M,F=x$F))
-    return(gbdList2)
-    }
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #' Computes simulated distribution of nonTravel METs
 #'
 #' Computes simulated distribution of nonTravel METs
@@ -615,9 +629,9 @@ getTravelDistribution <- function(mu, cv, pWalk, vWalk, size = 1e4){
 #' @export
 computeWalkingMETs <- function(v){
 
-    METs <- 1.2216*v + 0.0838
-
-    return(ifelse( METs < 2.5, 2.5, METs ))
+    #METs <- 1.2216*v + 0.0838
+    #return(ifelse( METs < 2.5, 2.5, METs ))
+    return(4.5)
 
 }
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -822,4 +836,112 @@ getTotalDistribution <- function( muTravel, cvTravel, muNonTravel, cvNonTravel, 
 ##     simLogNorm <- rlnorm(size, log(mu/sqrt(1+sd^2/mu^2)), sqrt(log(1+sd^2/mu^2)))
 ##     simData <- ifelse(sample(0:1, size = size, prob = c(1-p,p), replace = TRUE) == 1, simLogNorm, 0)
 ##     return(quantile(simData, probs = quantiles, na.rm = TRUE))
+## }
+## #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+## #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+## #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+## #' Returns
+## #'
+## #' Returns
+## #'
+## #' @param ITHIM.baseline An ITHIM object
+## #' @param ITHIM.scenario An ITHIM object
+## #'
+## #' @return
+## #'
+## #' @export
+## sumCVD <- function(ITHIM.baseline, ITHIM.scenario){
+##     ITHIM.baseline <- as(ITHIM.baseline, "list")
+##     ITHIM.scenario <- as(ITHIM.scenario, "list")
+##   return(sum(unlist(data.frame(compareModels(ITHIM.baseline,ITHIM.scenario)$daly.delta$CVD)[-1,]))) # AgeClass 1 is removed from totals
+## }
+## #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+## #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+## #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+## #' Returns
+## #'
+## #' Returns
+## #'
+## #' @param ITHIM.baseline An ITHIM object
+## #' @param ITHIM.scenario An ITHIM object
+## #'
+## #' @return
+## #'
+## #' @export
+## sumDiabetes <- function(ITHIM.baseline, ITHIM.scenario){
+##     ITHIM.baseline <- as(ITHIM.baseline, "list")
+##     ITHIM.scenario <- as(ITHIM.scenario, "list")
+##   return(sum(unlist(data.frame(compareModels(ITHIM.baseline,ITHIM.scenario)$daly.delta$Diabetes)[-1,]))) # AgeClass 1 is removed from totals
+## }
+## #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+## #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+## #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+## #' Returns
+## #'
+## #' Returns
+## #'
+## #' @param ITHIM.baseline An ITHIM object
+## #' @param ITHIM.scenario An ITHIM object
+## #'
+## #' @return
+## #'
+## #' @export
+## sumDepression <- function(ITHIM.baseline, ITHIM.scenario){
+##     ITHIM.baseline <- as(ITHIM.baseline, "list")
+##     ITHIM.scenario <- as(ITHIM.scenario, "list")
+##   return(sum(unlist(data.frame(compareModels(ITHIM.baseline,ITHIM.scenario)$daly.delta$Depression)[-1,]))) # AgeClass 1 is removed from totals
+## }
+## #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+## #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+## #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+## #' Returns
+## #'
+## #' Returns
+## #'
+## #' @param ITHIM.baseline An ITHIM object
+## #' @param ITHIM.scenario An ITHIM object
+## #'
+## #' @return
+## #'
+## #' @export
+## sumBreastCancer <- function(ITHIM.baseline, ITHIM.scenario){
+##     ITHIM.baseline <- as(ITHIM.baseline, "list")
+##     ITHIM.scenario <- as(ITHIM.scenario, "list")
+##   return(sum(unlist(data.frame(compareModels(ITHIM.baseline,ITHIM.scenario)$daly.delta$BreastCancer)[-1,]))) # AgeClass 1 is removed from totals
+## }
+## #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+## #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+## #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+## #' Returns
+## #'
+## #' Returns
+## #'
+## #' @param ITHIM.baseline An ITHIM object
+## #' @param ITHIM.scenario An ITHIM object
+## #'
+## #' @return
+## #'
+## #' @export
+## sumColonCancer <- function(ITHIM.baseline, ITHIM.scenario){
+##     ITHIM.baseline <- as(ITHIM.baseline, "list")
+##     ITHIM.scenario <- as(ITHIM.scenario, "list")
+##   return(sum(unlist(data.frame(compareModels(ITHIM.baseline,ITHIM.scenario)$daly.delta$ColonCancer)[-1,]))) # AgeClass 1 is removed from totals
+## }
+## #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+## #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+## #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+## #' Returns
+## #'
+## #' Returns
+## #'
+## #' @param ITHIM.baseline An ITHIM object
+## #' @param ITHIM.scenario An ITHIM object
+## #'
+## #' @return
+## #'
+## #' @export
+## sumDementia <- function(ITHIM.baseline, ITHIM.scenario){
+##     ITHIM.baseline <- as(ITHIM.baseline, "list")
+##     ITHIM.scenario <- as(ITHIM.scenario, "list")
+##   return(sum(unlist(data.frame(compareModels(ITHIM.baseline,ITHIM.scenario)$daly.delta$Dementia)[-1,]))) # AgeClass 1 is removed from totals
 ## }
