@@ -17,3 +17,4 @@ html
 *.tar.gz
 #*
 .~*
+.Rproj.user
