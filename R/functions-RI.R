@@ -171,14 +171,18 @@ readRoadInjuries <- function(filename){
 
     roadInjuriesList <- split(roadInjuries, roadInjuries$SeverityByRoadType)
 
-    roadInjuries <- lapply(roadInjuriesList, function(x) dcast(x, strikingMode ~ victimMode, sum))
-    
-#    roadInjuries <- within(roadInjuries, ebike <- as.numeric(ebike))
-#    roadInjuries <- within(roadInjuries, NOV <- as.numeric(NOV))
-
-
-#    roadInjuries <- split(roadInjuries, roadInjuries$SeverityByRoadType)
-#    names(roadInjuries) <- c("FatalLocal","FatalArterial","FatalHighway","SeriousLocal","SeriousArterial","SeriousHighway")
- #   roadInjuries <- lapply(roadInjuries,function(x){dimnames(x) <- list(c("walk","cycle","bus","car","HGV","LGV","mbike","ebike"),c("walk","cycle","bus","car","HGV","LGV","mbike","ebike","NOV"));x})
+    roadInjuries <- lapply(roadInjuriesList, function(x) {
+        foo <- dcast(x, strikingMode ~ victimMode, sum)
+        rownames(foo) <- foo$strikingMode
+        foo <- foo[,-1]
+        })
 return(roadInjuries)
+}
+#' @export
+createSINmatrix <- function(modeNames){
+    victimVec <- c(0.432,0.511,rep(0.4999,5))
+    strikingVec <- victimVec
+    NOVVec <- c(0.64,0.64,rep(0.8,5))
+    sinMatrix <- matrix(c(victimVec,strikingVec,NOVVec), nrow = length(modeNames), ncol = 3, dimnames = list(modeNames, c("victim","striking","NOV")))
+    return(sinMatrix)
 }

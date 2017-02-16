@@ -6,7 +6,6 @@ Fatal,Local,car,walk,1685
 Fatal,Local,HGV,walk,362
 Fatal,Local,LGV,walk,153
 Fatal,Local,mbike,walk,107
-Fatal,Local,ebike,walk,45
 Fatal,Arterial,walk,walk,0
 Fatal,Arterial,cycle,walk,18
 Fatal,Arterial,bus,walk,156
@@ -14,7 +13,6 @@ Fatal,Arterial,car,walk,1428
 Fatal,Arterial,HGV,walk,143
 Fatal,Arterial,LGV,walk,170
 Fatal,Arterial,mbike,walk,61
-Fatal,Arterial,ebike,walk,36
 Fatal,Highway,walk,walk,0
 Fatal,Highway,cycle,walk,0
 Fatal,Highway,bus,walk,2
@@ -22,7 +20,6 @@ Fatal,Highway,car,walk,112
 Fatal,Highway,HGV,walk,70
 Fatal,Highway,LGV,walk,10
 Fatal,Highway,mbike,walk,0
-Fatal,Highway,ebike,walk,1
 Serious,Local,walk,walk,0
 Serious,Local,cycle,walk,338
 Serious,Local,bus,walk,1411
@@ -30,7 +27,6 @@ Serious,Local,car,walk,16343
 Serious,Local,HGV,walk,660
 Serious,Local,LGV,walk,1080
 Serious,Local,mbike,walk,1245
-Serious,Local,ebike,walk,216
 Serious,Arterial,walk,walk,0
 Serious,Arterial,cycle,walk,426
 Serious,Arterial,bus,walk,1388
@@ -38,7 +34,6 @@ Serious,Arterial,car,walk,26796
 Serious,Arterial,HGV,walk,549
 Serious,Arterial,LGV,walk,1788
 Serious,Arterial,mbike,walk,942
-Serious,Arterial,ebike,walk,396
 Serious,Highway,walk,walk,0
 Serious,Highway,cycle,walk,0
 Serious,Highway,bus,walk,1
@@ -46,7 +41,6 @@ Serious,Highway,car,walk,101
 Serious,Highway,HGV,walk,47
 Serious,Highway,LGV,walk,11
 Serious,Highway,mbike,walk,1
-Serious,Highway,ebike,walk,5
 Fatal,Local,walk,cycle,1
 Fatal,Local,cycle,cycle,11
 Fatal,Local,bus,cycle,2
@@ -54,7 +48,6 @@ Fatal,Local,car,cycle,59
 Fatal,Local,HGV,cycle,6
 Fatal,Local,LGV,cycle,5
 Fatal,Local,mbike,cycle,7
-Fatal,Local,ebike,cycle,1
 Fatal,Arterial,walk,cycle,2
 Fatal,Arterial,cycle,cycle,9
 Fatal,Arterial,bus,cycle,4
@@ -62,7 +55,6 @@ Fatal,Arterial,car,cycle,34
 Fatal,Arterial,HGV,cycle,1
 Fatal,Arterial,LGV,cycle,5
 Fatal,Arterial,mbike,cycle,8
-Fatal,Arterial,ebike,cycle,1
 Fatal,Highway,walk,cycle,0
 Fatal,Highway,cycle,cycle,0
 Fatal,Highway,bus,cycle,0
@@ -70,7 +62,6 @@ Fatal,Highway,car,cycle,0
 Fatal,Highway,HGV,cycle,0
 Fatal,Highway,LGV,cycle,0
 Fatal,Highway,mbike,cycle,0
-Fatal,Highway,ebike,cycle,0
 Serious,Local,walk,cycle,54
 Serious,Local,cycle,cycle,176
 Serious,Local,bus,cycle,14
@@ -78,7 +69,6 @@ Serious,Local,car,cycle,239
 Serious,Local,HGV,cycle,12
 Serious,Local,LGV,cycle,15
 Serious,Local,mbike,cycle,115
-Serious,Local,ebike,cycle,4
 Serious,Arterial,walk,cycle,77
 Serious,Arterial,cycle,cycle,274
 Serious,Arterial,bus,cycle,14
@@ -86,7 +76,6 @@ Serious,Arterial,car,cycle,354
 Serious,Arterial,HGV,cycle,7
 Serious,Arterial,LGV,cycle,10
 Serious,Arterial,mbike,cycle,82
-Serious,Arterial,ebike,cycle,3
 Serious,Highway,walk,cycle,0
 Serious,Highway,cycle,cycle,0
 Serious,Highway,bus,cycle,0
@@ -94,7 +83,6 @@ Serious,Highway,car,cycle,0
 Serious,Highway,HGV,cycle,0
 Serious,Highway,LGV,cycle,0
 Serious,Highway,mbike,cycle,0
-Serious,Highway,ebike,cycle,0
 Fatal,Local,walk,bus,19
 Fatal,Local,cycle,bus,5
 Fatal,Local,bus,bus,6
@@ -102,7 +90,6 @@ Fatal,Local,car,bus,475
 Fatal,Local,HGV,bus,30
 Fatal,Local,LGV,bus,35
 Fatal,Local,mbike,bus,75
-Fatal,Local,ebike,bus,10
 Fatal,Arterial,walk,bus,16
 Fatal,Arterial,cycle,bus,4
 Fatal,Arterial,bus,bus,5
@@ -110,7 +97,6 @@ Fatal,Arterial,car,bus,335
 Fatal,Arterial,HGV,bus,9
 Fatal,Arterial,LGV,bus,15
 Fatal,Arterial,mbike,bus,63
-Fatal,Arterial,ebike,bus,9
 Fatal,Highway,walk,bus,0
 Fatal,Highway,cycle,bus,0
 Fatal,Highway,bus,bus,1
@@ -118,7 +104,6 @@ Fatal,Highway,car,bus,14
 Fatal,Highway,HGV,bus,9
 Fatal,Highway,LGV,bus,2
 Fatal,Highway,mbike,bus,5
-Fatal,Highway,ebike,bus,0
 Serious,Local,walk,bus,315
 Serious,Local,cycle,bus,102
 Serious,Local,bus,bus,24
@@ -126,7 +111,6 @@ Serious,Local,car,bus,2056
 Serious,Local,HGV,bus,25
 Serious,Local,LGV,bus,72
 Serious,Local,mbike,bus,530
-Serious,Local,ebike,bus,16
 Serious,Arterial,walk,bus,206
 Serious,Arterial,cycle,bus,75
 Serious,Arterial,bus,bus,15
@@ -134,7 +118,6 @@ Serious,Arterial,car,bus,1811
 Serious,Arterial,HGV,bus,14
 Serious,Arterial,LGV,bus,66
 Serious,Arterial,mbike,bus,414
-Serious,Arterial,ebike,bus,18
 Serious,Highway,walk,bus,0
 Serious,Highway,cycle,bus,0
 Serious,Highway,bus,bus,0
@@ -142,7 +125,6 @@ Serious,Highway,car,bus,73
 Serious,Highway,HGV,bus,1
 Serious,Highway,LGV,bus,2
 Serious,Highway,mbike,bus,18
-Serious,Highway,ebike,bus,1
 Fatal,Local,walk,car,3
 Fatal,Local,cycle,car,2
 Fatal,Local,bus,car,103
@@ -150,7 +132,6 @@ Fatal,Local,car,car,2012
 Fatal,Local,HGV,car,331
 Fatal,Local,LGV,car,230
 Fatal,Local,mbike,car,30
-Fatal,Local,ebike,car,29
 Fatal,Arterial,walk,car,5
 Fatal,Arterial,cycle,car,2
 Fatal,Arterial,bus,car,55
@@ -158,7 +139,6 @@ Fatal,Arterial,car,car,889
 Fatal,Arterial,HGV,car,65
 Fatal,Arterial,LGV,car,108
 Fatal,Arterial,mbike,car,10
-Fatal,Arterial,ebike,car,14
 Fatal,Highway,walk,car,2
 Fatal,Highway,cycle,car,0
 Fatal,Highway,bus,car,1
@@ -166,7 +146,6 @@ Fatal,Highway,car,car,167
 Fatal,Highway,HGV,car,83
 Fatal,Highway,LGV,car,28
 Fatal,Highway,mbike,car,0
-Fatal,Highway,ebike,car,1
 Serious,Local,walk,car,180
 Serious,Local,cycle,car,45
 Serious,Local,bus,car,328
@@ -174,7 +153,6 @@ Serious,Local,car,car,17168
 Serious,Local,HGV,car,572
 Serious,Local,LGV,car,1217
 Serious,Local,mbike,car,308
-Serious,Local,ebike,car,134
 Serious,Arterial,walk,car,165
 Serious,Arterial,cycle,car,52
 Serious,Arterial,bus,car,296
@@ -182,7 +160,6 @@ Serious,Arterial,car,car,12570
 Serious,Arterial,HGV,car,202
 Serious,Arterial,LGV,car,734
 Serious,Arterial,mbike,car,218
-Serious,Arterial,ebike,car,80
 Serious,Highway,walk,car,8
 Serious,Highway,cycle,car,0
 Serious,Highway,bus,car,15
@@ -190,7 +167,6 @@ Serious,Highway,car,car,1422
 Serious,Highway,HGV,car,182
 Serious,Highway,LGV,car,160
 Serious,Highway,mbike,car,7
-Serious,Highway,ebike,car,8
 Fatal,Local,walk,HGV,1
 Fatal,Local,cycle,HGV,0
 Fatal,Local,bus,HGV,4
@@ -198,7 +174,6 @@ Fatal,Local,car,HGV,34
 Fatal,Local,HGV,HGV,36
 Fatal,Local,LGV,HGV,15
 Fatal,Local,mbike,HGV,0
-Fatal,Local,ebike,HGV,3
 Fatal,Arterial,walk,HGV,1
 Fatal,Arterial,cycle,HGV,0
 Fatal,Arterial,bus,HGV,1
@@ -206,7 +181,6 @@ Fatal,Arterial,car,HGV,16
 Fatal,Arterial,HGV,HGV,9
 Fatal,Arterial,LGV,HGV,3
 Fatal,Arterial,mbike,HGV,0
-Fatal,Arterial,ebike,HGV,0
 Fatal,Highway,walk,HGV,0
 Fatal,Highway,cycle,HGV,0
 Fatal,Highway,bus,HGV,0
@@ -214,7 +188,6 @@ Fatal,Highway,car,HGV,8
 Fatal,Highway,HGV,HGV,19
 Fatal,Highway,LGV,HGV,2
 Fatal,Highway,mbike,HGV,0
-Fatal,Highway,ebike,HGV,0
 Serious,Local,walk,HGV,4
 Serious,Local,cycle,HGV,4
 Serious,Local,bus,HGV,23
@@ -222,7 +195,6 @@ Serious,Local,car,HGV,623
 Serious,Local,HGV,HGV,86
 Serious,Local,LGV,HGV,137
 Serious,Local,mbike,HGV,15
-Serious,Local,ebike,HGV,11
 Serious,Arterial,walk,HGV,4
 Serious,Arterial,cycle,HGV,0
 Serious,Arterial,bus,HGV,19
@@ -230,7 +202,6 @@ Serious,Arterial,car,HGV,373
 Serious,Arterial,HGV,HGV,39
 Serious,Arterial,LGV,HGV,62
 Serious,Arterial,mbike,HGV,6
-Serious,Arterial,ebike,HGV,8
 Serious,Highway,walk,HGV,0
 Serious,Highway,cycle,HGV,0
 Serious,Highway,bus,HGV,1
@@ -238,7 +209,6 @@ Serious,Highway,car,HGV,69
 Serious,Highway,HGV,HGV,50
 Serious,Highway,LGV,HGV,36
 Serious,Highway,mbike,HGV,1
-Serious,Highway,ebike,HGV,3
 Fatal,Local,walk,LGV,0
 Fatal,Local,cycle,LGV,0
 Fatal,Local,bus,LGV,0
@@ -246,7 +216,6 @@ Fatal,Local,car,LGV,12
 Fatal,Local,HGV,LGV,7
 Fatal,Local,LGV,LGV,0
 Fatal,Local,mbike,LGV,0
-Fatal,Local,ebike,LGV,1
 Fatal,Arterial,walk,LGV,1
 Fatal,Arterial,cycle,LGV,0
 Fatal,Arterial,bus,LGV,1
@@ -254,7 +223,6 @@ Fatal,Arterial,car,LGV,2
 Fatal,Arterial,HGV,LGV,0
 Fatal,Arterial,LGV,LGV,0
 Fatal,Arterial,mbike,LGV,0
-Fatal,Arterial,ebike,LGV,0
 Fatal,Highway,walk,LGV,0
 Fatal,Highway,cycle,LGV,0
 Fatal,Highway,bus,LGV,0
@@ -262,7 +230,6 @@ Fatal,Highway,car,LGV,0
 Fatal,Highway,HGV,LGV,5
 Fatal,Highway,LGV,LGV,0
 Fatal,Highway,mbike,LGV,0
-Fatal,Highway,ebike,LGV,0
 Serious,Local,walk,LGV,22
 Serious,Local,cycle,LGV,4
 Serious,Local,bus,LGV,16
@@ -270,7 +237,6 @@ Serious,Local,car,LGV,216
 Serious,Local,HGV,LGV,50
 Serious,Local,LGV,LGV,27
 Serious,Local,mbike,LGV,3
-Serious,Local,ebike,LGV,11
 Serious,Arterial,walk,LGV,18
 Serious,Arterial,cycle,LGV,3
 Serious,Arterial,bus,LGV,33
@@ -278,7 +244,6 @@ Serious,Arterial,car,LGV,152
 Serious,Arterial,HGV,LGV,10
 Serious,Arterial,LGV,LGV,16
 Serious,Arterial,mbike,LGV,4
-Serious,Arterial,ebike,LGV,1
 Serious,Highway,walk,LGV,1
 Serious,Highway,cycle,LGV,0
 Serious,Highway,bus,LGV,2
@@ -286,7 +251,6 @@ Serious,Highway,car,LGV,17
 Serious,Highway,HGV,LGV,32
 Serious,Highway,LGV,LGV,6
 Serious,Highway,mbike,LGV,0
-Serious,Highway,ebike,LGV,0
 Fatal,Local,walk,mbike,0
 Fatal,Local,cycle,mbike,0
 Fatal,Local,bus,mbike,2
@@ -294,7 +258,6 @@ Fatal,Local,car,mbike,13
 Fatal,Local,HGV,mbike,31
 Fatal,Local,LGV,mbike,4
 Fatal,Local,mbike,mbike,0
-Fatal,Local,ebike,mbike,3
 Fatal,Arterial,walk,mbike,0
 Fatal,Arterial,cycle,mbike,0
 Fatal,Arterial,bus,mbike,0
@@ -302,7 +265,6 @@ Fatal,Arterial,car,mbike,1
 Fatal,Arterial,HGV,mbike,4
 Fatal,Arterial,LGV,mbike,0
 Fatal,Arterial,mbike,mbike,0
-Fatal,Arterial,ebike,mbike,0
 Fatal,Highway,walk,mbike,0
 Fatal,Highway,cycle,mbike,0
 Fatal,Highway,bus,mbike,2
@@ -310,7 +272,6 @@ Fatal,Highway,car,mbike,11
 Fatal,Highway,HGV,mbike,52
 Fatal,Highway,LGV,mbike,1
 Fatal,Highway,mbike,mbike,0
-Fatal,Highway,ebike,mbike,0
 Serious,Local,walk,mbike,6
 Serious,Local,cycle,mbike,3
 Serious,Local,bus,mbike,8
@@ -318,7 +279,6 @@ Serious,Local,car,mbike,167
 Serious,Local,HGV,mbike,147
 Serious,Local,LGV,mbike,48
 Serious,Local,mbike,mbike,1
-Serious,Local,ebike,mbike,14
 Serious,Arterial,walk,mbike,4
 Serious,Arterial,cycle,mbike,1
 Serious,Arterial,bus,mbike,7
@@ -326,7 +286,6 @@ Serious,Arterial,car,mbike,50
 Serious,Arterial,HGV,mbike,23
 Serious,Arterial,LGV,mbike,10
 Serious,Arterial,mbike,mbike,1
-Serious,Arterial,ebike,mbike,3
 Serious,Highway,walk,mbike,1
 Serious,Highway,cycle,mbike,0
 Serious,Highway,bus,mbike,3
@@ -334,55 +293,6 @@ Serious,Highway,car,mbike,55
 Serious,Highway,HGV,mbike,142
 Serious,Highway,LGV,mbike,16
 Serious,Highway,mbike,mbike,1
-Serious,Highway,ebike,mbike,0
-Fatal,Local,walk,ebike,0
-Fatal,Local,cycle,ebike,0
-Fatal,Local,bus,ebike,0
-Fatal,Local,car,ebike,0
-Fatal,Local,HGV,ebike,0
-Fatal,Local,LGV,ebike,0
-Fatal,Local,mbike,ebike,0
-Fatal,Local,ebike,ebike,0
-Fatal,Arterial,walk,ebike,0
-Fatal,Arterial,cycle,ebike,0
-Fatal,Arterial,bus,ebike,0
-Fatal,Arterial,car,ebike,0
-Fatal,Arterial,HGV,ebike,0
-Fatal,Arterial,LGV,ebike,0
-Fatal,Arterial,mbike,ebike,0
-Fatal,Arterial,ebike,ebike,0
-Fatal,Highway,walk,ebike,0
-Fatal,Highway,cycle,ebike,0
-Fatal,Highway,bus,ebike,0
-Fatal,Highway,car,ebike,0
-Fatal,Highway,HGV,ebike,0
-Fatal,Highway,LGV,ebike,0
-Fatal,Highway,mbike,ebike,0
-Fatal,Highway,ebike,ebike,0
-Serious,Local,walk,ebike,0
-Serious,Local,cycle,ebike,0
-Serious,Local,bus,ebike,0
-Serious,Local,car,ebike,0
-Serious,Local,HGV,ebike,0
-Serious,Local,LGV,ebike,0
-Serious,Local,mbike,ebike,0
-Serious,Local,ebike,ebike,0
-Serious,Arterial,walk,ebike,0
-Serious,Arterial,cycle,ebike,0
-Serious,Arterial,bus,ebike,0
-Serious,Arterial,car,ebike,0
-Serious,Arterial,HGV,ebike,0
-Serious,Arterial,LGV,ebike,0
-Serious,Arterial,mbike,ebike,0
-Serious,Arterial,ebike,ebike,0
-Serious,Highway,walk,ebike,0
-Serious,Highway,cycle,ebike,0
-Serious,Highway,bus,ebike,0
-Serious,Highway,car,ebike,0
-Serious,Highway,HGV,ebike,0
-Serious,Highway,LGV,ebike,0
-Serious,Highway,mbike,ebike,0
-Serious,Highway,ebike,ebike,0
 Fatal,Local,walk,NOV,0
 Fatal,Local,cycle,NOV,0
 Fatal,Local,bus,NOV,0
@@ -390,7 +300,6 @@ Fatal,Local,car,NOV,0
 Fatal,Local,HGV,NOV,0
 Fatal,Local,LGV,NOV,0
 Fatal,Local,mbike,NOV,0
-Fatal,Local,ebike,NOV,0
 Fatal,Arterial,walk,NOV,0
 Fatal,Arterial,cycle,NOV,0
 Fatal,Arterial,bus,NOV,0
@@ -398,7 +307,6 @@ Fatal,Arterial,car,NOV,0
 Fatal,Arterial,HGV,NOV,0
 Fatal,Arterial,LGV,NOV,0
 Fatal,Arterial,mbike,NOV,0
-Fatal,Arterial,ebike,NOV,0
 Fatal,Highway,walk,NOV,0
 Fatal,Highway,cycle,NOV,0
 Fatal,Highway,bus,NOV,0
@@ -406,7 +314,6 @@ Fatal,Highway,car,NOV,0
 Fatal,Highway,HGV,NOV,0
 Fatal,Highway,LGV,NOV,0
 Fatal,Highway,mbike,NOV,0
-Fatal,Highway,ebike,NOV,0
 Serious,Local,walk,NOV,0
 Serious,Local,cycle,NOV,0
 Serious,Local,bus,NOV,0
@@ -414,7 +321,6 @@ Serious,Local,car,NOV,0
 Serious,Local,HGV,NOV,0
 Serious,Local,LGV,NOV,0
 Serious,Local,mbike,NOV,0
-Serious,Local,ebike,NOV,0
 Serious,Arterial,walk,NOV,0
 Serious,Arterial,cycle,NOV,0
 Serious,Arterial,bus,NOV,0
@@ -422,7 +328,6 @@ Serious,Arterial,car,NOV,0
 Serious,Arterial,HGV,NOV,0
 Serious,Arterial,LGV,NOV,0
 Serious,Arterial,mbike,NOV,0
-Serious,Arterial,ebike,NOV,0
 Serious,Highway,walk,NOV,0
 Serious,Highway,cycle,NOV,0
 Serious,Highway,bus,NOV,0
@@ -430,4 +335,3 @@ Serious,Highway,car,NOV,0
 Serious,Highway,HGV,NOV,0
 Serious,Highway,LGV,NOV,0
 Serious,Highway,mbike,NOV,0
-Serious,Highway,ebike,NOV,0

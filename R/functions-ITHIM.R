@@ -76,30 +76,31 @@ createParameterList <- function(
     Rwt <- Mwt/muwt
     Rct <- Mct/muct
 
-    muNonTravelMatrix <- matrix(c(0.0000000,0.0000000,0.9715051,1.0354205,0.9505718,0.8999381,0.8315675,0.7180636,0.0000000,0.0000000,1.0000000,1.1171469,0.9878429,0.9434823,0.8782254,0.7737818), ncol = 2, dimnames = list(paste0("ageClass",1:nAgeClass),c("M","F")))
-
-    meanType <- "referent"
-    n <- 100
-    quantiles <- seq(1/n, (n-1)/n, by = 1/n)
-
-    GBD <- readGBD(file = GBDFile)
-    
     cv <- 3.0288 # coefficient of variation for active transport time
 
     muNonTravel <- 2 # MET-hrs./week leisure activity
+    muNonTravelMatrix <- matrix(c(0.0000000,0.0000000,
+                                  0.9715051,1.0354205,
+                                  0.9505718,0.8999381,
+                                  0.8315675,0.7180636,
+                                  0.0000000,0.0000000,
+                                  1.0000000,1.1171469,
+                                  0.9878429,0.9434823,
+                                  0.8782254,0.7737818),
+                                ncol = 2, dimnames = list(paste0("ageClass",1:nAgeClass),c("M","F")
+                                                          ))
     cvNonTravel <- 1 # coefficient of variation for leisure activity
-
     roadInjuries <- readRoadInjuries(roadInjuriesFile)
-
+    modeNames <- unlist(unique(lapply(roadInjuries, rownames)))
+    sinMatrix <- createSINmatrix(modeNames)
     distRoadType <- list()
 
-    modeNames <- c("walk","cycle","bus","car","HGV","LGV","mbike","ebike")
+    GBD <- readGBD(file = GBDFile)
 
-    victimVec <- c(0.432,0.511,rep(0.4999,6))
-    strikingVec <- victimVec
-    NOVVec <- c(0.64,0.64,rep(0.8,6))
+    meanType <- "referent"
+    n <- 100 # percentiles instead of quintiles
+    quantiles <- seq(1/n, (n-1)/n, by = 1/n)
 
-sinMatrix <- matrix(c(victimVec,strikingVec,NOVVec), nrow = length(modeNames), ncol = 3, dimnames = list(modeNames, c("victim","striking","NOV")))
 
     return( new("ParameterSet",
         Rwt = Rwt,
