@@ -166,11 +166,18 @@ return(ITHIM.scenario)
 readRoadInjuries <- function(filename){
 #    filename <- system.file( filename, package = "ITHIM")
     roadInjuries <- read.csv(file = filename, header = TRUE, stringsAsFactors = FALSE)
-    roadInjuries <- within(roadInjuries, ebike <- as.numeric(ebike))
-    roadInjuries <- within(roadInjuries, NOV <- as.numeric(NOV))
+
+    roadInjuries <- data.frame(SeverityByRoadType = with(roadInjuries, paste0(severity,roadType)), roadInjuries[,-(1:2)])
+
+    roadInjuriesList <- split(roadInjuries, roadInjuries$SeverityByRoadType)
+
+    roadInjuries <- lapply(roadInjuriesList, function(x) dcast(x, strikingMode ~ victimMode, sum))
+    
+#    roadInjuries <- within(roadInjuries, ebike <- as.numeric(ebike))
+#    roadInjuries <- within(roadInjuries, NOV <- as.numeric(NOV))
 
 
-    roadInjuries <- split(roadInjuries, roadInjuries$SeverityByRoadType)
+#    roadInjuries <- split(roadInjuries, roadInjuries$SeverityByRoadType)
 #    names(roadInjuries) <- c("FatalLocal","FatalArterial","FatalHighway","SeriousLocal","SeriousArterial","SeriousHighway")
  #   roadInjuries <- lapply(roadInjuries,function(x){dimnames(x) <- list(c("walk","cycle","bus","car","HGV","LGV","mbike","ebike"),c("walk","cycle","bus","car","HGV","LGV","mbike","ebike","NOV"));x})
 return(roadInjuries)
