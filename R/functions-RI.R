@@ -20,6 +20,9 @@
 #'@export
 computeMultiplier <- function(base, scenario, safetyInNumbers){
 
+    base <- lapply(base, function(x) x[rownames(x) != "ebike",])
+    scenario <- lapply(scenario, function(x) x[rownames(x) != "ebike",])
+
     local <- outer((scenario$perMiles[,"Local"]/base$perMiles[,"Local"])^safetyInNumbers[,"victim"],(scenario$vehMiles[,"Local"]/base$vehMiles[,"Local"])^safetyInNumbers[,"striking"],"*")
         arterial <- outer((scenario$perMiles[,"Arterial"]/base$perMiles[,"Arterial"])^safetyInNumbers[,"victim"],(scenario$vehMiles[,"Arterial"]/base$vehMiles[,"Arterial"])^safetyInNumbers[,"striking"],"*")
         highway <- outer((scenario$perMiles[,"Highway"]/base$perMiles[,"Highway"])^safetyInNumbers[,"victim"],(scenario$vehMiles[,"Highway"]/base$vehMiles[,"Highway"])^safetyInNumbers[,"striking"],"*")
