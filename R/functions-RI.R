@@ -167,8 +167,9 @@ return(ITHIM.scenario)
 }
 #'@export
 readRoadInjuries <- function(filename){
-#    filename <- system.file( filename, package = "ITHIM")
     roadInjuries <- read.csv(file = filename, header = TRUE, stringsAsFactors = FALSE)
+
+    roadInjuries <- subset(roadInjuries, strikingMode != "ebike" & victimMode != "ebike")
 
     roadInjuries <- data.frame(SeverityByRoadType = with(roadInjuries, paste0(severity,roadType)), roadInjuries[,-(1:2)])
 
