@@ -1,6 +1,7 @@
 ### ITHIM: Integrated Transport and Health Impacts Model
 
-Welcome to the repository for the R package ITHIM.
+Welcome to the repository for the R package ITHIM. Please also visit
+the [tutorial](https://ithim.ghi.wisc.edu/tutorial.html).
 
 #### Quick Start
 
