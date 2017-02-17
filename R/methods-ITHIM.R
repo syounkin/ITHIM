@@ -1,6 +1,7 @@
 #' @export
 setMethod("show", signature(object="ITHIM"), function(object){
-  cat("Hello Vargo, this is an ITHIM object.  Currently the methods plot, show, get DALYs and update are available.  This is the show method.  Try plot().  I can't get summary to work.\n", sep = "")
+    return(show(getParameterSet(object)))
+#  cat("Hello Vargo, this is an ITHIM object.  Currently the methods plot, show, get DALYs and update are available.  This is the show method.  Try plot().  I can't get summary to work.\n", sep = "")
 })
 
 #' @export
