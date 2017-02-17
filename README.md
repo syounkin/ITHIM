@@ -15,7 +15,7 @@ ITHIM <- createITHIM()
 
 The default ITHIM object can be inspected as follows.
 
-`
+```
 > ITHIM
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~ Physical Activity ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -62,4 +62,4 @@ Parameter Names: Rwt, Rct, muwt, muct, cv, cvNonTravel, nAgeClass,
 muNonTravel, muNonTravelMatrix, GBD, meanType, quantiles,
 roadInjuries, distRoadType, safetyInNumbers,
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-`
+```
