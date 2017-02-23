@@ -17,6 +17,21 @@ setGeneric("tilePlot", function(x, n) standardGeneric("tilePlot"))
 #'
 #' @export
 setGeneric("getBurden", function(x, bur, dis) standardGeneric("getBurden"))
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#' Gets Change in Disease Burden due to Physical Activity
+#'
+#' Gets Change in Disease Burden due to Physical Activity
+#'
+#' @param x ITHIM object
+#' @param bur ?
+#' @param dis ?
+#'
+#' @return A burden value
+#'
+#' @export
+setGeneric("deltaBurden", function(x, bur, dis) standardGeneric("deltaBurden"))
 #' @export
 setGeneric("createITHIM", function(x) standardGeneric("createITHIM"))
 #' @export

@@ -93,6 +93,21 @@ setMethod("getBurden", signature(x = "ITHIM", bur = "missing", dis = "missing"),
 })
 
 #' @export
+setMethod("deltaBurden", signature(x = "ITHIM", bur = "character", dis = "missing"), function(x, bur){
+    return(deltaBurdenFunction(x, bur = bur, dis = "all"))
+})
+
+#' @export
+setMethod("deltaBurden", signature(x = "ITHIM", bur = "missing", dis = "character"), function(x, dis){
+    return(deltaBurdenFunction(x, bur = "daly", dis = dis))
+})
+
+#' @export
+setMethod("deltaBurden", signature(x = "ITHIM", bur = "missing", dis = "missing"), function(x){
+    return(deltaBurdenFunction(x, bur = "daly", dis = "all"))
+})
+
+#' @export
 setMethod("getParameterSet", signature(x = "ITHIM"), function(x){
     return(x@parameters)
 })
