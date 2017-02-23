@@ -48,7 +48,7 @@ createParameterList <- function(
     Mct <- activeTransportTimeList$cycle
 
     muwt <- Mwt[3,2] # min per week
-    muct <- Mwt[3,2] # min per week
+    muct <- Mct[3,2] # min per week
 
     Rwt <- Mwt/muwt
     Rct <- Mct/muct
