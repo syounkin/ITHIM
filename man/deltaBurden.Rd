@@ -4,14 +4,14 @@
 \alias{deltaBurden}
 \title{Gets Change in Disease Burden due to Physical Activity}
 \usage{
-deltaBurden(x, bur, dis)
+deltaBurden(baseline, scenario, bur, dis)
 }
 \arguments{
-\item{x}{ITHIM object}
-
 \item{bur}{?}
 
 \item{dis}{?}
+
+\item{x}{ITHIM object}
 }
 \value{
 A burden value

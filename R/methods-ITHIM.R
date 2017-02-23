@@ -93,18 +93,22 @@ setMethod("getBurden", signature(x = "ITHIM", bur = "missing", dis = "missing"),
 })
 
 #' @export
-setMethod("deltaBurden", signature(x = "ITHIM", bur = "character", dis = "missing"), function(x, bur){
-    return(deltaBurdenFunction(x, bur = bur, dis = "all"))
+setMethod("deltaBurden", signature(baseline = "ITHIM", scenario = "ITHIM", bur = "character", dis = "character"), function(baseline, scenario, bur, dis){
+    return(deltaBurdenFunction(baseline, scenario, bur = bur, dis = dis))
 })
 
 #' @export
-setMethod("deltaBurden", signature(x = "ITHIM", bur = "missing", dis = "character"), function(x, dis){
-    return(deltaBurdenFunction(x, bur = "daly", dis = dis))
+setMethod("deltaBurden", signature(baseline = "ITHIM", scenario = "ITHIM", bur = "character", dis = "missing"), function(baseline, scenario, bur, dis){
+    return(deltaBurdenFunction(baseline, scenario, bur = bur, dis = "all"))
 })
 
 #' @export
-setMethod("deltaBurden", signature(x = "ITHIM", bur = "missing", dis = "missing"), function(x){
-    return(deltaBurdenFunction(x, bur = "daly", dis = "all"))
+setMethod("deltaBurden", signature(baseline = "ITHIM", scenario = "ITHIM", bur = "missing", dis = "character"), function(baseline, scenario, bur, dis){
+    return(deltaBurdenFunction(baseline, scenario, bur = "daly.delta", dis = dis))
+})
+#' @export
+setMethod("deltaBurden", signature(baseline = "ITHIM", scenario = "ITHIM", bur = "missing", dis = "missing"), function(baseline, scenario, bur, dis){
+    return(deltaBurdenFunction(baseline, scenario, bur = "daly.delta", dis = "all"))
 })
 
 #' @export

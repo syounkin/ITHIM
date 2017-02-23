@@ -31,7 +31,7 @@ setGeneric("getBurden", function(x, bur, dis) standardGeneric("getBurden"))
 #' @return A burden value
 #'
 #' @export
-setGeneric("deltaBurden", function(x, bur, dis) standardGeneric("deltaBurden"))
+setGeneric("deltaBurden", function(baseline, scenario, bur, dis) standardGeneric("deltaBurden"))
 #' @export
 setGeneric("createITHIM", function(x) standardGeneric("createITHIM"))
 #' @export
