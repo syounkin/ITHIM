@@ -5,8 +5,8 @@
 \title{Performs the comparitive risk assesment for the physical activity
 component}
 \usage{
-deltaBurdenFunction(ITHIM.baseline, ITHIM.scenario, bur = "daly.delta",
-  dis = "total")
+deltaBurdenFunction(ITHIM.baseline, ITHIM.scenario, bur = "daly",
+  dis = "all")
 }
 \arguments{
 \item{ITHIM.baseline}{An ITHIM object}

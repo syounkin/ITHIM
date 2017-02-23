@@ -99,16 +99,16 @@ setMethod("deltaBurden", signature(baseline = "ITHIM", scenario = "ITHIM", bur =
 
 #' @export
 setMethod("deltaBurden", signature(baseline = "ITHIM", scenario = "ITHIM", bur = "character", dis = "missing"), function(baseline, scenario, bur, dis){
-    return(deltaBurdenFunction(baseline, scenario, bur = bur, dis = "all"))
+    return(deltaBurdenFunction(baseline, scenario, bur = bur))
 })
 
 #' @export
 setMethod("deltaBurden", signature(baseline = "ITHIM", scenario = "ITHIM", bur = "missing", dis = "character"), function(baseline, scenario, bur, dis){
-    return(deltaBurdenFunction(baseline, scenario, bur = "daly.delta", dis = dis))
+    return(deltaBurdenFunction(baseline, scenario, dis = dis))
 })
 #' @export
 setMethod("deltaBurden", signature(baseline = "ITHIM", scenario = "ITHIM", bur = "missing", dis = "missing"), function(baseline, scenario, bur, dis){
-    return(deltaBurdenFunction(baseline, scenario, bur = "daly.delta", dis = "all"))
+    return(deltaBurdenFunction(baseline, scenario))
 })
 
 #' @export
