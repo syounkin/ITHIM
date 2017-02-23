@@ -7,12 +7,6 @@
 \title{The ITHIM ParameterSet class}
 \description{
 This class defines the set of parameters needed for an
-ITHIM analysis.
-}
-\section{Slots}{
-
-\describe{
-\item{\code{}:}{}
-}
+ITHIM analysis.  See ITHIM class for more information.
 }
 

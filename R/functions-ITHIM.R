@@ -31,29 +31,6 @@ createITHIMFunction <- function(roadInjuriesFile = system.file("roadInjuries.csv
 #'
 #' @return A list with parameters and estimates
 #'
-#' \item{Rwt}{A numerical matrix for the walking time, relative to ?value?}
-#' \item{Rct}{A numerical matrix for the cycling time, relative to ?value?}
-#' \item{muwt}{A numerical value for the mean walking time}
-#' \item{muct}{A numerical value for the mean cycling time}
-#' \item{cv}{A numerical value for the coefficient of variation for active transport time}
-#' \item{cvNonTravel}{A numerical value for the coefficient of variation for leisure activity}
-#' \item{muNonTravel}{}
-#' \item{muNonTravelMatrix}{}
-#' \item{GBD}{}
-#' \item{meanType}{}
-#' \item{quantiles}{}
-#'
-#' @note There are 11 parameters in the ITHIM active transport component;
-#'
-#' 1-4. mean walking and cycling times (muwt, muct, Rwt, Rct)
-#'
-#' 5. standard deviation of active travel time (cv),
-#'
-#' 8. ratio of regional disease-specific mortality to national disease-specific mortality (GBD)
-#'
-#' 9-10. non-travel related physical activity means by age and sex (muNonTravel, muNonTravelMatrix)
-#'
-#' 11. standard deviation of leisure activity (cvNonTravel),
 #'
 #' @seealso \code{\link{readGBD}}
 #'
