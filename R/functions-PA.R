@@ -108,12 +108,24 @@ computeMeanMatrices <- function(parList){
 #'     baseline and scenario.  Physical activity component only.
 #'
 #' @export
-deltaBurdenFunction <- function(ITHIM.baseline, ITHIM.scenario, bur = "daly.delta", dis = "total"){
-    
+deltaBurdenFunction <- function(ITHIM.baseline, ITHIM.scenario, bur = "daly", dis = "total"){
+
     ITHIM.baseline <- as(ITHIM.baseline, "list")
     ITHIM.scenario <- as(ITHIM.scenario, "list")
 
     CRA <- compareModels(ITHIM.baseline,ITHIM.scenario)
+
+    if(bur == "daly"){
+        bur <- "daly.delta"
+    }else if( bur == "yll"){
+        bur <- "yll.delta"
+    }else if( bur == "yld"){
+        bur <- "yld.delta"
+    }else if( bur == "deaths"){
+        bur <- "dproj.delta"
+    }else{
+        stop("Value for bur is unrecognized.")
+        }
     
     index <- which(bur == names(CRA))
 
