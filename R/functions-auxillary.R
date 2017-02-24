@@ -69,7 +69,6 @@ s4Methods <- function(class)
     methods <- methods[grep("^Function:", methods)]
     sapply(strsplit(methods, " "), "[", 2)
 }
-
 #'@export
 getMethodsITHIM <- function()
 {
@@ -79,3 +78,4 @@ getMethodsITHIM <- function()
     methods <- methods[grep("^Function:", methods)]
     sapply(strsplit(methods, " "), "[", 2)
 }
+setEquality <- function(a,b) identical(sort(a),sort(b))
