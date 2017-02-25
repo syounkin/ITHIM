@@ -50,3 +50,9 @@ reformatGBD <- function(gbd){
         gbdList2 <- lapply(gbdList2, function(x) list(M=x$M,F=x$F))
             return(gbdList2)
             }
+#' @export
+readGBD2 <- function(filename){
+    foo <- read.csv(file = filename)
+    gbdArray <- array(foo$value, dim = c(13,2,8,4), dimnames = list(unique(foo$disease),unique(foo$sex), unique(foo$ageClass), unique(foo$burdenType)))
+    return(gbdArray)
+}
