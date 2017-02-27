@@ -169,6 +169,10 @@ return(ITHIM.scenario)
 readRoadInjuries <- function(filename){
     roadInjuries <- read.csv(file = filename, header = TRUE, stringsAsFactors = FALSE)
 
+    if(any(roadInjuries$strikingMode == "nov" | roadInjuries$strikingMode == "NOV")){
+        stop("NOV is a victim mode.  It should not be included among striking modes.")
+        }
+
     roadInjuries <- subset(roadInjuries, strikingMode != "ebike" & victimMode != "ebike")
 
     roadInjuries <- data.frame(SeverityByRoadType = with(roadInjuries, paste0(severity,roadType)), roadInjuries[,-(1:2)])

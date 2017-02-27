@@ -40,6 +40,20 @@ setGeneric("getParameterSet", function(x) standardGeneric("getParameterSet"))
 setGeneric("getMeans", function(x) standardGeneric("getMeans"))
 #' @export
 setGeneric("getGBD", function(x, format = "data.frame") standardGeneric("getGBD"))
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#' Gets Road Injury counts from ITHIM object
+#'
+#' Gets Road Injury counts from ITHIM object
+#'
+#' @param x ITHIM object
+#'
+#' @return A list of matrices of road injury counts.
+#'
+#' @note The matrices have striking modes as rows and victim modes as
+#'     columns.  NOV is considered a striking mode.
+#' 
 #' @export
 setGeneric("getRoadInjuries", function(x) standardGeneric("getRoadInjuries"))
 #' @export

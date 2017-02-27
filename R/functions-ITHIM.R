@@ -16,7 +16,7 @@
 #'     \code{\link{computeMeanMatrices}}, \code{\link{getQuintiles}}
 #'
 #' @export
-createITHIMFunction <- function(roadInjuriesFile = system.file("roadInjuries.csv", package = "ITHIM"), activeTransportTimeFile = system.file("activeTransportTime.csv",package = "ITHIM"), GBDFile = system.file("gbd.csv",package = "ITHIM")){
+createITHIMFunction <- function(roadInjuriesFile = system.file("roadInjuriesUS.csv", package = "ITHIM"), activeTransportTimeFile = system.file("activeTransportTime.csv",package = "ITHIM"), GBDFile = system.file("gbd.csv",package = "ITHIM")){
 
         new("ITHIM", parameters = parameters <- createParameterList(roadInjuriesFile = roadInjuriesFile, activeTransportTimeFile = activeTransportTimeFile, GBDFile = GBDFile), means = means <- computeMeanMatrices(as(parameters,"list")), quintiles = getQuintiles(means, as(parameters,"list")))
 
@@ -36,7 +36,7 @@ createITHIMFunction <- function(roadInjuriesFile = system.file("roadInjuries.csv
 #'
 #' @export
 createParameterList <- function(
-                                roadInjuriesFile = system.file("roadInjuries.csv", package = "ITHIM"),
+                                roadInjuriesFile = system.file("roadInjuriesUS.csv", package = "ITHIM"),
                                 activeTransportTimeFile = system.file("activeTransportTime.csv", package = "ITHIM"),
                                 GBDFile = system.file("gbd.csv", package = "ITHIM")){
 
@@ -69,7 +69,8 @@ createParameterList <- function(
     cvNonTravel <- 1 # coefficient of variation for leisure activity
     roadInjuries <- readRoadInjuries(roadInjuriesFile)
     modeNames <- unlist(unique(lapply(roadInjuries, rownames)))
-    sinMatrix <- createSINmatrix(modeNames)
+    # sinMatrix <- createSINmatrix(modeNames)
+    sinMatrix <- matrix(1)
     distRoadType <- list()
 
     GBD <- readGBD(file = GBDFile)
