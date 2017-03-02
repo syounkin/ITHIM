@@ -4,9 +4,10 @@
 \alias{createITHIMFunction}
 \title{Create an ITHIM object}
 \usage{
-createITHIMFunction(roadInjuriesFile = system.file("roadInjuries.csv", package
-  = "ITHIM"), activeTransportTimeFile = system.file("activeTransportTime.csv",
-  package = "ITHIM"), GBDFile = system.file("gbd.csv", package = "ITHIM"))
+createITHIMFunction(roadInjuriesFile = system.file("roadInjuriesUS.csv",
+  package = "ITHIM"),
+  activeTransportTimeFile = system.file("activeTransportTime.csv", package =
+  "ITHIM"), GBDFile = system.file("gbd.csv", package = "ITHIM"))
 }
 \value{
 A list of parameters, means and quintiles.

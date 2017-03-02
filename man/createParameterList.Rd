@@ -4,9 +4,10 @@
 \alias{createParameterList}
 \title{Define ITHIM model parameters}
 \usage{
-createParameterList(roadInjuriesFile = system.file("roadInjuries.csv", package
-  = "ITHIM"), activeTransportTimeFile = system.file("activeTransportTime.csv",
-  package = "ITHIM"), GBDFile = system.file("gbd.csv", package = "ITHIM"))
+createParameterList(roadInjuriesFile = system.file("roadInjuriesUS.csv",
+  package = "ITHIM"),
+  activeTransportTimeFile = system.file("activeTransportTime.csv", package =
+  "ITHIM"), GBDFile = system.file("gbd.csv", package = "ITHIM"))
 }
 \value{
 A list with parameters and estimates
