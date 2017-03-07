@@ -16,9 +16,9 @@
 #'     \code{\link{computeMeanMatrices}}, \code{\link{getQuintiles}}
 #'
 #' @export
-createITHIMFunction <- function(roadInjuriesFile = system.file("roadInjuries.csv", package = "ITHIM"), activeTransportTimeFile = system.file("activeTransportTime.csv",package = "ITHIM"), GBDFile = system.file("gbd.csv",package = "ITHIM")){
+createITHIMFunction <- function(activeTransportTimeFile = system.file("activeTransportTime.csv",package = "ITHIM"), GBDFile = system.file("gbd.csv",package = "ITHIM")){
 
-        new("ITHIM", parameters = parameters <- createParameterList(roadInjuriesFile = roadInjuriesFile, activeTransportTimeFile = activeTransportTimeFile, GBDFile = GBDFile), means = means <- computeMeanMatrices(as(parameters,"list")), quintiles = getQuintiles(means, as(parameters,"list")))
+        new("ITHIM", parameters = parameters <- createParameterList(activeTransportTimeFile = activeTransportTimeFile, GBDFile = GBDFile), means = means <- computeMeanMatrices(as(parameters,"list")), quintiles = getQuintiles(means, as(parameters,"list")))
 
 }
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -90,10 +90,11 @@ createParameterList <- function(
                                 ncol = 2, dimnames = list(paste0("ageClass",1:nAgeClass),c("M","F")
                                                           ))
     cvNonTravel <- 1 # coefficient of variation for leisure activity
-    roadInjuries <- readRoadInjuries(roadInjuriesFile)
+    roadInjuries <- array()
     modeNames <- unlist(unique(lapply(roadInjuries, rownames)))
-    sinMatrix <- createSINmatrix(modeNames)
-    distRoadType <- list()
+    sinMatrix <- array()
+    distRoadType <- array()
+    inputDims <- list()
 
     GBD <- readGBD(file = GBDFile)
 
@@ -117,7 +118,8 @@ createParameterList <- function(
         quantiles = quantiles,
         roadInjuries = roadInjuries,
         distRoadType = distRoadType,
-        safetyInNumbers = sinMatrix
+        safetyInNumbers = sinMatrix,
+        inputDims = inputDims
     ))
 }
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

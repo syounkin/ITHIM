@@ -9,7 +9,7 @@ Description: This package implements the Integrated Transport and Health Impacts
 URL: https://github.com/syounkin/ITHIM
 License: GPL-2
 Depends:
-    R (>= 3.0.0), ggplot2, reshape2
+    R (>= 3.0.0), ggplot2, reshape2, abind
 Suggests:
     knitr,
 VignetteBuilder: knitr
