@@ -117,6 +117,11 @@ setMethod("getParameterSet", signature(x = "ITHIM"), function(x){
 })
 
 #' @export
+setMethod("getParameterNames", signature(x = "ITHIM"), function(x){
+    return(getParameterNames(getParameterSet(x)))
+})
+
+#' @export
 setMethod("getMeans", signature(x = "ITHIM"), function(x){
     return(getMeans(getParameterSet(x)))
 })

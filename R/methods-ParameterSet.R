@@ -105,3 +105,8 @@ setMethod("getRoadInjuries", signature(x = "ParameterSet"), function(x){
 setMethod("getDistRoadType", signature(x = "ParameterSet"), function(x){
     return(x@distRoadType)
 })
+#' @export
+setMethod("getParameterNames", signature(x = "ParameterSet"), function(x){
+    return(slotNames(x))
+})
+
