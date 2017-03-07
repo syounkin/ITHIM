@@ -58,3 +58,16 @@ setGeneric("getGBD", function(x, format = "data.frame") standardGeneric("getGBD"
 setGeneric("getRoadInjuries", function(x) standardGeneric("getRoadInjuries"))
 #' @export
 setGeneric("getDistRoadType", function(x, format = "data.frame") standardGeneric("getDistRoadType"))
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#' Returns the names of the parameters in the ITHIM object
+#'
+#' Returns the names of the parameters in the ITHIM object
+#'
+#' @param x ITHIM object or a ParameterSet object
+#'
+#' @return A character vector of parameter names
+#'
+#' @export
+setGeneric("getParameterNames", function(x) standardGeneric("getParameterNames"))
