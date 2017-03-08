@@ -13,4 +13,11 @@ install_github("syounkin/ITHIM", ref="master")
 library("ITHIM")
 ITHIM <- createITHIM()
 ```
- [![Stories in Ready](https://badge.waffle.io/syounkin/ITHIM.svg?label=ready&title=Ready)](http://waffle.io/syounkin/ITHIM) 
+ [![Stories in Ready](https://badge.waffle.io/syounkin/ITHIM.svg?label=ready&title=Ready)](http://waffle.io/syounkin/ITHIM)
+
+
+.. image:: https://badge.waffle.io/syounkin/ITHIM.svg?label=ready&title=Ready
+ :target: https://waffle.io/syounkin/ITHIM
+  :alt: 'Stories in Ready'
+
+{<img alt='Stories in Ready' src='https://badge.waffle.io/syounkin/ITHIM.svg?label=ready&title=Ready' />}[https://waffle.io/syounkin/ITHIM]
