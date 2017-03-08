@@ -7,7 +7,7 @@
 update(x, parList)
 }
 \arguments{
-\item{x}{ITHIM object}
+\item{x}{ITHIM object or a ParameterSet object}
 
 \item{parList}{A named list of parameters}
 }
