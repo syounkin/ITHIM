@@ -72,7 +72,7 @@ setMethod("createITHIM", signature(x = "missing"), function(x){
 
 #' @export
 setMethod("createITHIM", signature(x = "list"), function(x){
-    ITHIM <- createITHIMFunction(activeTransportTimeFile=x$activeTransportTimeFile, roadInjuriesFile = x$roadInjuriesFile)
+    ITHIM <- createITHIMFunction(activeTransportTimeFile=x$activeTransportTimeFile, roadInjuriesFile = x$roadInjuriesFile, GBDFile = x$GBDFile)
     return(ITHIM)
 })
 
