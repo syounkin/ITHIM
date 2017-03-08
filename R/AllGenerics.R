@@ -1,5 +1,39 @@
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#' Update an ITHIM object
+#'
+#' Takes an ITHIM object as input and returns a new ITHIM object with
+#' parameters updated accordingly.
+#'
+#' @param x ITHIM object
+#' @param parList A named list of parameters
+#'
+#' @return An ITHIM object
+#'
+#' @note For a list of parameter names use \code{getParameterNames}.
+#'
+#' @examples
+#' ITHIM <- createITHIM()
+#' getMeans(ITHIM)
+#' ITHIM.new <- update(ITHIM, list(muwt = 10, muct = 5))
+#' getMeans(ITHIM.new)
+#'
 #' @export
 setGeneric("update", function(x, parList) standardGeneric("update"))
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#' Tile plot
+#'
+#' Creates a tile plot
+#'
+#' @param x ITHIM object
+#' @param n A numeric value indicating the length of the walk and
+#'     cycle vectors
+#'
+#' @return A figure created by ggplot2
+#'
 #' @export
 setGeneric("tilePlot", function(x, n) standardGeneric("tilePlot"))
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -10,7 +44,7 @@ setGeneric("tilePlot", function(x, n) standardGeneric("tilePlot"))
 #' Gets burden
 #'
 #' @param x ITHIM object
-#' @param bur ?
+#' @param bur A character string indicating the type of disease burden measure.  Possible values are 
 #' @param dis ?
 #'
 #' @return A burden value
