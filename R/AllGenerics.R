@@ -126,6 +126,18 @@ setGeneric("createITHIM", function(x) standardGeneric("createITHIM"))
 #'
 #' @export
 setGeneric("getParameterSet", function(x) standardGeneric("getParameterSet"))
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#' Retrieve mean values
+#'
+#' Retrieves walking, cycling and nonTravel activity means from an
+#' ITHIM object.
+#'
+#' @param x An ITHIM object
+#'
+#' @return A numeric vector of means.
+#'
 #' @export
 setGeneric("getMeans", function(x) standardGeneric("getMeans"))
 #' @export
