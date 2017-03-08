@@ -19,7 +19,7 @@ person,highway,truck,1.28
 person,highway,motorcycle,0.08
 vehicle,local,walk,0.62
 vehicle,local,bike,0.27
-vehicle,local,bus,0
+vehicle,local,bus,0.0013012
 vehicle,local,car,0.97
 vehicle,local,truck,0.13
 vehicle,local,motorcycle,0.01

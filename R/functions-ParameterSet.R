@@ -21,8 +21,7 @@ createParameterSet <- function(x){
                 quantiles = parList$quantiles,
                 roadInjuries = parList$roadInjuries,
                 distRoadType = parList$distRoadType,
-                safetyInNumbers = parList$safetyInNumbers,
-                inputDims = parList$inputDims
+                safetyInNumbers = parList$safetyInNumbers
                 )
     return(pSet)
     }

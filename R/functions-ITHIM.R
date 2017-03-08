@@ -94,7 +94,6 @@ createParameterList <- function(
     modeNames <- unlist(unique(lapply(roadInjuries, rownames)))
     sinMatrix <- array()
     distRoadType <- array()
-    inputDims <- list()
 
     GBD <- readGBD(file = GBDFile)
 
@@ -118,8 +117,7 @@ createParameterList <- function(
         quantiles = quantiles,
         roadInjuries = roadInjuries,
         distRoadType = distRoadType,
-        safetyInNumbers = sinMatrix,
-        inputDims = inputDims
+        safetyInNumbers = sinMatrix
     ))
 }
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

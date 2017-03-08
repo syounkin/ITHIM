@@ -54,7 +54,7 @@ setMethod("show", signature(object="ParameterSet"), function(object){
 setAs("ParameterSet", "list", function(from) list(Rwt = from@Rwt, Rct = from@Rct, muwt = from@muwt,
     muct = from@muct, cv = from@cv, cvNonTravel = from@cvNonTravel,
     nAgeClass = from@nAgeClass, muNonTravel = from@muNonTravel, muNonTravelMatrix = from@muNonTravelMatrix,
-    GBD = from@GBD, meanType = from@meanType, quantiles = from@quantiles, roadInjuries = from@roadInjuries, distRoadType = from@distRoadType, safetyInNumbers = from@safetyInNumbers, inputDims = from@inputDims)
+    GBD = from@GBD, meanType = from@meanType, quantiles = from@quantiles, roadInjuries = from@roadInjuries, distRoadType = from@distRoadType, safetyInNumbers = from@safetyInNumbers)
     )
 
 #' @export

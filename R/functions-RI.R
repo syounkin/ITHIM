@@ -26,25 +26,33 @@ computeMultiplier <- function(baseline, scenario, safetyInNumbers){
   
   dimForRatio <- c('distType')
   
-  # which index represents person part. TODO: could be set via params?
+  # which index represents person part in distRoadType. TODO: could be set via params?
   
   personIdx <- c('person')
   
-  # which index represents vehicle part. TODO: could be set via params?
+  # which index represents vehicle part in distRoadType. TODO: could be set via params?
   
   vehicleIdx <- c('vehicle')
+  
+  # which index represents person part(/victim) in safetyInNumbers TODO: could be set via params?
+  
+  victimIdx <- c('victim')
+  
+  # which index represents vehicle part(/striking) in safetyInNumbers TODO: could be set via params?
+  
+  strikingIdx <- c('striking')
   
   # which dim represents modes and should be renamed to victim/striking. TODO: could be set via params?
   
   dimForMode <- c('mode')
   
   # output renamed mode victim, striking (in that order!).
-  # Bacause of renaming inputDims for baseline/scenario objects should be upadated somewhere!
   
   renamedModes <- c('victim', 'striking')
   
+  #TODO: check dims!
+  
   # get dim position for distRoadType (dimForRatio) in baseline/scenario. 
-  # TODO: check if dim positions in baseline/scenario are equal?
   
   distByRoadDimPosition <- match(dimForRatio, names(baseline@parameters@distRoadType))
   
@@ -55,9 +63,6 @@ computeMultiplier <- function(baseline, scenario, safetyInNumbers){
   # get dim position for mode (dimForMode) in baseline/scenario.
   
   modeDimPosition <- match(dimForMode, names(baseline@parameters@distRoadType))
-  
-  # TODO: distByRoadDimPosition must be equal safetyInNumbersDimPosition.
-  # This is obligatory on input level - so question: if any check is needed here?
   
   # person part rename mode dim
   
@@ -72,7 +77,19 @@ computeMultiplier <- function(baseline, scenario, safetyInNumbers){
   
   personPartBaseline <- abind::asub(baseline@parameters@distRoadType, personIdx, distByRoadDimPosition)
   personPartScenario <- abind::asub(scenario@parameters@distRoadType, personIdx, distByRoadDimPosition)
-  personPartSafetyInNumbers <- abind::asub(safetyInNumbers, personIdx, safetyInNumbersDimPosition)
+  personPartSafetyInNumbers <- abind::asub(safetyInNumbers, victimIdx, safetyInNumbersDimPosition)
+  
+  # check if needed arrays have same dims with exactly the same indices (even same order!)
+  
+  if(!helperCheckIfArraysHaveSameDims(personPartBaseline, personPartScenario)){
+    stop('computeMultiplier: dims: Baseline-Scenario')
+  }
+  
+  if(!helperCheckIfArraysHaveSameDims(personPartBaseline, personPartSafetyInNumbers)){
+    stop('computeMultiplier: dims: Baseline-SafetyInNumbers')
+  }
+  
+  # if ok - calc personPart
   
   personPart <- (personPartScenario / personPartBaseline) ^ personPartSafetyInNumbers
   
@@ -89,18 +106,20 @@ computeMultiplier <- function(baseline, scenario, safetyInNumbers){
   
   vehiclePartBaseline <- abind::asub(baseline@parameters@distRoadType, vehicleIdx, distByRoadDimPosition)
   vehiclePartScenario <- abind::asub(scenario@parameters@distRoadType, vehicleIdx, distByRoadDimPosition)
-  vehiclePartSafetyInNumbers <- abind::asub(safetyInNumbers, vehicleIdx, safetyInNumbersDimPosition)
+  vehiclePartSafetyInNumbers <- abind::asub(safetyInNumbers, strikingIdx, safetyInNumbersDimPosition)
+  
+  # check is not needed here since vehicle part uses same matrices as person part
   
   vehiclePart <- (vehiclePartScenario / vehiclePartBaseline) ^ vehiclePartSafetyInNumbers
   
   # create outer product of personPart and vehiclePart
-  # In the results only "diagonal" cells for non-modes dimension are important. The rest is a garbage, but the structure of
+  # In the results only "diagonal" cells for non-modes dimensions are important. The rest is a garbage, but the structure of
   # array is exactly the same as further data inputs.
   # The first mode-like dimension is victim mode, while the second mode-like dimension is striking mode
   
   outputArray <- personPart %o% vehiclePart
   
-  # hack - more in helperCreateArray()
+  # hack with names(array) - more in helperCreateArray()
   
   names(outputArray) <- c(personPartNameOfDims, vehiclePartNameOfDims)
   
@@ -206,24 +225,65 @@ return(injuryRR)
 }
 #'@export
 multiplyInjuries <- function(ITHIM.baseline, ITHIM.scenario){
+  
+  # which dim stores severity. TODO: could be set via params?
+  
+  dimForSeverity <- c('severity')
+  
+  # get dim position for severity (dimForSeverity) in baseline (must be baseline!)
+  
+  severityDimPosition <- match(dimForSeverity, names(ITHIM.baseline@parameters@roadInjuries))
+  
+  # get all indices for roadInjuries. It should unique already!
+  
+  severityIndices <- dimnames(ITHIM.baseline@parameters@roadInjuries)[[severityDimPosition]]
+  
+  # compute multiplier for scenario
 
-multiplier <- computeMultiplier(base = getDistRoadType(ITHIM.baseline), scenario = getDistRoadType(ITHIM.scenario), safetyInNumbers = getParameterSet(ITHIM.baseline)@safetyInNumbers)
+  multiplier <- computeMultiplier(baseline = ITHIM.baseline,
+                                  scenario = ITHIM.scenario,
+                                  safetyInNumbers = ITHIM.baseline@parameters@safetyInNumbers)
+  
+  # create output array. Workaround - abind is used (instead of afill), so output array must be created,
+  # without any indices in severity dimension (these would be added via abind)
+  
+  outputArrayDimensionWithIndices <- dimnames(ITHIM.baseline@parameters@roadInjuries)
+  
+  outputArrayDimensionWithIndices[[severityDimPosition]] <- vector()
+  
+  outputArray = array(NA,
+                      dim = unname(sapply(outputArrayDimensionWithIndices, function(x) length(x), simplify = T)),
+                      dimnames = unname(outputArrayDimensionWithIndices))
+  
+  # iterate over severity indices
+  
+  for (idx in severityIndices){
+    
+    # extract particular severity from baseline roadInjuries
+    
+    severityData <- abind::asub(ITHIM.baseline@parameters@roadInjuries, idx, severityDimPosition)
+    
+    # check if arrays have same structure
+    
+    if(!helperCheckIfArraysHaveSameDims(severityData, multiplier)){
+      stop(paste0('multiplyInjuries: severityData-multiplier: index: ', idx))
+    }
+    
+    # baseline * multiplier
+    
+    outputData <- severityData * multiplier
+    
+    # add to output array
+    
+    outputArray <- abind(outputArray, outputData, along = severityDimPosition)
+    
+  }
+  
+  # bacause of workaround - add indices for severity manually 
+  
+  dimnames(outputArray) <- dimnames(ITHIM.baseline@parameters@roadInjuries)
 
-multiplier <- lapply(multiplier, function(x) ifelse(is.na(x),1,x))
-
-    RI <- getRoadInjuries(ITHIM.baseline)
-
-    #RI <- lapply(RI, function(x) x[,-c(1,2)])
-
-RI.scenario <- list(
-     FatalLocal = RI$FatalLocal*multiplier$local,
-     FatalArterial = RI$FatalArterial*multiplier$arterial,
-     FatalHighway = RI$FatalHighway*multiplier$highway,
-     SeriousLocal = RI$SeriousLocal*multiplier$local,
-     SeriousArterial = RI$SeriousArterial*multiplier$arterial,
-     SeriousHighway = RI$SeriousHighway*multiplier$highway
-     )
-return(RI.scenario)
+  return(outputArray)
 
 }
 #'@export
@@ -235,48 +295,53 @@ computeRoadInjuryBurden <- function(ITHIM.baseline, ITHIM.scenario){
 }
 #'@export
 updateRoadInjuries <- function(ITHIM.baseline, ITHIM.scenario){
+  
   ITHIM.scenario <- update(ITHIM.scenario, list(roadInjuries = multiplyInjuries(ITHIM.baseline, ITHIM.scenario)))
+  
 return(ITHIM.scenario)
 }
 #'@export
 readRoadInjuries <- function(ITHIM.object, file){
   
-  # TODO: how to deal with double roadType column
-  
-  # get already used ("input") variables with unique entries
-  
-  inputDims <- ITHIM.object@parameters@inputDims
-  
   # read file
   
   inputData <- read.csv(file, stringsAsFactors = FALSE)
   
-  # create array and update inputDims
+  # create array
   
-  arrayAndDims <- helperCreateArray(inputData, inputDims)
+  producedArray <- helperCreateArray(inputData)
   
   # return updated object
   
-  ITHIM.updated <- update(ITHIM.object, list(roadInjuries = arrayAndDims$createdArray, inputDims = arrayAndDims$inputDims))
+  ITHIM.updated <- update(ITHIM.object, list(roadInjuries = producedArray$createdArray))
   
   return(ITHIM.updated)
 }
 #' @export
-createSINmatrix <- function(modeNames){
-    victimVec <- c(0.432,0.511,rep(0.4999,5))
-    strikingVec <- victimVec
-    NOVVec <- c(0.64,0.64,rep(0.8,5))
-    sinMatrix <- matrix(c(victimVec,strikingVec,NOVVec), nrow = length(modeNames), ncol = 3, dimnames = list(modeNames, c("victim","striking","NOV")))
-    print(sinMatrix)
-    return(sinMatrix)
+helperCheckIfArraysHaveSameDims <- function(array1, array2){
+  
+  # check if arrays
+  
+  if (!(is.array(array1) && is.array(array2))){
+    return(FALSE)
+  }
+  
+  # check def of dimensions
+  
+  if (!( (length(dim(array1)) == length(dim(array2))) && all(dim(array1) == dim(array2)) )){
+    return(FALSE)
+  }
+  
+  # check indices - if ok at this point -> return TRUE
+  
+  if(identical(dimnames(array1), dimnames(array2))){
+    return(TRUE)
+  }
+  
+  return(FALSE)
 }
 #' @export
-helperSymDiff <- function(a, b){
-  # this is just symmetric difference
-  return(setdiff(union(a,b), intersect(a,b)))
-}
-#' @export
-helperCreateArray <- function(inputData, inputDims){
+helperCreateArray <- function(inputData){
   
   # column with values (TODO: could be defined as param?)
   
@@ -290,48 +355,25 @@ helperCreateArray <- function(inputData, inputDims){
   
   inputData <- inputData[c(columnsWithVariables, columnWithValues)]
   
-  # for every column
+  # list which should stored names of future dimension with sorted values (future indices)
   
-  for (colname in columnsWithVariables){
-    
-    # get unique entries. Sort is used to be sure that every future array would have identically defined dims
-    
-    uniqueEntires <- sort(unique(subset(inputData, select = colname, drop = T)))
-    
-    # check if variable (column with the same name) was already processed (thus it is in inputDims) and
-    # it has exactly the same list of entires. If not -> error.
-    # In other case add variable with entires to inputDims
-    
-    if ((colname %in% names(inputDims)) &&
-        length(helperSymDiff(inputDims[[colname]], uniqueEntires)) > 0){
-      
-      stop(paste0("readDistByRoadType: column has different entries than one read previously: ", colname))
-      
-    } else {
-      
-      inputDims[[colname]] <- uniqueEntires
-      
-    }
-    
-  }
+  outputArrayDimsWithIndices <- as.list(setNames(columnsWithVariables, columnsWithVariables))
   
-  # if everything ok at this point -> create array
+  # get unique entries. Sort is used to be sure that every future array would have identically defined dims
   
-  # only needed "variables" (columns)
-  
-  neededColumnsWithVariables <- inputDims[columnsWithVariables]
-  
+  outputArrayDimsWithIndices <- sapply(outputArrayDimsWithIndices, function(x, y) {sort(unique(subset(y, select = x, drop = T)))}, y = inputData, simplify = F)
+
   # create array using needed columns with unique entries as definition of dims
   
   outputArray <- array(NA,
-                       unname(sapply(neededColumnsWithVariables, function(x) length(x), simplify = T)),
-                       unname(neededColumnsWithVariables))
+                       unname(sapply(outputArrayDimsWithIndices, function(x) length(x), simplify = T)),
+                       unname(outputArrayDimsWithIndices))
   
   # TODO: other way to pass name of the dims? 
   # This is hack to pass name of columns (variables) to outputArray.
   # It could be set by attr() command, but "name attr" is better since it is not lost during array modification.
   
-  names(outputArray) <- names(neededColumnsWithVariables)
+  names(outputArray) <- names(outputArrayDimsWithIndices)
   
   # iterate over input file -> fill every cell of array
   
@@ -347,26 +389,22 @@ helperCreateArray <- function(inputData, inputDims){
   
   # return as list 
   
-  return(list(createdArray = outputArray, inputDims = inputDims))
+  return(list(createdArray = outputArray))
 }
 #' @export
 readDistByRoadType <- function(ITHIM.object, file){
-  
-  # get already used ("input") variables with unique entries
-  
-  inputDims <- ITHIM.object@parameters@inputDims
   
   # read file
   
   inputData <- read.csv(file, stringsAsFactors = FALSE)
   
-  # create array and update inputDims
+  # create array
   
-  arrayAndDims <- helperCreateArray(inputData, inputDims)
+  producedArray <- helperCreateArray(inputData)
   
   # return updated object
   
-  ITHIM.updated <- update(ITHIM.object, list(distRoadType = arrayAndDims$createdArray, inputDims = arrayAndDims$inputDims))
+  ITHIM.updated <- update(ITHIM.object, list(distRoadType = producedArray$createdArray))
   
   return(ITHIM.updated)
   
@@ -374,21 +412,17 @@ readDistByRoadType <- function(ITHIM.object, file){
 #' @export
 readSafetyInNumbers <- function(ITHIM.object, file){
   
-  # get already used ("input") variables with unique entries
-  
-  inputDims <- ITHIM.object@parameters@inputDims
-  
   # read file
   
   inputData <- read.csv(file, stringsAsFactors = FALSE)
   
   # create array and update inputDims
   
-  arrayAndDims <- helperCreateArray(inputData, inputDims)
+  producedArray <- helperCreateArray(inputData)
   
   # return updated object
   
-  ITHIM.updated <- update(ITHIM.object, list(safetyInNumbers = arrayAndDims$createdArray, inputDims = arrayAndDims$inputDims))
+  ITHIM.updated <- update(ITHIM.object, list(safetyInNumbers = producedArray$createdArray))
   
   return(ITHIM.updated)
   
