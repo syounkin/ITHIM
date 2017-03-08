@@ -113,6 +113,17 @@ setGeneric("getParameterNames", function(x) standardGeneric("getParameterNames")
 #'
 #' @export
 setGeneric("createITHIM", function(x) standardGeneric("createITHIM"))
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#' Retrieve a ParameterSet object
+#'
+#' Returns the ParameterSet object embedded in an ITHIM object.
+#'
+#' @param x An ITHIM object
+#'
+#' @return An object of class ParameterSet
+#'
 #' @export
 setGeneric("getParameterSet", function(x) standardGeneric("getParameterSet"))
 #' @export
