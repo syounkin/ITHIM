@@ -6,7 +6,7 @@
 #' Takes an ITHIM object as input and returns a new ITHIM object with
 #' parameters updated accordingly.
 #'
-#' @param x ITHIM object
+#' @param x ITHIM object or a ParameterSet object
 #' @param parList A named list of parameters
 #'
 #' @return An ITHIM object
@@ -66,14 +66,6 @@ setGeneric("getBurden", function(x, bur, dis) standardGeneric("getBurden"))
 #'
 #' @export
 setGeneric("deltaBurden", function(baseline, scenario, bur, dis) standardGeneric("deltaBurden"))
-#' @export
-setGeneric("createITHIM", function(x) standardGeneric("createITHIM"))
-#' @export
-setGeneric("getParameterSet", function(x) standardGeneric("getParameterSet"))
-#' @export
-setGeneric("getMeans", function(x) standardGeneric("getMeans"))
-#' @export
-setGeneric("getGBD", function(x, format = "data.frame") standardGeneric("getGBD"))
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -105,3 +97,25 @@ setGeneric("getDistRoadType", function(x, format = "data.frame") standardGeneric
 #'
 #' @export
 setGeneric("getParameterNames", function(x) standardGeneric("getParameterNames"))
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#' Create an ITHIM object
+#'
+#' Returns an ITHIM object.  
+#'
+#' @param x A list of file names or a ParameterSet object
+#'
+#' @return An object of class ITHIM
+#'
+#' @note If run with no arguments this function will return the
+#'     default ITHIM object
+#'
+#' @export
+setGeneric("createITHIM", function(x) standardGeneric("createITHIM"))
+#' @export
+setGeneric("getParameterSet", function(x) standardGeneric("getParameterSet"))
+#' @export
+setGeneric("getMeans", function(x) standardGeneric("getMeans"))
+#' @export
+setGeneric("getGBD", function(x, format = "data.frame") standardGeneric("getGBD"))

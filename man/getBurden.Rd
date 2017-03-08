@@ -9,7 +9,7 @@ getBurden(x, bur, dis)
 \arguments{
 \item{x}{ITHIM object}
 
-\item{bur}{?}
+\item{bur}{A character string indicating the type of disease burden measure.  Possible values are}
 
 \item{dis}{?}
 }
