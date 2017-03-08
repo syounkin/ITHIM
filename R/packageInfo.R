@@ -68,6 +68,7 @@
 #' @seealso \code{\link{createITHIM}}, \code{\link{getMeans}}, \code{\link{deltaDALY}}, \code{\link{getBurden}}, \code{\link{update}}
 #' @examples
 #'
+#' # Create default ITHIM object
 #' ITHIM.baseline <- createITHIM()
 #' getMeans(ITHIM.baseline)
 #' ITHIM.scenario <- update(ITHIM.baseline, list(muwt = 120, muct = 60))
@@ -75,5 +76,11 @@
 #' initialBurden <- getBurden(ITHIM.baseline, bur = "daly", dis = "CVD")
 #' pctChange <- deltaDALY/initialBurden*100
 #'
+#' # Create ITHIM object using csv files.
+#' activeTransportFile <- system.file("activeTransportTime.csv", package = "ITHIM")
+#' GBDFile <- system.file("gbd.csv", package = "ITHIM")
+#' roadInjuriesFile <- system.file("roadInjuries.csv", package = "ITHIM")
+#' ITHIM <- createITHIM(list(activeTransportTimeFile = activeTransportFile, roadInjuriesFile = roadInjuriesFile, GBDFile = GBDFile))
+#' getMeans(ITHIM)
 #' 
 NULL
