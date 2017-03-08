@@ -4,14 +4,14 @@
 \alias{computeMultiplier}
 \title{Computes road injury multiplier}
 \usage{
-computeMultiplier(base, scenario, safetyInNumbers)
+computeMultiplier(baseline, scenario, safetyInNumbers)
 }
 \arguments{
+\item{scenario}{Same as above but for the scenario.}
+
 \item{base}{a list containing two data frames (one for person-miles
 and one for vehicle miles) indicating the distance travelled in
 the baseline}
-
-\item{scenario}{Same as above but for the scenario.}
 }
 \value{
 A list of multipliers.
