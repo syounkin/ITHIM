@@ -107,8 +107,23 @@ setGeneric("deltaBurden", function(baseline, scenario, bur, dis) standardGeneric
 #' 
 #' @export
 setGeneric("getRoadInjuries", function(x) standardGeneric("getRoadInjuries"))
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#' Retrieves the distance by road type
+#'
+#' Retrieve distance by road type contained in ITHIM object.
+#'
+#' @param x An ITHIM object or a ParameterSet object
+#'
+#' @return A list of matrices...
+#'
+#' @note The road injury component of the ITHIM package is still under
+#'     development.  It is not recommended to use this method right
+#'     now.
+#'
 #' @export
-setGeneric("getDistRoadType", function(x, format = "data.frame") standardGeneric("getDistRoadType"))
+setGeneric("getDistRoadType", function(x) standardGeneric("getDistRoadType"))
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
