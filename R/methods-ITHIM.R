@@ -151,3 +151,7 @@ setMethod("getGBD", signature(x = "ITHIM", format = "character"), function(x, fo
 setMethod("getGBD", signature(x = "ITHIM", format = "missing"), function(x){
     getGBD(x, format = "data.frame")
 })
+#' @export
+setMethod("getSiN", signature(x = "ITHIM"), function(x){
+    return(getSiN(getParameterSet(x)))
+})

@@ -109,4 +109,7 @@ setMethod("getDistRoadType", signature(x = "ParameterSet"), function(x){
 setMethod("getParameterNames", signature(x = "ParameterSet"), function(x){
     return(slotNames(x))
 })
-
+#' @export
+setMethod("getSiN", signature(x = "ParameterSet"), function(x){
+    return(x@safetyInNumbers)
+})
