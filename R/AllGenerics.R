@@ -195,3 +195,16 @@ setGeneric("getMeans", function(x) standardGeneric("getMeans"))
 #'
 #' @export
 setGeneric("getGBD", function(x, format = "data.frame") standardGeneric("getGBD"))
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#' Retrieves the Safety in Numbers parameters
+#'
+#' Retrieves the Safety in Numbers parameters
+#'
+#' @param x An ITHIM or ParameterSet object
+#'
+#' @return An array of safety in numbers parameters
+#'
+#' @export
+setGeneric("getSiN", function(x) standardGeneric("getSiN"))
