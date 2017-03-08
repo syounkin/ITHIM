@@ -140,5 +140,18 @@ setGeneric("getParameterSet", function(x) standardGeneric("getParameterSet"))
 #'
 #' @export
 setGeneric("getMeans", function(x) standardGeneric("getMeans"))
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#' Retrieves the Global Burden of Disease (GBD) data
+#'
+#' Retrieves the Global Burden of Disease (GBD) data from an ITHIM object
+#'
+#' @param x An ITHIM object
+#' @param format A character string indicating what form to return the
+#'     data.  Possible values are "data.frame" and "list".
+#'
+#' @return Either a list or a data frame containg GBD data.
+#'
 #' @export
 setGeneric("getGBD", function(x, format = "data.frame") standardGeneric("getGBD"))
