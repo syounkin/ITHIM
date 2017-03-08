@@ -44,11 +44,23 @@ setGeneric("tilePlot", function(x, n) standardGeneric("tilePlot"))
 #' Gets burden
 #'
 #' @param x ITHIM object
-#' @param bur A character string indicating the type of disease burden measure.  Possible values are 
-#' @param dis ?
+#' @param bur A character string indicating the type of disease burden
+#'     measure.  Available values are "dproj", "yll", "yld" and
+#'     "daly".  The default value is "daly".
+#' @param dis A character string indicating which disease to consider.
+#'     Possible values are "BreastCancer", "ColonCancer", "HHD",
+#'     "IHD", "Stroke", "Dementia", "Diabetes", "Depression",
+#'     "LungCancer", "InflammatoryHD", "RespiratoryDisease" and
+#'     "RTIs".  See \code{readGBD} for more information.  The default
+#'     value is "all" which returns the sum of disease burden across
+#'     these diseases.
 #'
-#' @return A burden value
+#' @return A numerical value for the disease burden
 #'
+#' @note If bur is set wrong 0 will be returned, not an error message.
+#'     This is a bug.  It should not return zero in this case.  That
+#'     is misleading.
+#' 
 #' @export
 setGeneric("getBurden", function(x, bur, dis) standardGeneric("getBurden"))
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -58,12 +70,25 @@ setGeneric("getBurden", function(x, bur, dis) standardGeneric("getBurden"))
 #'
 #' Gets Change in Disease Burden due to Physical Activity
 #'
-#' @param x ITHIM object
-#' @param bur ?
-#' @param dis ?
+#' @param baseline ITHIM object
+#' @param scenario ITHIM object
+#' 
+#' @param bur A character string indicating the type of disease burden
+#'     measure.  Available values are "deaths", "yll", "yld" and
+#'     "daly".  The default value is "daly".
+#' @param dis A character string indicating which disease to consider.
+#'     Possible values are "BreastCancer", "ColonCancer",
+#'     "Depression", "Dementia", "Diabetes" and "CVD".  The default
+#'     value is "all" which returns the sum of disease burden across
+#'     these diseases.
+#'
+##' @inheritParams getBurden
 #'
 #' @return A burden value
 #'
+#' @note The parameters dis and bur should be harmonized across
+#'     \code{getBurden} and \code{deltaBurden}.
+#' 
 #' @export
 setGeneric("deltaBurden", function(baseline, scenario, bur, dis) standardGeneric("deltaBurden"))
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

@@ -9,14 +9,27 @@ getBurden(x, bur, dis)
 \arguments{
 \item{x}{ITHIM object}
 
-\item{bur}{A character string indicating the type of disease burden measure.  Possible values are}
+\item{bur}{A character string indicating the type of disease burden
+measure.  Available values are "dproj", "yll", "yld" and
+"daly".  The default value is "daly".}
 
-\item{dis}{?}
+\item{dis}{A character string indicating which disease to consider.
+Possible values are "BreastCancer", "ColonCancer", "HHD",
+"IHD", "Stroke", "Dementia", "Diabetes", "Depression",
+"LungCancer", "InflammatoryHD", "RespiratoryDisease" and
+"RTIs".  See \code{readGBD} for more information.  The default
+value is "all" which returns the sum of disease burden across
+these diseases.}
 }
 \value{
-A burden value
+A numerical value for the disease burden
 }
 \description{
 Gets burden
+}
+\note{
+If bur is set wrong 0 will be returned, not an error message.
+    This is a bug.  It should not return zero in this case.  That
+    is misleading.
 }
 

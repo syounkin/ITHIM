@@ -7,16 +7,28 @@
 deltaBurden(baseline, scenario, bur, dis)
 }
 \arguments{
-\item{bur}{?}
+\item{baseline}{ITHIM object}
 
-\item{dis}{?}
+\item{scenario}{ITHIM object}
 
-\item{x}{ITHIM object}
+\item{bur}{A character string indicating the type of disease burden
+measure.  Available values are "deaths", "yll", "yld" and
+"daly".  The default value is "daly".}
+
+\item{dis}{A character string indicating which disease to consider.
+Possible values are "BreastCancer", "ColonCancer",
+"Depression", "Dementia", "Diabetes" and "CVD".  The default
+value is "all" which returns the sum of disease burden across
+these diseases.}
 }
 \value{
 A burden value
 }
 \description{
 Gets Change in Disease Burden due to Physical Activity
+}
+\note{
+The parameters dis and bur should be harmonized across
+    \code{getBurden} and \code{deltaBurden}.
 }
 
