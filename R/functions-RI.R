@@ -1,22 +1,22 @@
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#' Computes road injury multiplier
-#'
-#' This multiplier is used to estimate the road injury count in the
-#' scenario.  It is a function of distance by road type (person-miles
-#' and vehicle-miles) and safey in number parameters (one for
-#' person-miles and one for vehicle miles.  Currently both values are
-#' fixed at 0.5 for both person and vehicle.
-#'
-#' @param base a list containing two data frames (one for person-miles
-#'     and one for vehicle miles) indicating the distance travelled in
-#'     the baseline
-#'
-#' @param scenario Same as above but for the scenario.
-#'
-#' @return A list of multipliers.
-#'
+### Computes road injury multiplier
+###
+### This multiplier is used to estimate the road injury count in the
+### scenario.  It is a function of distance by road type (person-miles
+### and vehicle-miles) and safey in number parameters (one for
+### person-miles and one for vehicle miles.  Currently both values are
+### fixed at 0.5 for both person and vehicle.
+###
+### @param base a list containing two data frames (one for person-miles
+###     and one for vehicle miles) indicating the distance travelled in
+###     the baseline
+###
+### @param scenario Same as above but for the scenario.
+###
+### @return A list of multipliers.
+###
 computeMultiplier <- function(baseline, scenario, safetyInNumbers){
   
   # TODO: update doc

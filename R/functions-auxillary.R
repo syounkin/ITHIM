@@ -1,17 +1,17 @@
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#' This function coverts the 2001 CDC Age variable to years.
-#'
-#' @param value The value for age, i.e., characters 2-4 of the code
-#'     (sloppy with class!)
-#' @param unit The units for age, i.e., chatater 1 of the code (sloppy
-#'     with class!)
-#' @note This function is likely only applicable to the 2001 data
-#'     file.
-#' @return A numeric vector of age in years - this is a test
-#'
-#' 
+### This function coverts the 2001 CDC Age variable to years.
+###
+### @param value The value for age, i.e., characters 2-4 of the code
+###     (sloppy with class!)
+### @param unit The units for age, i.e., chatater 1 of the code (sloppy
+###     with class!)
+### @note This function is likely only applicable to the 2001 data
+###     file.
+### @return A numeric vector of age in years - this is a test
+###
+### 
 convertAge <- function(value, unit){
 
     value <- ifelse(value == "999", NA, value)
@@ -29,15 +29,15 @@ convertAge <- function(value, unit){
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#' Converts age to ITHIM age class
-#'
-#' Converts age to ITHIM age class
-#'
-#' @param age A vector of ages.  This vector will be coerced to numeric.
-#'
-#' @return A character vector of ITHIM age categories
-#'
-#' 
+### Converts age to ITHIM age class
+###
+### Converts age to ITHIM age class
+###
+### @param age A vector of ages.  This vector will be coerced to numeric.
+###
+### @return A character vector of ITHIM age categories
+###
+### 
 convertToAgeClass <- function(age){
   age <- as.numeric(age)
   agecat <- ifelse( age <= 4, "00-04", ifelse( age <= 14, "05-14", ifelse( age <= 29, "15-29", ifelse( age <= 44, "30-44", ifelse( age <= 59, "45-59", ifelse( age <= 69, "60-69", ifelse( age <= 79, "70-79", ifelse( age > 80, "80+", NA))))))))
