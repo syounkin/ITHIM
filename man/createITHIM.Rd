@@ -4,10 +4,20 @@
 \alias{createITHIM}
 \title{Create an ITHIM object}
 \usage{
-createITHIM(x)
+createITHIM(activeTransportFile, GBDFile, roadInjuriesFile)
 }
 \arguments{
-\item{x}{A list of file names or a ParameterSet object}
+\item{activeTransportFile}{A character string indicating the name
+of the file containing mean walk and cycle times.  Default
+value uses data from the inst directory.}
+
+\item{GBDFile}{A character string indicating the name of the file
+containing the disease burden data.  Default value uses data
+from the inst directory.}
+
+\item{roadInjuriesFile}{A character string indicating the name of
+the file containing the road injury data (still under
+development).  Default value uses data from the inst directory.}
 }
 \value{
 An object of class ITHIM
@@ -16,7 +26,21 @@ An object of class ITHIM
 Returns an ITHIM object.
 }
 \note{
+The path is relative to current working directory.
+
+GBD stands for Global Burden of Disease.  We use this simply
+    because this was our original data source.  It does not need to
+    be estimates from GBD.  Any disease burden estimate is fine.
+
 If run with no arguments this function will return the
     default ITHIM object
+}
+\examples{
+
+activeTransportFile <- system.file("activeTransportTime.csv", package = "ITHIM")
+GBDFile <- system.file("gbd.csv", package = "ITHIM")
+
+ITHIM <- createITHIM(activeTransportFile = activeTransportFile, GBDFile = GBDFile)
+
 }
 

@@ -144,15 +144,35 @@ setGeneric("getParameterNames", function(x) standardGeneric("getParameterNames")
 #'
 #' Returns an ITHIM object.  
 #'
-#' @param x A list of file names or a ParameterSet object
+#' @param activeTransportFile A character string indicating the name
+#'     of the file containing mean walk and cycle times.  Default
+#'     value uses data from the inst directory.
+#' @param GBDFile A character string indicating the name of the file
+#'     containing the disease burden data.  Default value uses data
+#'     from the inst directory.
+#' @param roadInjuriesFile A character string indicating the name of
+#'     the file containing the road injury data (still under
+#'     development).  Default value uses data from the inst directory.
 #'
+#' @note The path is relative to current working directory.
+#' @note GBD stands for Global Burden of Disease.  We use this simply
+#'     because this was our original data source.  It does not need to
+#'     be estimates from GBD.  Any disease burden estimate is fine.
+#' 
 #' @return An object of class ITHIM
 #'
 #' @note If run with no arguments this function will return the
 #'     default ITHIM object
 #'
+#' @examples
+#'
+#' activeTransportFile <- system.file("activeTransportTime.csv", package = "ITHIM")
+#' GBDFile <- system.file("gbd.csv", package = "ITHIM")
+#'
+#' ITHIM <- createITHIM(activeTransportFile = activeTransportFile, GBDFile = GBDFile)
+#' 
 #' @export
-setGeneric("createITHIM", function(x) standardGeneric("createITHIM"))
+setGeneric("createITHIM", function(activeTransportFile, GBDFile, roadInjuriesFile) standardGeneric("createITHIM"))
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
