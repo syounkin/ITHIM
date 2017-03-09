@@ -1,14 +1,14 @@
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#' Read in Global Burden of Disease Data
-#'
-#' Read in Global Burden of Disease Data
-#'
-#' @return A list of lists of matrices with dproj, yll, yld and daly
-#'     by age and sex and disease
-#'
-#'
+### Read in Global Burden of Disease Data
+###
+### Read in Global Burden of Disease Data
+###
+### @return A list of lists of matrices with dproj, yll, yld and daly
+###     by age and sex and disease
+###
+###
 readGBD <- function(filename){
     gbd <- read.csv(file=filename, stringsAsFactors = FALSE)
 
@@ -35,14 +35,14 @@ readGBD <- function(filename){
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#' Reformat GBD data frame
-#'
-#' Reformat GBD data frame
-#'
-#' @return A list of lists of matrices with dproj, yll, yld and daly
-#'     by age and sex and disease
-#'
-#'
+### Reformat GBD data frame
+###
+### Reformat GBD data frame
+###
+### @return A list of lists of matrices with dproj, yll, yld and daly
+###     by age and sex and disease
+###
+###
 reformatGBD <- function(gbd){
             gbdList <- split(gbd,gbd$disease)
         gbdList[["CVD"]] <- data.frame(disease = "CVD", gbdList$IHD[,c("sex",  "ageClass")], gbdList$IHD[,c("dproj","yll","yld","daly")] + gbdList$InflammatoryHD[,c("dproj","yll","yld","daly")] + gbdList$HHD[,c("dproj","yll","yld","daly")])
