@@ -1,5 +1,3 @@
-
-#'@export
 createParameterSet <- function(x){
 
     parList <- as(createParameterList(),"list")

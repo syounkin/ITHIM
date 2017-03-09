@@ -1,16 +1,4 @@
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#' Returns the mean walk time matrix
-#'
-#' Returns the mean walk time matrix
-#'
-#' @param ITHIM An ITHIM object
-#'
-#' @return A numerical matrix of mean walk time
-#'
-#' @export
-getWalkTime <- function(ITHIM, form = 2){
+getWalkTimeFunction <- function(ITHIM, form = 2){
     if( form == 1 ){
         walkTime <- with(as(ITHIM@parameters,"list"), Rwt*muwt)
     }else if (form == 2){
@@ -21,19 +9,7 @@ getWalkTime <- function(ITHIM, form = 2){
     }
     return(data.frame(walkTime, type = "walk time"))
 }
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#' Returns the mean cycle time matrix
-#'
-#' Returns the mean cycle time matrix
-#'
-#' @param ITHIM An ITHIM object
-#'
-#' @return A numerical matrix of mean cycle time
-#'
-#' @export
-getCycleTime <- function(ITHIM, form = 2){
+getCycleTimeFunction <- function(ITHIM, form = 2){
     if( form == 1 ){
         cycleTime <- with(as(ITHIM@parameters,"list"), Rct*muct)
     }else if (form == 2){
@@ -44,19 +20,7 @@ getCycleTime <- function(ITHIM, form = 2){
     }
     return(data.frame(cycleTime, type = "cycle time"))
 }
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#' Returns the non-travel METs matrix
-#'
-#' Returns the non-travel METs matrix
-#'
-#' @param ITHIM An ITHIM object
-#'
-#' @return A numerical matrix of mean non-travel means
-#'
-#' @export
-getNonTravelMETs <- function(ITHIM, form = 2){
+getNonTravelMETsFunction <- function(ITHIM, form = 2){
     if( form == 1 ){
         nonTravelMETs <- with(as(ITHIM@parameters,"list"), muNonTravelMatrix*muNonTravel)
     }else if (form == 2){

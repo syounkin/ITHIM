@@ -16,7 +16,7 @@
 #' @return A list of two matrices; mean walking time and mean cycling
 #'     time in minutes per week.
 #'
-#'@export
+#'
 readActiveTransportTime <- function(filename){
     activeTravel <- read.csv(file = filename, header = TRUE, stringsAsFactors = FALSE)
     
@@ -66,7 +66,7 @@ readActiveTransportTime <- function(filename){
 #' @note We use a constant coefficient of variation across strata to compute standard deviations
 #' @seealso \code{\link{createITHIM}}
 #'
-#' @export
+#'
 computeMeanMatrices <- function(parList){
 
     with(parList, {
@@ -107,7 +107,7 @@ computeMeanMatrices <- function(parList){
 #' @return A numerical value for the chnage in disease burden between
 #'     baseline and scenario.  Physical activity component only.
 #'
-#' @export
+#'
 deltaBurdenFunction <- function(ITHIM.baseline, ITHIM.scenario, bur = "daly", dis = "all"){
 
     ITHIM.baseline <- as(ITHIM.baseline, "list")
@@ -158,7 +158,7 @@ deltaBurdenFunction <- function(ITHIM.baseline, ITHIM.scenario, bur = "daly", di
 #'
 #' @seealso \code{\link{computeQuintiles}}
 #'
-#' @export
+#'
 getQuintiles <- function(means, parameters){
 
   ActiveTransportTime <- computeQuintiles(means$meanActiveTransportTime, means$sdActiveTransportTime, parameters$quantiles)
@@ -204,7 +204,7 @@ getQuintiles <- function(means, parameters){
 #'
 #' @seealso \code{\link{getQuintiles}}
 #'
-#' @export
+#'
 computeQuintiles <- function( mean, sd, quantiles ){
 
     nAgeClass <- nrow(mean)
@@ -243,7 +243,7 @@ computeQuintiles <- function( mean, sd, quantiles ){
 #'
 #' @seealso \code{\link{compareModels}}
 #'
-#' @export
+#'
 createActiveTransportRRs <- function(nQuantiles = 5){
 
     diseaseNames <- c("BreastCancer","ColonCancer","CVD","Dementia","Depression","Diabetes")
@@ -323,7 +323,7 @@ createActiveTransportRRs <- function(nQuantiles = 5){
 #'
 #' @seealso \code{\link{createITHIM}}, \code{\link{AFForList2}}
 #'
-#' @export
+#'
 compareModels <- function(baseline, scenario){
 
     baseline <- as(baseline, "list")
@@ -413,7 +413,7 @@ compareModels <- function(baseline, scenario){
 #'
 #' @return A random sample from the distribution.
 #'
-#' @export
+#'
 getNonTravelDistribution <- function(mu, cv, size = 1e4){
     mu <- ifelse(mu == 0, 0.01, mu)
     sd <- mu*cv
@@ -430,7 +430,7 @@ getNonTravelDistribution <- function(mu, cv, size = 1e4){
 #'
 #' @return A random sample from the distribution.
 #'
-#' @export
+#'
 getTravelDistribution <- function(mu, cv, pWalk, size = 1e4){
     mu <- ifelse(mu == 0, 0.01, mu)
     sd <- mu*cv
@@ -455,7 +455,7 @@ getTravelDistribution <- function(mu, cv, pWalk, size = 1e4){
 #'
 #' @return An estimate for MET expenditure
 #'
-#' @export
+#'
 computeWalkingMETs <- function(){
 
     #METs <- 1.2216*v + 0.0838
@@ -472,7 +472,7 @@ computeWalkingMETs <- function(){
 #'
 #' @return An estimate for MET expenditure
 #'
-#' @export
+#'
 computeCyclingMETs <- function(){
 
     return(6)
@@ -487,7 +487,7 @@ computeCyclingMETs <- function(){
 #'
 #' @return An estimate for total MET distribution
 #'
-#' @export
+#'
 getTotalDistribution <- function( muTravel, cvTravel, muNonTravel, cvNonTravel, pWalk, size ){
 
     return(getTravelDistribution( mu = muTravel, cv=cvTravel, pWalk = pWalk, size = size) + getNonTravelDistribution(mu = muNonTravel, cv = cvNonTravel, size = size))

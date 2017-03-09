@@ -17,7 +17,6 @@
 #'
 #' @return A list of multipliers.
 #'
-#'@export
 computeMultiplier <- function(baseline, scenario, safetyInNumbers){
   
   # TODO: update doc
@@ -125,7 +124,6 @@ computeMultiplier <- function(baseline, scenario, safetyInNumbers){
   
   return(outputArray)
 }
-#'@export
 computeInjuryRR <- function(RI.baseline, RI.scenario){
 # written by Tomek
 injuryTypes <- c("Fatal", "Serious")
@@ -223,7 +221,6 @@ for (it in injuryTypes){
 }
 return(injuryRR)
 }
-#'@export
 multiplyInjuries <- function(ITHIM.baseline, ITHIM.scenario){
   
   # which dim stores severity. TODO: could be set via params?
@@ -317,7 +314,6 @@ readRoadInjuries <- function(ITHIM.object, file){
   
   return(ITHIM.updated)
 }
-#' @export
 helperCheckIfArraysHaveSameDims <- function(array1, array2){
   
   # check if arrays
@@ -340,7 +336,6 @@ helperCheckIfArraysHaveSameDims <- function(array1, array2){
   
   return(FALSE)
 }
-#' @export
 helperCreateArray <- function(inputData){
   
   # column with values (TODO: could be defined as param?)

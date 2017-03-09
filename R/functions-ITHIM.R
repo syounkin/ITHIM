@@ -15,7 +15,7 @@
 #'     \code{\link{createParameterList}},
 #'     \code{\link{computeMeanMatrices}}, \code{\link{getQuintiles}}
 #'
-#' @export
+#'
 createITHIMFunction <- function(roadInjuriesFile = system.file("roadInjuriesUS.csv", package = "ITHIM"), activeTransportTimeFile = system.file("activeTransportTime.csv",package = "ITHIM"), GBDFile = system.file("gbd.csv",package = "ITHIM")){
         new("ITHIM", parameters = parameters <- createParameterList(activeTransportTimeFile = activeTransportTimeFile, GBDFile = GBDFile), means = means <- computeMeanMatrices(as(parameters,"list")), quintiles = getQuintiles(means, as(parameters,"list")))
 
@@ -33,7 +33,7 @@ createITHIMFunction <- function(roadInjuriesFile = system.file("roadInjuriesUS.c
 #'
 #' @seealso \code{\link{readGBD}}
 #'
-#' @export
+#'
 createParameterList <- function(
                                 roadInjuriesFile = system.file("roadInjuriesUS.csv", package = "ITHIM"),
                                 activeTransportTimeFile = system.file("activeTransportTime.csv", package = "ITHIM"),
@@ -106,7 +106,7 @@ createParameterList <- function(
 #'
 #' @return An updated ITHIM object
 #'
-#' @export
+#'
 updateITHIM <- function( ITHIM, parName, parValue){
 
     ITHIM$parameters[[parName]] <- parValue

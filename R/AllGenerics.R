@@ -228,3 +228,41 @@ setGeneric("getGBD", function(x, format = "data.frame") standardGeneric("getGBD"
 #'
 #' @export
 setGeneric("getSiN", function(x) standardGeneric("getSiN"))
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#' Returns the mean walk time matrix
+#'
+#' Returns the mean walk time matrix
+#'
+#' @param x An ITHIM object
+#' @param form an integer
+#'
+#' @return A numerical matrix of mean walk time
+#'
+setGeneric("getWalkTime", function(x, form) standardGeneric("getWalkTime"))
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#' Returns the mean cycle time matrix
+#'
+#' Returns the mean cycle time matrix
+#'
+#' @inheritParams getWalkTime
+#'
+#' @return A numerical matrix of mean cycle time
+#'
+setGeneric("getCycleTime", function(x, form) standardGeneric("getCycleTime"))
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#' Returns the non-travel METs matrix
+#'
+#' Returns the non-travel METs matrix
+#'
+#' @inheritParams getWalkTime
+#'
+#' @return A numerical matrix of mean non-travel activity
+#'
+#' @export
+setGeneric("getNonTravelMETs", function(x, form) standardGeneric("getNonTravelMETs"))
