@@ -287,7 +287,7 @@ createActiveTransportRRs <- function(nQuantiles = 5){
     ## RR.lit[["HHD"]] <- RR.lit[["CVD"]]
 
     k <- 0.5
-    RR <- mapply(function(x,y,k) x^(1/y)^k, RR.lit, exposure, 0.5, SIMPLIFY=FALSE)
+    RR <- mapply(function(x,y,k) x^(1/y)^k, RR.lit, exposure, k, SIMPLIFY=FALSE)
     RR <- lapply(RR, reshapeRR, nQuantiles = nQuantiles)
 
     return(RR)
