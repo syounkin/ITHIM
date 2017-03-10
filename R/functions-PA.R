@@ -280,11 +280,11 @@ createActiveTransportRRs <- function(nQuantiles = 5){
     exposure[["Depression"]][4:nAgeClass,1:2] <- 11.25
     RR.lit[["Depression"]][4:nAgeClass,1:2] <- 0.859615572255727
 
-    exposure[["Stroke"]] <- exposure[["CVD"]]
-    RR.lit[["Stroke"]] <- RR.lit[["CVD"]]
+    ## exposure[["Stroke"]] <- exposure[["CVD"]]
+    ## RR.lit[["Stroke"]] <- RR.lit[["CVD"]]
 
-    exposure[["HHD"]] <- exposure[["CVD"]]
-    RR.lit[["HHD"]] <- RR.lit[["CVD"]]
+    ## exposure[["HHD"]] <- exposure[["CVD"]]
+    ## RR.lit[["HHD"]] <- RR.lit[["CVD"]]
 
     k <- 0.5
     RR <- mapply(function(x,y,k) x^(1/y)^k, RR.lit, exposure, 0.5, SIMPLIFY=FALSE)
