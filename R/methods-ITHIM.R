@@ -151,3 +151,43 @@ setMethod("getGBD", signature(x = "ITHIM", format = "character"), function(x, fo
 setMethod("getGBD", signature(x = "ITHIM", format = "missing"), function(x){
     getGBD(x, format = "data.frame")
 })
+#' @export
+setMethod("getSiN", signature(x = "ITHIM"), function(x){
+    return(getSiN(getParameterSet(x)))
+})
+#' @export
+setMethod("getWalkTime", signature(x = "ITHIM", form = "integer"), function(x, form){
+    return(getWalkTimeFunction(x, form))
+})
+#' @export
+setMethod("getWalkTime", signature(x = "ITHIM", form = "numeric"), function(x, form){
+    return(getWalkTimeFunction(x, as.integer(form)))
+})
+#' @export
+setMethod("getWalkTime", signature(x = "ITHIM", form = "missing"), function(x, form){
+    return(getWalkTimeFunction(x))
+})
+#' @export
+setMethod("getCycleTime", signature(x = "ITHIM", form = "integer"), function(x, form){
+    return(getCycleTimeFunction(x, form))
+})
+#' @export
+setMethod("getCycleTime", signature(x = "ITHIM", form = "numeric"), function(x, form){
+    return(getCycleTimeFunction(x, as.integer(form)))
+})
+#' @export
+setMethod("getCycleTime", signature(x = "ITHIM", form = "missing"), function(x, form){
+    return(getCycleTimeFunction(x))
+})
+#' @export
+setMethod("getNonTravelMETs", signature(x = "ITHIM", form = "integer"), function(x, form){
+    return(getNonTravelMETsFunction(x, form))
+})
+#' @export
+setMethod("getNonTravelMETs", signature(x = "ITHIM", form = "numeric"), function(x, form){
+    return(getNonTravelMETsFunction(x, as.integer(form)))
+})
+#' @export
+setMethod("getNonTravelMETs", signature(x = "ITHIM", form = "missing"), function(x, form){
+    return(getNonTravelMETsFunction(x))
+})

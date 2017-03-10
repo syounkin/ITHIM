@@ -144,15 +144,46 @@ setGeneric("getParameterNames", function(x) standardGeneric("getParameterNames")
 #'
 #' Returns an ITHIM object.  
 #'
-#' @param x A list of file names or a ParameterSet object
+#' @param activeTransportFile A character string indicating the name
+#'     of the file containing mean walk and cycle times.  Default
+#'     value uses data from the inst directory.
+#' @param GBDFile A character string indicating the name of the file
+#'     containing the disease burden data.  Default value uses data
+#'     from the inst directory.
+#' @param roadInjuriesFile A character string indicating the name of
+#'     the file containing the road injury data (still under
+#'     development).  Default value uses data from the inst directory.
 #'
+#' @note The path is relative to current working directory.
+#'
+#' @note GBD stands for Global Burden of Disease.  We use this simply
+#'     because this was our original data source.  It does not need to
+#'     be estimates from GBD.  Any disease burden estimate is fine.
+#' @note The disease burden file must contain values for any of the
+#'     following diseases; "BreastCancer", "ColonCancer", "CVD",
+#'     "Dementia", "Diabetes", "Depression" and "RTIs", and must be
+#'     labeled accordingly.  RTI stands for road traffic injury and is
+#'     needed only if the road injury component is being used.
+#'
+#' @note The format for the disease burden will be normalized and
+#'     explained in greater detail soon.  See
+#'     \link{https://github.com/syounkin/ITHIM/blob/devel/inst/gbd.csv}
+#'     for an example.
+#' 
 #' @return An object of class ITHIM
 #'
 #' @note If run with no arguments this function will return the
 #'     default ITHIM object
 #'
+#' @examples
+#'
+#' activeTransportFile <- system.file("activeTransportTime.csv", package = "ITHIM")
+#' GBDFile <- system.file("gbd.csv", package = "ITHIM")
+#'
+#' ITHIM <- createITHIM(activeTransportFile = activeTransportFile, GBDFile = GBDFile)
+#' 
 #' @export
-setGeneric("createITHIM", function(x) standardGeneric("createITHIM"))
+setGeneric("createITHIM", function(activeTransportFile, GBDFile, roadInjuriesFile) standardGeneric("createITHIM"))
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -195,3 +226,54 @@ setGeneric("getMeans", function(x) standardGeneric("getMeans"))
 #'
 #' @export
 setGeneric("getGBD", function(x, format = "data.frame") standardGeneric("getGBD"))
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#' Retrieves the Safety in Numbers parameters
+#'
+#' Retrieves the Safety in Numbers parameters
+#'
+#' @param x An ITHIM or ParameterSet object
+#'
+#' @return An array of safety in numbers parameters
+#'
+#' @export
+setGeneric("getSiN", function(x) standardGeneric("getSiN"))
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#' Returns the mean walk time matrix
+#'
+#' Returns the mean walk time matrix
+#'
+#' @param x An ITHIM object
+#' @param form an integer
+#'
+#' @return A numerical matrix of mean walk time
+#'
+setGeneric("getWalkTime", function(x, form) standardGeneric("getWalkTime"))
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#' Returns the mean cycle time matrix
+#'
+#' Returns the mean cycle time matrix
+#'
+#' @inheritParams getWalkTime
+#'
+#' @return A numerical matrix of mean cycle time
+#'
+setGeneric("getCycleTime", function(x, form) standardGeneric("getCycleTime"))
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#' Returns the non-travel METs matrix
+#'
+#' Returns the non-travel METs matrix
+#'
+#' @inheritParams getWalkTime
+#'
+#' @return A numerical matrix of mean non-travel activity
+#'
+#' @export
+setGeneric("getNonTravelMETs", function(x, form) standardGeneric("getNonTravelMETs"))

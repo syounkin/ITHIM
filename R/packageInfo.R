@@ -61,17 +61,39 @@
 #' the 2000 Bay Area Travel Survey.
 #'
 #' @name ITHIM-package
+#' @aliases ITHIM
 #' @docType package
 #' @author Samuel G. Younkin \email{syounkin@@wisc.edu}
 #' @references \url{http://www.cedar.iph.cam.ac.uk/research/modelling/ithim/}, \url{https://ithim.ghi.wisc.edu/}
-#' @seealso \code{\link{createITHIM}}, \code{\link{compareModels}}
+#' @seealso \code{\link{createITHIM}}, \code{\link{getMeans}}, \code{\link{deltaDALY}}, \code{\link{getBurden}}, \code{\link{update}}
 #' @examples
 #'
+#' ## Create default ITHIM object ##
+#'
 #' ITHIM.baseline <- createITHIM()
-#' ITHIM.scenario <- updateITHIM(ITHIM.baseline, "muwt", 120)
-#' comparativeRisk <- compareModels(ITHIM.baseline, ITHIM.scenario)
-#' names(ITHIM.baseline)
-#' names(ITHIM.baseline$parameters)
-#' names(comparativeRisk)
-#' comparativeRisk$AF$BreastCancer
+#'
+#' (meanVec <- getMeans(ITHIM.baseline))
+#'
+#' ITHIM.scenario <- update(ITHIM.baseline, list(muwt = 2*meanVec$walk, muct = 2*meanVec$cycle))
+#' getMeans(ITHIM.scenario)
+#' 
+#' deltaDALY <- deltaBurden(ITHIM.baseline, ITHIM.scenario, bur = "daly", dis = "CVD")
+#' initialBurden <- getBurden(ITHIM.baseline, bur = "daly", dis = "CVD")
+#' (pctChange <- deltaDALY/initialBurden*100)
+#'
+#' ## Create ITHIM object using csv files ##
+#'
+#' activeTransportFile <- system.file("activeTransportTime.csv", package = "ITHIM")
+#' GBDFile <- system.file("gbd.csv", package = "ITHIM")
+#'
+#' ITHIM.baseline <- createITHIM(activeTransportFile = activeTransportFile, GBDFile = GBDFile)
+#' getMeans(ITHIM.baseline)
+#'
+#' ITHIM.scenario <- update(ITHIM.baseline, list(muwt = 2*meanVec$walk, muct = 2*meanVec$cycle))
+#' getMeans(ITHIM.scenario)
+#' 
+#' deltaDALY <- deltaBurden(ITHIM.baseline, ITHIM.scenario, bur = "daly", dis = "CVD")
+#' initialBurden <- getBurden(ITHIM.baseline, bur = "daly", dis = "CVD")
+#' (pctChange <- deltaDALY/initialBurden*100)
+#'
 NULL

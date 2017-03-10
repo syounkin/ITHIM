@@ -1,40 +1,39 @@
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#' Create an ITHIM object
-#'
-#' An ITHIM object is a list which contains three elements;
-#' parameters, means and quintiles.  The parameters are listed in
-#' \code{\link{createParameterList}}.  The elements means and
-#' quintiles mimic the computation presented in the original EXCEL
-#' workbook.  Use \code{\link{updateITHIM}} to change values of the
-#' parameters.
-#'
-#' @return A list of parameters, means and quintiles.
-#' @seealso \code{\link{updateITHIM}},
-#'     \code{\link{createParameterList}},
-#'     \code{\link{computeMeanMatrices}}, \code{\link{getQuintiles}}
-#'
-#' @export
+### Create an ITHIM object
+###
+### An ITHIM object is a list which contains three elements;
+### parameters, means and quintiles.  The parameters are listed in
+### \code{\link{createParameterList}}.  The elements means and
+### quintiles mimic the computation presented in the original EXCEL
+### workbook.  Use \code{\link{updateITHIM}} to change values of the
+### parameters.
+###
+### @return A list of parameters, means and quintiles.
+### @seealso \code{\link{updateITHIM}},
+###     \code{\link{createParameterList}},
+###     \code{\link{computeMeanMatrices}}, \code{\link{getQuintiles}}
+###
+###
 createITHIMFunction <- function(roadInjuriesFile = system.file("roadInjuriesUS.csv", package = "ITHIM"), activeTransportTimeFile = system.file("activeTransportTime.csv",package = "ITHIM"), GBDFile = system.file("gbd.csv",package = "ITHIM")){
-
-        new("ITHIM", parameters = parameters <- createParameterList(roadInjuriesFile = roadInjuriesFile, activeTransportTimeFile = activeTransportTimeFile, GBDFile = GBDFile), means = means <- computeMeanMatrices(as(parameters,"list")), quintiles = getQuintiles(means, as(parameters,"list")))
+        new("ITHIM", parameters = parameters <- createParameterList(activeTransportTimeFile = activeTransportTimeFile, GBDFile = GBDFile), means = means <- computeMeanMatrices(as(parameters,"list")), quintiles = getQuintiles(means, as(parameters,"list")))
 
 }
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#' Define ITHIM model parameters
-#'
-#' This function is used to generate a complete list of default
-#' parameters
-#'
-#' @return A list with parameters and estimates
-#'
-#'
-#' @seealso \code{\link{readGBD}}
-#'
-#' @export
+### Define ITHIM model parameters
+###
+### This function is used to generate a complete list of default
+### parameters
+###
+### @return A list with parameters and estimates
+###
+###
+### @seealso \code{\link{readGBD}}
+###
+###
 createParameterList <- function(
                                 roadInjuriesFile = system.file("roadInjuriesUS.csv", package = "ITHIM"),
                                 activeTransportTimeFile = system.file("activeTransportTime.csv", package = "ITHIM"),
@@ -67,11 +66,11 @@ createParameterList <- function(
                                 ncol = 2, dimnames = list(paste0("ageClass",1:nAgeClass),c("M","F")
                                                           ))
     cvNonTravel <- 1 # coefficient of variation for leisure activity
-    roadInjuries <- readRoadInjuries(roadInjuriesFile)
+    roadInjuries <- array()
     modeNames <- unlist(unique(lapply(roadInjuries, rownames)))
-    # sinMatrix <- createSINmatrix(modeNames)
-    sinMatrix <- matrix(1)
-    distRoadType <- list()
+
+    sinMatrix <- array()
+    distRoadType <- array()
 
     GBD <- readGBD(file = GBDFile)
 
@@ -101,13 +100,13 @@ createParameterList <- function(
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#' Updates an ITHIM object
-#'
-#' Change a parameter and recreate the object.
-#'
-#' @return An updated ITHIM object
-#'
-#' @export
+### Updates an ITHIM object
+###
+### Change a parameter and recreate the object.
+###
+### @return An updated ITHIM object
+###
+###
 updateITHIM <- function( ITHIM, parName, parValue){
 
     ITHIM$parameters[[parName]] <- parValue

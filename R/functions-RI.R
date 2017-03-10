@@ -1,39 +1,129 @@
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#' Computes road injury multiplier
-#'
-#' This multiplier is used to estimate the road injury count in the
-#' scenario.  It is a function of distance by road type (person-miles
-#' and vehicle-miles) and safey in number parameters (one for
-#' person-miles and one for vehicle miles.  Currently both values are
-#' fixed at 0.5 for both person and vehicle.
-#'
-#' @param base a list containing two data frames (one for person-miles
-#'     and one for vehicle miles) indicating the distance travelled in
-#'     the baseline
-#'
-#' @param scenario Same as above but for the scenario.
-#'
-#' @return A list of multipliers.
-#'
-#'@export
-computeMultiplier <- function(base, scenario, safetyInNumbers){
-
-    base <- lapply(base, function(x) x[rownames(x) != "ebike",])
-    scenario <- lapply(scenario, function(x) x[rownames(x) != "ebike",])
-
-    local <- outer((scenario$perMiles[,"Local"]/base$perMiles[,"Local"])^safetyInNumbers[,"victim"],(scenario$vehMiles[,"Local"]/base$vehMiles[,"Local"])^safetyInNumbers[,"striking"],"*")
-        arterial <- outer((scenario$perMiles[,"Arterial"]/base$perMiles[,"Arterial"])^safetyInNumbers[,"victim"],(scenario$vehMiles[,"Arterial"]/base$vehMiles[,"Arterial"])^safetyInNumbers[,"striking"],"*")
-        highway <- outer((scenario$perMiles[,"Highway"]/base$perMiles[,"Highway"])^safetyInNumbers[,"victim"],(scenario$vehMiles[,"Highway"]/base$vehMiles[,"Highway"])^safetyInNumbers[,"striking"],"*")
-
-        local <- cbind(local, NOV = (scenario$perMiles[,"Local"]/base$perMiles[,"Local"])^safetyInNumbers[,"NOV"])
-        arterial <- cbind(arterial, NOV = (scenario$perMiles[,"Arterial"]/base$perMiles[,"Arterial"])^safetyInNumbers[,"NOV"])
-        highway <- cbind(highway, NOV = (scenario$perMiles[,"Highway"]/base$perMiles[,"Highway"])^safetyInNumbers[,"NOV"])
-
-    list(local = local,arterial = arterial,highway = highway)
+### Computes road injury multiplier
+###
+### This multiplier is used to estimate the road injury count in the
+### scenario.  It is a function of distance by road type (person-miles
+### and vehicle-miles) and safey in number parameters (one for
+### person-miles and one for vehicle miles.  Currently both values are
+### fixed at 0.5 for both person and vehicle.
+###
+### @param base a list containing two data frames (one for person-miles
+###     and one for vehicle miles) indicating the distance travelled in
+###     the baseline
+###
+### @param scenario Same as above but for the scenario.
+###
+### @return A list of multipliers.
+###
+computeMultiplier <- function(baseline, scenario, safetyInNumbers){
+  
+  # TODO: update doc
+  
+  # which dim should be used to calc ratio. TODO: could be set via params?
+  
+  dimForRatio <- c('distType')
+  
+  # which index represents person part in distRoadType. TODO: could be set via params?
+  
+  personIdx <- c('person')
+  
+  # which index represents vehicle part in distRoadType. TODO: could be set via params?
+  
+  vehicleIdx <- c('vehicle')
+  
+  # which index represents person part(/victim) in safetyInNumbers TODO: could be set via params?
+  
+  victimIdx <- c('victim')
+  
+  # which index represents vehicle part(/striking) in safetyInNumbers TODO: could be set via params?
+  
+  strikingIdx <- c('striking')
+  
+  # which dim represents modes and should be renamed to victim/striking. TODO: could be set via params?
+  
+  dimForMode <- c('mode')
+  
+  # output renamed mode victim, striking (in that order!).
+  
+  renamedModes <- c('victim', 'striking')
+  
+  #TODO: check dims!
+  
+  # get dim position for distRoadType (dimForRatio) in baseline/scenario. 
+  
+  distByRoadDimPosition <- match(dimForRatio, names(baseline@parameters@distRoadType))
+  
+  # get dim position for distRoadType (dimForRatio) in safetyInNumbers
+  
+  safetyInNumbersDimPosition <- match(dimForRatio, names(safetyInNumbers))
+  
+  # get dim position for mode (dimForMode) in baseline/scenario.
+  
+  modeDimPosition <- match(dimForMode, names(baseline@parameters@distRoadType))
+  
+  # person part rename mode dim
+  
+  personPartNameOfDims <- names(baseline@parameters@distRoadType)
+  personPartNameOfDims[modeDimPosition] <- renamedModes[1]
+  
+  # remove NA and dim(dimForRatio) which is going to be reduced
+  
+  personPartNameOfDims <- personPartNameOfDims[!(is.na(personPartNameOfDims) | personPartNameOfDims %in% dimForRatio)]
+  
+  # person part calcs
+  
+  personPartBaseline <- abind::asub(baseline@parameters@distRoadType, personIdx, distByRoadDimPosition)
+  personPartScenario <- abind::asub(scenario@parameters@distRoadType, personIdx, distByRoadDimPosition)
+  personPartSafetyInNumbers <- abind::asub(safetyInNumbers, victimIdx, safetyInNumbersDimPosition)
+  
+  # check if needed arrays have same dims with exactly the same indices (even same order!)
+  
+  if(!helperCheckIfArraysHaveSameDims(personPartBaseline, personPartScenario)){
+    stop('computeMultiplier: dims: Baseline-Scenario')
+  }
+  
+  if(!helperCheckIfArraysHaveSameDims(personPartBaseline, personPartSafetyInNumbers)){
+    stop('computeMultiplier: dims: Baseline-SafetyInNumbers')
+  }
+  
+  # if ok - calc personPart
+  
+  personPart <- (personPartScenario / personPartBaseline) ^ personPartSafetyInNumbers
+  
+  # vehicle part rename mode dim
+  
+  vehiclePartNameOfDims <- names(baseline@parameters@distRoadType)
+  vehiclePartNameOfDims[modeDimPosition] <- renamedModes[2]
+  
+  # remove NA and dim(dimForRatio) which is going to be reduced
+  
+  vehiclePartNameOfDims <- vehiclePartNameOfDims[!(is.na(vehiclePartNameOfDims) | vehiclePartNameOfDims %in% dimForRatio)]
+  
+  # vehicle part calcs
+  
+  vehiclePartBaseline <- abind::asub(baseline@parameters@distRoadType, vehicleIdx, distByRoadDimPosition)
+  vehiclePartScenario <- abind::asub(scenario@parameters@distRoadType, vehicleIdx, distByRoadDimPosition)
+  vehiclePartSafetyInNumbers <- abind::asub(safetyInNumbers, strikingIdx, safetyInNumbersDimPosition)
+  
+  # check is not needed here since vehicle part uses same matrices as person part
+  
+  vehiclePart <- (vehiclePartScenario / vehiclePartBaseline) ^ vehiclePartSafetyInNumbers
+  
+  # create outer product of personPart and vehiclePart
+  # In the results only "diagonal" cells for non-modes dimensions are important. The rest is a garbage, but the structure of
+  # array is exactly the same as further data inputs.
+  # The first mode-like dimension is victim mode, while the second mode-like dimension is striking mode
+  
+  outputArray <- personPart %o% vehiclePart
+  
+  # hack with names(array) - more in helperCreateArray()
+  
+  names(outputArray) <- c(personPartNameOfDims, vehiclePartNameOfDims)
+  
+  return(outputArray)
 }
-#'@export
 computeInjuryRR <- function(RI.baseline, RI.scenario){
 # written by Tomek
 injuryTypes <- c("Fatal", "Serious")
@@ -131,66 +221,137 @@ for (it in injuryTypes){
 }
 return(injuryRR)
 }
-#'@export
 multiplyInjuries <- function(ITHIM.baseline, ITHIM.scenario){
+  
+  # which dim stores severity. TODO: could be set via params?
+  
+  dimForSeverity <- c('severity')
+  
+  # get dim position for severity (dimForSeverity) in baseline (must be baseline!)
+  
+  severityDimPosition <- match(dimForSeverity, names(ITHIM.baseline@parameters@roadInjuries))
+  
+  # get all indices for roadInjuries. It should unique already!
+  
+  severityIndices <- dimnames(ITHIM.baseline@parameters@roadInjuries)[[severityDimPosition]]
+  
+  # compute multiplier for scenario
 
-multiplier <- computeMultiplier(base = getDistRoadType(ITHIM.baseline), scenario = getDistRoadType(ITHIM.scenario), safetyInNumbers = getParameterSet(ITHIM.baseline)@safetyInNumbers)
+  multiplier <- computeMultiplier(baseline = ITHIM.baseline,
+                                  scenario = ITHIM.scenario,
+                                  safetyInNumbers = ITHIM.baseline@parameters@safetyInNumbers)
+  
+  # create output array. Workaround - abind is used (instead of afill), so output array must be created,
+  # without any indices in severity dimension (these would be added via abind)
+  
+  outputArrayDimensionWithIndices <- dimnames(ITHIM.baseline@parameters@roadInjuries)
+  
+  outputArrayDimensionWithIndices[[severityDimPosition]] <- vector()
+  
+  outputArray = array(NA,
+                      dim = unname(sapply(outputArrayDimensionWithIndices, function(x) length(x), simplify = T)),
+                      dimnames = unname(outputArrayDimensionWithIndices))
+  
+  # iterate over severity indices
+  
+  for (idx in severityIndices){
+    
+    # extract particular severity from baseline roadInjuries
+    
+    severityData <- abind::asub(ITHIM.baseline@parameters@roadInjuries, idx, severityDimPosition)
+    
+    # check if arrays have same structure
+    
+    if(!helperCheckIfArraysHaveSameDims(severityData, multiplier)){
+      stop(paste0('multiplyInjuries: severityData-multiplier: index: ', idx))
+    }
+    
+    # baseline * multiplier
+    
+    outputData <- severityData * multiplier
+    
+    # add to output array
+    
+    outputArray <- abind(outputArray, outputData, along = severityDimPosition)
+    
+  }
+  
+  # bacause of workaround - add indices for severity manually 
+  
+  dimnames(outputArray) <- dimnames(ITHIM.baseline@parameters@roadInjuries)
 
-multiplier <- lapply(multiplier, function(x) ifelse(is.na(x),1,x))
-
-    RI <- getRoadInjuries(ITHIM.baseline)
-
-    #RI <- lapply(RI, function(x) x[,-c(1,2)])
-
-RI.scenario <- list(
-     FatalLocal = RI$FatalLocal*multiplier$local,
-     FatalArterial = RI$FatalArterial*multiplier$arterial,
-     FatalHighway = RI$FatalHighway*multiplier$highway,
-     SeriousLocal = RI$SeriousLocal*multiplier$local,
-     SeriousArterial = RI$SeriousArterial*multiplier$arterial,
-     SeriousHighway = RI$SeriousHighway*multiplier$highway
-     )
-return(RI.scenario)
+  return(outputArray)
 
 }
-#'@export
-computeRoadInjuryBurden <- function(ITHIM.baseline, ITHIM.scenario){
-  injuryRR <- computeInjuryRR(getRoadInjuries(ITHIM.baseline), getRoadInjuries(ITHIM.scenario))
-  RTI.GBD <- subset(getGBD(ITHIM.baseline),disease == "RTIs")
-  RIburden <- data.frame(ageClass = RTI.GBD$ageClass, sex = RTI.GBD$sex, burden = RTI.GBD$variable,delta = RTI.GBD$value*(1-injuryRR$Fatal))
-  return(RIburden)
+helperCheckIfArraysHaveSameDims <- function(array1, array2){
+  
+  # check if arrays
+  
+  if (!(is.array(array1) && is.array(array2))){
+    return(FALSE)
+  }
+  
+  # check def of dimensions
+  
+  if (!( (length(dim(array1)) == length(dim(array2))) && all(dim(array1) == dim(array2)) )){
+    return(FALSE)
+  }
+  
+  # check indices - if ok at this point -> return TRUE
+  
+  if(identical(dimnames(array1), dimnames(array2))){
+    return(TRUE)
+  }
+  
+  return(FALSE)
 }
-#'@export
-updateRoadInjuries <- function(ITHIM.baseline, ITHIM.scenario){
-ITHIM.scenario <- update(ITHIM.scenario, list(roadInjuries = multiplyInjuries(ITHIM.baseline, ITHIM.scenario)))
-return(ITHIM.scenario)
-}
-#'@export
-readRoadInjuries <- function(filename){
-    roadInjuries <- read.csv(file = filename, header = TRUE, stringsAsFactors = FALSE)
+helperCreateArray <- function(inputData){
+  
+  # column with values (TODO: could be defined as param?)
+  
+  columnWithValues <- c("value")
+  
+  # all columns except this with values
+  
+  columnsWithVariables <- setdiff(colnames(inputData), columnWithValues)
+  
+  # rearrange columns in inputData to match columnsWithVariables, than column with the values at the end
+  
+  inputData <- inputData[c(columnsWithVariables, columnWithValues)]
+  
+  # list which should stored names of future dimension with sorted values (future indices)
+  
+  outputArrayDimsWithIndices <- as.list(setNames(columnsWithVariables, columnsWithVariables))
+  
+  # get unique entries. Sort is used to be sure that every future array would have identically defined dims
+  
+  outputArrayDimsWithIndices <- sapply(outputArrayDimsWithIndices, function(x, y) {sort(unique(subset(y, select = x, drop = T)))}, y = inputData, simplify = F)
 
-    if(any(roadInjuries$strikingMode == "nov" | roadInjuries$strikingMode == "NOV")){
-        stop("NOV is a victim mode.  It should not be included among striking modes.")
-        }
-
-    roadInjuries <- subset(roadInjuries, strikingMode != "ebike" & victimMode != "ebike")
-
-    roadInjuries <- data.frame(SeverityByRoadType = with(roadInjuries, paste0(severity,roadType)), roadInjuries[,-(1:2)])
-
-    roadInjuriesList <- split(roadInjuries, roadInjuries$SeverityByRoadType)
-
-    roadInjuries <- lapply(roadInjuriesList, function(x) {
-        foo <- dcast(x, strikingMode ~ victimMode, sum)
-        rownames(foo) <- foo$strikingMode
-        foo <- foo[,-1]
-        })
-return(roadInjuries)
-}
-#' @export
-createSINmatrix <- function(modeNames){
-    victimVec <- c(0.432,0.511,rep(0.4999,5))
-    strikingVec <- victimVec
-    NOVVec <- c(0.64,0.64,rep(0.8,5))
-    sinMatrix <- matrix(c(victimVec,strikingVec,NOVVec), nrow = length(modeNames), ncol = 3, dimnames = list(modeNames, c("victim","striking","NOV")))
-    return(sinMatrix)
+  # create array using needed columns with unique entries as definition of dims
+  
+  outputArray <- array(NA,
+                       unname(sapply(outputArrayDimsWithIndices, function(x) length(x), simplify = T)),
+                       unname(outputArrayDimsWithIndices))
+  
+  # TODO: other way to pass name of the dims? 
+  # This is hack to pass name of columns (variables) to outputArray.
+  # It could be set by attr() command, but "name attr" is better since it is not lost during array modification.
+  
+  names(outputArray) <- names(outputArrayDimsWithIndices)
+  
+  # iterate over input file -> fill every cell of array
+  
+  for (row in seq_len(nrow(inputData))){
+    
+    rowValues <- inputData[row, , drop = FALSE]
+    
+    # thanks to trick with matrix used to subset, it is possible to address particular cell using vector with particular combination of entries
+    
+    outputArray[matrix(unname(unlist(rowValues[columnsWithVariables])), nrow = 1)] <- unname(unlist(rowValues[columnWithValues]))
+    
+  }
+  
+  # return as list 
+  
+  return(list(createdArray = outputArray))
 }
