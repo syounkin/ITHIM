@@ -57,49 +57,6 @@ setAs("ParameterSet", "list", function(from) list(Rwt = from@Rwt, Rct = from@Rct
     GBD = from@GBD, meanType = from@meanType, quantiles = from@quantiles, roadInjuries = from@roadInjuries, distRoadType = from@distRoadType, safetyInNumbers = from@safetyInNumbers)
     )
 
-## #' @export
-## setMethod("createITHIM", signature(x = "ParameterSet"), function(x){
-##     ITHIM <- createITHIMFunction()
-##     ITHIM <- update(ITHIM, x)
-##     return(ITHIM)
-## })
-
-## #' @export
-## setMethod("createITHIM", signature(x = "missing"), function(x){
-##     ITHIM <- createITHIMFunction()
-##     return(ITHIM)
-## })
-
-#' @export
-setMethod("createITHIM", signature(activeTransportFile = "character", GBDFile = "character", roadInjuriesFile = "character"), function(activeTransportFile, GBDFile, roadInjuriesFile){
-    ITHIM <- createITHIMFunction(activeTransportTimeFile = activeTransportFile, roadInjuriesFile = roadInjuriesFile, GBDFile = GBDFile)
-    return(ITHIM)
-})
-
-#' @export
-setMethod("createITHIM", signature(activeTransportFile = "character", GBDFile = "character", roadInjuriesFile = "missing"), function(activeTransportFile, GBDFile, roadInjuriesFile){
-    ITHIM <- createITHIMFunction(activeTransportTimeFile = activeTransportFile, GBDFile = GBDFile)
-    return(ITHIM)
-})
-
-#' @export
-setMethod("createITHIM", signature(activeTransportFile = "character", GBDFile = "missing", roadInjuriesFile = "missing"), function(activeTransportFile, GBDFile, roadInjuriesFile){
-    ITHIM <- createITHIMFunction(activeTransportTimeFile = activeTransportFile)
-    return(ITHIM)
-})
-
-#' @export
-setMethod("createITHIM", signature(activeTransportFile = "character", GBDFile = "missing", roadInjuriesFile = "character"), function(activeTransportFile, GBDFile, roadInjuriesFile){
-    ITHIM <- createITHIMFunction(activeTransportTimeFile = activeTransportFile, roadInjuriesFile = roadInjuriesFile)
-    return(ITHIM)
-})
-
-#' @export
-setMethod("createITHIM", signature(activeTransportFile = "missing", GBDFile = "missing", roadInjuriesFile = "missing"), function(activeTransportFile, GBDFile, roadInjuriesFile){
-    ITHIM <- createITHIMFunction()
-    return(ITHIM)
-})
-
 #' @export
 setMethod("update", signature(x = "ParameterSet", parList = "list"), function(x, parList){
     x <- as(x, "list")
