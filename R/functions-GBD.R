@@ -19,7 +19,7 @@ readGBD <- function(filename){
         stop("Error with column names")
     }
 
-    if( !(setEquality(unique(gbd$disease),c("BreastCancer", "ColonCancer", "HHD", "IHD", "Stroke", "Dementia", "Diabetes", "Depression", "LungCancer", "InflammatoryHD", "RespiratoryDisease", "RTIs")))){
+    if( !(all(unique(gbd$disease) %in% c("BreastCancer", "ColonCancer", "CVD", "Dementia", "Diabetes", "Depression", "RTIs")))){
         stop("Error with disease names")
     }
 
@@ -44,12 +44,11 @@ readGBD <- function(filename){
 ###
 ###
 reformatGBD <- function(gbd){
-            gbdList <- split(gbd,gbd$disease)
-        gbdList[["CVD"]] <- data.frame(disease = "CVD", gbdList$IHD[,c("sex",  "ageClass")], gbdList$IHD[,c("dproj","yll","yld","daly")] + gbdList$InflammatoryHD[,c("dproj","yll","yld","daly")] + gbdList$HHD[,c("dproj","yll","yld","daly")])
-        gbdList2 <- lapply(gbdList,function(x) split(x,as.factor(x$sex)))
-        gbdList2 <- lapply(gbdList2, function(x) list(M=x$M,F=x$F))
-            return(gbdList2)
-            }
+    gbdList <- split(gbd,gbd$disease)
+    gbdList2 <- lapply(gbdList,function(x) split(x,as.factor(x$sex)))
+    gbdList2 <- lapply(gbdList2, function(x) list(M=x$M,F=x$F))
+    return(gbdList2)
+}
 readGBD2 <- function(filename){
     foo <- read.csv(file = filename)
     gbdArray <- array(foo$value, dim = c(13,2,8,4), dimnames = list(unique(foo$disease),unique(foo$sex), unique(foo$ageClass), unique(foo$burdenType)))
