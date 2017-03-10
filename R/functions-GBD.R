@@ -20,7 +20,7 @@ readGBD <- function(filename){
     }
 
     if( !(all(unique(gbd$disease) %in% c("BreastCancer", "ColonCancer", "CVD", "Dementia", "Diabetes", "Depression", "RTIs")))){
-        stop("Error with disease names")
+        stop("Extraneous diseases are included in the disease burden file.  Currently the ITHIM package does not support this.  Please see the help page for createITHIM and remove extraneous diseases from disease burden file.")
     }
 
     if(length(names(gbd))==7){
