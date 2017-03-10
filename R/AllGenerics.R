@@ -155,9 +155,20 @@ setGeneric("getParameterNames", function(x) standardGeneric("getParameterNames")
 #'     development).  Default value uses data from the inst directory.
 #'
 #' @note The path is relative to current working directory.
+#'
 #' @note GBD stands for Global Burden of Disease.  We use this simply
 #'     because this was our original data source.  It does not need to
 #'     be estimates from GBD.  Any disease burden estimate is fine.
+#' @note The disease burden file must contain values for any of the
+#'     following diseases; "BreastCancer", "ColonCancer", "CVD",
+#'     "Dementia", "Diabetes", "Depression" and "RTIs", and must be
+#'     labeled accordingly.  RTI stands for road traffic injury and is
+#'     needed only if the road injury component is being used.
+#'
+#' @note The format for the disease burden will be normalized and
+#'     explained in greater detail soon.  See
+#'     \link{https://github.com/syounkin/ITHIM/blob/devel/inst/gbd.csv}
+#'     for an example.
 #' 
 #' @return An object of class ITHIM
 #'

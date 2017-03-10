@@ -110,6 +110,13 @@ computeMeanMatrices <- function(parList){
 ###
 deltaBurdenFunction <- function(ITHIM.baseline, ITHIM.scenario, bur = "daly", dis = "all"){
 
+    diseases <- names(getGBD(ITHIM.baseline, format = "list"))
+    diseases <- diseases[diseases != "RTIs"]
+
+    if(!(dis %in% c(diseases,"all"))){
+        stop("Value for 'dis' not contained in disease burden file.")
+    }
+
     ITHIM.baseline <- as(ITHIM.baseline, "list")
     ITHIM.scenario <- as(ITHIM.scenario, "list")
 
@@ -280,14 +287,14 @@ createActiveTransportRRs <- function(nQuantiles = 5){
     exposure[["Depression"]][4:nAgeClass,1:2] <- 11.25
     RR.lit[["Depression"]][4:nAgeClass,1:2] <- 0.859615572255727
 
-    exposure[["Stroke"]] <- exposure[["CVD"]]
-    RR.lit[["Stroke"]] <- RR.lit[["CVD"]]
+    ## exposure[["Stroke"]] <- exposure[["CVD"]]
+    ## RR.lit[["Stroke"]] <- RR.lit[["CVD"]]
 
-    exposure[["HHD"]] <- exposure[["CVD"]]
-    RR.lit[["HHD"]] <- RR.lit[["CVD"]]
+    ## exposure[["HHD"]] <- exposure[["CVD"]]
+    ## RR.lit[["HHD"]] <- RR.lit[["CVD"]]
 
     k <- 0.5
-    RR <- mapply(function(x,y,k) x^(1/y)^k, RR.lit, exposure, 0.5, SIMPLIFY=FALSE)
+    RR <- mapply(function(x,y,k) x^(1/y)^k, RR.lit, exposure, k, SIMPLIFY=FALSE)
     RR <- lapply(RR, reshapeRR, nQuantiles = nQuantiles)
 
     return(RR)
@@ -326,6 +333,10 @@ createActiveTransportRRs <- function(nQuantiles = 5){
 ###
 compareModels <- function(baseline, scenario){
 
+    # diseases <- c("BreastCancer","ColonCancer","Depression","Dementia","Diabetes", "CVD")
+    diseases <- names(baseline$parameters$GBD)
+    diseases <- diseases[diseases != "RTIs"]
+
     baseline <- as(baseline, "list")
     scenario <- as(scenario, "list")
     baseline$parameters <- as(baseline$parameters, "list")
@@ -350,8 +361,6 @@ compareModels <- function(baseline, scenario){
     NewBurdenList <- lapply(NewBurden,function(x) list(M = x[,"M"], F = x[,"F"]))
     denom <- lapply(normalizedDiseaseBurden, function(x) lapply(x, rowSums))
     denom.baseline <- lapply(normalizedDiseaseBurden.baseline, function(x) lapply(x, rowSums))
-
-    diseases <- c("BreastCancer","ColonCancer","Depression","Dementia","Diabetes", "CVD")
 
     GBD <- GBD[diseases]
     NewBurdenList <- NewBurdenList[diseases]
