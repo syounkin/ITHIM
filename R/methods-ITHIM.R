@@ -172,9 +172,11 @@ setMethod("getDistRoadType", signature(x = "ITHIM"), function(x){
 #' @export
 setMethod("getGBD", signature(x = "ITHIM", format = "character"), function(x, format){
     if(format == "list"){
-        return(x@parameters@GBD)
+        return(getParameterSet(x)@GBD)
     }else if(format == "data.frame"){
-        return(melt(x@parameters@GBD))
+        GBD <- melt(getParameterSet(x)@GBD, id.vars =c("disease","sex","ageClass"),varnames = "value")
+        GBD <- GBD[,!(names(GBD) %in% c("L2","L1"))]
+        return(GBD)
     }else{
         message("Error with getGBD format argument.")
         }
