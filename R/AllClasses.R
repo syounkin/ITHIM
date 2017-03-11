@@ -66,9 +66,8 @@ setClass("ParameterSet", representation(Rwt = "matrix",
 #'
 #' 9. standard deviation of leisure activity (cvNonTravel),
 #'
-#' @name ITHIM
+#' @name ITHIM-class
 #' @rdname ITHIM
-#' @aliases ITHIM-class
 #' @exportClass ITHIM
 setClass("ITHIM", representation(parameters = "ParameterSet",
                                  means = "list",

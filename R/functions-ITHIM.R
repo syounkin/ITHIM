@@ -72,7 +72,7 @@ createParameterList <- function(
     sinMatrix <- array()
     distRoadType <- array()
 
-    GBD <- readGBD(file = GBDFile)
+    GBD <- readGBD(filename = GBDFile)
 
     meanType <- "referent"
     n <- 100 # percentiles instead of quintiles

@@ -20,22 +20,26 @@
 #' getMeans(ITHIM.new)
 #'
 #' @export
+#' @docType methods
+#' @rdname update-methods
 setGeneric("update", function(x, parList) standardGeneric("update"))
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#' Tile plot
-#'
-#' Creates a tile plot
-#'
-#' @param x ITHIM object
-#' @param n A numeric value indicating the length of the walk and
-#'     cycle vectors
-#'
-#' @return A figure created by ggplot2
-#'
-#' @export
-setGeneric("tilePlot", function(x, n) standardGeneric("tilePlot"))
+## #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+## #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+## #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+## #' Tile plot
+## #'
+## #' Creates a tile plot
+## #'
+## #' @param x ITHIM object
+## #' @param n A numeric value indicating the length of the walk and
+## #'     cycle vectors
+## #'
+## #' @return A figure created by ggplot2
+## #'
+## #' @export
+## #' @docType methods
+## #' @rdname tilePlot-methods
+## setGeneric("tilePlot", function(x, n) standardGeneric("tilePlot"))
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -62,6 +66,8 @@ setGeneric("tilePlot", function(x, n) standardGeneric("tilePlot"))
 #'     is misleading.
 #' 
 #' @export
+#' @docType methods
+#' @rdname getBurden-methods
 setGeneric("getBurden", function(x, bur, dis) standardGeneric("getBurden"))
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -90,6 +96,8 @@ setGeneric("getBurden", function(x, bur, dis) standardGeneric("getBurden"))
 #'     \code{getBurden} and \code{deltaBurden}.
 #' 
 #' @export
+#' @docType methods
+#' @rdname deltaBurden-methods
 setGeneric("deltaBurden", function(baseline, scenario, bur, dis) standardGeneric("deltaBurden"))
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -106,6 +114,8 @@ setGeneric("deltaBurden", function(baseline, scenario, bur, dis) standardGeneric
 #'     columns.  NOV is considered a striking mode.
 #' 
 #' @export
+#' @docType methods
+#' @rdname getRoadInjuries-methods
 setGeneric("getRoadInjuries", function(x) standardGeneric("getRoadInjuries"))
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -123,6 +133,8 @@ setGeneric("getRoadInjuries", function(x) standardGeneric("getRoadInjuries"))
 #'     now.
 #'
 #' @export
+#' @docType methods
+#' @rdname getDistRoadType-methods
 setGeneric("getDistRoadType", function(x) standardGeneric("getDistRoadType"))
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -136,6 +148,8 @@ setGeneric("getDistRoadType", function(x) standardGeneric("getDistRoadType"))
 #' @return A character vector of parameter names
 #'
 #' @export
+#' @docType methods
+#' @rdname getParameterNames-methods
 setGeneric("getParameterNames", function(x) standardGeneric("getParameterNames"))
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -167,7 +181,7 @@ setGeneric("getParameterNames", function(x) standardGeneric("getParameterNames")
 #'
 #' @note The format for the disease burden will be normalized and
 #'     explained in greater detail soon.  See
-#'     \link{https://github.com/syounkin/ITHIM/blob/devel/inst/gbd.csv}
+#'     \url{https://github.com/syounkin/ITHIM/blob/devel/inst/gbd.csv}
 #'     for an example.
 #' 
 #' @return An object of class ITHIM
@@ -175,6 +189,9 @@ setGeneric("getParameterNames", function(x) standardGeneric("getParameterNames")
 #' @note If run with no arguments this function will return the
 #'     default ITHIM object
 #'
+#' @export
+#' @docType methods
+#' @rdname createITHIM-methods
 #' @examples
 #'
 #' activeTransportFile <- system.file("activeTransportTime.csv", package = "ITHIM")
@@ -182,7 +199,6 @@ setGeneric("getParameterNames", function(x) standardGeneric("getParameterNames")
 #'
 #' ITHIM <- createITHIM(activeTransportFile = activeTransportFile, GBDFile = GBDFile)
 #' 
-#' @export
 setGeneric("createITHIM", function(activeTransportFile, GBDFile, roadInjuriesFile) standardGeneric("createITHIM"))
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -196,6 +212,8 @@ setGeneric("createITHIM", function(activeTransportFile, GBDFile, roadInjuriesFil
 #' @return An object of class ParameterSet
 #'
 #' @export
+#' @docType methods
+#' @rdname getParameterSet-methods
 setGeneric("getParameterSet", function(x) standardGeneric("getParameterSet"))
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -210,6 +228,8 @@ setGeneric("getParameterSet", function(x) standardGeneric("getParameterSet"))
 #' @return A numeric vector of means.
 #'
 #' @export
+#' @docType methods
+#' @rdname getMeans-methods
 setGeneric("getMeans", function(x) standardGeneric("getMeans"))
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -225,6 +245,8 @@ setGeneric("getMeans", function(x) standardGeneric("getMeans"))
 #' @return Either a list or a data frame containg GBD data.
 #'
 #' @export
+#' @docType methods
+#' @rdname getGBD-methods
 setGeneric("getGBD", function(x, format = "data.frame") standardGeneric("getGBD"))
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -238,6 +260,8 @@ setGeneric("getGBD", function(x, format = "data.frame") standardGeneric("getGBD"
 #' @return An array of safety in numbers parameters
 #'
 #' @export
+#' @docType methods
+#' @rdname getSiN-methods
 setGeneric("getSiN", function(x) standardGeneric("getSiN"))
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -251,6 +275,9 @@ setGeneric("getSiN", function(x) standardGeneric("getSiN"))
 #'
 #' @return A numerical matrix of mean walk time
 #'
+#' @export
+#' @docType methods
+#' @rdname getWalkTime-methods
 setGeneric("getWalkTime", function(x, form) standardGeneric("getWalkTime"))
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -263,6 +290,9 @@ setGeneric("getWalkTime", function(x, form) standardGeneric("getWalkTime"))
 #'
 #' @return A numerical matrix of mean cycle time
 #'
+#' @export
+#' @docType methods
+#' @rdname getCycleTime-methods
 setGeneric("getCycleTime", function(x, form) standardGeneric("getCycleTime"))
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -276,4 +306,6 @@ setGeneric("getCycleTime", function(x, form) standardGeneric("getCycleTime"))
 #' @return A numerical matrix of mean non-travel activity
 #'
 #' @export
+#' @docType methods
+#' @rdname getNonTravelMETs-methods
 setGeneric("getNonTravelMETs", function(x, form) standardGeneric("getNonTravelMETs"))

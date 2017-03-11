@@ -1,4 +1,3 @@
-#' @export
 setMethod("show", signature(object="ParameterSet"), function(object){
     cat("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n")
     cat("~~~~~ Physical Activity ~~~~~~~~~~~~~~~~~~~~~~~~~\n")
@@ -57,6 +56,8 @@ setAs("ParameterSet", "list", function(from) list(Rwt = from@Rwt, Rct = from@Rct
     GBD = from@GBD, meanType = from@meanType, quantiles = from@quantiles, roadInjuries = from@roadInjuries, distRoadType = from@distRoadType, safetyInNumbers = from@safetyInNumbers)
     )
 
+#' @rdname update-methods
+#' @aliases update
 #' @export
 setMethod("update", signature(x = "ParameterSet", parList = "list"), function(x, parList){
     x <- as(x, "list")
@@ -66,11 +67,15 @@ setMethod("update", signature(x = "ParameterSet", parList = "list"), function(x,
     return(createParameterSet(x))
 })
 
+#' @rdname getMeans-methods
+#' @aliases getMeans
 #' @export
 setMethod("getMeans", signature(x = "ParameterSet"), function(x){
     return(data.frame(walk = x@muwt, cycle = x@muct, nonTravel = x@muNonTravel))
 })
 
+#' @rdname getRoadInjuries-methods
+#' @aliases getRoadInjuries
 #' @export
 setMethod("getRoadInjuries", signature(x = "ParameterSet"), function(x){
     ## RI <- lapply(x@roadInjuries, function(df) {
@@ -82,14 +87,20 @@ setMethod("getRoadInjuries", signature(x = "ParameterSet"), function(x){
     return(x@roadInjuries)
 })
 
+#' @rdname getDistRoadType-methods
+#' @aliases getDistRoadType
 #' @export
 setMethod("getDistRoadType", signature(x = "ParameterSet"), function(x){
     return(x@distRoadType)
 })
+#' @rdname getParameterNames-methods
+#' @aliases getParameterNames
 #' @export
 setMethod("getParameterNames", signature(x = "ParameterSet"), function(x){
     return(slotNames(x))
 })
+#' @rdname getSiN-methods
+#' @aliases getSiN
 #' @export
 setMethod("getSiN", signature(x = "ParameterSet"), function(x){
     return(x@safetyInNumbers)

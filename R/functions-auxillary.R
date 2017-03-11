@@ -51,11 +51,11 @@ s4Methods <- function(class)
     sapply(strsplit(methods, " "), "[", 2)
 }
 setEquality <- function(a,b) identical(sort(a),sort(b))
-plotRR <- function(RR.baseline,RR.scenario){
-D <- melt(list(baseline = RR.baseline, scenario = RR.scenario), c("age","quint"), value.name = "RR")
-D <- subset(D, !(age %in% paste0("ageClass",1:2)))
-names(D) <- c("age","quint","RR","sex","vision")
-p <- ggplot(D, aes(age,  RR)) + geom_bar(aes(fill=vision), stat = "identity", position = "dodge")
-p <- p + facet_grid( quint ~ sex )
-return(p)
-}
+## plotRR <- function(RR.baseline,RR.scenario){
+## D <- melt(list(baseline = RR.baseline, scenario = RR.scenario), c("age","quint"), value.name = "RR")
+## D <- subset(D, !(age %in% paste0("ageClass",1:2)))
+## names(D) <- c("age","quint","RR","sex","vision")
+## p <- ggplot(D, aes(age,  RR)) + geom_bar(aes(fill=vision), stat = "identity", position = "dodge")
+## p <- p + facet_grid( quint ~ sex )
+## return(p)
+## }

@@ -1,3 +1,8 @@
 Makefile
 .git
 .gitignore
+..Rcheck/
+README.md
+ITHIM.pdf
+.*.tar.gz
+.*.Rcheck

@@ -1,2 +1,2 @@
-library(testthat)
+require("testthat")
 test_check("ITHIM")

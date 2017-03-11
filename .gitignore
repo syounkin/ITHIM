@@ -17,3 +17,6 @@ html
 *.tar.gz
 #*
 .~*
+..Rcheck/
+README.md
+ITHIM.Rcheck

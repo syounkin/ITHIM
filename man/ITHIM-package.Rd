@@ -104,6 +104,6 @@ Samuel G. Younkin \email{syounkin@wisc.edu}
 \url{http://www.cedar.iph.cam.ac.uk/research/modelling/ithim/}, \url{https://ithim.ghi.wisc.edu/}
 }
 \seealso{
-\code{\link{createITHIM}}, \code{\link{getMeans}}, \code{\link{deltaDALY}}, \code{\link{getBurden}}, \code{\link{update}}
+\code{\link{createITHIM}}, \code{\link{getMeans}}, \code{\link{deltaBurden}}, \code{\link{getBurden}}, \code{\link{update}}
 }
 
