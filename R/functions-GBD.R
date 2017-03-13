@@ -10,7 +10,18 @@
 ###
 ###
 readGBD <- function(filename){
+
     gbd <- read.csv(file=filename, stringsAsFactors = FALSE)
+
+    if("burdenType" %in% names(gbd)){
+        normalized <- TRUE
+    }else{
+        normalized <- FALSE
+    }
+
+    if(normalized){
+        gbd <- gbd %>% spread(burdenType, value)
+    }
 
     if(!(
         setEquality(names(gbd), c("region","disease","sex","ageClass","dproj","yll","yld","daly"))
