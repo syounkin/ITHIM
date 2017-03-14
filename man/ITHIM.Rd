@@ -30,7 +30,7 @@ There are 9 parameters in the ITHIM physical activity
 9. standard deviation of leisure activity (cvNonTravel),
 }
 \section{Parameter List}{
- 
+
 \describe{
 \item{Rwt}{A numerical matrix for the walking time, relative to females in ageClass3}
 \item{Rct}{A numerical matrix for the cycling time, relative to females in ageClass3}

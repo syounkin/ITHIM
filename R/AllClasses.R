@@ -17,6 +17,7 @@ setClass("ParameterSet", representation(Rwt = "matrix",
                                         muNonTravel = "numeric",
                                         muNonTravelMatrix = "matrix",
                                         GBD = "list",
+                                        F = "matrix",
                                         meanType = "character",
                                         quantiles = "vector",
                                         roadInjuries = "array",
@@ -34,7 +35,7 @@ setClass("ParameterSet", representation(Rwt = "matrix",
 #' be used in a modular fashion to compare baseline and scenario
 #' models.
 #'
-#'@section Parameter List: 
+#'@section Parameter List:
 #' \describe{
 #' \item{Rwt}{A numerical matrix for the walking time, relative to females in ageClass3}
 #' \item{Rct}{A numerical matrix for the cycling time, relative to females in ageClass3}
