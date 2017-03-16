@@ -37,7 +37,7 @@ createITHIMFunction <- function(roadInjuriesFile = system.file("roadInjuriesUS.c
 createParameterList <- function(
                                 roadInjuriesFile = system.file("roadInjuriesUS.csv", package = "ITHIM"),
                                 activeTransportTimeFile = system.file("activeTransportTime.csv", package = "ITHIM"),
-                                GBDFile = system.file("gbd.csv", package = "ITHIM")){
+                                GBDFile = system.file("gbd.csv", package = "ITHIM"), meanType = "overall"){
 
     nAgeClass <- 8L
 
@@ -46,11 +46,8 @@ createParameterList <- function(
     Mwt <- activeTransportTimeList$walk
     Mct <- activeTransportTimeList$cycle
 
-    muwt <- Mwt[3,2] # min per week
-    muct <- Mct[3,2] # min per week
-
-    Rwt <- Mwt/muwt
-    Rct <- Mct/muct
+    Rwt <- Mwt/Mwt[3,2]
+    Rct <- Mct/Mct[3,2]
 
     cv <- 3.0288 # coefficient of variation for active transport time
 
@@ -85,7 +82,16 @@ createParameterList <- function(
                 byrow = TRUE, nrow = nAgeClass, ncol = 2,
                 dimnames = list(paste0("ageClass",1:nAgeClass),c("M","F")))
 
-    meanType <- "overall"
+    if( meanType == "referent" ){
+        muwt <- Mwt[3,2]
+        muct <- Mct[3,2]
+    }else if( meanType == "overall" ){
+        muwt <- sum(F*Mwt)
+        muct <- sum(F*Mct)
+    }else{
+        stop("Wrong meanType value.")
+    }
+    
     n <- 100 # percentiles instead of quintiles
     quantiles <- seq(1/n, (n-1)/n, by = 1/n)
 
