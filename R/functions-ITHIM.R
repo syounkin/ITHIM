@@ -74,21 +74,20 @@ createParameterList <- function(
 
     GBD <- readGBD(filename = GBDFile)
 
-    F <- matrix(c(0.0000000,0.0000000,
-                                  0.9715051,1.0354205,
-                                  0.9505718,0.8999381,
-                                  0.8315675,0.7180636,
-                                  0.0000000,0.0000000,
-                                  1.0000000,1.1171469,
-                                  0.9878429,0.9434823,
-                                  0.8782254,0.7737818),
-                                ncol = 2, dimnames = list(paste0("ageClass",1:nAgeClass),c("M","F")
-))
+    F <- matrix(c(0.0353518933,0.0337319963,
+                  0.0677709111,0.0646090177,
+                  0.1082721374,0.1025659595,
+                  0.1007813234,0.0996136545,
+                  0.1012405253,0.1051998903,
+                  0.0429797369,0.047666298,
+                  0.0236366386,0.0297455114,
+                  0.0130355262,0.0237989804),
+                byrow = TRUE, nrow = nAgeClass, ncol = 2,
+                dimnames = list(paste0("ageClass",1:nAgeClass),c("M","F")))
 
-    meanType <- "referent"
+    meanType <- "overall"
     n <- 100 # percentiles instead of quintiles
     quantiles <- seq(1/n, (n-1)/n, by = 1/n)
-
 
     return( new("ParameterSet",
         Rwt = Rwt,
