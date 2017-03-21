@@ -37,7 +37,9 @@ createITHIMFunction <- function(roadInjuriesFile = system.file("roadInjuriesUS.c
 createParameterList <- function(
                                 roadInjuriesFile = system.file("roadInjuriesUS.csv", package = "ITHIM"),
                                 activeTransportTimeFile = system.file("activeTransportTime.csv", package = "ITHIM"),
-                                GBDFile = system.file("gbd.csv", package = "ITHIM"), meanType = "overall"){
+                                GBDFile = system.file("gbd.csv", package = "ITHIM"),
+                                FFile = system.file("F.csv", package = "ITHIM"),
+                                meanType = "overall"){
 
     nAgeClass <- 8L
 
@@ -71,16 +73,7 @@ createParameterList <- function(
 
     GBD <- readGBD(filename = GBDFile)
 
-    F <- matrix(c(0.0353518933,0.0337319963,
-                  0.0677709111,0.0646090177,
-                  0.1082721374,0.1025659595,
-                  0.1007813234,0.0996136545,
-                  0.1012405253,0.1051998903,
-                  0.0429797369,0.047666298,
-                  0.0236366386,0.0297455114,
-                  0.0130355262,0.0237989804),
-                byrow = TRUE, nrow = nAgeClass, ncol = 2,
-                dimnames = list(paste0("ageClass",1:nAgeClass),c("M","F")))
+    F <- readF(filename = FFile)
 
     if( meanType == "referent" ){
         muwt <- Mwt[3,2]
@@ -91,7 +84,7 @@ createParameterList <- function(
     }else{
         stop("Wrong meanType value.")
     }
-    
+
     n <- 100 # percentiles instead of quintiles
     quantiles <- seq(1/n, (n-1)/n, by = 1/n)
 
@@ -137,3 +130,12 @@ updateITHIM <- function( ITHIM, parName, parValue){
     )
     return(ITHIM)
     }
+readF <- function(filename){
+    F <- read.csv(file = filename, header = TRUE, stringsAsFactors = FALSE)
+
+    foo <- split(F,F$sex)
+
+    F <- matrix(c(foo$M$value,foo$F$value),ncol = 2, dimnames = list(foo$F$ageClass,c("M","F")))
+
+    return(F)
+}
