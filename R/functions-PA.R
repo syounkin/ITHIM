@@ -19,7 +19,7 @@
 ###
 readActiveTransportTime <- function(filename){
     activeTravel <- read.csv(file = filename, header = TRUE, stringsAsFactors = FALSE)
-    
+
     activeTravelList <- split(activeTravel, activeTravel$mode)
 
     nAgeClass <- unique(unlist(lapply(activeTravelList, function(x) length(x$ageClass))))/2
@@ -33,7 +33,7 @@ readActiveTransportTime <- function(filename){
         dimnames(activeTravelMatrix) <- list(paste0("ageClass",1:nAgeClass), c("M","F"))
         activeTravelMatrix
     })
-    
+
     return(activeTravelList)
 }
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -73,11 +73,14 @@ computeMeanMatrices <- function(parList){
         if( meanType == "overall" ){
             alphawt <- sum(F*Rwt)
             alphact <- sum(F*Rct)
+            alphant <- sum(F*muNonTravelMatrix)
             meanWalkTime <- muwt/alphawt*Rwt
             meanCycleTime <- muct/alphact*Rct
+            meanNonTravel <- muNonTravel/alphant*muNonTravelMatrix
         }else if( meanType == "referent" ){
             meanWalkTime <- muwt*Rwt
             meanCycleTime <- muct*Rct
+            meanNonTravel <- muNonTravel*muNonTravelMatrix
         }else{
             message("Wrong mean type.")
         }
@@ -86,7 +89,7 @@ computeMeanMatrices <- function(parList){
         sdActiveTransportTime <- meanActiveTransportTime*cv
         pWalk <- 1 - propTimeCycling #meanWalkTime/(meanWalkTime + meanCycleTime)
 
-        return(list(meanWalkTime = meanWalkTime, meanCycleTime = meanCycleTime, meanActiveTransportTime = meanActiveTransportTime, sdActiveTransportTime = sdActiveTransportTime, propTimeCycling = propTimeCycling, pWalk = pWalk)) # meanWalkMET = meanWalkMET, meanCycleMET = meanCycleMET,
+        return(list(meanWalkTime = meanWalkTime, meanCycleTime = meanCycleTime, meanActiveTransportTime = meanActiveTransportTime, sdActiveTransportTime = sdActiveTransportTime, propTimeCycling = propTimeCycling, pWalk = pWalk, meanNonTravel = meanNonTravel)) # meanWalkMET = meanWalkMET, meanCycleMET = meanCycleMET,
         })
 }
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
