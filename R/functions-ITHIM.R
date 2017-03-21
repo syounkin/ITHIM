@@ -133,6 +133,10 @@ updateITHIM <- function( ITHIM, parName, parValue){
 readF <- function(filename){
     F <- read.csv(file = filename, header = TRUE, stringsAsFactors = FALSE)
 
+    if(!all(colnames(F)==c("ageClass","sex","value"))){
+        stop("Column names for F file must be ageClass, sex and value.")
+    }
+
     foo <- split(F,F$sex)
 
     F <- matrix(c(foo$M$value,foo$F$value),ncol = 2, dimnames = list(foo$F$ageClass,c("M","F")))
