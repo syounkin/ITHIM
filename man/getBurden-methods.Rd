@@ -23,7 +23,7 @@ getBurden(x, bur, dis)
 \item{x}{ITHIM object}
 
 \item{bur}{A character string indicating the type of disease burden
-measure.  Available values are "dproj", "yll", "yld" and
+measure.  Available values are "deaths", "yll", "yld" and
 "daly".  The default value is "daly".}
 
 \item{dis}{A character string indicating which disease to consider.

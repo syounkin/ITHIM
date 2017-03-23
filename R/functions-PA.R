@@ -104,7 +104,7 @@ computeMeanMatrices <- function(parList){
 ### @param ITHIM.scenario An ITHIM object
 ### @param bur A chatacter string indicating the type of burden.
 ###     Acceptable values are daly.delta, yll.delta, yld.delta,
-###     dproj.delta (projected deaths).
+###     deaths.delta (projected deaths).
 ### @param dis A character string indicating which disease is of interest.  Acceptable values are BreastCancer, ColonCancer, CVD, Dementia, Depression, Diabetes, Stroke, HHD or total.  The default value is tot
 ###
 ### @return A numerical value for the chnage in disease burden between
@@ -132,7 +132,7 @@ deltaBurdenFunction <- function(ITHIM.baseline, ITHIM.scenario, bur = "daly", di
     }else if( bur == "yld"){
         burOld <- "yld.delta"
     }else if( bur == "deaths"){
-        burOld <- "dproj.delta"
+        burOld <- "deaths.delta"
     }else{
         stop("Value for bur is unrecognized.")
     }
@@ -323,7 +323,7 @@ createActiveTransportRRs <- function(nQuantiles = 5){
 ### \item{RRnormalizedToBaseline}{}
 ### \item{AF}{Attributable fraction.  Computed with \code{\link{AFForList2}}}
 ### \item{normalizedDiseaseBurden}{}
-### \item{dproj.delta}{Change in number of deaths. (the variable name dproj comes from Geoff's projected data)}
+### \item{deaths.delta}{Change in number of deaths. (the variable name deaths comes from Geoff's projected data)}
 ### \item{yll.delta}{Change in YLL}
 ### \item{yld.delta}{Change in YLD}
 ### \item{daly.delta}{Change in DALY}
@@ -369,13 +369,13 @@ compareModels <- function(baseline, scenario){
     normalizedDiseaseBurden <- normalizedDiseaseBurden[diseases]
     normalizedDiseaseBurden.baseline <- normalizedDiseaseBurden.baseline[diseases]
 
-    dproj <- mapply(FUN = burdenFunction, GBD, NewBurdenList, denom, MoreArgs = list(burden = "dproj"), SIMPLIFY = FALSE)
-    dproj.baseline <- mapply(FUN = burdenFunction, GBD, NewBurdenList, denom.baseline, MoreArgs = list(burden = "dproj", baseline = TRUE), SIMPLIFY = FALSE)
-    dprojBurden <- calculateBurden(dproj, normalizedDiseaseBurden)
-    dprojBurden.baseline <- calculateBurden(dproj.baseline, normalizedDiseaseBurden.baseline)
-    dproj.delta <- mapply(function(x,y){
+    deaths <- mapply(FUN = burdenFunction, GBD, NewBurdenList, denom, MoreArgs = list(burden = "deaths"), SIMPLIFY = FALSE)
+    deaths.baseline <- mapply(FUN = burdenFunction, GBD, NewBurdenList, denom.baseline, MoreArgs = list(burden = "deaths", baseline = TRUE), SIMPLIFY = FALSE)
+    deathsBurden <- calculateBurden(deaths, normalizedDiseaseBurden)
+    deathsBurden.baseline <- calculateBurden(deaths.baseline, normalizedDiseaseBurden.baseline)
+    deaths.delta <- mapply(function(x,y){
         mapply("-",x,y, SIMPLIFY = FALSE)
-        },dprojBurden,dprojBurden.baseline, SIMPLIFY = FALSE)
+        },deathsBurden,deathsBurden.baseline, SIMPLIFY = FALSE)
 
     yll <- mapply(FUN = burdenFunction, GBD, NewBurdenList, denom, MoreArgs = list(burden = "yll"), SIMPLIFY = FALSE)
     yll.baseline <- mapply(FUN = burdenFunction, GBD, NewBurdenList, denom.baseline, MoreArgs = list(burden = "yll", baseline = TRUE), SIMPLIFY = FALSE)
@@ -406,7 +406,7 @@ compareModels <- function(baseline, scenario){
                 RRnormalizedToBaseline = RRnormalizedToBaseline.scenario,
                 AF = AF,
                 normalizedDiseaseBurden = normalizedDiseaseBurden,
-                dproj.delta = dproj.delta,
+                deaths.delta = deaths.delta,
                 yll.delta = yll.delta,
                 yld.delta = yld.delta,
                 daly.delta = daly.delta

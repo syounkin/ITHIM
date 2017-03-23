@@ -5,7 +5,7 @@
 ###
 ### Read in Global Burden of Disease Data
 ###
-### @return A list of lists of matrices with dproj, yll, yld and daly
+### @return A list of lists of matrices with deaths, yll, yld and daly
 ###     by age and sex and disease
 ###
 ###
@@ -24,9 +24,9 @@ readGBD <- function(filename){
     }
 
     if(!(
-        setEquality(names(gbd), c("region","disease","sex","ageClass","dproj","yll","yld","daly"))
+        setEquality(names(gbd), c("region","disease","sex","ageClass","deaths","yll","yld","daly"))
         ||
-        setEquality(names(gbd), c("disease","sex","ageClass","dproj","yll","yld","daly")))){
+        setEquality(names(gbd), c("disease","sex","ageClass","deaths","yll","yld","daly")))){
         stop("Error with column names")
     }
 
@@ -50,7 +50,7 @@ readGBD <- function(filename){
 ###
 ### Reformat GBD data frame
 ###
-### @return A list of lists of matrices with dproj, yll, yld and daly
+### @return A list of lists of matrices with deaths, yll, yld and daly
 ###     by age and sex and disease
 ###
 ###

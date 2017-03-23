@@ -49,7 +49,7 @@ setGeneric("update", function(x, parList) standardGeneric("update"))
 #'
 #' @param x ITHIM object
 #' @param bur A character string indicating the type of disease burden
-#'     measure.  Available values are "dproj", "yll", "yld" and
+#'     measure.  Available values are "deaths", "yll", "yld" and
 #'     "daly".  The default value is "daly".
 #' @param dis A character string indicating which disease to consider.
 #'     Possible values are "BreastCancer", "ColonCancer", "HHD",
