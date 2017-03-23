@@ -175,13 +175,10 @@ getQuintiles <- function(means, parameters){
   WalkingTime <- list(M = ActiveTransportTime[["M"]] * (1-means$propTimeCycling[,"M"]), F = ActiveTransportTime[["F"]] * (1-means$propTimeCycling[,"F"]))
   CyclingTime <- list(M = ActiveTransportTime[["M"]] * (means$propTimeCycling[,"M"]), F = ActiveTransportTime[["F"]] * (means$propTimeCycling[,"F"]))
 
-  muNonTravel <- parameters$muNonTravel
-  muNonTravelMatrix <- parameters$muNonTravelMatrix
-
   TotalMETSample <- mapply(getTotalDistribution,
                                  muTravel = means$meanActiveTransportTime,
                                  cvTravel = parameters$cv,
-                                 muNonTravel = muNonTravelMatrix*muNonTravel,
+                                 muNonTravel = means$meanNonTravel,
                                  cvNonTravel = parameters$cvNonTravel,
                                  pWalk = means$pWalk, # parameters$pWalk
                                  size = 1e5, SIMPLIFY = FALSE)
