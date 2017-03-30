@@ -44,7 +44,7 @@ There are 9 parameters in the ITHIM physical activity
 \item{GBD}{A list of lists of data.frames.  This should be improved.  More to come.}
 \item{meanType}{Either "overall" or "referent".  If the value is referent than the means given above, muwt, muct and muNonTravel are for females in ageClass3.  If the value is overall than it is the oveall population mean and F, the population density is needed.  The option "overall" is therefore defunct right now, as F is not included.}
 \item{quantiles}{A numeric vector of quantiles to be used in the population attributable fraction approximation.  The default value is to use percentiles, i.e., 0.01, 0.02,..., 0.99.}
-\item{roadInjuries}{A list of data.frames.  One data.frame for each of "FatalArterial","FatalHighway","FatalLocal","SeriousArterial", "SeriousHighway", "SeriousLocal".  The data frames contain counts stratified by striking and victim vehicles.}
+\item{roadInjuries}{A list of data.frames.  One data.frame for each of "Fatalmajor","FatalmotorOnly","Fatalminor","Seriousmajor", "SeriousmotorOnly", "Seriousminor".  The data frames contain counts stratified by striking and victim vehicles.}
 \item{distRoadType}{Soon to be defunct.}
 \item{safetyInNumbers}{A matrix of safety in number parameters.  Rows are vehicle mode, columns are victim, striking, NOV.  More details to come.}
 }
