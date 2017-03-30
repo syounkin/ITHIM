@@ -16,14 +16,16 @@
 ###     \code{\link{computeMeanMatrices}}, \code{\link{getQuintiles}}
 ###
 ###
-createITHIMFunction <- function(roadInjuriesFile = system.file("roadInjuriesUS.csv", package = "ITHIM"),
+createITHIMFunction <- function(roadInjuriesFile = system.file("roadInjuries.csv", package = "ITHIM"),
                                 activeTransportTimeFile = system.file("activeTransportTime.csv",package = "ITHIM"),
                                 GBDFile = system.file("gbd.csv",package = "ITHIM"),
-                                FFile = system.file("F.csv",package = "ITHIM")){
+                                FFile = system.file("F.csv",package = "ITHIM"),
+                                meanType = "overall"){
 
     new("ITHIM", parameters = parameters <- createParameterList(activeTransportTimeFile = activeTransportTimeFile,
                                                                 GBDFile = GBDFile,
-                                                                FFile = FFile),
+                                                                FFile = FFile,
+                                                                meanType = meanType),
         means = means <- computeMeanMatrices(as(parameters,"list")),
         quintiles = getQuintiles(means, as(parameters,"list")))
 
@@ -42,11 +44,10 @@ createITHIMFunction <- function(roadInjuriesFile = system.file("roadInjuriesUS.c
 ### @seealso \code{\link{readGBD}}
 ###
 ###
-createParameterList <- function(
-                                roadInjuriesFile = system.file("roadInjuriesUS.csv", package = "ITHIM"),
-                                activeTransportTimeFile = system.file("activeTransportTime.csv", package = "ITHIM"),
-                                GBDFile = system.file("gbd.csv", package = "ITHIM"),
-                                FFile = system.file("F.csv", package = "ITHIM"),
+createParameterList <- function(roadInjuriesFile = system.file("roadInjuries.csv", package = "ITHIM"),
+                                activeTransportTimeFile = system.file("activeTransportTime.csv",package = "ITHIM"),
+                                GBDFile = system.file("gbd.csv",package = "ITHIM"),
+                                FFile = system.file("F.csv",package = "ITHIM"),
                                 meanType = "overall"){
 
     nAgeClass <- 8L
