@@ -240,7 +240,7 @@ multiplyInjuries <- function(ITHIM.baseline, ITHIM.scenario){
   multiplier <- computeMultiplier(baseline = ITHIM.baseline,
                                   scenario = ITHIM.scenario,
                                   safetyInNumbers = ITHIM.baseline@parameters@safetyInNumbers)
-  
+
   # create output array. Workaround - abind is used (instead of afill), so output array must be created,
   # without any indices in severity dimension (these would be added via abind)
   

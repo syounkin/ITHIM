@@ -16,8 +16,18 @@
 ###     \code{\link{computeMeanMatrices}}, \code{\link{getQuintiles}}
 ###
 ###
-createITHIMFunction <- function(roadInjuriesFile = system.file("roadInjuriesUS.csv", package = "ITHIM"), activeTransportTimeFile = system.file("activeTransportTime.csv",package = "ITHIM"), GBDFile = system.file("gbd.csv",package = "ITHIM")){
-        new("ITHIM", parameters = parameters <- createParameterList(activeTransportTimeFile = activeTransportTimeFile, GBDFile = GBDFile), means = means <- computeMeanMatrices(as(parameters,"list")), quintiles = getQuintiles(means, as(parameters,"list")))
+createITHIMFunction <- function(roadInjuriesFile = system.file("roadInjuriesUS.csv", package = "ITHIM"),
+                                activeTransportTimeFile = system.file("activeTransportTime.csv", package = "ITHIM"),
+                                GBDFile = system.file("gbd.csv", package = "ITHIM"),
+                                distRoadTypeFile = system.file("distByRoadTypeBaseline.csv", package = "ITHIM"),
+                                safetyInNumbersFile = system.file("SiN.csv", package = "ITHIM")){
+        new("ITHIM", 
+            parameters = parameters <- createParameterList(activeTransportTimeFile = activeTransportTimeFile, 
+                                                           GBDFile = GBDFile,
+                                                           distRoadTypeFile = distRoadTypeFile,
+                                                           safetyInNumbersFile = safetyInNumbersFile),
+            means = means <- computeMeanMatrices(as(parameters,"list")),
+            quintiles = getQuintiles(means, as(parameters,"list")))
 
 }
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -39,6 +49,8 @@ createParameterList <- function(
                                 activeTransportTimeFile = system.file("activeTransportTime.csv", package = "ITHIM"),
                                 GBDFile = system.file("gbd.csv", package = "ITHIM"),
                                 FFile = system.file("F.csv", package = "ITHIM"),
+                                distRoadTypeFile = system.file("distByRoadTypeBaseline.csv", package = "ITHIM"),
+                                safetyInNumbersFile = system.file("SiN.csv", package = "ITHIM"),
                                 meanType = "overall"){
 
     nAgeClass <- 8L
@@ -67,9 +79,14 @@ createParameterList <- function(
     cvNonTravel <- 1 # coefficient of variation for leisure activity
     roadInjuries <- array()
     modeNames <- unlist(unique(lapply(roadInjuries, rownames)))
+    
+    # read safetyInNumbers using helper function which converts "normalize" csv into array
 
-    sinMatrix <- array()
-    distRoadType <- array()
+    safetyInNumbers <- readSafetyInNumbers(file = safetyInNumbersFile)
+    
+    # read distRoadType using helper function which converts "normalize" csv into array
+    
+    distRoadType <- readDistByRoadType(file = distRoadTypeFile)
 
     GBD <- readGBD(filename = GBDFile)
 
@@ -104,7 +121,7 @@ createParameterList <- function(
         quantiles = quantiles,
         roadInjuries = roadInjuries,
         distRoadType = distRoadType,
-        safetyInNumbers = sinMatrix
+        safetyInNumbers = safetyInNumbers
     ))
 }
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

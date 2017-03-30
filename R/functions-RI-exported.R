@@ -26,7 +26,7 @@ readRoadInjuries <- function(file){
   
   # return producedArray
   
-  return(producedArray)
+  return(producedArray$createdArray)
   
 }
 ## #' @export
@@ -42,7 +42,7 @@ readDistByRoadType <- function(file){
   
   # return producedArray
   
-  return(producedArray)
+  return(producedArray$createdArray)
   
 }
 ## #' @export
@@ -58,6 +58,6 @@ readSafetyInNumbers <- function(file){
   
   # return producedArray
   
-  return(producedArray)
+  return(producedArray$createdArray)
   
 }

@@ -199,7 +199,7 @@ setGeneric("getParameterNames", function(x) standardGeneric("getParameterNames")
 #'
 #' ITHIM <- createITHIM(activeTransportFile = activeTransportFile, GBDFile = GBDFile)
 #' 
-setGeneric("createITHIM", function(activeTransportFile, GBDFile, roadInjuriesFile) standardGeneric("createITHIM"))
+setGeneric("createITHIM", function(activeTransportFile, GBDFile, roadInjuriesFile, distRoadTypeFile, safetyInNumbersFile) standardGeneric("createITHIM"))
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
