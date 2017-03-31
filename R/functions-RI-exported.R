@@ -14,7 +14,7 @@ updateRoadInjuries <- function(ITHIM.baseline, ITHIM.scenario){
 return(ITHIM.scenario)
 }
 ## #' @export
-readRoadInjuries <- function(ITHIM.object, file){
+readRoadInjuries <- function(file){
   
   # read file
   
@@ -24,14 +24,13 @@ readRoadInjuries <- function(ITHIM.object, file){
   
   producedArray <- helperCreateArray(inputData)
   
-  # return updated object
+  # return producedArray
   
-  ITHIM.updated <- update(ITHIM.object, list(roadInjuries = producedArray$createdArray))
+  return(producedArray$createdArray)
   
-  return(ITHIM.updated)
 }
 ## #' @export
-readDistByRoadType <- function(ITHIM.object, file){
+readDistByRoadType <- function(file){
   
   # read file
   
@@ -41,15 +40,13 @@ readDistByRoadType <- function(ITHIM.object, file){
   
   producedArray <- helperCreateArray(inputData)
   
-  # return updated object
+  # return producedArray
   
-  ITHIM.updated <- update(ITHIM.object, list(distRoadType = producedArray$createdArray))
-  
-  return(ITHIM.updated)
+  return(producedArray$createdArray)
   
 }
 ## #' @export
-readSafetyInNumbers <- function(ITHIM.object, file){
+readSafetyInNumbers <- function(file){
   
   # read file
   
@@ -59,10 +56,8 @@ readSafetyInNumbers <- function(ITHIM.object, file){
   
   producedArray <- helperCreateArray(inputData)
   
-  # return updated object
+  # return producedArray
   
-  ITHIM.updated <- update(ITHIM.object, list(safetyInNumbers = producedArray$createdArray))
-  
-  return(ITHIM.updated)
+  return(producedArray$createdArray)
   
 }
