@@ -3,29 +3,40 @@
 \docType{methods}
 \name{createITHIM}
 \alias{createITHIM}
-\alias{createITHIM,character,character,character-method}
-\alias{createITHIM,character,character,missing-method}
-\alias{createITHIM,character,missing,character-method}
-\alias{createITHIM,character,missing,missing-method}
-\alias{createITHIM,missing,missing,missing-method}
+\alias{createITHIM,character,character,character,character,character-method}
+\alias{createITHIM,character,character,missing,character,character-method}
+\alias{createITHIM,character,character,missing,missing,missing-method}
+\alias{createITHIM,character,missing,character,character,character-method}
+\alias{createITHIM,character,missing,missing,character,character-method}
+\alias{createITHIM,missing,missing,missing,missing,missing-method}
 \title{Create an ITHIM object}
 \usage{
-createITHIM(activeTransportFile, GBDFile, roadInjuriesFile)
+createITHIM(activeTransportFile, GBDFile, roadInjuriesFile, distRoadTypeFile,
+  safetyInNumbersFile)
 
-\S4method{createITHIM}{character,character,character}(activeTransportFile,
-  GBDFile, roadInjuriesFile)
 
-\S4method{createITHIM}{character,character,missing}(activeTransportFile,
-  GBDFile, roadInjuriesFile)
+  \S4method{createITHIM}{character,character,character,character,character}(activeTransportFile,
+  GBDFile, roadInjuriesFile, distRoadTypeFile, safetyInNumbersFile)
 
-\S4method{createITHIM}{character,missing,missing}(activeTransportFile, GBDFile,
-  roadInjuriesFile)
 
-\S4method{createITHIM}{character,missing,character}(activeTransportFile,
-  GBDFile, roadInjuriesFile)
+  \S4method{createITHIM}{character,character,missing,character,character}(activeTransportFile,
+  GBDFile, roadInjuriesFile, distRoadTypeFile, safetyInNumbersFile)
 
-\S4method{createITHIM}{missing,missing,missing}(activeTransportFile, GBDFile,
-  roadInjuriesFile)
+
+  \S4method{createITHIM}{character,character,missing,missing,missing}(activeTransportFile,
+  GBDFile, roadInjuriesFile, distRoadTypeFile, safetyInNumbersFile)
+
+
+  \S4method{createITHIM}{character,missing,missing,character,character}(activeTransportFile,
+  GBDFile, roadInjuriesFile, distRoadTypeFile, safetyInNumbersFile)
+
+
+  \S4method{createITHIM}{character,missing,character,character,character}(activeTransportFile,
+  GBDFile, roadInjuriesFile, distRoadTypeFile, safetyInNumbersFile)
+
+
+  \S4method{createITHIM}{missing,missing,missing,missing,missing}(activeTransportFile,
+  GBDFile, roadInjuriesFile, distRoadTypeFile, safetyInNumbersFile)
 }
 \arguments{
 \item{activeTransportFile}{A character string indicating the name
@@ -39,6 +50,13 @@ from the inst directory.}
 \item{roadInjuriesFile}{A character string indicating the name of
 the file containing the road injury data (still under
 development).  Default value uses data from the inst directory.}
+
+\item{distRoadTypeFile}{A character string indicating the name of
+the file containing distances (person and vehicle) by road type
+(minor, major, motorOnly)}
+
+\item{safetyInNumbersFile}{A character string indicating the name
+of the file conatining safety in number parameters.}
 }
 \value{
 An object of class ITHIM
