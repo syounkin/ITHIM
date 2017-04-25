@@ -6,3 +6,5 @@ README.md
 ITHIM.pdf
 .*.tar.gz
 .*.Rcheck
+^.*\.Rproj$
+^\.Rproj\.user$
