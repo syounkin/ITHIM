@@ -7,7 +7,7 @@ html: ./man/*
 	R CMD INSTALL --html --no-inst ~/ITHIM/
 
 check:
-	rm -v ITHIM_*.*.*.tar.gz
+	rm -v ITHIM_*.*.*.tar.gz || true
 	R --vanilla < ~/GHI/R/check.R
 	R CMD build .
 	R CMD check --as-cran ITHIM_*.*.*.tar.gz
