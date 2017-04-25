@@ -167,6 +167,11 @@ setGeneric("getParameterNames", function(x) standardGeneric("getParameterNames")
 #' @param roadInjuriesFile A character string indicating the name of
 #'     the file containing the road injury data (still under
 #'     development).  Default value uses data from the inst directory.
+#' @param distRoadTypeFile A character string indicating the name of
+#'     the file containing distances (person and vehicle) by road type
+#'     (minor, major, motorOnly)
+#' @param safetyInNumbersFile A character string indicating the name
+#'     of the file conatining safety in number parameters.
 #'
 #' @note The path is relative to current working directory.
 #'
@@ -199,7 +204,7 @@ setGeneric("getParameterNames", function(x) standardGeneric("getParameterNames")
 #'
 #' ITHIM <- createITHIM(activeTransportFile = activeTransportFile, GBDFile = GBDFile)
 #' 
-setGeneric("createITHIM", function(activeTransportFile, GBDFile, roadInjuriesFile) standardGeneric("createITHIM"))
+setGeneric("createITHIM", function(activeTransportFile, GBDFile, roadInjuriesFile, distRoadTypeFile, safetyInNumbersFile) standardGeneric("createITHIM"))
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
