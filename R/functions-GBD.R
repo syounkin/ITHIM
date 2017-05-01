@@ -13,35 +13,41 @@ readGBD <- function(filename){
 
     gbd <- read.csv(file=filename, stringsAsFactors = FALSE)
 
+    gbd <- gbd %>% arrange(disease,sex,ageClass,burdenType)
+
     if("burdenType" %in% names(gbd)){
         normalized <- TRUE
     }else{
         normalized <- FALSE
     }
 
-    if(normalized){
-        gbd <- gbd %>% spread(burdenType, value)
+    if(!normalized){        
+        stop("GBD inmpuit gfile myust be normalized.")
     }
+    #gbd <- gbd %>% spread(burdenType, value)
+    ## if(!(
+    ##     setEquality(names(gbd), c("region","disease","sex","ageClass","deaths","yll","yld","daly"))
+    ##     ||
+    ##     setEquality(names(gbd), c("disease","sex","ageClass","deaths","yll","yld","daly")))){
+    ##     stop("Error with column names")
+    ## }
 
-    if(!(
-        setEquality(names(gbd), c("region","disease","sex","ageClass","deaths","yll","yld","daly"))
-        ||
-        setEquality(names(gbd), c("disease","sex","ageClass","deaths","yll","yld","daly")))){
-        stop("Error with column names")
-    }
+    ## if( !(all(unique(gbd$disease) %in% c("BreastCancer", "ColonCancer", "CVD", "Dementia", "Diabetes", "Depression", "RTIs")))){
+    ##     stop("Extraneous diseases are included in the disease burden file.  Currently the ITHIM package does not support this.  Please see the help page for createITHIM and remove extraneous diseases from disease burden file.")
+    ## }
 
-    if( !(all(unique(gbd$disease) %in% c("BreastCancer", "ColonCancer", "CVD", "Dementia", "Diabetes", "Depression", "RTIs")))){
-        stop("Extraneous diseases are included in the disease burden file.  Currently the ITHIM package does not support this.  Please see the help page for createITHIM and remove extraneous diseases from disease burden file.")
-    }
+    ## if(length(names(gbd))==7){
+    ##     gbdList2 <- reformatGBD(gbd)
+    ## }else if(length(names(gbd))==8){
+    ##     gbdList2 <- lapply(split(gbd,gbd$region), reformatGBD)
+    ## }else{
+    ##     stop("Wrong number of columns in GBD file.")
+    ## }
+    ## return(gbdList2)
 
-    if(length(names(gbd))==7){
-        gbdList2 <- reformatGBD(gbd)
-    }else if(length(names(gbd))==8){
-        gbdList2 <- lapply(split(gbd,gbd$region), reformatGBD)
-    }else{
-        stop("Wrong number of columns in GBD file.")
-    }
+    gbdList2 <- lapply(split(gbd, gbd$disease), function(x) split(x,x$sex))
     return(gbdList2)
+    
 }
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
