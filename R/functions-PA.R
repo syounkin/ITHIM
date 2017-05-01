@@ -359,8 +359,8 @@ compareModels <- function(baseline, scenario){
 
     NewBurden <- lapply(AF,function(x) 1-x)
     NewBurdenList <- lapply(NewBurden,function(x) list(M = x[,"M"], F = x[,"F"]))
-    
-    
+
+
     denom <- lapply(normalizedDiseaseBurden, function(x) lapply(x, rowSums))
     denom.baseline <- lapply(normalizedDiseaseBurden.baseline, function(x) lapply(x, rowSums))
 
@@ -572,9 +572,9 @@ normalizeDiseaseBurden <- function(diseaseBurden){
 ###
 burdenFunction <- function(x2,y2,z2,burden,baseline=FALSE){
     if(!baseline){
-        mapply(function(x,y,z){x[x$variable==burden,"value"] * y / z}, x2, y2, z2, SIMPLIFY = FALSE)
+        mapply(function(x,y,z){x[x$burdenType==burden,"value"] * y / z}, x2, y2, z2, SIMPLIFY = FALSE)
     }else{
-        mapply(function(x,y,z){x[x$variable==burden,"value"] / z}, x2, y2, z2, SIMPLIFY = FALSE)
+        mapply(function(x,y,z){x[x$burdenType==burden,"value"] / z}, x2, y2, z2, SIMPLIFY = FALSE)
     }
 }
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

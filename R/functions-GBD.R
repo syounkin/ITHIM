@@ -21,7 +21,7 @@ readGBD <- function(filename){
         normalized <- FALSE
     }
 
-    if(!normalized){        
+    if(!normalized){
         stop("GBD inmpuit gfile myust be normalized.")
     }
     #gbd <- gbd %>% spread(burdenType, value)
@@ -45,9 +45,12 @@ readGBD <- function(filename){
     ## }
     ## return(gbdList2)
 
-    gbdList2 <- lapply(split(gbd, gbd$disease), function(x) split(x,x$sex))
+    gbdList2 <- lapply(split(gbd, gbd$disease), function(x) {
+        foo <- split(x,x$sex)
+        foo <- list(M = foo$M, F = foo$F)
+        })
     return(gbdList2)
-    
+
 }
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
