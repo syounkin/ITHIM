@@ -74,11 +74,11 @@ setMethod("getBurden", signature(x = "ITHIM", bur = "character", dis = "characte
     suppressMessages(
         if( dis[1] == "all" ){
             foo <- getGBD(x)
-            foo <- foo[foo$variable == bur,]
+            foo <- foo[foo$burdenType == bur,]
         return(sum(foo$value, na.rm = TRUE))
         }else{
             foo <- getGBD(x)
-            foo <- foo[foo$variable == bur & foo$disease %in% dis,]
+            foo <- foo[foo$burdenType == bur & foo$disease %in% dis,]
         return(sum(foo$value, na.rm = TRUE))
     })
 })
