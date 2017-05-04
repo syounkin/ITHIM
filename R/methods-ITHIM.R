@@ -74,11 +74,11 @@ setMethod("getBurden", signature(x = "ITHIM", bur = "character", dis = "characte
     suppressMessages(
         if( dis[1] == "all" ){
             foo <- getGBD(x)
-            foo <- foo[foo$variable == bur,]
+            foo <- foo[foo$burdenType == bur,]
         return(sum(foo$value, na.rm = TRUE))
         }else{
             foo <- getGBD(x)
-            foo <- foo[foo$variable == bur & foo$disease %in% dis,]
+            foo <- foo[foo$burdenType == bur & foo$disease %in% dis,]
         return(sum(foo$value, na.rm = TRUE))
     })
 })
@@ -174,8 +174,7 @@ setMethod("getGBD", signature(x = "ITHIM", format = "character"), function(x, fo
     if(format == "list"){
         return(getParameterSet(x)@GBD)
     }else if(format == "data.frame"){
-        GBD <- melt(getParameterSet(x)@GBD, id.vars =c("disease","sex","ageClass"),varnames = "value")
-        GBD <- GBD[,!(names(GBD) %in% c("L2","L1"))]
+        GBD <- do.call("rbind", do.call("rbind",getParameterSet(x)@GBD))
         return(GBD)
     }else{
         message("Error with getGBD format argument.")

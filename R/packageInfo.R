@@ -96,6 +96,6 @@
 #' initialBurden <- getBurden(ITHIM.baseline, bur = "daly", dis = "CVD")
 #' (pctChange <- deltaDALY/initialBurden*100)
 #'
-#' @import abind methods tidyr reshape2 utils stats
+#' @import tidyverse abind utils methods stats
 #' 
 NULL
