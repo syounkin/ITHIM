@@ -17,6 +17,14 @@ setMethod("createITHIM", signature(activeTransportFile = "character", GBDFile = 
 #' @rdname createITHIM-methods
 #' @aliases createITHIM
 #' @export
+setMethod("createITHIM", signature(activeTransportFile = "character", GBDFile = "character", roadInjuriesFile = "missing", distRoadTypeFile = "missing", safetyInNumbersFile = "missing"), function(activeTransportFile, GBDFile, roadInjuriesFile, distRoadTypeFile, safetyInNumbersFile){
+    ITHIM <- createITHIMFunction(activeTransportTimeFile = activeTransportFile, GBDFile = GBDFile)
+    return(ITHIM)
+})
+
+#' @rdname createITHIM-methods
+#' @aliases createITHIM
+#' @export
 setMethod("createITHIM", signature(activeTransportFile = "character", GBDFile = "missing", roadInjuriesFile = "missing", distRoadTypeFile = "character", safetyInNumbersFile = "character"), function(activeTransportFile, GBDFile, roadInjuriesFile, distRoadTypeFile, safetyInNumbersFile){
     ITHIM <- createITHIMFunction(activeTransportTimeFile = activeTransportFile, distRoadTypeFile = distRoadTypeFile, safetyInNumbersFile = safetyInNumbersFile)
     return(ITHIM)

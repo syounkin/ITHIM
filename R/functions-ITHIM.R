@@ -20,15 +20,19 @@ createITHIMFunction <- function(roadInjuriesFile = system.file("roadInjuriesUS.c
                                 activeTransportTimeFile = system.file("activeTransportTime.csv", package = "ITHIM"),
                                 GBDFile = system.file("gbd.csv", package = "ITHIM"),
                                 distRoadTypeFile = system.file("distByRoadTypeBaseline.csv", package = "ITHIM"),
-                                safetyInNumbersFile = system.file("SiN.csv", package = "ITHIM")){
-        new("ITHIM", 
-            parameters = parameters <- createParameterList(activeTransportTimeFile = activeTransportTimeFile, 
-                                                           GBDFile = GBDFile,
-                                                           distRoadTypeFile = distRoadTypeFile,
-                                                           safetyInNumbersFile = safetyInNumbersFile),
-            means = means <- computeMeanMatrices(as(parameters,"list")),
-            quintiles = getQuintiles(means, as(parameters,"list")))
-
+                                safetyInNumbersFile = system.file("SiN.csv", package = "ITHIM"),
+                                FFile = system.file("F.csv",package = "ITHIM"),
+                                meanType = "overall"){
+    
+    new("ITHIM", parameters = parameters <- createParameterList(
+                                  activeTransportTimeFile = activeTransportTimeFile,
+                                  distRoadTypeFile = distRoadTypeFile,
+                                  safetyInNumbersFile = safetyInNumbersFile,
+                                  GBDFile = GBDFile,
+                                  FFile = FFile,
+                                  meanType = meanType),
+        means = means <- computeMeanMatrices(as(parameters,"list")),
+        quintiles = getQuintiles(means, as(parameters,"list")))
 }
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

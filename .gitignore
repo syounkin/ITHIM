@@ -20,3 +20,5 @@ html
 ..Rcheck/
 README.md
 ITHIM.Rcheck
+.Rproj.user
+ITHIM.Rproj

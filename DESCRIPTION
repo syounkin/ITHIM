@@ -1,8 +1,8 @@
 Package: ITHIM
 Type: Package
 Title: The Integrated Transport and Health Impacts Model
-Version: 0.4.3
-Date: 2017-03-21
+Version: 0.5.1
+Date: 2017-05-04
 Author: Samuel G. Younkin <syounkin@wisc.edu>
 Maintainer: Samuel G. Younkin <syounkin@wisc.edu>
 Description: Implements the Integrated Transport and Health Impacts
@@ -18,7 +18,7 @@ Description: Implements the Integrated Transport and Health Impacts
 URL: https://github.com/syounkin/ITHIM
 License: GPL-2
 Depends:
-    R (>= 3.0.0), tidyr, reshape2, abind, utils, methods, stats
+    R (>= 3.0.0), tidyverse, abind, utils, methods, stats
 Suggests:
     knitr, testthat
 RoxygenNote: 5.0.1

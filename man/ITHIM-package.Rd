@@ -57,8 +57,8 @@ database of fatal and serious collisions reported to police.
 
 Roadway type: determined roadway type associated with the collision
 by a spatial join in mapping software (ArcGIS 10, ESRI, Redlands,
-CA) to a street layer and categorized it as highway, arterial, or
-local on the basis of federal and state classifications of facility
+CA) to a street layer and categorized it as motorOnly, major, or
+minor on the basis of federal and state classifications of facility
 type.
 
 Daily distances walked, bicycled, and driven by drivers and

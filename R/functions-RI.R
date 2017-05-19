@@ -127,7 +127,7 @@ computeMultiplier <- function(baseline, scenario, safetyInNumbers){
 computeInjuryRR <- function(RI.baseline, RI.scenario){
 # written by Tomek
 injuryTypes <- c("Fatal", "Serious")
-roadTypes <- c("Local","Arterial","Highway")
+roadTypes <- c("minor","major","motorOnly")
 dsNames <- c("Baseline", "Scenario")
 injuryResultsTotals <- as.data.frame(matrix(nrow = length(injuryTypes),
                               ncol = length(dsNames),
