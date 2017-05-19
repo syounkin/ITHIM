@@ -336,7 +336,7 @@ helperCreateArray <- function(inputData){
   # TODO: other way to pass name of the dims? 
   # This is hack to pass name of columns (variables) to outputArray.
   # It could be set by attr() command, but "name attr" is better since it is not lost during array modification.
-  
+
   names(outputArray) <- names(outputArrayDimsWithIndices)
   
   # iterate over input file -> fill every cell of array
