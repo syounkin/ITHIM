@@ -38,7 +38,7 @@ test_that("rows (indices) order doesn't matter, because indices are sorted", {
   
   producedArray1 <- helperCreateArray(inputData1)
   
-  csvContent2 <- csvContent1 <- paste0("distType,roadType,mode,", columnWithValues,"
+  csvContent2 <- paste0("distType,roadType,mode,", columnWithValues,"
                 striking,arterial,truck,0.5
                 victim,local,bus,0.5
                 striking,local,car,0.5")
