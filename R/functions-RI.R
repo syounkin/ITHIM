@@ -283,7 +283,7 @@ multiplyInjuries <- function(ITHIM.baseline, ITHIM.scenario){
   return(outputArray)
 
 }
-helperCheckIfArraysHaveSameDims <- function(array1, array2){
+helperCheckIfArraysHaveSameDims <- function(array1, array2, check.dimnames = FALSE){
   
   # check if arrays
   
@@ -297,10 +297,24 @@ helperCheckIfArraysHaveSameDims <- function(array1, array2){
     return(FALSE)
   }
   
-  # check indices - if ok at this point -> return TRUE
+  # should names of dims be checked
   
-  if(identical(dimnames(array1), dimnames(array2))){
-    return(TRUE)
+  if(check.dimnames){
+  
+    # check indices - if ok at this point -> return TRUE
+    
+    if(identical(dimnames(array1), dimnames(array2))){
+      return(TRUE)
+    }
+    
+  } else {
+    
+    # check indices - if ok at this point -> return TRUE
+    
+    if(identical(unname(dimnames(array1)), unname(dimnames(array2)))){
+      return(TRUE)
+    }
+    
   }
   
   return(FALSE)
@@ -333,11 +347,9 @@ helperCreateArray <- function(inputData){
                        unname(sapply(outputArrayDimsWithIndices, function(x) length(x), simplify = T)),
                        unname(outputArrayDimsWithIndices))
   
-  # TODO: other way to pass name of the dims? 
-  # This is hack to pass name of columns (variables) to outputArray.
-  # It could be set by attr() command, but "name attr" is better since it is not lost during array modification.
-
-  names(outputArray) <- names(outputArrayDimsWithIndices)
+  # save names of dims with indices
+  
+  dimnames(outputArray) <- outputArrayDimsWithIndices
   
   # iterate over input file -> fill every cell of array
   
