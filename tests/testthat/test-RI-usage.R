@@ -32,10 +32,6 @@ test_that("calculation of scenario injuries causes no error. 2 dimensions (roadT
   
   roadInjuriesFromExcel <- helperCreateArray(excelRoadInjuriesScenarioWithoutNOV)$createdArray
   
-  # * TODO: after removing usage of names() - should be removed
-  
-  names(roadInjuriesFromExcel) <- NULL
-  
   # test data
   
   expect_equal(ITHIM.scenario@parameters@roadInjuries, roadInjuriesFromExcel, tolerance = 0.0002)
@@ -118,10 +114,6 @@ test_that("calculation of scenario injuries causes no error. 3 dimensions (ageGr
                                                                          "striking", "value")]
   
   roadInjuriesFromExcel <- helperCreateArray(rbind(threeDimsRoadInjuriesScenarioAG1, threeDimsRoadInjuriesScenarioAG2))$createdArray
-  
-  # * TODO: after removing usage of names() - should be removed
-  
-  names(roadInjuriesFromExcel) <- NULL
   
   # test data
   

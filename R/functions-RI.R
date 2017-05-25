@@ -53,19 +53,19 @@ computeMultiplier <- function(baseline, scenario, safetyInNumbers){
   
   # get dim position for distRoadType (dimForRatio) in baseline/scenario. 
   
-  distByRoadDimPosition <- match(dimForRatio, names(baseline@parameters@distRoadType))
+  distByRoadDimPosition <- match(dimForRatio, names(dimnames(baseline@parameters@distRoadType)))
   
   # get dim position for distRoadType (dimForRatio) in safetyInNumbers
   
-  safetyInNumbersDimPosition <- match(dimForRatio, names(safetyInNumbers))
+  safetyInNumbersDimPosition <- match(dimForRatio, names(dimnames(safetyInNumbers)))
   
   # get dim position for mode (dimForMode) in baseline/scenario.
   
-  modeDimPosition <- match(dimForMode, names(baseline@parameters@distRoadType))
+  modeDimPosition <- match(dimForMode, names(dimnames(baseline@parameters@distRoadType)))
   
   # person part rename mode dim
   
-  personPartNameOfDims <- names(baseline@parameters@distRoadType)
+  personPartNameOfDims <- names(dimnames(baseline@parameters@distRoadType))
   personPartNameOfDims[modeDimPosition] <- renamedModes[1]
   
   # remove NA and dim(dimForRatio) which is going to be reduced
@@ -73,7 +73,7 @@ computeMultiplier <- function(baseline, scenario, safetyInNumbers){
   personPartNameOfDims <- personPartNameOfDims[!(is.na(personPartNameOfDims) | personPartNameOfDims %in% dimForRatio)]
   
   # person part calcs
-  
+
   personPartBaseline <- abind::asub(baseline@parameters@distRoadType, personIdx, distByRoadDimPosition)
   personPartScenario <- abind::asub(scenario@parameters@distRoadType, personIdx, distByRoadDimPosition)
   personPartSafetyInNumbers <- abind::asub(safetyInNumbers, victimIdx, safetyInNumbersDimPosition)
@@ -94,7 +94,7 @@ computeMultiplier <- function(baseline, scenario, safetyInNumbers){
   
   # vehicle part rename mode dim
   
-  vehiclePartNameOfDims <- names(baseline@parameters@distRoadType)
+  vehiclePartNameOfDims <- names(dimnames(baseline@parameters@distRoadType))
   vehiclePartNameOfDims[modeDimPosition] <- renamedModes[2]
   
   # remove NA and dim(dimForRatio) which is going to be reduced
@@ -117,10 +117,10 @@ computeMultiplier <- function(baseline, scenario, safetyInNumbers){
   # The first mode-like dimension is victim mode, while the second mode-like dimension is striking mode
   
   outputArray <- personPart %o% vehiclePart
+
+  # rename dimnames to included value from renamedModes
   
-  # hack with names(array) - more in helperCreateArray()
-  
-  names(outputArray) <- c(personPartNameOfDims, vehiclePartNameOfDims)
+  names(dimnames(outputArray)) <- c(personPartNameOfDims, vehiclePartNameOfDims)
   
   return(outputArray)
 }
@@ -229,7 +229,7 @@ multiplyInjuries <- function(ITHIM.baseline, ITHIM.scenario){
   
   # get dim position for severity (dimForSeverity) in baseline (must be baseline!)
   
-  severityDimPosition <- match(dimForSeverity, names(ITHIM.baseline@parameters@roadInjuries))
+  severityDimPosition <- match(dimForSeverity, names(dimnames(ITHIM.baseline@parameters@roadInjuries)))
   
   # get all indices for roadInjuries. It should unique already!
   
@@ -297,11 +297,11 @@ helperCheckIfArraysHaveSameDims <- function(array1, array2, check.dimnames = FAL
     return(FALSE)
   }
   
-  # should names of dims be checked
+  # should the names of dims be checked
   
   if(check.dimnames){
   
-    # check indices - if ok at this point -> return TRUE
+    # check indices and names of dims - if ok at this point -> return TRUE
     
     if(identical(dimnames(array1), dimnames(array2))){
       return(TRUE)
