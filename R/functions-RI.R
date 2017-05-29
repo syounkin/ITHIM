@@ -125,101 +125,160 @@ computeMultiplier <- function(baseline, scenario, safetyInNumbers){
   return(outputArray)
 }
 computeInjuryRR <- function(RI.baseline, RI.scenario){
-# written by Tomek
-injuryTypes <- c("Fatal", "Serious")
-roadTypes <- c("minor","major","motorOnly")
-dsNames <- c("Baseline", "Scenario")
-injuryResultsTotals <- as.data.frame(matrix(nrow = length(injuryTypes),
-                              ncol = length(dsNames),
-                              dimnames = list(injuryTypes, dsNames)))
-
-injuryRRbyModes <- injuryRR <- vector(mode="list", length=length(injuryTypes))
-names(injuryRRbyModes) <- injuryTypes
-names(injuryRR) <- injuryTypes
-
-# for every injuryType
-
-for (it in injuryTypes){
-
-  # generate combinations of injuryTypes - roadTypes
-
-  injuryRoadTypes <- paste0(it, roadTypes)
-
-  # for every dataSource
-  i <- 0
-  for (ds in list(RI.baseline, RI.scenario)){
-
-    # run some checks regarding structure of input (passed via method args) data
-
-    # check data type (should be list)
-
-    if (is.list(ds)){
-
-      # check if needed injury-road type combinations are here
-
-      if(length(setdiff(injuryRoadTypes, names(ds))) == 0){
-
-        # check data type of every entry (should be data.frame)
-
-        lapply(ds, function(irtentry) if(!(is.data.frame(irtentry))){
-          stop('computeInjuryRR: wrong entry data type: data.frame check')
-          })
-
-      } else {
-        stop('computeInjuryRR: lack of needed injury-road type combinations')
-      }
-
-    } else {
-      stop('computeInjuryRR: wrong input data type: list check')
-    }
-
-    i <- i+1
-
-    # get data source variable from env
-
-    dsVar <- ds
-
-    dsResults <- NULL
-
-    # iterate over injuryRoadTypes - sum matrices
-
-    for (irt in injuryRoadTypes){
-
-      if(is.null(dsResults)){
-        dsResults <- dsVar[[irt]]
-      } else {
-        dsResults <- dsResults + dsVar[[irt]]
-      }
-
-    }
-
-    # row totals
-
-    dsResults <- transform(dsResults, total=rowSums(dsResults, na.rm = T))
-
-    # save matrix with totals in corresponding cell
-
-    injuryResultsTotals[[it, dsNames[i]]] <- dsResults[,c("total"), drop = F]
-
+  
+  victimsBaseline <- computeTotalVictimsBySeverity(RI.baseline@parameters@roadInjuries)
+  
+  victimsScenario <- computeTotalVictimsBySeverity(RI.scenario@parameters@roadInjuries)
+  
+  # check if arrays have same structure
+  
+  if(!helperCheckIfArraysHaveSameDims(victimsBaseline, victimsScenario)){
+    stop("computeInjuryRR: different dims")
   }
+  
+  return(victimsScenario/victimsBaseline)
+  
 }
+computeTotalVictimsBySeverity <- function(RI){
+  
+  # which dim stores severity. TODO: could be set via params?
+  
+  dimForSeverity <- c('severity')
+  
+  # which dims store roadType for victim and striking. TODO: could be set via params?
+  
+  dimsForRoadType <- c("victimRoadType", "strikingRoadType")
+  
+  # which dims store victim and striking values. TODO: could be set via params?
+  
+  dimsForValues <- c("victim", "striking")
+  
+  # core function which calculates victims by severity
+  
+  calcVictimsBySeverity <- function(RI){
+    
+    # get dim position for severity (dimForSeverity) in RI
+    
+    severityDimPosition <- match(dimForSeverity, names(dimnames(RI)))
+    
+    # get all indices for roadInjuries. It should be unique already!
+    
+    severityIndices <- dimnames(RI)[[dimForSeverity]]
+  
+    # verify if indices for roadType (for victim and striking) are exactly the same
+    
+    if(!all.equal(sort(dimnames(RI)[[dimsForRoadType[1]]]), sort(dimnames(RI)[[dimsForRoadType[2]]]))){
+      
+      stop("computeTotalVictimsByMode: different indices for roadType: victim vs. striking")
+    }
+    
+    # indices for roadType - if passed above test, it doesn't matter which is used victimRoadType/strikingRoadType
+    
+    roadTypesIndices <- unname(dimnames(RI)[[dimsForRoadType[1]]])
+    
+    # output as array
+    
+    outputVictimsArray <- array(NA,
+                                dim = length(severityIndices),
+                                dimnames = dimnames(RI)[dimForSeverity])
+    
+    # iterate over severity indices
+    
+    for (idx in severityIndices){
+      
+      # extract particular severity RI
+      
+      severityData <- abind::asub(RI, idx, severityDimPosition)
+      
+      # init reduced roadType
+      
+      reducedRoadType <- NULL
+      
+      # iterate over roadTypes
+      
+      for (roadType in roadTypesIndices){
+        
+        # for roadType only diagonal values are proper
+        
+        tempOut <- abind::asub(severityData, list(roadType, roadType), match(dimsForRoadType, names(dimnames(severityData))))
+        
+        # sum victims over all roadTypes
+        
+        if(is.null(reducedRoadType)){
+          reducedRoadType <- tempOut
+        } else {
+          reducedRoadType <- reducedRoadType + tempOut
+        }
+        
+      }
+      
+      # IF INPUT DATA IS CORRECT SO IT HAS ONLY DIAGONAL VALUES FOR ROADTYPES (LIKE LOCAL - LOCAL, NOT LOCAL - ARTERIAL), THEN
+      # ABOVE CODE COULD BE REPLACED WITH SIMPLE SUM: sum(severityData, na.rm = T) because not diagonal should equal NA
+      
+      outputVictimsArray[[idx]] <- sum(reducedRoadType)
+      
+    }
+    
+    return(outputVictimsArray)
+  }
+  
+  # check if there are any extra dims (not functional)
 
-# RR by modes
+  extraDims <- setdiff(names(dimnames(RI)), c(dimForSeverity, dimsForRoadType, dimsForValues))
 
-# for every injuryType
+  if(length(extraDims) > 0){
+    
+    # if there are any extra dims - every combination of indices from different extra dims should be calculated separately and the results
+    # should be combined into one output array
+    
+    allIndicesCombinationOfExtraDims <- expand.grid(dimnames(RI)[extraDims], stringsAsFactors = F)
+    
+    # dims (+ all indices) for extra dims and severity
+    
+    extraDimsAndSeverity <- append(dimnames(RI)[extraDims], dimnames(RI)[dimForSeverity])
+    
+    # output array
+    
+    outputArray <- array(NA,
+                         dim = sapply(extraDimsAndSeverity, function(x) length(x), simplify = T),
+                         dimnames = extraDimsAndSeverity)
+    
+    # iterate over every combination
+    
+    for (i in seq_len(nrow(allIndicesCombinationOfExtraDims))){
+      
+      comb <- unlist(allIndicesCombinationOfExtraDims[i, ])
+      
+      # extract particular combination of indices (different dims)
+      
+      combArray <- abind::asub(RI, setNames(as.list(unname(comb)), names(comb)), match(names(comb), names(dimnames(RI))))
+      
+      combResult <- calcVictimsBySeverity(combArray)
+      
+      # create list of extra dims (with indices) + severity
+      # VERY IMPORTANT: dimForSeverity at the end
+      
+      combDimnames <- append(comb, dimnames(RI)[dimForSeverity])
+      
+      # little hack: create array using values from the flatten results of calcTemp(combArray), thus order
+      # of dims matters
+      
+      combOutputArray <- array(unname(unlist(as.list(combResult))[combDimnames[[dimForSeverity]]]),
+                               dim = sapply(combDimnames, function(x) length(x), simplify = T),
+                               dimnames = combDimnames)
+      
+      # save results
+      
+      abind::afill(outputArray) <- combOutputArray
 
-for (it in injuryTypes){
-  injuryRRbyModes[[it]] <- injuryResultsTotals[[it, "Scenario"]] / injuryResultsTotals[[it, "Baseline"]]
-}
-
-# RR
-
-# for every injuryType
-
-for (it in injuryTypes){
-  injuryRR[[it]] <- sum(injuryResultsTotals[[it, "Scenario"]], na.rm = T) / sum(injuryResultsTotals[[it, "Baseline"]], na.rm = T)
-}
-return(injuryRR)
+    }
+    
+    return(outputArray)
+    
+  } else {
+    
+    return(calcVictimsBySeverity(RI))
+  }
 }
 multiplyInjuries <- function(ITHIM.baseline, ITHIM.scenario){
   
@@ -231,7 +290,7 @@ multiplyInjuries <- function(ITHIM.baseline, ITHIM.scenario){
   
   severityDimPosition <- match(dimForSeverity, names(dimnames(ITHIM.baseline@parameters@roadInjuries)))
   
-  # get all indices for roadInjuries. It should unique already!
+  # get all indices for roadInjuries. It should be unique already!
   
   severityIndices <- dimnames(ITHIM.baseline@parameters@roadInjuries)[[severityDimPosition]]
   

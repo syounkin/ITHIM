@@ -36,6 +36,13 @@ test_that("calculation of scenario injuries causes no error. 2 dimensions (roadT
   
   expect_equal(ITHIM.scenario@parameters@roadInjuries, roadInjuriesFromExcel, tolerance = 0.0002)
   
+  # test RR data
+  
+  RR <- computeInjuryRR(ITHIM.baseline,ITHIM.scenario)
+  
+  expect_equal(RR[["severity" = "fatal"]], c(1.044543), tolerance = 0.0001)
+  expect_equal(RR[["severity" = "serious"]], c(1.046931), tolerance = 0.0001)
+  
 })
 
 test_that("calculation of scenario injuries causes no error. 3 dimensions (ageGroup [reduced - only diagonal results: ag1-ag1, ag2-ag2, without ag2-ag1, ag1-ag2], roadType, mode), without NOV", {
@@ -118,5 +125,14 @@ test_that("calculation of scenario injuries causes no error. 3 dimensions (ageGr
   # test data
   
   expect_equal(ITHIM.scenario@parameters@roadInjuries, roadInjuriesFromExcel, tolerance = 0.0002)
+  
+  # test RR data
+  
+  RR <- computeInjuryRR(ITHIM.baseline,ITHIM.scenario)
+  
+  expect_equal(RR[["victimAgeGroup" = "ag1", "strikingAgeGroup" = "ag1", "severity" = "fatal"]], c(1.95281), tolerance = 0.0001)
+  expect_equal(RR[["victimAgeGroup" = "ag2", "strikingAgeGroup" = "ag2", "severity" = "fatal"]], c(1.044523), tolerance = 0.0001)
+  expect_equal(RR[["victimAgeGroup" = "ag1", "strikingAgeGroup" = "ag1", "severity" = "serious"]], c(2.07377), tolerance = 0.0001)
+  expect_equal(RR[["victimAgeGroup" = "ag2", "strikingAgeGroup" = "ag2", "severity" = "serious"]], c(1.046925), tolerance = 0.0001)
   
 })
