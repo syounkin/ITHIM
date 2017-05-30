@@ -7,9 +7,9 @@ computeRoadInjuryBurden <- function(ITHIM.baseline, ITHIM.scenario){
   return(RIburden)
 }
 ## #' @export
-updateRoadInjuries <- function(ITHIM.baseline, ITHIM.scenario){
+updateRoadInjuries <- function(ITHIM.baseline, ITHIM.scenario, add.NOV = FALSE){
   
-  ITHIM.scenario <- update(ITHIM.scenario, list(roadInjuries = multiplyInjuries(ITHIM.baseline, ITHIM.scenario)))
+  ITHIM.scenario <- update(ITHIM.scenario, list(roadInjuries = multiplyInjuries(ITHIM.baseline, ITHIM.scenario, add.NOV = add.NOV)))
   
 return(ITHIM.scenario)
 }

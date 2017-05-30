@@ -40,6 +40,8 @@ test_that("calculation of scenario injuries causes no error. 2 dimensions (roadT
   
   RR <- computeInjuryRR(ITHIM.baseline,ITHIM.scenario)
   
+  # compare with the results from Excel model
+  
   expect_equal(RR[["severity" = "fatal"]], c(1.044543), tolerance = 0.0001)
   expect_equal(RR[["severity" = "serious"]], c(1.046931), tolerance = 0.0001)
   
@@ -130,9 +132,59 @@ test_that("calculation of scenario injuries causes no error. 3 dimensions (ageGr
   
   RR <- computeInjuryRR(ITHIM.baseline,ITHIM.scenario)
   
+  # compare with the results from Excel model
+  
   expect_equal(RR[["victimAgeGroup" = "ag1", "strikingAgeGroup" = "ag1", "severity" = "fatal"]], c(1.95281), tolerance = 0.0001)
   expect_equal(RR[["victimAgeGroup" = "ag2", "strikingAgeGroup" = "ag2", "severity" = "fatal"]], c(1.044523), tolerance = 0.0001)
   expect_equal(RR[["victimAgeGroup" = "ag1", "strikingAgeGroup" = "ag1", "severity" = "serious"]], c(2.07377), tolerance = 0.0001)
   expect_equal(RR[["victimAgeGroup" = "ag2", "strikingAgeGroup" = "ag2", "severity" = "serious"]], c(1.046925), tolerance = 0.0001)
+  
+})
+
+### with NOV
+
+test_that("calculation of scenario injuries causes no error. 2 dimensions (roadType, mode), with NOV", {
+  
+  # init ITHIM baseline and scenario using data for helper
+  
+  # this part can be prone to errors since createITHIM() by default loads SafetyInNumbers and DistByRoadType Baseline from /inst .
+  # In case of lack of these files, test won't work
+  
+  ITHIM.baseline <- createITHIM()
+  
+  # get SafetyInNumbers and DistByRoadType Baseline data from helper, not file (this is why read* methods are not used)
+  
+  ITHIM.baseline <- update(ITHIM.baseline, list(distRoadType = helperCreateArray(excelDistByRoadTypeBaselineWithoutNOV)$createdArray))
+  
+  ITHIM.baseline <- update(ITHIM.baseline, list(safetyInNumbers = helperCreateArray(excelSafetyInNumbersWithoutNOV)$createdArray))
+  
+  # Scenario DistByRoadType
+  
+  ITHIM.scenario <- update(ITHIM.baseline, list(distRoadType = helperCreateArray(excelDistByRoadTypeScenarioWithoutNOV)$createdArray))
+  
+  # RoadInjuries for baseline
+  
+  ITHIM.baseline <- update(ITHIM.baseline, list(roadInjuries = helperCreateArray(excelRoadInjuriesBaselineWithNOV)$createdArray))
+  
+  # RoadInjuries for scenario using scenario multiplier and baseline RoadInjuries
+  
+  ITHIM.scenario <- updateRoadInjuries(ITHIM.baseline, ITHIM.scenario, add.NOV = TRUE)
+  
+  # prepare RoadInjuries data from Excel model - create array
+  
+  roadInjuriesFromExcel <- helperCreateArray(excelRoadInjuriesScenarioWithNOV)$createdArray
+  
+  # test data
+  
+  expect_equal(ITHIM.scenario@parameters@roadInjuries, roadInjuriesFromExcel, tolerance = 0.0002)
+  
+  # test RR data
+  
+  RR <- computeInjuryRR(ITHIM.baseline,ITHIM.scenario)
+  
+  # compare with the results from Excel model
+  
+  expect_equal(RR[["severity" = "fatal"]], c(1.001083), tolerance = 0.0001)
+  expect_equal(RR[["severity" = "serious"]], c(1.02555), tolerance = 0.0001)
   
 })

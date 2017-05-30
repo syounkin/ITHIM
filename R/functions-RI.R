@@ -17,7 +17,7 @@
 ###
 ### @return A list of multipliers.
 ###
-computeMultiplier <- function(baseline, scenario, safetyInNumbers){
+computeMultiplier <- function(baseline, scenario, safetyInNumbers, add.NOV = FALSE){
   
   # TODO: update doc
   
@@ -49,7 +49,15 @@ computeMultiplier <- function(baseline, scenario, safetyInNumbers){
   
   renamedModes <- c('victim', 'striking')
   
-  #TODO: check dims!
+  # text for NOV. TODO: could be set via params?
+  
+  NOVTextValue <- c('NOV')
+  
+  # which mode should be treated as NOV source
+  
+  NOVMode <- c('walk')
+  
+  # TODO: check dims!
   
   # get dim position for distRoadType (dimForRatio) in baseline/scenario. 
   
@@ -77,7 +85,7 @@ computeMultiplier <- function(baseline, scenario, safetyInNumbers){
   personPartBaseline <- abind::asub(baseline@parameters@distRoadType, personIdx, distByRoadDimPosition)
   personPartScenario <- abind::asub(scenario@parameters@distRoadType, personIdx, distByRoadDimPosition)
   personPartSafetyInNumbers <- abind::asub(safetyInNumbers, victimIdx, safetyInNumbersDimPosition)
-  
+
   # check if needed arrays have same dims with exactly the same indices (even same order!)
   
   if(!helperCheckIfArraysHaveSameDims(personPartBaseline, personPartScenario)){
@@ -93,7 +101,7 @@ computeMultiplier <- function(baseline, scenario, safetyInNumbers){
   personPart <- (personPartScenario / personPartBaseline) ^ personPartSafetyInNumbers
   
   # vehicle part rename mode dim
-  
+
   vehiclePartNameOfDims <- names(dimnames(baseline@parameters@distRoadType))
   vehiclePartNameOfDims[modeDimPosition] <- renamedModes[2]
   
@@ -111,6 +119,50 @@ computeMultiplier <- function(baseline, scenario, safetyInNumbers){
   
   vehiclePart <- (vehiclePartScenario / vehiclePartBaseline) ^ vehiclePartSafetyInNumbers
   
+  # if NOV is needed
+  
+  if(add.NOV){
+    
+    if(length(dimnames(vehiclePart)[[dimForMode]]) < 1 | length(dimnames(personPart)[[dimForMode]]) < 1 ){
+      stop('computeMultiplier: NOV: mode dimension has no any index')
+    }
+    
+    # just copy values from the NOVMode index
+    
+    personPartNOV <- abind::asub(personPart, NOVMode, match(dimForMode, names(dimnames(personPart))))
+    
+    # add a new index to personPartTemp array
+    
+    personPartTemp <- abind(personPart, personPartNOV, along = match(dimForMode, names(dimnames(personPart))))
+    
+    # copy dimnames and add NOV text value
+    
+    personPartTempDimnames <- dimnames(personPart)
+    personPartTempDimnames[[dimForMode]] <- append(personPartTempDimnames[[dimForMode]], NOVTextValue)
+    
+    dimnames(personPartTemp) <- personPartTempDimnames
+    
+    # just copy values from the NOVMode index
+    
+    vehiclePartNOV <- abind::asub(vehiclePart, NOVMode, match(dimForMode, names(dimnames(vehiclePart))))
+    vehiclePartNOV[] <- 1
+    # add a new index to vehiclePartTemp array
+    
+    vehiclePartTemp <- abind(vehiclePart, vehiclePartNOV, along = match(dimForMode, names(dimnames(vehiclePart))))
+    
+    # copy dimnames and add NOV text value
+    
+    vehiclePartTempDimnames <- dimnames(vehiclePart)
+    vehiclePartTempDimnames[[dimForMode]] <- append(vehiclePartTempDimnames[[dimForMode]], NOVTextValue)
+    
+    dimnames(vehiclePartTemp) <- vehiclePartTempDimnames
+
+    personPart <- personPartTemp
+    
+    vehiclePart <- vehiclePartTemp
+    
+  }
+  
   # create outer product of personPart and vehiclePart
   # In the results only "diagonal" cells for non-modes dimensions are important. The rest is a garbage, but the structure of
   # array is exactly the same as further data inputs.
@@ -119,8 +171,28 @@ computeMultiplier <- function(baseline, scenario, safetyInNumbers){
   outputArray <- personPart %o% vehiclePart
 
   # rename dimnames to included value from renamedModes
-  
+
   names(dimnames(outputArray)) <- c(personPartNameOfDims, vehiclePartNameOfDims)
+
+  # if NOV is needed - remove NOV from victim dim
+  
+  if(add.NOV){
+    
+    # remove NOV from victim dim
+    
+    outputArrayDimnames <- dimnames(outputArray)
+    
+    outputArrayDimnames[[renamedModes[1]]] <- setdiff(outputArrayDimnames[[renamedModes[1]]], NOVTextValue)
+    
+    # sort same way like it is in helperCreateArray
+    
+    outputArrayDimnames <- sapply(outputArrayDimnames, function(x) {sort(x)}, simplify = F)
+    
+    # slice array - everything except NOV in victim dim and resorted striking dim
+    
+    outputArray <- abind::asub(outputArray, outputArrayDimnames[renamedModes], match(renamedModes, names(outputArrayDimnames)))
+    
+  }
   
   return(outputArray)
 }
@@ -280,7 +352,7 @@ computeTotalVictimsBySeverity <- function(RI){
     return(calcVictimsBySeverity(RI))
   }
 }
-multiplyInjuries <- function(ITHIM.baseline, ITHIM.scenario){
+multiplyInjuries <- function(ITHIM.baseline, ITHIM.scenario, add.NOV = FALSE){
   
   # which dim stores severity. TODO: could be set via params?
   
@@ -298,7 +370,8 @@ multiplyInjuries <- function(ITHIM.baseline, ITHIM.scenario){
 
   multiplier <- computeMultiplier(baseline = ITHIM.baseline,
                                   scenario = ITHIM.scenario,
-                                  safetyInNumbers = ITHIM.baseline@parameters@safetyInNumbers)
+                                  safetyInNumbers = ITHIM.baseline@parameters@safetyInNumbers,
+                                  add.NOV = add.NOV)
 
   # create output array. Workaround - abind is used (instead of afill), so output array must be created,
   # without any indices in severity dimension (these would be added via abind)
@@ -318,9 +391,9 @@ multiplyInjuries <- function(ITHIM.baseline, ITHIM.scenario){
     # extract particular severity from baseline roadInjuries
     
     severityData <- abind::asub(ITHIM.baseline@parameters@roadInjuries, idx, severityDimPosition)
-    
+
     # check if arrays have same structure
-    
+
     if(!helperCheckIfArraysHaveSameDims(severityData, multiplier)){
       stop(paste0('multiplyInjuries: severityData-multiplier: index: ', idx))
     }
