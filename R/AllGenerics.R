@@ -64,7 +64,7 @@ setGeneric("update", function(x, parList) standardGeneric("update"))
 #' @note If bur is set wrong 0 will be returned, not an error message.
 #'     This is a bug.  It should not return zero in this case.  That
 #'     is misleading.
-#' 
+#'
 #' @export
 #' @docType methods
 #' @rdname getBurden-methods
@@ -78,7 +78,7 @@ setGeneric("getBurden", function(x, bur, dis) standardGeneric("getBurden"))
 #'
 #' @param baseline ITHIM object
 #' @param scenario ITHIM object
-#' 
+#'
 #' @param bur A character string indicating the type of disease burden
 #'     measure.  Available values are "deaths", "yll", "yld" and
 #'     "daly".  The default value is "daly".
@@ -94,7 +94,7 @@ setGeneric("getBurden", function(x, bur, dis) standardGeneric("getBurden"))
 #'
 #' @note The parameters dis and bur should be harmonized across
 #'     \code{getBurden} and \code{deltaBurden}.
-#' 
+#'
 #' @export
 #' @docType methods
 #' @rdname deltaBurden-methods
@@ -112,7 +112,7 @@ setGeneric("deltaBurden", function(baseline, scenario, bur, dis) standardGeneric
 #'
 #' @note The matrices have striking modes as rows and victim modes as
 #'     columns.  NOV is considered a striking mode.
-#' 
+#'
 #' @export
 #' @docType methods
 #' @rdname getRoadInjuries-methods
@@ -156,7 +156,7 @@ setGeneric("getParameterNames", function(x) standardGeneric("getParameterNames")
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #' Create an ITHIM object
 #'
-#' Returns an ITHIM object.  
+#' Returns an ITHIM object.
 #'
 #' @param activeTransportFile A character string indicating the name
 #'     of the file containing mean walk and cycle times.  Default
@@ -188,7 +188,7 @@ setGeneric("getParameterNames", function(x) standardGeneric("getParameterNames")
 #'     explained in greater detail soon.  See
 #'     \url{https://github.com/syounkin/ITHIM/blob/devel/inst/gbd.csv}
 #'     for an example.
-#' 
+#'
 #' @return An object of class ITHIM
 #'
 #' @note If run with no arguments this function will return the
@@ -203,7 +203,7 @@ setGeneric("getParameterNames", function(x) standardGeneric("getParameterNames")
 #' GBDFile <- system.file("gbd.csv", package = "ITHIM")
 #'
 #' ITHIM <- createITHIM(activeTransportFile = activeTransportFile, GBDFile = GBDFile)
-#' 
+#'
 setGeneric("createITHIM", function(activeTransportFile, GBDFile, roadInjuriesFile, distRoadTypeFile, safetyInNumbersFile) standardGeneric("createITHIM"))
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -314,3 +314,22 @@ setGeneric("getCycleTime", function(x, form) standardGeneric("getCycleTime"))
 #' @docType methods
 #' @rdname getNonTravelMETs-methods
 setGeneric("getNonTravelMETs", function(x, form) standardGeneric("getNonTravelMETs"))
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#' Retrieves population matrix from U.S. Census
+#'
+#' Retrieves population matrix from U.S. Census
+#'
+#' @param state An integer representing the state ID
+#' @param county An integer representing the county ID
+#'
+#' @return A data frame of population counts
+#' @export
+#' @docType methods
+#' @rdname getPopulation-methods
+#' @note The underlying function, \code{getTractAgeSex}, was written
+#'     primarily by Vargo
+#'
+#'
+setGeneric("getPopulation", function(state, county) standardGeneric("getPopulation"))
