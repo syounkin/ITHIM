@@ -323,6 +323,7 @@ setGeneric("getNonTravelMETs", function(x, form) standardGeneric("getNonTravelME
 #'
 #' @param state An integer representing the state ID
 #' @param county An integer representing the county ID
+#' @param msa An integer representing the MSA ID (NHTS specific)
 #'
 #' @return A data frame of population counts
 #' @export
@@ -332,4 +333,4 @@ setGeneric("getNonTravelMETs", function(x, form) standardGeneric("getNonTravelME
 #'     primarily by Vargo
 #'
 #'
-setGeneric("getPopulation", function(state, county) standardGeneric("getPopulation"))
+setGeneric("getPopulation", function(msa, state, county) standardGeneric("getPopulation"))

@@ -1,0 +1,845 @@
+countyName,stateName,stateFIPS,countyFIPS,STCNTY,FIPSnum,msaName,msaFIPS,msaNHTS
+Taylor,Texas,48,441,48441,48441,"Abilene, TX MSA",40,
+Summit,Ohio,39,153,39153,39153,"Akron, OH PMSA",80,1692
+Portage,Ohio,39,133,39133,39133,"Akron, OH PMSA",80,1692
+Lee,Georgia,13,177,13177,13177,"Albany, GA MSA",120,
+Dougherty,Georgia,13,95,13095,13095,"Albany, GA MSA",120,
+Saratoga,New York,36,91,36091,36091,"Albany-Schenectady-Troy, NY MSA",160,
+Montgomery,New York,36,57,36057,36057,"Albany-Schenectady-Troy, NY MSA",160,
+Rensselaer,New York,36,83,36083,36083,"Albany-Schenectady-Troy, NY MSA",160,
+Schenectady,New York,36,93,36093,36093,"Albany-Schenectady-Troy, NY MSA",160,
+Schoharie,New York,36,95,36095,36095,"Albany-Schenectady-Troy, NY MSA",160,
+Albany,New York,36,1,36001,36001,"Albany-Schenectady-Troy, NY MSA",160,
+Sandoval,New Mexico,35,43,35043,35043,"Albuquerque, NM MSA",200,
+Bernalillo,New Mexico,35,1,35001,35001,"Albuquerque, NM MSA",200,
+Valencia,New Mexico,35,61,35061,35061,"Albuquerque, NM MSA",200,
+Rapides,Louisiana,22,79,22079,22079,"Alexandria, LA MSA",220,
+Carbon,Pennsylvania,42,25,42025,42025,"Allentown-Bethlehem-Easton, PA MSA",240,
+Northampton,Pennsylvania,42,95,42095,42095,"Allentown-Bethlehem-Easton, PA MSA",240,
+Lehigh,Pennsylvania,42,77,42077,42077,"Allentown-Bethlehem-Easton, PA MSA",240,
+Blair,Pennsylvania,42,13,42013,42013,"Altoona, PA MSA",280,
+Potter,Texas,48,375,48375,48375,"Amarillo, TX MSA",320,
+Randall,Texas,48,381,48381,48381,"Amarillo, TX MSA",320,
+Anchorage,Alaska,2,20,2020,2020,"Anchorage, AK MSA",380,
+Livingston,Michigan,26,93,26093,26093,"Ann Arbor, MI PMSA",440,2162
+Washtenaw,Michigan,26,161,26161,26161,"Ann Arbor, MI PMSA",440,2162
+Lenawee,Michigan,26,91,26091,26091,"Ann Arbor, MI PMSA",440,2162
+Calhoun,Alabama,1,15,1015,1015,"Anniston, AL MSA",450,
+Outagamie,Wisconsin,55,87,55087,55087,"Appleton-Oshkosh-Neenah, WI MSA",460,
+Winnebago,Wisconsin,55,139,55139,55139,"Appleton-Oshkosh-Neenah, WI MSA",460,
+Calumet,Wisconsin,55,15,55015,55015,"Appleton-Oshkosh-Neenah, WI MSA",460,
+Madison,North Carolina,37,115,37115,37115,"Asheville, NC MSA",480,
+Buncombe,North Carolina,37,21,37021,37021,"Asheville, NC MSA",480,
+Madison,Georgia,13,195,13195,13195,"Athens, GA MSA",500,
+Clarke,Georgia,13,59,13059,13059,"Athens, GA MSA",500,
+Oconee,Georgia,13,219,13219,13219,"Athens, GA MSA",500,
+Pickens,Georgia,13,227,13227,13227,"Atlanta, GA MSA",520,520
+Bartow,Georgia,13,15,13015,13015,"Atlanta, GA MSA",520,520
+Cherokee,Georgia,13,57,13057,13057,"Atlanta, GA MSA",520,520
+Forsyth,Georgia,13,117,13117,13117,"Atlanta, GA MSA",520,520
+Fulton,Georgia,13,121,13121,13121,"Atlanta, GA MSA",520,520
+Gwinnett,Georgia,13,135,13135,13135,"Atlanta, GA MSA",520,520
+Barrow,Georgia,13,13,13013,13013,"Atlanta, GA MSA",520,520
+Cobb,Georgia,13,67,13067,13067,"Atlanta, GA MSA",520,520
+Paulding,Georgia,13,223,13223,13223,"Atlanta, GA MSA",520,520
+DeKalb,Georgia,13,89,13089,13089,"Atlanta, GA MSA",520,520
+Walton,Georgia,13,297,13297,13297,"Atlanta, GA MSA",520,520
+Carroll,Georgia,13,45,13045,13045,"Atlanta, GA MSA",520,520
+Douglas,Georgia,13,97,13097,13097,"Atlanta, GA MSA",520,520
+Rockdale,Georgia,13,247,13247,13247,"Atlanta, GA MSA",520,520
+Newton,Georgia,13,217,13217,13217,"Atlanta, GA MSA",520,520
+Clayton,Georgia,13,63,13063,13063,"Atlanta, GA MSA",520,520
+Henry,Georgia,13,151,13151,13151,"Atlanta, GA MSA",520,520
+Fayette,Georgia,13,113,13113,13113,"Atlanta, GA MSA",520,520
+Coweta,Georgia,13,77,13077,13077,"Atlanta, GA MSA",520,520
+Spalding,Georgia,13,255,13255,13255,"Atlanta, GA MSA",520,520
+Atlantic,New Jersey,34,1,34001,34001,"Atlantic-Cape May, NJ PMSA",560,6162
+Cape May,New Jersey,34,9,34009,34009,"Atlantic-Cape May, NJ PMSA",560,6162
+Lee,Alabama,1,81,1081,1081,"Auburn-Opelika, AL MSA",580,
+Edgefield,South Carolina,45,37,45037,45037,"Augusta-Aiken, GA-SC MSA",600,
+Aiken,South Carolina,45,3,45003,45003,"Augusta-Aiken, GA-SC MSA",600,
+Columbia,Georgia,13,73,13073,13073,"Augusta-Aiken, GA-SC MSA",600,
+McDuffie,Georgia,13,189,13189,13189,"Augusta-Aiken, GA-SC MSA",600,
+Richmond,Georgia,13,245,13245,13245,"Augusta-Aiken, GA-SC MSA",600,
+Williamson,Texas,48,491,48491,48491,"Austin-San Marcos, TX MSA",640,640
+Travis,Texas,48,453,48453,48453,"Austin-San Marcos, TX MSA",640,640
+Bastrop,Texas,48,21,48021,48021,"Austin-San Marcos, TX MSA",640,640
+Hays,Texas,48,209,48209,48209,"Austin-San Marcos, TX MSA",640,640
+Caldwell,Texas,48,55,48055,48055,"Austin-San Marcos, TX MSA",640,640
+Kern,California,6,29,6029,6029,"Bakersfield, CA MSA",680,
+Harford,Maryland,24,25,24025,24025,"Baltimore, MD PMSA",720,8872
+Carroll,Maryland,24,13,24013,24013,"Baltimore, MD PMSA",720,8872
+Baltimore,Maryland,24,5,24005,24005,"Baltimore, MD PMSA",720,8872
+Baltimore City,Maryland,24,510,24510,24510,"Baltimore, MD PMSA",720,8872
+Howard,Maryland,24,27,24027,24027,"Baltimore, MD PMSA",720,8872
+Queen Anne's,Maryland,24,35,24035,24035,"Baltimore, MD PMSA",720,8872
+Anne Arundel,Maryland,24,3,24003,24003,"Baltimore, MD PMSA",720,8872
+Barnstable,Massachusetts,25,1,25001,25001,"Barnstable-Yarmouth, MA MSA",740,
+East Baton Rouge,Louisiana,22,33,22033,22033,"Baton Rouge, LA MSA",760,
+West Baton Rouge,Louisiana,22,121,22121,22121,"Baton Rouge, LA MSA",760,
+Livingston,Louisiana,22,63,22063,22063,"Baton Rouge, LA MSA",760,
+Ascension,Louisiana,22,5,22005,22005,"Baton Rouge, LA MSA",760,
+Hardin,Texas,48,199,48199,48199,"Beaumont-Port Arthur, TX MSA",840,
+Orange,Texas,48,361,48361,48361,"Beaumont-Port Arthur, TX MSA",840,
+Jefferson,Texas,48,245,48245,48245,"Beaumont-Port Arthur, TX MSA",840,
+Whatcom,Washington,53,73,53073,53073,"Bellingham, WA MSA",860,
+Berrien,Michigan,26,21,26021,26021,"Benton Harbor, MI MSA",870,
+Passaic,New Jersey,34,31,34031,34031,"Bergen-Passaic, NJ PMSA",875,
+Bergen,New Jersey,34,3,34003,34003,"Bergen-Passaic, NJ PMSA",875,
+Yellowstone,Montana,30,111,30111,30111,"Billings, MT MSA",880,
+Jackson,Mississippi,28,59,28059,28059,"Biloxi-Gulfport-Pascagoula, MS MSA",920,
+Harrison,Mississippi,28,47,28047,28047,"Biloxi-Gulfport-Pascagoula, MS MSA",920,
+Hancock,Mississippi,28,45,28045,28045,"Biloxi-Gulfport-Pascagoula, MS MSA",920,
+Broome,New York,36,7,36007,36007,"Binghamton, NY MSA",960,
+Tioga,New York,36,107,36107,36107,"Binghamton, NY MSA",960,
+Blount,Alabama,1,9,1009,1009,"Birmingham, AL MSA",1000,
+St. Clair,Alabama,1,115,1115,1115,"Birmingham, AL MSA",1000,
+Jefferson,Alabama,1,73,1073,1073,"Birmingham, AL MSA",1000,
+Shelby,Alabama,1,117,1117,1117,"Birmingham, AL MSA",1000,
+Burleigh,North Dakota,38,15,38015,38015,"Bismarck, ND MSA",1010,
+Morton,North Dakota,38,59,38059,38059,"Bismarck, ND MSA",1010,
+Monroe,Indiana,18,105,18105,18105,"Bloomington, IN MSA",1020,
+McLean,Illinois,17,113,17113,17113,"Bloomington-Normal, IL MSA",1040,
+Canyon,Idaho,16,27,16027,16027,"Boise City, ID MSA",1080,
+Ada,Idaho,16,1,16001,16001,"Boise City, ID MSA",1080,
+Essex,Massachusetts,25,9,25009,25009,"Boston, MA-NH PMSA",1120,1122
+Middlesex,Massachusetts,25,17,25017,25017,"Boston, MA-NH PMSA",1120,1122
+Suffolk,Massachusetts,25,25,25025,25025,"Boston, MA-NH PMSA",1120,1122
+Norfolk,Massachusetts,25,21,25021,25021,"Boston, MA-NH PMSA",1120,1122
+Bristol,Massachusetts,25,5,25005,25005,"Boston, MA-NH PMSA",1120,1122
+Boulder,Colorado,8,13,8013,8013,"Boulder-Longmont, CO PMSA",1125,2082
+Broomfield,Colorado,8,14,8014,8014,"Boulder-Longmont, CO PMSA",1125,2082
+Brazoria,Texas,48,39,48039,48039,"Brazoria, TX PMSA",1145,3362
+Kitsap,Washington,53,35,53035,53035,"Bremerton, WA PMSA",1150,7602
+Plymouth,Massachusetts,25,23,25023,25023,"Brockton, MA PMSA",1200,
+Cameron,Texas,48,61,48061,48061,"Brownsville-Harlingen-San Benito, TX MSA",1240,
+Brazos,Texas,48,41,48041,48041,"Bryan-College Station, TX MSA",1260,
+Niagara,New York,36,63,36063,36063,"Buffalo-Niagara Falls, NY MSA",1280,1280
+Erie,New York,36,29,36029,36029,"Buffalo-Niagara Falls, NY MSA",1280,1280
+Chittenden,Vermont,50,7,50007,50007,"Burlington, VT MSA",1305,
+Stark,Ohio,39,151,39151,39151,"Canton-Massillon, OH MSA",1320,
+Carroll,Ohio,39,19,39019,39019,"Canton-Massillon, OH MSA",1320,
+Natrona,Wyoming,56,25,56025,56025,"Casper, WY MSA",1350,
+Linn,Iowa,19,113,19113,19113,"Cedar Rapids, IA MSA",1360,
+Champaign,Illinois,17,19,17019,17019,"Champaign-Urbana, IL MSA",1400,
+Berkeley,South Carolina,45,15,45015,45015,"Charleston-North Charleston, SC MSA",1440,
+Dorchester,South Carolina,45,35,45035,45035,"Charleston-North Charleston, SC MSA",1440,
+Charleston,South Carolina,45,19,45019,45019,"Charleston-North Charleston, SC MSA",1440,
+Putnam,West Virginia,54,79,54079,54079,"Charleston, WV MSA",1480,
+Kanawha,West Virginia,54,39,54039,54039,"Charleston, WV MSA",1480,
+Rowan,North Carolina,37,159,37159,37159,"Charlotte-Gastonia-Rock Hill, NC-SC MSA",1520,1520
+Lincoln,North Carolina,37,109,37109,37109,"Charlotte-Gastonia-Rock Hill, NC-SC MSA",1520,1520
+Mecklenburg,North Carolina,37,119,37119,37119,"Charlotte-Gastonia-Rock Hill, NC-SC MSA",1520,1520
+Cabarrus,North Carolina,37,25,37025,37025,"Charlotte-Gastonia-Rock Hill, NC-SC MSA",1520,1520
+Gaston,North Carolina,37,71,37071,37071,"Charlotte-Gastonia-Rock Hill, NC-SC MSA",1520,1520
+Union,North Carolina,37,179,37179,37179,"Charlotte-Gastonia-Rock Hill, NC-SC MSA",1520,1520
+York,South Carolina,45,91,45091,45091,"Charlotte-Gastonia-Rock Hill, NC-SC MSA",1520,1520
+Greene,Virginia,51,79,51079,51079,"Charlottesville, VA MSA",1540,
+Albemarle,Virginia,51,3,51003,51003,"Charlottesville, VA MSA",1540,
+Charlottesville,Virginia,51,540,51540,51540,"Charlottesville, VA MSA",1540,
+Fluvanna,Virginia,51,65,51065,51065,"Charlottesville, VA MSA",1540,
+Hamilton,Tennessee,47,65,47065,47065,"Chattanooga, TN-GA MSA",1560,
+Marion,Tennessee,47,115,47115,47115,"Chattanooga, TN-GA MSA",1560,
+Catoosa,Georgia,13,47,13047,13047,"Chattanooga, TN-GA MSA",1560,
+Dade,Georgia,13,83,13083,13083,"Chattanooga, TN-GA MSA",1560,
+Walker,Georgia,13,295,13295,13295,"Chattanooga, TN-GA MSA",1560,
+Laramie,Wyoming,56,21,56021,56021,"Cheyenne, WY MSA",1580,
+Will,Illinois,17,197,17197,17197,"Chicago, IL PMSA",1600,1602
+Kendall,Illinois,17,93,17093,17093,"Chicago, IL PMSA",1600,1602
+Grundy,Illinois,17,63,17063,17063,"Chicago, IL PMSA",1600,1602
+McHenry,Illinois,17,111,17111,17111,"Chicago, IL PMSA",1600,1602
+Lake,Illinois,17,97,17097,17097,"Chicago, IL PMSA",1600,1602
+Cook,Illinois,17,31,17031,17031,"Chicago, IL PMSA",1600,1602
+Kane,Illinois,17,89,17089,17089,"Chicago, IL PMSA",1600,1602
+DeKalb,Illinois,17,37,17037,17037,"Chicago, IL PMSA",1600,1602
+DuPage,Illinois,17,43,17043,17043,"Chicago, IL PMSA",1600,1602
+Butte,California,6,7,6007,6007,"Chico-Paradise, CA MSA",1620,
+Warren,Ohio,39,165,39165,39165,"Cincinnati, OH-KY-IN PMSA",1640,1642
+Dearborn,Indiana,18,29,18029,18029,"Cincinnati, OH-KY-IN PMSA",1640,1642
+Hamilton,Ohio,39,61,39061,39061,"Cincinnati, OH-KY-IN PMSA",1640,1642
+Clermont,Ohio,39,25,39025,39025,"Cincinnati, OH-KY-IN PMSA",1640,1642
+Brown,Ohio,39,15,39015,39015,"Cincinnati, OH-KY-IN PMSA",1640,1642
+Boone,Kentucky,21,15,21015,21015,"Cincinnati, OH-KY-IN PMSA",1640,1642
+Campbell,Kentucky,21,37,21037,21037,"Cincinnati, OH-KY-IN PMSA",1640,1642
+Kenton,Kentucky,21,117,21117,21117,"Cincinnati, OH-KY-IN PMSA",1640,1642
+Ohio,Indiana,18,115,18115,18115,"Cincinnati, OH-KY-IN PMSA",1640,1642
+Pendleton,Kentucky,21,191,21191,21191,"Cincinnati, OH-KY-IN PMSA",1640,1642
+Gallatin,Kentucky,21,77,21077,21077,"Cincinnati, OH-KY-IN PMSA",1640,1642
+Grant,Kentucky,21,81,21081,21081,"Cincinnati, OH-KY-IN PMSA",1640,1642
+Christian,Kentucky,21,47,21047,21047,"Clarksville-Hopkinsville, TN-KY MSA",1660,
+Montgomery,Tennessee,47,125,47125,47125,"Clarksville-Hopkinsville, TN-KY MSA",1660,
+Geauga,Ohio,39,55,39055,39055,"Cleveland-Lorain-Elyria, OH PMSA",1680,1692
+Cuyahoga,Ohio,39,35,39035,39035,"Cleveland-Lorain-Elyria, OH PMSA",1680,1692
+Lorain,Ohio,39,93,39093,39093,"Cleveland-Lorain-Elyria, OH PMSA",1680,1692
+Medina,Ohio,39,103,39103,39103,"Cleveland-Lorain-Elyria, OH PMSA",1680,1692
+Ashtabula,Ohio,39,7,39007,39007,"Cleveland-Lorain-Elyria, OH PMSA",1680,1692
+Lake,Ohio,39,85,39085,39085,"Cleveland-Lorain-Elyria, OH PMSA",1680,1692
+El Paso,Colorado,8,41,8041,8041,"Colorado Springs, CO MSA",1720,
+Boone,Missouri,29,19,29019,29019,"Columbia, MO MSA",1740,
+Richland,South Carolina,45,79,45079,45079,"Columbia, SC MSA",1760,
+Lexington,South Carolina,45,63,45063,45063,"Columbia, SC MSA",1760,
+Harris,Georgia,13,145,13145,13145,"Columbus, GA-AL MSA",1800,
+Muscogee,Georgia,13,215,13215,13215,"Columbus, GA-AL MSA",1800,
+Chattahoochee,Georgia,13,53,13053,13053,"Columbus, GA-AL MSA",1800,
+Russell,Alabama,1,113,1113,1113,"Columbus, GA-AL MSA",1800,
+Delaware,Ohio,39,41,39041,39041,"Columbus, OH MSA",1840,1840
+Licking,Ohio,39,89,39089,39089,"Columbus, OH MSA",1840,1840
+Franklin,Ohio,39,49,39049,39049,"Columbus, OH MSA",1840,1840
+Madison,Ohio,39,97,39097,39097,"Columbus, OH MSA",1840,1840
+Fairfield,Ohio,39,45,39045,39045,"Columbus, OH MSA",1840,1840
+Pickaway,Ohio,39,129,39129,39129,"Columbus, OH MSA",1840,1840
+San Patricio,Texas,48,409,48409,48409,"Corpus Christi, TX MSA",1880,
+Nueces,Texas,48,355,48355,48355,"Corpus Christi, TX MSA",1880,
+Benton,Oregon,41,3,41003,41003,"Corvallis, OR MSA",1890,
+Allegany,Maryland,24,1,24001,24001,"Cumberland, MD-WV MSA",1900,
+Mineral,West Virginia,54,57,54057,54057,"Cumberland, MD-WV MSA",1900,
+Denton,Texas,48,121,48121,48121,"Dallas, TX PMSA",1920,1922
+Hunt,Texas,48,231,48231,48231,"Dallas, TX PMSA",1920,1922
+Collin,Texas,48,85,48085,48085,"Dallas, TX PMSA",1920,1922
+Dallas,Texas,48,113,48113,48113,"Dallas, TX PMSA",1920,1922
+Rockwall,Texas,48,397,48397,48397,"Dallas, TX PMSA",1920,1922
+Kaufman,Texas,48,257,48257,48257,"Dallas, TX PMSA",1920,1922
+Ellis,Texas,48,139,48139,48139,"Dallas, TX PMSA",1920,1922
+Henderson,Texas,48,213,48213,48213,"Dallas, TX PMSA",1920,1922
+Fairfield,Connecticut,9,1,9001,9001,"Danbury, CT PMSA",1930,
+Pittsylvania,Virginia,51,143,51143,51143,"Danville, VA MSA",1950,
+Danville,Virginia,51,590,51590,51590,"Danville, VA MSA",1950,
+Rock Island,Illinois,17,161,17161,17161,"Davenport-Moline-Rock Island, IA-IL MSA",1960,
+Scott,Iowa,19,163,19163,19163,"Davenport-Moline-Rock Island, IA-IL MSA",1960,
+Henry,Illinois,17,73,17073,17073,"Davenport-Moline-Rock Island, IA-IL MSA",1960,
+Miami,Ohio,39,109,39109,39109,"Dayton-Springfield, OH MSA",2000,
+Clark,Ohio,39,23,39023,39023,"Dayton-Springfield, OH MSA",2000,
+Montgomery,Ohio,39,113,39113,39113,"Dayton-Springfield, OH MSA",2000,
+Greene,Ohio,39,57,39057,39057,"Dayton-Springfield, OH MSA",2000,
+Flagler,Florida,12,35,12035,12035,"Daytona Beach, FL MSA",2020,
+Volusia,Florida,12,127,12127,12127,"Daytona Beach, FL MSA",2020,
+Lawrence,Alabama,1,79,1079,1079,"Decatur, AL MSA",2030,
+Morgan,Alabama,1,103,1103,1103,"Decatur, AL MSA",2030,
+Macon,Illinois,17,115,17115,17115,"Decatur, IL MSA",2040,
+Adams,Colorado,8,1,8001,8001,"Denver, CO PMSA",2080,2082
+Jefferson,Colorado,8,59,8059,8059,"Denver, CO PMSA",2080,2082
+Denver,Colorado,8,31,8031,8031,"Denver, CO PMSA",2080,2082
+Arapahoe,Colorado,8,5,8005,8005,"Denver, CO PMSA",2080,2082
+Douglas,Colorado,8,35,8035,8035,"Denver, CO PMSA",2080,2082
+Polk,Iowa,19,153,19153,19153,"Des Moines, IA MSA",2120,
+Dallas,Iowa,19,49,19049,19049,"Des Moines, IA MSA",2120,
+Warren,Iowa,19,181,19181,19181,"Des Moines, IA MSA",2120,
+Lapeer,Michigan,26,87,26087,26087,"Detroit, MI PMSA",2160,2162
+St. Clair,Michigan,26,147,26147,26147,"Detroit, MI PMSA",2160,2162
+Macomb,Michigan,26,99,26099,26099,"Detroit, MI PMSA",2160,2162
+Oakland,Michigan,26,125,26125,26125,"Detroit, MI PMSA",2160,2162
+Wayne,Michigan,26,163,26163,26163,"Detroit, MI PMSA",2160,2162
+Monroe,Michigan,26,115,26115,26115,"Detroit, MI PMSA",2160,2162
+Dale,Alabama,1,45,1045,1045,"Dothan, AL MSA",2180,
+Houston,Alabama,1,69,1069,1069,"Dothan, AL MSA",2180,
+Kent,Delaware,10,1,10001,10001,"Dover, DE MSA",2190,
+Dubuque,Iowa,19,61,19061,19061,"Dubuque, IA MSA",2200,
+St. Louis,Minnesota,27,137,27137,27137,"Duluth-Superior, MN-WI MSA",2240,
+Douglas,Wisconsin,55,31,55031,55031,"Duluth-Superior, MN-WI MSA",2240,
+Dutchess,New York,36,27,36027,36027,"Dutchess County, NY PMSA",2281,
+Chippewa,Wisconsin,55,17,55017,55017,"Eau Claire, WI MSA",2290,
+Eau Claire,Wisconsin,55,35,55035,55035,"Eau Claire, WI MSA",2290,
+El Paso,Texas,48,141,48141,48141,"El Paso, TX MSA",2320,
+Elkhart,Indiana,18,39,18039,18039,"Elkhart-Goshen, IN MSA",2330,
+Chemung,New York,36,15,36015,36015,"Elmira, NY MSA",2335,
+Garfield,Oklahoma,40,47,40047,40047,"Enid, OK MSA",2340,
+Erie,Pennsylvania,42,49,42049,42049,"Erie, PA MSA",2360,
+Lane,Oregon,41,39,41039,41039,"Eugene-Springfield, OR MSA",2400,
+Warrick,Indiana,18,173,18173,18173,"Evansville-Henderson, IN-KY MSA",2440,
+Posey,Indiana,18,129,18129,18129,"Evansville-Henderson, IN-KY MSA",2440,
+Vanderburgh,Indiana,18,163,18163,18163,"Evansville-Henderson, IN-KY MSA",2440,
+Henderson,Kentucky,21,101,21101,21101,"Evansville-Henderson, IN-KY MSA",2440,
+Cass,North Dakota,38,17,38017,38017,"Fargo-Moorhead, ND-MN MSA",2520,
+Clay,Minnesota,27,27,27027,27027,"Fargo-Moorhead, ND-MN MSA",2520,
+Cumberland,North Carolina,37,51,37051,37051,"Fayetteville, NC MSA",2560,
+Benton,Arkansas,5,7,5007,5007,"Fayetteville-Springdale-Rogers, AR MSA",2580,
+Washington,Arkansas,5,143,5143,5143,"Fayetteville-Springdale-Rogers, AR MSA",2580,
+Kane,Utah,49,25,49025,49025,"Flagstaff, AZ-UT MSA",2620,
+Coconino,Arizona,4,5,4005,4005,"Flagstaff, AZ-UT MSA",2620,
+Genesee,Michigan,26,49,26049,26049,"Flint, MI PMSA",2640,2162
+Lauderdale,Alabama,1,77,1077,1077,"Florence, AL MSA",2650,
+Colbert,Alabama,1,33,1033,1033,"Florence, AL MSA",2650,
+Florence,South Carolina,45,41,45041,45041,"Florence, SC MSA",2655,
+Larimer,Colorado,8,69,8069,8069,"Fort Collins-Loveland, CO MSA",2670,
+Broward,Florida,12,11,12011,12011,"Fort Lauderdale, FL PMSA",2680,4992
+Lee,Florida,12,71,12071,12071,"Fort Myers-Cape Coral, FL MSA",2700,
+St. Lucie,Florida,12,111,12111,12111,"Fort Pierce-Port St. Lucie, FL MSA",2710,
+Martin,Florida,12,85,12085,12085,"Fort Pierce-Port St. Lucie, FL MSA",2710,
+Crawford,Arkansas,5,33,5033,5033,"Fort Smith, AR-OK MSA",2720,
+Sequoyah,Oklahoma,40,135,40135,40135,"Fort Smith, AR-OK MSA",2720,
+Sebastian,Arkansas,5,131,5131,5131,"Fort Smith, AR-OK MSA",2720,
+Okaloosa,Florida,12,91,12091,12091,"Fort Walton Beach, FL MSA",2750,
+DeKalb,Indiana,18,33,18033,18033,"Fort Wayne, IN MSA",2760,
+Whitley,Indiana,18,183,18183,18183,"Fort Wayne, IN MSA",2760,
+Allen,Indiana,18,3,18003,18003,"Fort Wayne, IN MSA",2760,
+Huntington,Indiana,18,69,18069,18069,"Fort Wayne, IN MSA",2760,
+Adams,Indiana,18,1,18001,18001,"Fort Wayne, IN MSA",2760,
+Wells,Indiana,18,179,18179,18179,"Fort Wayne, IN MSA",2760,
+Parker,Texas,48,367,48367,48367,"Fort Worth-Arlington, TX PMSA",2800,1922
+Tarrant,Texas,48,439,48439,48439,"Fort Worth-Arlington, TX PMSA",2800,1922
+Johnson,Texas,48,251,48251,48251,"Fort Worth-Arlington, TX PMSA",2800,1922
+Hood,Texas,48,221,48221,48221,"Fort Worth-Arlington, TX PMSA",2800,1922
+Madera,California,6,39,6039,6039,"Fresno, CA MSA",2840,
+Fresno,California,6,19,6019,6019,"Fresno, CA MSA",2840,
+Etowah,Alabama,1,55,1055,1055,"Gadsden, AL MSA",2880,
+Alachua,Florida,12,1,12001,12001,"Gainesville, FL MSA",2900,
+Galveston,Texas,48,167,48167,48167,"Galveston-Texas City, TX PMSA",2920,3362
+Lake,Indiana,18,89,18089,18089,"Gary, IN PMSA",2960,1602
+Porter,Indiana,18,127,18127,18127,"Gary, IN PMSA",2960,1602
+Washington,New York,36,115,36115,36115,"Glens Falls, NY MSA",2975,
+Warren,New York,36,113,36113,36113,"Glens Falls, NY MSA",2975,
+Wayne,North Carolina,37,191,37191,37191,"Goldsboro, NC MSA",2980,
+Grand Forks,North Dakota,38,35,38035,38035,"Grand Forks, ND-MN MSA",2985,
+Polk,Minnesota,27,119,27119,27119,"Grand Forks, ND-MN MSA",2985,
+Mesa,Colorado,8,77,8077,8077,"Grand Junction, CO MSA",2995,
+Muskegon,Michigan,26,121,26121,26121,"Grand Rapids-Muskegon-Holland, MI MSA",3000,3000
+Kent,Michigan,26,81,26081,26081,"Grand Rapids-Muskegon-Holland, MI MSA",3000,3000
+Ottawa,Michigan,26,139,26139,26139,"Grand Rapids-Muskegon-Holland, MI MSA",3000,3000
+Allegan,Michigan,26,5,26005,26005,"Grand Rapids-Muskegon-Holland, MI MSA",3000,3000
+Cascade,Montana,30,13,30013,30013,"Great Falls, MT MSA",3040,
+Weld,Colorado,8,123,8123,8123,"Greeley, CO PMSA",3060,2082
+Brown,Wisconsin,55,9,55009,55009,"Green Bay, WI MSA",3080,
+Stokes,North Carolina,37,169,37169,37169,"Greensboro--Winston-Salem--High Point, NC MSA",3120,3120
+Yadkin,North Carolina,37,197,37197,37197,"Greensboro--Winston-Salem--High Point, NC MSA",3120,3120
+Forsyth,North Carolina,37,67,37067,37067,"Greensboro--Winston-Salem--High Point, NC MSA",3120,3120
+Guilford,North Carolina,37,81,37081,37081,"Greensboro--Winston-Salem--High Point, NC MSA",3120,3120
+Alamance,North Carolina,37,1,37001,37001,"Greensboro--Winston-Salem--High Point, NC MSA",3120,3120
+Davie,North Carolina,37,59,37059,37059,"Greensboro--Winston-Salem--High Point, NC MSA",3120,3120
+Davidson,North Carolina,37,57,37057,37057,"Greensboro--Winston-Salem--High Point, NC MSA",3120,3120
+Randolph,North Carolina,37,151,37151,37151,"Greensboro--Winston-Salem--High Point, NC MSA",3120,3120
+Pitt,North Carolina,37,147,37147,37147,"Greenville, NC MSA",3150,
+Greenville,South Carolina,45,45,45045,45045,"Greenville-Spartanburg-Anderson, SC MSA",3160,
+Spartanburg,South Carolina,45,83,45083,45083,"Greenville-Spartanburg-Anderson, SC MSA",3160,
+Cherokee,South Carolina,45,21,45021,45021,"Greenville-Spartanburg-Anderson, SC MSA",3160,
+Pickens,South Carolina,45,77,45077,45077,"Greenville-Spartanburg-Anderson, SC MSA",3160,
+Anderson,South Carolina,45,7,45007,45007,"Greenville-Spartanburg-Anderson, SC MSA",3160,
+Washington,Maryland,24,43,24043,24043,"Hagerstown, MD PMSA",3180,
+Butler,Ohio,39,17,39017,39017,"Hamilton-Middletown, OH PMSA",3200,1642
+Dauphin,Pennsylvania,42,43,42043,42043,"Harrisburg-Lebanon-Carlisle, PA MSA",3240,
+Perry,Pennsylvania,42,99,42099,42099,"Harrisburg-Lebanon-Carlisle, PA MSA",3240,
+Lebanon,Pennsylvania,42,75,42075,42075,"Harrisburg-Lebanon-Carlisle, PA MSA",3240,
+Cumberland,Pennsylvania,42,41,42041,42041,"Harrisburg-Lebanon-Carlisle, PA MSA",3240,
+Hartford,Connecticut,9,3,9003,9003,"Hartford, CT MSA",3280,3280
+Tolland,Connecticut,9,13,9013,9013,"Hartford, CT MSA",3280,3280
+Middlesex,Connecticut,9,7,9007,9007,"Hartford, CT MSA",3280,3280
+Lamar,Mississippi,28,73,28073,28073,"Hattiesburg, MS MSA",3285,
+Forrest,Mississippi,28,35,28035,28035,"Hattiesburg, MS MSA",3285,
+Caldwell,North Carolina,37,27,37027,37027,"Hickory-Morganton-Lenoir, NC MSA",3290,
+Alexander,North Carolina,37,3,37003,37003,"Hickory-Morganton-Lenoir, NC MSA",3290,
+Burke,North Carolina,37,23,37023,37023,"Hickory-Morganton-Lenoir, NC MSA",3290,
+Catawba,North Carolina,37,35,37035,37035,"Hickory-Morganton-Lenoir, NC MSA",3290,
+Honolulu,Hawaii,15,3,15003,15003,"Honolulu, HI MSA",3320,
+Lafourche,Louisiana,22,57,22057,22057,"Houma, LA MSA",3350,
+Terrebonne,Louisiana,22,109,22109,22109,"Houma, LA MSA",3350,
+Montgomery,Texas,48,339,48339,48339,"Houston, TX PMSA",3360,3362
+Liberty,Texas,48,291,48291,48291,"Houston, TX PMSA",3360,3362
+Waller,Texas,48,473,48473,48473,"Houston, TX PMSA",3360,3362
+Harris,Texas,48,201,48201,48201,"Houston, TX PMSA",3360,3362
+Chambers,Texas,48,71,48071,48071,"Houston, TX PMSA",3360,3362
+Fort Bend,Texas,48,157,48157,48157,"Houston, TX PMSA",3360,3362
+Lawrence,Ohio,39,87,39087,39087,"Huntington-Ashland, WV-KY-OH MSA",3400,
+Greenup,Kentucky,21,89,21089,21089,"Huntington-Ashland, WV-KY-OH MSA",3400,
+Cabell,West Virginia,54,11,54011,54011,"Huntington-Ashland, WV-KY-OH MSA",3400,
+Carter,Kentucky,21,43,21043,21043,"Huntington-Ashland, WV-KY-OH MSA",3400,
+Boyd,Kentucky,21,19,21019,21019,"Huntington-Ashland, WV-KY-OH MSA",3400,
+Wayne,West Virginia,54,99,54099,54099,"Huntington-Ashland, WV-KY-OH MSA",3400,
+Limestone,Alabama,1,83,1083,1083,"Huntsville, AL MSA",3440,
+Madison,Alabama,1,89,1089,1089,"Huntsville, AL MSA",3440,
+Madison,Indiana,18,95,18095,18095,"Indianapolis, IN MSA",3480,3480
+Hamilton,Indiana,18,57,18057,18057,"Indianapolis, IN MSA",3480,3480
+Boone,Indiana,18,11,18011,18011,"Indianapolis, IN MSA",3480,3480
+Hancock,Indiana,18,59,18059,18059,"Indianapolis, IN MSA",3480,3480
+Marion,Indiana,18,97,18097,18097,"Indianapolis, IN MSA",3480,3480
+Hendricks,Indiana,18,63,18063,18063,"Indianapolis, IN MSA",3480,3480
+Shelby,Indiana,18,145,18145,18145,"Indianapolis, IN MSA",3480,3480
+Johnson,Indiana,18,81,18081,18081,"Indianapolis, IN MSA",3480,3480
+Morgan,Indiana,18,109,18109,18109,"Indianapolis, IN MSA",3480,3480
+Johnson,Iowa,19,103,19103,19103,"Iowa City, IA MSA",3500,
+Jackson,Michigan,26,75,26075,26075,"Jackson, MI MSA",3520,
+Madison,Mississippi,28,89,28089,28089,"Jackson, MS MSA",3560,
+Rankin,Mississippi,28,121,28121,28121,"Jackson, MS MSA",3560,
+Hinds,Mississippi,28,49,28049,28049,"Jackson, MS MSA",3560,
+Madison,Tennessee,47,113,47113,47113,"Jackson, TN MSA",3580,
+Chester,Tennessee,47,23,47023,47023,"Jackson, TN MSA",3580,
+Nassau,Florida,12,89,12089,12089,"Jacksonville, FL MSA",3600,3600
+Duval,Florida,12,31,12031,12031,"Jacksonville, FL MSA",3600,3600
+St. Johns,Florida,12,109,12109,12109,"Jacksonville, FL MSA",3600,3600
+Clay,Florida,12,19,12019,12019,"Jacksonville, FL MSA",3600,3600
+Onslow,North Carolina,37,133,37133,37133,"Jacksonville, NC MSA",3605,
+Chautauqua,New York,36,13,36013,36013,"Jamestown, NY MSA",3610,
+Rock,Wisconsin,55,105,55105,55105,"Janesville-Beloit, WI MSA",3620,
+Hudson,New Jersey,34,17,34017,34017,"Jersey City, NJ PMSA",3640,
+Washington,Virginia,51,191,51191,51191,"Johnson City-Kingsport-Bristol, TN-VA MSA",3660,
+Scott,Virginia,51,169,51169,51169,"Johnson City-Kingsport-Bristol, TN-VA MSA",3660,
+Bristol,Virginia,51,520,51520,51520,"Johnson City-Kingsport-Bristol, TN-VA MSA",3660,
+Sullivan,Tennessee,47,163,47163,47163,"Johnson City-Kingsport-Bristol, TN-VA MSA",3660,
+Hawkins,Tennessee,47,73,47073,47073,"Johnson City-Kingsport-Bristol, TN-VA MSA",3660,
+Carter,Tennessee,47,19,47019,47019,"Johnson City-Kingsport-Bristol, TN-VA MSA",3660,
+Washington,Tennessee,47,179,47179,47179,"Johnson City-Kingsport-Bristol, TN-VA MSA",3660,
+Unicoi,Tennessee,47,171,47171,47171,"Johnson City-Kingsport-Bristol, TN-VA MSA",3660,
+Cambria,Pennsylvania,42,21,42021,42021,"Johnstown, PA MSA",3680,
+Somerset,Pennsylvania,42,111,42111,42111,"Johnstown, PA MSA",3680,
+Craighead,Arkansas,5,31,5031,5031,"Jonesboro, AR MSA",3700,
+Jasper,Missouri,29,97,29097,29097,"Joplin, MO MSA",3710,
+Newton,Missouri,29,145,29145,29145,"Joplin, MO MSA",3710,
+Kalamazoo,Michigan,26,77,26077,26077,"Kalamazoo-Battle Creek, MI MSA",3720,
+Calhoun,Michigan,26,25,26025,26025,"Kalamazoo-Battle Creek, MI MSA",3720,
+Van Buren,Michigan,26,159,26159,26159,"Kalamazoo-Battle Creek, MI MSA",3720,
+Kankakee,Illinois,17,91,17091,17091,"Kankakee, IL PMSA",3740,
+Clinton,Missouri,29,49,29049,29049,"Kansas City, MO-KS MSA",3760,3760
+Platte,Missouri,29,165,29165,29165,"Kansas City, MO-KS MSA",3760,3760
+Ray,Missouri,29,177,29177,29177,"Kansas City, MO-KS MSA",3760,3760
+Clay,Missouri,29,47,29047,29047,"Kansas City, MO-KS MSA",3760,3760
+Leavenworth,Kansas,20,103,20103,20103,"Kansas City, MO-KS MSA",3760,3760
+Lafayette,Missouri,29,107,29107,29107,"Kansas City, MO-KS MSA",3760,3760
+Jackson,Missouri,29,95,29095,29095,"Kansas City, MO-KS MSA",3760,3760
+Wyandotte,Kansas,20,209,20209,20209,"Kansas City, MO-KS MSA",3760,3760
+Johnson,Kansas,20,91,20091,20091,"Kansas City, MO-KS MSA",3760,3760
+Cass,Missouri,29,37,29037,29037,"Kansas City, MO-KS MSA",3760,3760
+Miami,Kansas,20,121,20121,20121,"Kansas City, MO-KS MSA",3760,3760
+Kenosha,Wisconsin,55,59,55059,55059,"Kenosha, WI PMSA",3800,1602
+Coryell,Texas,48,99,48099,48099,"Killeen-Temple, TX MSA",3810,
+Bell,Texas,48,27,48027,48027,"Killeen-Temple, TX MSA",3810,
+Union,Tennessee,47,173,47173,47173,"Knoxville, TN MSA",3840,
+Anderson,Tennessee,47,1,47001,47001,"Knoxville, TN MSA",3840,
+Knox,Tennessee,47,93,47093,47093,"Knoxville, TN MSA",3840,
+Sevier,Tennessee,47,155,47155,47155,"Knoxville, TN MSA",3840,
+Loudon,Tennessee,47,105,47105,47105,"Knoxville, TN MSA",3840,
+Blount,Tennessee,47,9,47009,47009,"Knoxville, TN MSA",3840,
+Howard,Indiana,18,67,18067,18067,"Kokomo, IN MSA",3850,
+Tipton,Indiana,18,159,18159,18159,"Kokomo, IN MSA",3850,
+La Crosse,Wisconsin,55,63,55063,55063,"La Crosse, WI-MN MSA",3870,
+Houston,Minnesota,27,55,27055,27055,"La Crosse, WI-MN MSA",3870,
+St. Landry,Louisiana,22,97,22097,22097,"Lafayette, LA MSA",3880,
+St. Martin,Louisiana,22,99,22099,22099,"Lafayette, LA MSA",3880,
+Acadia,Louisiana,22,1,22001,22001,"Lafayette, LA MSA",3880,
+Lafayette,Louisiana,22,55,22055,22055,"Lafayette, LA MSA",3880,
+Tippecanoe,Indiana,18,157,18157,18157,"Lafayette, IN MSA",3920,
+Clinton,Indiana,18,23,18023,18023,"Lafayette, IN MSA",3920,
+Calcasieu,Louisiana,22,19,22019,22019,"Lake Charles, LA MSA",3960,
+Polk,Florida,12,105,12105,12105,"Lakeland-Winter Haven, FL MSA",3980,
+Lancaster,Pennsylvania,42,71,42071,42071,"Lancaster, PA MSA",4000,
+Clinton,Michigan,26,37,26037,26037,"Lansing-East Lansing, MI MSA",4040,
+Ingham,Michigan,26,65,26065,26065,"Lansing-East Lansing, MI MSA",4040,
+Eaton,Michigan,26,45,26045,26045,"Lansing-East Lansing, MI MSA",4040,
+Webb,Texas,48,479,48479,48479,"Laredo, TX MSA",4080,
+Dona Ana,New Mexico,35,13,35013,35013,"Las Cruces, NM MSA",4100,
+Nye,Nevada,32,23,32023,32023,"Las Vegas, NV-AZ MSA",4120,4120
+Mohave,Arizona,4,15,4015,4015,"Las Vegas, NV-AZ MSA",4120,4120
+Clark,Nevada,32,3,32003,32003,"Las Vegas, NV-AZ MSA",4120,4120
+Douglas,Kansas,20,45,20045,20045,"Lawrence, KS MSA",4150,
+Rockingham,New Hampshire,33,15,33015,33015,"Lawrence, MA-NH PMSA",4160,1122
+Comanche,Oklahoma,40,31,40031,40031,"Lawton, OK MSA",4200,
+Androscoggin,Maine,23,1,23001,23001,"Lewiston-Auburn, ME MSA",4240,
+Scott,Kentucky,21,209,21209,21209,"Lexington, KY MSA",4280,
+Bourbon,Kentucky,21,17,21017,21017,"Lexington, KY MSA",4280,
+Fayette,Kentucky,21,67,21067,21067,"Lexington, KY MSA",4280,
+Woodford,Kentucky,21,239,21239,21239,"Lexington, KY MSA",4280,
+Clark,Kentucky,21,49,21049,21049,"Lexington, KY MSA",4280,
+Jessamine,Kentucky,21,113,21113,21113,"Lexington, KY MSA",4280,
+Madison,Kentucky,21,151,21151,21151,"Lexington, KY MSA",4280,
+Allen,Ohio,39,3,39003,39003,"Lima, OH MSA",4320,
+Auglaize,Ohio,39,11,39011,39011,"Lima, OH MSA",4320,
+Lancaster,Nebraska,31,109,31109,31109,"Lincoln, NE MSA",4360,
+Faulkner,Arkansas,5,45,5045,5045,"Little Rock-North Little Rock, AR MSA",4400,
+Lonoke,Arkansas,5,85,5085,5085,"Little Rock-North Little Rock, AR MSA",4400,
+Pulaski,Arkansas,5,119,5119,5119,"Little Rock-North Little Rock, AR MSA",4400,
+Saline,Arkansas,5,125,5125,5125,"Little Rock-North Little Rock, AR MSA",4400,
+Upshur,Texas,48,459,48459,48459,"Longview-Marshall, TX MSA",4420,
+Harrison,Texas,48,203,48203,48203,"Longview-Marshall, TX MSA",4420,
+Gregg,Texas,48,183,48183,48183,"Longview-Marshall, TX MSA",4420,
+Los Angeles,California,6,37,6037,6037,"Los Angeles-Long Beach, CA PMSA",4480,4472
+Scott,Indiana,18,143,18143,18143,"Louisville, KY-IN MSA",4520,4520
+Clark,Indiana,18,19,18019,18019,"Louisville, KY-IN MSA",4520,4520
+Oldham,Kentucky,21,185,21185,21185,"Louisville, KY-IN MSA",4520,4520
+Harrison,Indiana,18,61,18061,18061,"Louisville, KY-IN MSA",4520,4520
+Floyd,Indiana,18,43,18043,18043,"Louisville, KY-IN MSA",4520,4520
+Jefferson,Kentucky,21,111,21111,21111,"Louisville, KY-IN MSA",4520,4520
+Bullitt,Kentucky,21,29,21029,21029,"Louisville, KY-IN MSA",4520,4520
+Lubbock,Texas,48,303,48303,48303,"Lubbock, TX MSA",4600,
+Amherst,Virginia,51,9,51009,51009,"Lynchburg, VA MSA",4640,
+Bedford,Virginia,51,19,51019,51019,"Lynchburg, VA MSA",4640,
+Lynchburg,Virginia,51,680,51680,51680,"Lynchburg, VA MSA",4640,
+Campbell,Virginia,51,31,51031,51031,"Lynchburg, VA MSA",4640,
+Bedford City,Virginia,51,515,51515,51515,"Lynchburg, VA MSA",4640,
+Jones,Georgia,13,169,13169,13169,"Macon, GA MSA",4680,
+Bibb,Georgia,13,21,13021,13021,"Macon, GA MSA",4680,
+Twiggs,Georgia,13,289,13289,13289,"Macon, GA MSA",4680,
+Peach,Georgia,13,225,13225,13225,"Macon, GA MSA",4680,
+Houston,Georgia,13,153,13153,13153,"Macon, GA MSA",4680,
+Dane,Wisconsin,55,25,55025,55025,"Madison, WI MSA",4720,
+Crawford,Ohio,39,33,39033,39033,"Mansfield, OH MSA",4800,
+Richland,Ohio,39,139,39139,39139,"Mansfield, OH MSA",4800,
+Hidalgo,Texas,48,215,48215,48215,"McAllen-Edinburg-Mission, TX MSA",4880,
+Jackson,Oregon,41,29,41029,41029,"Medford-Ashland, OR MSA",4890,
+Brevard,Florida,12,9,12009,12009,"Melbourne-Titusville-Palm Bay, FL MSA",4900,
+Tipton,Tennessee,47,167,47167,47167,"Memphis, TN-AR-MS MSA",4920,4920
+Shelby,Tennessee,47,157,47157,47157,"Memphis, TN-AR-MS MSA",4920,4920
+Crittenden,Arkansas,5,35,5035,5035,"Memphis, TN-AR-MS MSA",4920,4920
+Fayette,Tennessee,47,47,47047,47047,"Memphis, TN-AR-MS MSA",4920,4920
+DeSoto,Mississippi,28,33,28033,28033,"Memphis, TN-AR-MS MSA",4920,4920
+Merced,California,6,47,6047,6047,"Merced, CA MSA",4940,
+Miami-Dade,Florida,12,86,12086,12086,"Miami, FL PMSA",5000,4992
+Hunterdon,New Jersey,34,19,34019,34019,"Middlesex-Somerset-Hunterdon, NJ PMSA",5015,
+Somerset,New Jersey,34,35,34035,34035,"Middlesex-Somerset-Hunterdon, NJ PMSA",5015,
+Middlesex,New Jersey,34,23,34023,34023,"Middlesex-Somerset-Hunterdon, NJ PMSA",5015,
+Washington,Wisconsin,55,131,55131,55131,"Milwaukee-Waukesha, WI PMSA",5080,5082
+Ozaukee,Wisconsin,55,89,55089,55089,"Milwaukee-Waukesha, WI PMSA",5080,5082
+Waukesha,Wisconsin,55,133,55133,55133,"Milwaukee-Waukesha, WI PMSA",5080,5082
+Milwaukee,Wisconsin,55,79,55079,55079,"Milwaukee-Waukesha, WI PMSA",5080,5082
+Isanti,Minnesota,27,59,27059,27059,"Minneapolis-St. Paul, MN-WI MSA",5120,5120
+Chisago,Minnesota,27,25,27025,27025,"Minneapolis-St. Paul, MN-WI MSA",5120,5120
+Sherburne,Minnesota,27,141,27141,27141,"Minneapolis-St. Paul, MN-WI MSA",5120,5120
+Wright,Minnesota,27,171,27171,27171,"Minneapolis-St. Paul, MN-WI MSA",5120,5120
+Anoka,Minnesota,27,3,27003,27003,"Minneapolis-St. Paul, MN-WI MSA",5120,5120
+Washington,Minnesota,27,163,27163,27163,"Minneapolis-St. Paul, MN-WI MSA",5120,5120
+Hennepin,Minnesota,27,53,27053,27053,"Minneapolis-St. Paul, MN-WI MSA",5120,5120
+St. Croix,Wisconsin,55,109,55109,55109,"Minneapolis-St. Paul, MN-WI MSA",5120,5120
+Ramsey,Minnesota,27,123,27123,27123,"Minneapolis-St. Paul, MN-WI MSA",5120,5120
+Carver,Minnesota,27,19,27019,27019,"Minneapolis-St. Paul, MN-WI MSA",5120,5120
+Dakota,Minnesota,27,37,27037,27037,"Minneapolis-St. Paul, MN-WI MSA",5120,5120
+Pierce,Wisconsin,55,93,55093,55093,"Minneapolis-St. Paul, MN-WI MSA",5120,5120
+Scott,Minnesota,27,139,27139,27139,"Minneapolis-St. Paul, MN-WI MSA",5120,5120
+Missoula,Montana,30,63,30063,30063,"Missoula, MT MSA",5140,
+Baldwin,Alabama,1,3,1003,1003,"Mobile, AL MSA",5160,
+Mobile,Alabama,1,97,1097,1097,"Mobile, AL MSA",5160,
+Stanislaus,California,6,99,6099,6099,"Modesto, CA MSA",5170,
+Monmouth,New Jersey,34,25,34025,34025,"Monmouth-Ocean, NJ PMSA",5190,
+Ocean,New Jersey,34,29,34029,34029,"Monmouth-Ocean, NJ PMSA",5190,
+Ouachita,Louisiana,22,73,22073,22073,"Monroe, LA MSA",5200,
+Elmore,Alabama,1,51,1051,1051,"Montgomery, AL MSA",5240,
+Autauga,Alabama,1,1,1001,1001,"Montgomery, AL MSA",5240,
+Montgomery,Alabama,1,101,1101,1101,"Montgomery, AL MSA",5240,
+Delaware,Indiana,18,35,18035,18035,"Muncie, IN MSA",5280,
+Horry,South Carolina,45,51,45051,45051,"Myrtle Beach, SC MSA",5330,
+Collier,Florida,12,21,12021,12021,"Naples, FL MSA",5345,
+Hillsborough,New Hampshire,33,11,33011,33011,"Nashua, NH PMSA",5350,
+Robertson,Tennessee,47,147,47147,47147,"Nashville, TN MSA",5360,5360
+Sumner,Tennessee,47,165,47165,47165,"Nashville, TN MSA",5360,5360
+Cheatham,Tennessee,47,21,47021,47021,"Nashville, TN MSA",5360,5360
+Davidson,Tennessee,47,37,47037,47037,"Nashville, TN MSA",5360,5360
+Wilson,Tennessee,47,189,47189,47189,"Nashville, TN MSA",5360,5360
+Dickson,Tennessee,47,43,47043,47043,"Nashville, TN MSA",5360,5360
+Rutherford,Tennessee,47,149,47149,47149,"Nashville, TN MSA",5360,5360
+Williamson,Tennessee,47,187,47187,47187,"Nashville, TN MSA",5360,5360
+Nassau,New York,36,59,36059,36059,"Nassau-Suffolk, NY PMSA",5380,
+Suffolk,New York,36,103,36103,36103,"Nassau-Suffolk, NY PMSA",5380,
+New Haven,Connecticut,9,9,9009,9009,"New Haven-Meriden, CT PMSA",5480,
+New London,Connecticut,9,11,9011,9011,"New London-Norwich, CT-RI MSA",5520,
+St. Tammany,Louisiana,22,103,22103,22103,"New Orleans, LA MSA",5560,5560
+St. John the Baptist,Louisiana,22,95,22095,22095,"New Orleans, LA MSA",5560,5560
+St. James,Louisiana,22,93,22093,22093,"New Orleans, LA MSA",5560,5560
+Orleans,Louisiana,22,71,22071,22071,"New Orleans, LA MSA",5560,5560
+St. Charles,Louisiana,22,89,22089,22089,"New Orleans, LA MSA",5560,5560
+Plaquemines,Louisiana,22,75,22075,22075,"New Orleans, LA MSA",5560,5560
+Jefferson,Louisiana,22,51,22051,22051,"New Orleans, LA MSA",5560,5560
+Putnam,New York,36,79,36079,36079,"New York, NY PMSA",5600,5602
+Westchester,New York,36,119,36119,36119,"New York, NY PMSA",5600,5602
+Rockland,New York,36,87,36087,36087,"New York, NY PMSA",5600,5602
+Bronx,New York,36,5,36005,36005,"New York, NY PMSA",5600,5602
+New York,New York,36,61,36061,36061,"New York, NY PMSA",5600,5602
+Queens,New York,36,81,36081,36081,"New York, NY PMSA",5600,5602
+Kings,New York,36,47,36047,36047,"New York, NY PMSA",5600,5602
+Richmond,New York,36,85,36085,36085,"New York, NY PMSA",5600,5602
+Sussex,New Jersey,34,37,34037,34037,"Newark, NJ PMSA",5640,5602
+Warren,New Jersey,34,41,34041,34041,"Newark, NJ PMSA",5640,5602
+Morris,New Jersey,34,27,34027,34027,"Newark, NJ PMSA",5640,5602
+Essex,New Jersey,34,13,34013,34013,"Newark, NJ PMSA",5640,5602
+Union,New Jersey,34,39,34039,34039,"Newark, NJ PMSA",5640,5602
+Orange,New York,36,71,36071,36071,"Newburgh, NY-PA PMSA",5660,
+Pike,Pennsylvania,42,103,42103,42103,"Newburgh, NY-PA PMSA",5660,
+Gloucester,Virginia,51,73,51073,51073,"Norfolk-Virginia Beach-Newport News, VA-NC MSA",5720,5720
+Mathews,Virginia,51,115,51115,51115,"Norfolk-Virginia Beach-Newport News, VA-NC MSA",5720,5720
+James City,Virginia,51,95,51095,51095,"Norfolk-Virginia Beach-Newport News, VA-NC MSA",5720,5720
+York,Virginia,51,199,51199,51199,"Norfolk-Virginia Beach-Newport News, VA-NC MSA",5720,5720
+Williamsburg,Virginia,51,830,51830,51830,"Norfolk-Virginia Beach-Newport News, VA-NC MSA",5720,5720
+Newport News,Virginia,51,700,51700,51700,"Norfolk-Virginia Beach-Newport News, VA-NC MSA",5720,5720
+Poquoson,Virginia,51,735,51735,51735,"Norfolk-Virginia Beach-Newport News, VA-NC MSA",5720,5720
+Isle of Wight,Virginia,51,93,51093,51093,"Norfolk-Virginia Beach-Newport News, VA-NC MSA",5720,5720
+Hampton,Virginia,51,650,51650,51650,"Norfolk-Virginia Beach-Newport News, VA-NC MSA",5720,5720
+Norfolk,Virginia,51,710,51710,51710,"Norfolk-Virginia Beach-Newport News, VA-NC MSA",5720,5720
+Virginia Beach,Virginia,51,810,51810,51810,"Norfolk-Virginia Beach-Newport News, VA-NC MSA",5720,5720
+Suffolk,Virginia,51,800,51800,51800,"Norfolk-Virginia Beach-Newport News, VA-NC MSA",5720,5720
+Chesapeake,Virginia,51,550,51550,51550,"Norfolk-Virginia Beach-Newport News, VA-NC MSA",5720,5720
+Portsmouth,Virginia,51,740,51740,51740,"Norfolk-Virginia Beach-Newport News, VA-NC MSA",5720,5720
+Currituck,North Carolina,37,53,37053,37053,"Norfolk-Virginia Beach-Newport News, VA-NC MSA",5720,5720
+Contra Costa,California,6,13,6013,6013,"Oakland, CA PMSA",5775,7362
+Alameda,California,6,1,6001,6001,"Oakland, CA PMSA",5775,7362
+Marion,Florida,12,83,12083,12083,"Ocala, FL MSA",5790,
+Midland,Texas,48,329,48329,48329,"Odessa-Midland, TX MSA",5800,
+Ector,Texas,48,135,48135,48135,"Odessa-Midland, TX MSA",5800,
+Logan,Oklahoma,40,83,40083,40083,"Oklahoma City, OK MSA",5880,5880
+Canadian,Oklahoma,40,17,40017,40017,"Oklahoma City, OK MSA",5880,5880
+Oklahoma,Oklahoma,40,109,40109,40109,"Oklahoma City, OK MSA",5880,5880
+Pottawatomie,Oklahoma,40,125,40125,40125,"Oklahoma City, OK MSA",5880,5880
+Cleveland,Oklahoma,40,27,40027,40027,"Oklahoma City, OK MSA",5880,5880
+McClain,Oklahoma,40,87,40087,40087,"Oklahoma City, OK MSA",5880,5880
+Thurston,Washington,53,67,53067,53067,"Olympia, WA PMSA",5910,
+Washington,Nebraska,31,177,31177,31177,"Omaha, NE-IA MSA",5920,
+Pottawattamie,Iowa,19,155,19155,19155,"Omaha, NE-IA MSA",5920,
+Douglas,Nebraska,31,55,31055,31055,"Omaha, NE-IA MSA",5920,
+Sarpy,Nebraska,31,153,31153,31153,"Omaha, NE-IA MSA",5920,
+Cass,Nebraska,31,25,31025,31025,"Omaha, NE-IA MSA",5920,
+Orange,California,6,59,6059,6059,"Orange County, CA PMSA",5945,4472
+Lake,Florida,12,69,12069,12069,"Orlando, FL MSA",5960,5960
+Seminole,Florida,12,117,12117,12117,"Orlando, FL MSA",5960,5960
+Orange,Florida,12,95,12095,12095,"Orlando, FL MSA",5960,5960
+Osceola,Florida,12,97,12097,12097,"Orlando, FL MSA",5960,5960
+Daviess,Kentucky,21,59,21059,21059,"Owensboro, KY MSA",5990,
+Bay,Florida,12,5,12005,12005,"Panama City, FL MSA",6015,
+Washington,Ohio,39,167,39167,39167,"Parkersburg-Marietta, WV-OH MSA",6020,
+Wood,West Virginia,54,107,54107,54107,"Parkersburg-Marietta, WV-OH MSA",6020,
+Santa Rosa,Florida,12,113,12113,12113,"Pensacola, FL MSA",6080,
+Escambia,Florida,12,33,12033,12033,"Pensacola, FL MSA",6080,
+Peoria,Illinois,17,143,17143,17143,"Peoria-Pekin, IL MSA",6120,
+Woodford,Illinois,17,203,17203,17203,"Peoria-Pekin, IL MSA",6120,
+Tazewell,Illinois,17,179,17179,17179,"Peoria-Pekin, IL MSA",6120,
+Bucks,Pennsylvania,42,17,42017,42017,"Philadelphia, PA-NJ PMSA",6160,6162
+Montgomery,Pennsylvania,42,91,42091,42091,"Philadelphia, PA-NJ PMSA",6160,6162
+Chester,Pennsylvania,42,29,42029,42029,"Philadelphia, PA-NJ PMSA",6160,6162
+Burlington,New Jersey,34,5,34005,34005,"Philadelphia, PA-NJ PMSA",6160,6162
+Philadelphia,Pennsylvania,42,101,42101,42101,"Philadelphia, PA-NJ PMSA",6160,6162
+Delaware,Pennsylvania,42,45,42045,42045,"Philadelphia, PA-NJ PMSA",6160,6162
+Camden,New Jersey,34,7,34007,34007,"Philadelphia, PA-NJ PMSA",6160,6162
+Gloucester,New Jersey,34,15,34015,34015,"Philadelphia, PA-NJ PMSA",6160,6162
+Salem,New Jersey,34,33,34033,34033,"Philadelphia, PA-NJ PMSA",6160,6162
+Maricopa,Arizona,4,13,4013,4013,"Phoenix-Mesa, AZ MSA",6200,6200
+Pinal,Arizona,4,21,4021,4021,"Phoenix-Mesa, AZ MSA",6200,6200
+Jefferson,Arkansas,5,69,5069,5069,"Pine Bluff, AR MSA",6240,
+Butler,Pennsylvania,42,19,42019,42019,"Pittsburgh, PA MSA",6280,6280
+Beaver,Pennsylvania,42,7,42007,42007,"Pittsburgh, PA MSA",6280,6280
+Westmoreland,Pennsylvania,42,129,42129,42129,"Pittsburgh, PA MSA",6280,6280
+Allegheny,Pennsylvania,42,3,42003,42003,"Pittsburgh, PA MSA",6280,6280
+Washington,Pennsylvania,42,125,42125,42125,"Pittsburgh, PA MSA",6280,6280
+Fayette,Pennsylvania,42,51,42051,42051,"Pittsburgh, PA MSA",6280,6280
+Bannock,Idaho,16,5,16005,16005,"Pocatello, ID MSA",6340,
+Cumberland,Maine,23,5,23005,23005,"Portland, ME MSA",6400,
+Columbia,Oregon,41,9,41009,41009,"Portland-Vancouver, OR-WA PMSA",6440,6442
+Clark,Washington,53,11,53011,53011,"Portland-Vancouver, OR-WA PMSA",6440,6442
+Washington,Oregon,41,67,41067,41067,"Portland-Vancouver, OR-WA PMSA",6440,6442
+Multnomah,Oregon,41,51,41051,41051,"Portland-Vancouver, OR-WA PMSA",6440,6442
+Clackamas,Oregon,41,5,41005,41005,"Portland-Vancouver, OR-WA PMSA",6440,6442
+Yamhill,Oregon,41,71,41071,41071,"Portland-Vancouver, OR-WA PMSA",6440,6442
+Strafford,New Hampshire,33,17,33017,33017,"Portsmouth-Rochester, NH-ME PMSA",6450,
+Providence,Rhode Island,44,7,44007,44007,"Providence-Fall River-Warwick, RI-MA MSA",6480,6480
+Bristol,Rhode Island,44,1,44001,44001,"Providence-Fall River-Warwick, RI-MA MSA",6480,6480
+Kent,Rhode Island,44,3,44003,44003,"Providence-Fall River-Warwick, RI-MA MSA",6480,6480
+Newport,Rhode Island,44,5,44005,44005,"Providence-Fall River-Warwick, RI-MA MSA",6480,6480
+Washington,Rhode Island,44,9,44009,44009,"Providence-Fall River-Warwick, RI-MA MSA",6480,6480
+Utah,Utah,49,49,49049,49049,"Provo-Orem, UT MSA",6520,
+Pueblo,Colorado,8,101,8101,8101,"Pueblo, CO MSA",6560,
+Charlotte,Florida,12,15,12015,12015,"Punta Gorda, FL MSA",6580,
+Racine,Wisconsin,55,101,55101,55101,"Racine, WI PMSA",6600,5082
+Franklin,North Carolina,37,69,37069,37069,"Raleigh-Durham-Chapel Hill, NC MSA",6640,6640
+Orange,North Carolina,37,135,37135,37135,"Raleigh-Durham-Chapel Hill, NC MSA",6640,6640
+Durham,North Carolina,37,63,37063,37063,"Raleigh-Durham-Chapel Hill, NC MSA",6640,6640
+Wake,North Carolina,37,183,37183,37183,"Raleigh-Durham-Chapel Hill, NC MSA",6640,6640
+Chatham,North Carolina,37,37,37037,37037,"Raleigh-Durham-Chapel Hill, NC MSA",6640,6640
+Johnston,North Carolina,37,101,37101,37101,"Raleigh-Durham-Chapel Hill, NC MSA",6640,6640
+Pennington,South Dakota,46,103,46103,46103,"Rapid City, SD MSA",6660,
+Berks,Pennsylvania,42,11,42011,42011,"Reading, PA MSA",6680,
+Shasta,California,6,89,6089,6089,"Redding, CA MSA",6690,
+Washoe,Nevada,32,31,32031,32031,"Reno, NV MSA",6720,
+Franklin,Washington,53,21,53021,53021,"Richland-Kennewick-Pasco, WA MSA",6740,
+Benton,Washington,53,5,53005,53005,"Richland-Kennewick-Pasco, WA MSA",6740,
+Hanover,Virginia,51,85,51085,51085,"Richmond-Petersburg, VA MSA",6760,
+Goochland,Virginia,51,75,51075,51075,"Richmond-Petersburg, VA MSA",6760,
+Henrico,Virginia,51,87,51087,51087,"Richmond-Petersburg, VA MSA",6760,
+Powhatan,Virginia,51,145,51145,51145,"Richmond-Petersburg, VA MSA",6760,
+New Kent,Virginia,51,127,51127,51127,"Richmond-Petersburg, VA MSA",6760,
+Richmond City,Virginia,51,760,51760,51760,"Richmond-Petersburg, VA MSA",6760,
+Chesterfield,Virginia,51,41,51041,51041,"Richmond-Petersburg, VA MSA",6760,
+Charles City,Virginia,51,36,51036,51036,"Richmond-Petersburg, VA MSA",6760,
+Prince George,Virginia,51,149,51149,51149,"Richmond-Petersburg, VA MSA",6760,
+Hopewell,Virginia,51,670,51670,51670,"Richmond-Petersburg, VA MSA",6760,
+Colonial Heights,Virginia,51,570,51570,51570,"Richmond-Petersburg, VA MSA",6760,
+Dinwiddie,Virginia,51,53,51053,51053,"Richmond-Petersburg, VA MSA",6760,
+Petersburg,Virginia,51,730,51730,51730,"Richmond-Petersburg, VA MSA",6760,
+San Bernardino,California,6,71,6071,6071,"Riverside-San Bernardino, CA PMSA",6780,4472
+Riverside,California,6,65,6065,6065,"Riverside-San Bernardino, CA PMSA",6780,4472
+Botetourt,Virginia,51,23,51023,51023,"Roanoke, VA MSA",6800,
+Roanoke,Virginia,51,161,51161,51161,"Roanoke, VA MSA",6800,
+Roanoke City,Virginia,51,770,51770,51770,"Roanoke, VA MSA",6800,
+Salem,Virginia,51,775,51775,51775,"Roanoke, VA MSA",6800,
+Olmsted,Minnesota,27,109,27109,27109,"Rochester, MN MSA",6820,
+Orleans,New York,36,73,36073,36073,"Rochester, NY MSA",6840,6840
+Monroe,New York,36,55,36055,36055,"Rochester, NY MSA",6840,6840
+Wayne,New York,36,117,36117,36117,"Rochester, NY MSA",6840,6840
+Genesee,New York,36,37,36037,36037,"Rochester, NY MSA",6840,6840
+Ontario,New York,36,69,36069,36069,"Rochester, NY MSA",6840,6840
+Livingston,New York,36,51,36051,36051,"Rochester, NY MSA",6840,6840
+Winnebago,Illinois,17,201,17201,17201,"Rockford, IL MSA",6880,
+Boone,Illinois,17,7,17007,17007,"Rockford, IL MSA",6880,
+Ogle,Illinois,17,141,17141,17141,"Rockford, IL MSA",6880,
+Nash,North Carolina,37,127,37127,37127,"Rocky Mount, NC MSA",6895,
+Edgecombe,North Carolina,37,65,37065,37065,"Rocky Mount, NC MSA",6895,
+Placer,California,6,61,6061,6061,"Sacramento, CA PMSA",6920,6922
+El Dorado,California,6,17,6017,6017,"Sacramento, CA PMSA",6920,6922
+Sacramento,California,6,67,6067,6067,"Sacramento, CA PMSA",6920,6922
+Bay,Michigan,26,17,26017,26017,"Saginaw-Bay City-Midland, MI MSA",6960,
+Midland,Michigan,26,111,26111,26111,"Saginaw-Bay City-Midland, MI MSA",6960,
+Saginaw,Michigan,26,145,26145,26145,"Saginaw-Bay City-Midland, MI MSA",6960,
+Benton,Minnesota,27,9,27009,27009,"St. Cloud, MN MSA",6980,
+Stearns,Minnesota,27,145,27145,27145,"St. Cloud, MN MSA",6980,
+Andrew,Missouri,29,3,29003,29003,"St. Joseph, MO MSA",7000,
+Buchanan,Missouri,29,21,29021,29021,"St. Joseph, MO MSA",7000,
+Jersey,Illinois,17,83,17083,17083,"St. Louis, MO-IL MSA",7040,7040
+Lincoln,Missouri,29,113,29113,29113,"St. Louis, MO-IL MSA",7040,7040
+Madison,Illinois,17,119,17119,17119,"St. Louis, MO-IL MSA",7040,7040
+Warren,Missouri,29,219,29219,29219,"St. Louis, MO-IL MSA",7040,7040
+St. Charles,Missouri,29,183,29183,29183,"St. Louis, MO-IL MSA",7040,7040
+St. Louis,Missouri,29,189,29189,29189,"St. Louis, MO-IL MSA",7040,7040
+St. Louis City,Missouri,29,510,29510,29510,"St. Louis, MO-IL MSA",7040,7040
+Clinton,Illinois,17,27,17027,17027,"St. Louis, MO-IL MSA",7040,7040
+Franklin,Missouri,29,71,29071,29071,"St. Louis, MO-IL MSA",7040,7040
+St. Clair,Illinois,17,163,17163,17163,"St. Louis, MO-IL MSA",7040,7040
+Monroe,Illinois,17,133,17133,17133,"St. Louis, MO-IL MSA",7040,7040
+Jefferson,Missouri,29,99,29099,29099,"St. Louis, MO-IL MSA",7040,7040
+Marion,Oregon,41,47,41047,41047,"Salem, OR PMSA",7080,6442
+Polk,Oregon,41,53,41053,41053,"Salem, OR PMSA",7080,6442
+Monterey,California,6,53,6053,6053,"Salinas, CA MSA",7120,
+Weber,Utah,49,57,49057,49057,"Salt Lake City-Ogden, UT MSA",7160,7160
+Davis,Utah,49,11,49011,49011,"Salt Lake City-Ogden, UT MSA",7160,7160
+Salt Lake,Utah,49,35,49035,49035,"Salt Lake City-Ogden, UT MSA",7160,7160
+Tom Green,Texas,48,451,48451,48451,"San Angelo, TX MSA",7200,
+Comal,Texas,48,91,48091,48091,"San Antonio, TX MSA",7240,7240
+Guadalupe,Texas,48,187,48187,48187,"San Antonio, TX MSA",7240,7240
+Bexar,Texas,48,29,48029,48029,"San Antonio, TX MSA",7240,7240
+Wilson,Texas,48,493,48493,48493,"San Antonio, TX MSA",7240,7240
+San Diego,California,6,73,6073,6073,"San Diego, CA MSA",7320,7320
+Marin,California,6,41,6041,6041,"San Francisco, CA PMSA",7360,7362
+San Francisco,California,6,75,6075,6075,"San Francisco, CA PMSA",7360,7362
+San Mateo,California,6,81,6081,6081,"San Francisco, CA PMSA",7360,7362
+Santa Clara,California,6,85,6085,6085,"San Jose, CA PMSA",7400,7362
+San Luis Obispo,California,6,79,6079,6079,"San Luis Obispo-Atascadero-Paso Robles, CA MSA",7460,
+Santa Barbara,California,6,83,6083,6083,"Santa Barbara-Santa Maria-Lompoc, CA MSA",7480,
+Santa Cruz,California,6,87,6087,6087,"Santa Cruz-Watsonville, CA PMSA",7485,
+Santa Fe,New Mexico,35,49,35049,35049,"Santa Fe, NM MSA",7490,
+Los Alamos,New Mexico,35,28,35028,35028,"Santa Fe, NM MSA",7490,
+Sonoma,California,6,97,6097,6097,"Santa Rosa, CA PMSA",7500,
+Manatee,Florida,12,81,12081,12081,"Sarasota-Bradenton, FL MSA",7510,
+Sarasota,Florida,12,115,12115,12115,"Sarasota-Bradenton, FL MSA",7510,
+Effingham,Georgia,13,103,13103,13103,"Savannah, GA MSA",7520,
+Bryan,Georgia,13,29,13029,13029,"Savannah, GA MSA",7520,
+Chatham,Georgia,13,51,13051,13051,"Savannah, GA MSA",7520,
+Wyoming,Pennsylvania,42,131,42131,42131,"Scranton--Wilkes-Barre--Hazleton, PA MSA",7560,
+Lackawanna,Pennsylvania,42,69,42069,42069,"Scranton--Wilkes-Barre--Hazleton, PA MSA",7560,
+Luzerne,Pennsylvania,42,79,42079,42079,"Scranton--Wilkes-Barre--Hazleton, PA MSA",7560,
+Columbia,Pennsylvania,42,37,42037,42037,"Scranton--Wilkes-Barre--Hazleton, PA MSA",7560,
+Snohomish,Washington,53,61,53061,53061,"Seattle-Bellevue-Everett, WA PMSA",7600,7602
+Island,Washington,53,29,53029,53029,"Seattle-Bellevue-Everett, WA PMSA",7600,7602
+King,Washington,53,33,53033,53033,"Seattle-Bellevue-Everett, WA PMSA",7600,7602
+Mercer,Pennsylvania,42,85,42085,42085,"Sharon, PA MSA",7610,
+Sheboygan,Wisconsin,55,117,55117,55117,"Sheboygan, WI MSA",7620,
+Grayson,Texas,48,181,48181,48181,"Sherman-Denison, TX MSA",7640,
+Caddo,Louisiana,22,17,22017,22017,"Shreveport-Bossier City, LA MSA",7680,
+Bossier,Louisiana,22,15,22015,22015,"Shreveport-Bossier City, LA MSA",7680,
+Webster,Louisiana,22,119,22119,22119,"Shreveport-Bossier City, LA MSA",7680,
+Woodbury,Iowa,19,193,19193,19193,"Sioux City, IA-NE MSA",7720,
+Dakota,Nebraska,31,43,31043,31043,"Sioux City, IA-NE MSA",7720,
+Minnehaha,South Dakota,46,99,46099,46099,"Sioux Falls, SD MSA",7760,
+Lincoln,South Dakota,46,83,46083,46083,"Sioux Falls, SD MSA",7760,
+St. Joseph,Indiana,18,141,18141,18141,"South Bend, IN MSA",7800,
+Spokane,Washington,53,63,53063,53063,"Spokane, WA MSA",7840,
+Menard,Illinois,17,129,17129,17129,"Springfield, IL MSA",7880,
+Sangamon,Illinois,17,167,17167,17167,"Springfield, IL MSA",7880,
+Webster,Missouri,29,225,29225,29225,"Springfield, MO MSA",7920,
+Greene,Missouri,29,77,29077,29077,"Springfield, MO MSA",7920,
+Christian,Missouri,29,43,29043,29043,"Springfield, MO MSA",7920,
+Hampshire,Massachusetts,25,15,25015,25015,"Springfield, MA MSA",8000,
+Hampden,Massachusetts,25,13,25013,25013,"Springfield, MA MSA",8000,
+Centre,Pennsylvania,42,27,42027,42027,"State College, PA MSA",8050,
+Hancock,West Virginia,54,29,54029,54029,"Steubenville-Weirton, OH-WV MSA",8080,
+Jefferson,Ohio,39,81,39081,39081,"Steubenville-Weirton, OH-WV MSA",8080,
+Brooke,West Virginia,54,9,54009,54009,"Steubenville-Weirton, OH-WV MSA",8080,
+San Joaquin,California,6,77,6077,6077,"Stockton-Lodi, CA MSA",8120,
+Sumter,South Carolina,45,85,45085,45085,"Sumter, SC MSA",8140,
+Oswego,New York,36,75,36075,36075,"Syracuse, NY MSA",8160,
+Cayuga,New York,36,11,36011,36011,"Syracuse, NY MSA",8160,
+Onondaga,New York,36,67,36067,36067,"Syracuse, NY MSA",8160,
+Madison,New York,36,53,36053,36053,"Syracuse, NY MSA",8160,
+Pierce,Washington,53,53,53053,53053,"Tacoma, WA PMSA",8200,7602
+Gadsden,Florida,12,39,12039,12039,"Tallahassee, FL MSA",8240,
+Leon,Florida,12,73,12073,12073,"Tallahassee, FL MSA",8240,
+Hernando,Florida,12,53,12053,12053,"Tampa-St. Petersburg-Clearwater, FL MSA",8280,8280
+Pasco,Florida,12,101,12101,12101,"Tampa-St. Petersburg-Clearwater, FL MSA",8280,8280
+Pinellas,Florida,12,103,12103,12103,"Tampa-St. Petersburg-Clearwater, FL MSA",8280,8280
+Hillsborough,Florida,12,57,12057,12057,"Tampa-St. Petersburg-Clearwater, FL MSA",8280,8280
+Vermillion,Indiana,18,165,18165,18165,"Terre Haute, IN MSA",8320,
+Vigo,Indiana,18,167,18167,18167,"Terre Haute, IN MSA",8320,
+Clay,Indiana,18,21,18021,18021,"Terre Haute, IN MSA",8320,
+Bowie,Texas,48,37,48037,48037,"Texarkana, TX-Texarkana, AR MSA",8360,
+Miller,Arkansas,5,91,5091,5091,"Texarkana, TX-Texarkana, AR MSA",8360,
+Lucas,Ohio,39,95,39095,39095,"Toledo, OH MSA",8400,
+Fulton,Ohio,39,51,39051,39051,"Toledo, OH MSA",8400,
+Wood,Ohio,39,173,39173,39173,"Toledo, OH MSA",8400,
+Shawnee,Kansas,20,177,20177,20177,"Topeka, KS MSA",8440,
+Mercer,New Jersey,34,21,34021,34021,"Trenton, NJ PMSA",8480,
+Pima,Arizona,4,19,4019,4019,"Tucson, AZ MSA",8520,
+Osage,Oklahoma,40,113,40113,40113,"Tulsa, OK MSA",8560,
+Rogers,Oklahoma,40,131,40131,40131,"Tulsa, OK MSA",8560,
+Tulsa,Oklahoma,40,143,40143,40143,"Tulsa, OK MSA",8560,
+Creek,Oklahoma,40,37,40037,40037,"Tulsa, OK MSA",8560,
+Wagoner,Oklahoma,40,145,40145,40145,"Tulsa, OK MSA",8560,
+Tuscaloosa,Alabama,1,125,1125,1125,"Tuscaloosa, AL MSA",8600,
+Smith,Texas,48,423,48423,48423,"Tyler, TX MSA",8640,
+Herkimer,New York,36,43,36043,36043,"Utica-Rome, NY MSA",8680,
+Oneida,New York,36,65,36065,36065,"Utica-Rome, NY MSA",8680,
+Napa,California,6,55,6055,6055,"Vallejo-Fairfield-Napa, CA PMSA",8720,
+Solano,California,6,95,6095,6095,"Vallejo-Fairfield-Napa, CA PMSA",8720,
+Ventura,California,6,111,6111,6111,"Ventura, CA PMSA",8735,
+Victoria,Texas,48,469,48469,48469,"Victoria, TX MSA",8750,
+Cumberland,New Jersey,34,11,34011,34011,"Vineland-Millville-Bridgeton, NJ PMSA",8760,
+Tulare,California,6,107,6107,6107,"Visalia-Tulare-Porterville, CA MSA",8780,
+McLennan,Texas,48,309,48309,48309,"Waco, TX MSA",8800,
+Frederick,Maryland,24,21,24021,24021,"Washington, DC-MD-VA-WV PMSA",8840,8872
+Berkeley,West Virginia,54,3,54003,54003,"Washington, DC-MD-VA-WV PMSA",8840,8872
+Jefferson,West Virginia,54,37,54037,54037,"Washington, DC-MD-VA-WV PMSA",8840,8872
+Montgomery,Maryland,24,31,24031,24031,"Washington, DC-MD-VA-WV PMSA",8840,8872
+Loudoun,Virginia,51,107,51107,51107,"Washington, DC-MD-VA-WV PMSA",8840,8872
+Clarke,Virginia,51,43,51043,51043,"Washington, DC-MD-VA-WV PMSA",8840,8872
+Prince George's,Maryland,24,33,24033,24033,"Washington, DC-MD-VA-WV PMSA",8840,8872
+Fairfax,Virginia,51,59,51059,51059,"Washington, DC-MD-VA-WV PMSA",8840,8872
+Warren,Virginia,51,187,51187,51187,"Washington, DC-MD-VA-WV PMSA",8840,8872
+Fauquier,Virginia,51,61,51061,51061,"Washington, DC-MD-VA-WV PMSA",8840,8872
+District of Columbia,District of Columbia,11,1,11001,11001,"Washington, DC-MD-VA-WV PMSA",8840,8872
+Prince William,Virginia,51,153,51153,51153,"Washington, DC-MD-VA-WV PMSA",8840,8872
+Arlington,Virginia,51,13,51013,51013,"Washington, DC-MD-VA-WV PMSA",8840,8872
+Falls Church,Virginia,51,610,51610,51610,"Washington, DC-MD-VA-WV PMSA",8840,8872
+Fairfax City,Virginia,51,600,51600,51600,"Washington, DC-MD-VA-WV PMSA",8840,8872
+Alexandria,Virginia,51,510,51510,51510,"Washington, DC-MD-VA-WV PMSA",8840,8872
+Manassas Park,Virginia,51,685,51685,51685,"Washington, DC-MD-VA-WV PMSA",8840,8872
+Manassas,Virginia,51,683,51683,51683,"Washington, DC-MD-VA-WV PMSA",8840,8872
+Calvert,Maryland,24,9,24009,24009,"Washington, DC-MD-VA-WV PMSA",8840,8872
+Charles,Maryland,24,17,24017,24017,"Washington, DC-MD-VA-WV PMSA",8840,8872
+Culpeper,Virginia,51,47,51047,51047,"Washington, DC-MD-VA-WV PMSA",8840,8872
+Stafford,Virginia,51,179,51179,51179,"Washington, DC-MD-VA-WV PMSA",8840,8872
+Spotsylvania,Virginia,51,177,51177,51177,"Washington, DC-MD-VA-WV PMSA",8840,8872
+King George,Virginia,51,99,51099,51099,"Washington, DC-MD-VA-WV PMSA",8840,8872
+Fredericksburg,Virginia,51,630,51630,51630,"Washington, DC-MD-VA-WV PMSA",8840,8872
+Black Hawk,Iowa,19,13,19013,19013,"Waterloo-Cedar Falls, IA MSA",8920,
+Marathon,Wisconsin,55,73,55073,55073,"Wausau, WI MSA",8940,
+Palm Beach,Florida,12,99,12099,12099,"West Palm Beach-Boca Raton, FL MSA",8960,8960
+Ohio,West Virginia,54,69,54069,54069,"Wheeling, WV-OH MSA",9000,
+Belmont,Ohio,39,13,39013,39013,"Wheeling, WV-OH MSA",9000,
+Marshall,West Virginia,54,51,54051,54051,"Wheeling, WV-OH MSA",9000,
+Harvey,Kansas,20,79,20079,20079,"Wichita, KS MSA",9040,
+Butler,Kansas,20,15,20015,20015,"Wichita, KS MSA",9040,
+Sedgwick,Kansas,20,173,20173,20173,"Wichita, KS MSA",9040,
+Wichita,Texas,48,485,48485,48485,"Wichita Falls, TX MSA",9080,
+Archer,Texas,48,9,48009,48009,"Wichita Falls, TX MSA",9080,
+Lycoming,Pennsylvania,42,81,42081,42081,"Williamsport, PA MSA",9140,
+New Castle,Delaware,10,3,10003,10003,"Wilmington-Newark, DE-MD PMSA",9160,6162
+Cecil,Maryland,24,15,24015,24015,"Wilmington-Newark, DE-MD PMSA",9160,6162
+New Hanover,North Carolina,37,129,37129,37129,"Wilmington, NC MSA",9200,
+Brunswick,North Carolina,37,19,37019,37019,"Wilmington, NC MSA",9200,
+Worcester,Massachusetts,25,27,25027,25027,"Worcester, MA-CT PMSA",9240,1122
+Yakima,Washington,53,77,53077,53077,"Yakima, WA MSA",9260,
+Yolo,California,6,113,6113,6113,"Yolo, CA PMSA",9270,6922
+York,Pennsylvania,42,133,42133,42133,"York, PA MSA",9280,
+Trumbull,Ohio,39,155,39155,39155,"Youngstown-Warren, OH MSA",9320,
+Mahoning,Ohio,39,99,39099,39099,"Youngstown-Warren, OH MSA",9320,
+Columbiana,Ohio,39,29,39029,39029,"Youngstown-Warren, OH MSA",9320,
+Yuba,California,6,115,6115,6115,"Yuba City, CA MSA",9340,
+Sutter,California,6,101,6101,6101,"Yuba City, CA MSA",9340,
+Yuma,Arizona,4,27,4027,4027,"Yuma, AZ MSA",9360,

@@ -3,14 +3,22 @@
 \docType{methods}
 \name{getPopulation}
 \alias{getPopulation}
-\alias{getPopulation,vector,vector-method}
+\alias{getPopulation,missing,vector,vector-method}
+\alias{getPopulation,numeric,missing,missing-method}
+\alias{getPopulation,vector,missing,missing-method}
 \title{Retrieves population matrix from U.S. Census}
 \usage{
-getPopulation(state, county)
+getPopulation(msa, state, county)
 
-\S4method{getPopulation}{vector,vector}(state, county)
+\S4method{getPopulation}{missing,vector,vector}(msa, state, county)
+
+\S4method{getPopulation}{numeric,missing,missing}(msa, state, county)
+
+\S4method{getPopulation}{vector,missing,missing}(msa, state, county)
 }
 \arguments{
+\item{msa}{An integer representing the MSA ID (NHTS specific)}
+
 \item{state}{An integer representing the state ID}
 
 \item{county}{An integer representing the county ID}
