@@ -336,3 +336,20 @@ setGeneric("getNonTravelMETs", function(x, form) standardGeneric("getNonTravelME
 #'
 #'
 setGeneric("getPopulation", function(msa, state, county) standardGeneric("getPopulation"))
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#' Foo
+#'
+#' Foo
+#'
+#' @param baseline foo
+#' @param scenario foo
+#'
+#' @return foo
+#' @export
+#' @docType methods
+#' @rdname tabulateDeltaBurden-methods
+#'
+#'
+setGeneric("tabulateDeltaBurden", function(baseline, scenario) standardGeneric("tabulateDeltaBurden"))
