@@ -3,25 +3,41 @@
 \docType{methods}
 \name{deltaBurden}
 \alias{deltaBurden}
-\alias{deltaBurden,ITHIM,ITHIM,character,character-method}
-\alias{deltaBurden,ITHIM,ITHIM,character,missing-method}
-\alias{deltaBurden,ITHIM,ITHIM,missing,character-method}
-\alias{deltaBurden,ITHIM,ITHIM,missing,missing-method}
+\alias{deltaBurden,ITHIM,ITHIM,character,character,character-method}
+\alias{deltaBurden,ITHIM,ITHIM,character,character,missing-method}
+\alias{deltaBurden,ITHIM,ITHIM,character,missing,character-method}
+\alias{deltaBurden,ITHIM,ITHIM,character,missing,missing-method}
+\alias{deltaBurden,ITHIM,ITHIM,missing,character,character-method}
+\alias{deltaBurden,ITHIM,ITHIM,missing,character,missing-method}
+\alias{deltaBurden,ITHIM,ITHIM,missing,missing,character-method}
+\alias{deltaBurden,ITHIM,ITHIM,missing,missing,missing-method}
 \title{Gets Change in Disease Burden due to Physical Activity}
 \usage{
-deltaBurden(baseline, scenario, bur, dis)
+deltaBurden(baseline, scenario, bur, dis, type)
 
-\S4method{deltaBurden}{ITHIM,ITHIM,character,character}(baseline, scenario, bur,
-  dis)
+\S4method{deltaBurden}{ITHIM,ITHIM,character,character,character}(baseline,
+  scenario, bur, dis, type)
 
-\S4method{deltaBurden}{ITHIM,ITHIM,character,missing}(baseline, scenario, bur,
-  dis)
+\S4method{deltaBurden}{ITHIM,ITHIM,character,character,missing}(baseline,
+  scenario, bur, dis, type)
 
-\S4method{deltaBurden}{ITHIM,ITHIM,missing,character}(baseline, scenario, bur,
-  dis)
+\S4method{deltaBurden}{ITHIM,ITHIM,character,missing,character}(baseline,
+  scenario, bur, dis, type)
 
-\S4method{deltaBurden}{ITHIM,ITHIM,missing,missing}(baseline, scenario, bur,
-  dis)
+\S4method{deltaBurden}{ITHIM,ITHIM,character,missing,missing}(baseline,
+  scenario, bur, dis, type)
+
+\S4method{deltaBurden}{ITHIM,ITHIM,missing,character,character}(baseline,
+  scenario, bur, dis, type)
+
+\S4method{deltaBurden}{ITHIM,ITHIM,missing,character,missing}(baseline,
+  scenario, bur, dis, type)
+
+\S4method{deltaBurden}{ITHIM,ITHIM,missing,missing,character}(baseline,
+  scenario, bur, dis, type)
+
+\S4method{deltaBurden}{ITHIM,ITHIM,missing,missing,missing}(baseline, scenario,
+  bur, dis, type)
 }
 \arguments{
 \item{baseline}{ITHIM object}
@@ -37,6 +53,9 @@ Possible values are "BreastCancer", "ColonCancer",
 "Depression", "Dementia", "Diabetes" and "CVD".  The default
 value is "all" which returns the sum of disease burden across
 these diseases.}
+
+\item{type}{A character string.  Either "percent" or "absolute",
+default is "absolute"}
 }
 \value{
 A burden value

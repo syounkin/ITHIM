@@ -114,8 +114,22 @@ setMethod("deltaBurden", signature(baseline = "ITHIM", scenario = "ITHIM", bur =
 #' @rdname deltaBurden-methods
 #' @aliases deltaBurden
 #' @export
+setMethod("deltaBurden", signature(baseline = "ITHIM", scenario = "ITHIM", bur = "character", dis = "character", type = "missing"), function(baseline, scenario, bur, dis, type){
+    return(deltaBurdenFunction(baseline, scenario, bur = bur, dis = dis))
+})
+
+#' @rdname deltaBurden-methods
+#' @aliases deltaBurden
+#' @export
 setMethod("deltaBurden", signature(baseline = "ITHIM", scenario = "ITHIM", bur = "character", dis = "missing", type = "character"), function(baseline, scenario, bur, dis, type){
     return(deltaBurdenFunction(baseline, scenario, bur = bur, type = type))
+})
+
+#' @rdname deltaBurden-methods
+#' @aliases deltaBurden
+#' @export
+setMethod("deltaBurden", signature(baseline = "ITHIM", scenario = "ITHIM", bur = "character", dis = "missing", type = "missing"), function(baseline, scenario, bur, dis, type){
+    return(deltaBurdenFunction(baseline, scenario, bur = bur))
 })
 
 #' @rdname deltaBurden-methods
@@ -128,8 +142,22 @@ setMethod("deltaBurden", signature(baseline = "ITHIM", scenario = "ITHIM", bur =
 #' @rdname deltaBurden-methods
 #' @aliases deltaBurden
 #' @export
+setMethod("deltaBurden", signature(baseline = "ITHIM", scenario = "ITHIM", bur = "missing", dis = "character", type = "missing"), function(baseline, scenario, bur, dis, type){
+    return(deltaBurdenFunction(baseline, scenario, dis = dis))
+})
+
+#' @rdname deltaBurden-methods
+#' @aliases deltaBurden
+#' @export
 setMethod("deltaBurden", signature(baseline = "ITHIM", scenario = "ITHIM", bur = "missing", dis = "missing", type = "character"), function(baseline, scenario, bur, dis, type){
     return(deltaBurdenFunction(baseline, scenario, type = type))
+})
+
+#' @rdname deltaBurden-methods
+#' @aliases deltaBurden
+#' @export
+setMethod("deltaBurden", signature(baseline = "ITHIM", scenario = "ITHIM", bur = "missing", dis = "missing", type = "missing"), function(baseline, scenario, bur, dis, type){
+    return(deltaBurdenFunction(baseline, scenario))
 })
 
 #' @rdname getParameterSet-methods
