@@ -23,7 +23,7 @@ createITHIMFunction <- function(roadInjuriesFile = system.file("roadInjuriesUS.c
                                 safetyInNumbersFile = system.file("SiN.csv", package = "ITHIM"),
                                 FFile = system.file("F.csv",package = "ITHIM"),
                                 meanType = "overall"){
-    
+
     new("ITHIM", parameters = parameters <- createParameterList(
                                   activeTransportTimeFile = activeTransportTimeFile,
                                   distRoadTypeFile = distRoadTypeFile,
@@ -83,25 +83,26 @@ createParameterList <- function(
     cvNonTravel <- 1 # coefficient of variation for leisure activity
     roadInjuries <- array()
     modeNames <- unlist(unique(lapply(roadInjuries, rownames)))
-    
+
     # read safetyInNumbers using helper function which converts "normalize" csv into array
 
     safetyInNumbers <- readSafetyInNumbers(file = safetyInNumbersFile)
-    
+
     # read distRoadType using helper function which converts "normalize" csv into array
-    
+
     distRoadType <- readDistByRoadType(file = distRoadTypeFile)
 
     GBD <- readGBD(filename = GBDFile)
 
-    F <- readF(filename = FFile)
+    N <- readF(filename = FFile)
+    P <- N/sum(N)
 
     if( meanType == "referent" ){
         muwt <- Mwt[3,2]
         muct <- Mct[3,2]
     }else if( meanType == "overall" ){
-        muwt <- sum(F*Mwt)
-        muct <- sum(F*Mct)
+        muwt <- sum(P*Mwt)
+        muct <- sum(P*Mct)
     }else{
         stop("Wrong meanType value.")
     }
@@ -120,7 +121,7 @@ createParameterList <- function(
         muNonTravel = muNonTravel,
         muNonTravelMatrix = muNonTravelMatrix,
         GBD = GBD,
-        F = F,
+        F = N,
         meanType = meanType,
         quantiles = quantiles,
         roadInjuries = roadInjuries,
