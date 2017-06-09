@@ -87,6 +87,8 @@ setGeneric("getBurden", function(x, bur, dis) standardGeneric("getBurden"))
 #'     "Depression", "Dementia", "Diabetes" and "CVD".  The default
 #'     value is "all" which returns the sum of disease burden across
 #'     these diseases.
+#' @param type A character string.  Either "percent" or "absolute",
+#'     default is "absolute"
 #'
 ##' @inheritParams getBurden
 #'
@@ -98,7 +100,7 @@ setGeneric("getBurden", function(x, bur, dis) standardGeneric("getBurden"))
 #' @export
 #' @docType methods
 #' @rdname deltaBurden-methods
-setGeneric("deltaBurden", function(baseline, scenario, bur, dis) standardGeneric("deltaBurden"))
+setGeneric("deltaBurden", function(baseline, scenario, bur, dis, type) standardGeneric("deltaBurden"))
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

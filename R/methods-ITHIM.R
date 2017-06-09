@@ -107,29 +107,29 @@ setMethod("getBurden", signature(x = "ITHIM", bur = "missing", dis = "missing"),
 #' @rdname deltaBurden-methods
 #' @aliases deltaBurden
 #' @export
-setMethod("deltaBurden", signature(baseline = "ITHIM", scenario = "ITHIM", bur = "character", dis = "character"), function(baseline, scenario, bur, dis){
-    return(deltaBurdenFunction(baseline, scenario, bur = bur, dis = dis))
+setMethod("deltaBurden", signature(baseline = "ITHIM", scenario = "ITHIM", bur = "character", dis = "character", type = "character"), function(baseline, scenario, bur, dis, type){
+    return(deltaBurdenFunction(baseline, scenario, bur = bur, dis = dis, type = type))
 })
 
 #' @rdname deltaBurden-methods
 #' @aliases deltaBurden
 #' @export
-setMethod("deltaBurden", signature(baseline = "ITHIM", scenario = "ITHIM", bur = "character", dis = "missing"), function(baseline, scenario, bur, dis){
-    return(deltaBurdenFunction(baseline, scenario, bur = bur))
+setMethod("deltaBurden", signature(baseline = "ITHIM", scenario = "ITHIM", bur = "character", dis = "missing", type = "character"), function(baseline, scenario, bur, dis, type){
+    return(deltaBurdenFunction(baseline, scenario, bur = bur, type = type))
 })
 
 #' @rdname deltaBurden-methods
 #' @aliases deltaBurden
 #' @export
-setMethod("deltaBurden", signature(baseline = "ITHIM", scenario = "ITHIM", bur = "missing", dis = "character"), function(baseline, scenario, bur, dis){
-    return(deltaBurdenFunction(baseline, scenario, dis = dis))
+setMethod("deltaBurden", signature(baseline = "ITHIM", scenario = "ITHIM", bur = "missing", dis = "character", type = "character"), function(baseline, scenario, bur, dis, type){
+    return(deltaBurdenFunction(baseline, scenario, dis = dis, type = type))
 })
 
 #' @rdname deltaBurden-methods
 #' @aliases deltaBurden
 #' @export
-setMethod("deltaBurden", signature(baseline = "ITHIM", scenario = "ITHIM", bur = "missing", dis = "missing"), function(baseline, scenario, bur, dis){
-    return(deltaBurdenFunction(baseline, scenario))
+setMethod("deltaBurden", signature(baseline = "ITHIM", scenario = "ITHIM", bur = "missing", dis = "missing", type = "character"), function(baseline, scenario, bur, dis, type){
+    return(deltaBurdenFunction(baseline, scenario, type = type))
 })
 
 #' @rdname getParameterSet-methods

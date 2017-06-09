@@ -112,7 +112,7 @@ computeMeanMatrices <- function(parList){
 ###     baseline and scenario.  Physical activity component only.
 ###
 ###
-deltaBurdenFunction <- function(ITHIM.baseline, ITHIM.scenario, bur = "daly", dis = "all"){
+deltaBurdenFunction <- function(ITHIM.baseline, ITHIM.scenario, bur = "daly", dis = "all", type = "absolute"){
 
     diseases <- names(getGBD(ITHIM.baseline, format = "list"))
     diseases <- diseases[diseases != "RTIs"]
@@ -120,6 +120,8 @@ deltaBurdenFunction <- function(ITHIM.baseline, ITHIM.scenario, bur = "daly", di
     if(!(dis %in% c(diseases,"all"))){
         stop("Value for 'dis' not contained in disease burden file.")
     }
+
+    ITHIM.baseline.obj <- ITHIM.baseline
 
     ITHIM.baseline <- as(ITHIM.baseline, "list")
     ITHIM.scenario <- as(ITHIM.scenario, "list")
@@ -148,7 +150,15 @@ deltaBurdenFunction <- function(ITHIM.baseline, ITHIM.scenario, bur = "daly", di
         burdenValue <- sum(unlist(CRA[[index]]), na.rm = TRUE)
     }
 
-  return(burdenValue) # AgeClass 1 is NOT removed from totals
+    if( type == "absolute" ){
+        burden <- burdenValue
+    }else if(type == "percent"){
+        burden <- burdenValue/getBurden(ITHIM.baseline.obj, dis = dis, bur = bur)
+    }else{
+        message("Error in type conditional")
+    }
+    
+  return(burden) # AgeClass 1 is NOT removed from totals
 }
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
