@@ -71,9 +71,10 @@ computeMeanMatrices <- function(parList){
 
     with(parList, {
         if( meanType == "overall" ){
-            alphawt <- sum(F*Rwt)
-            alphact <- sum(F*Rct)
-            alphant <- sum(F*muNonTravelMatrix)
+            P <- F/sum(F)
+            alphawt <- sum(P*Rwt)
+            alphact <- sum(P*Rct)
+            alphant <- sum(P*muNonTravelMatrix)
             meanWalkTime <- muwt/alphawt*Rwt
             meanCycleTime <- muct/alphact*Rct
             meanNonTravel <- muNonTravel/alphant*muNonTravelMatrix
