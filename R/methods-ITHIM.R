@@ -221,6 +221,12 @@ setMethod("getGBD", signature(x = "ITHIM", format = "missing"), function(x){
 setMethod("getSiN", signature(x = "ITHIM"), function(x){
     return(getSiN(getParameterSet(x)))
 })
+#' @rdname getF-methods
+#' @aliases getF
+#' @export
+setMethod("getF", signature(x = "ITHIM"), function(x){
+    return(getF(getParameterSet(x)))
+})
 #' @rdname getWalkTime-methods
 #' @aliases getWalkTime
 #' @export

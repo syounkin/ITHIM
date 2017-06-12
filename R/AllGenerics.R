@@ -353,3 +353,19 @@ setGeneric("getPopulation", function(msa, state, county) standardGeneric("getPop
 #'
 #'
 setGeneric("tabulateDeltaBurden", function(baseline, scenario) standardGeneric("tabulateDeltaBurden"))
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#' Get F
+#'
+#' Get F
+#'
+#' @param x ITHIM or ParameterSetobject
+#'
+#' @return foo
+#' @export
+#' @docType methods
+#' @rdname getF-methods
+#'
+#'
+setGeneric("getF", function(x) standardGeneric("getF"))

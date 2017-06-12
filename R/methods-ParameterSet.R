@@ -105,3 +105,9 @@ setMethod("getParameterNames", signature(x = "ParameterSet"), function(x){
 setMethod("getSiN", signature(x = "ParameterSet"), function(x){
     return(x@safetyInNumbers)
 })
+#' @rdname getF-methods
+#' @aliases getF
+#' @export
+setMethod("getF", signature(x = "ParameterSet"), function(x){
+    return(x@F)
+})
