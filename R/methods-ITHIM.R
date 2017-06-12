@@ -275,3 +275,9 @@ setMethod("getNonTravelMETs", signature(x = "ITHIM", form = "numeric"), function
 setMethod("getNonTravelMETs", signature(x = "ITHIM", form = "missing"), function(x, form){
     return(getNonTravelMETsFunction(x))
 })
+#' @rdname tabulateDeltaBurden-methods
+#' @aliases tabulateDeltaBurden
+#' @export
+setMethod("tabulateDeltaBurden", signature(baseline = "ITHIM", scenario = "ITHIM"), function(baseline, scenario){
+    return(tabulateDeltaBurdenFunction(baseline, scenario))
+})

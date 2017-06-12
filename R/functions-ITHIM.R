@@ -165,3 +165,26 @@ readF <- function(filename){
 
     return(F)
 }
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+tabulateDeltaBurdenFunction <- function(ITHIM.baseline, ITHIM.scenario){
+
+    deltaBurdenWrapper <- function( bur, dis ){
+        burden <- deltaBurden(baseline = ITHIM.baseline, scenario = ITHIM.scenario, bur = bur, dis = dis, type = "percent")
+        return(burden)
+    }
+
+
+    results <- data.frame()
+    disVec <- c("BreastCancer","ColonCancer","CVD","Dementia","Depression","Diabetes")
+    burVec <- c("deaths", "daly", "yll", "yld")
+    for( dis in disVec ){
+        for( bur in burVec ){
+            results <- rbind(results,data.frame(bur,dis,(deltaBurdenWrapper(bur, dis))))
+        }}
+
+    names(results) <- c("burdenType","disease","percentDeltaBurden")
+
+    return(results)
+}
