@@ -370,3 +370,35 @@ setGeneric("tabulateDeltaBurden", function(baseline, scenario) standardGeneric("
 #'
 #'
 setGeneric("getF", function(x, prob) standardGeneric("getF"))
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#' Foo
+#'
+#' Foobar
+#'
+#' @param baseline ITHIM object
+#' @param scenario ITHIM object
+#'
+#' @return A list of attributable fractions
+#'
+#' @export
+#' @docType methods
+#' @rdname getAF-methods
+setGeneric("getAF", function(baseline, scenario) standardGeneric("getAF"))
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#' Foo
+#'
+#' Foobar
+#'
+#' @param baseline ITHIM object
+#' @param scenario ITHIM object
+#'
+#' @return A vector of summarised attributable fractions
+#'
+#' @export
+#' @docType methods
+#' @rdname summariseAF-methods
+setGeneric("summariseAF", function(baseline, scenario) standardGeneric("summariseAF"))

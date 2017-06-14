@@ -262,3 +262,29 @@ setMethod("getNonTravelMETs", signature(x = "ITHIM", form = "missing"), function
 setMethod("tabulateDeltaBurden", signature(baseline = "ITHIM", scenario = "ITHIM"), function(baseline, scenario){
     return(tabulateDeltaBurdenFunction(baseline, scenario))
 })
+#' @rdname getAF-methods
+#' @aliases getAF
+#' @export
+setMethod("getAF", signature(baseline = "ITHIM", scenario = "ITHIM"), function(baseline, scenario){
+    CM <- compareModels(baseline, scenario)
+    return(CM$AF)
+})
+#' @rdname summariseAF-methods
+#' @aliases summariseAF
+#' @export
+setMethod("summariseAF", signature(baseline = "ITHIM", scenario = "ITHIM"), function(baseline, scenario){
+    phi <- summariseAFFunction(baseline, scenario)
+    return(phi)
+})
+
+
+summariseAFFunction <- function(baseline, scenario){
+    require("tidyverse")
+    foo <- getGBD(baseline) %>% tbl_df(.) %>% dplyr::filter(., burdenType == "deaths") %>% tidyr::spread(., sex, value) %>% dplyr::select(., disease,M,F)
+    foo <- lapply(split(foo,foo$disease), function(x) x[,-1])
+    AF <- getAF(baseline,scenario)
+    diseaseVec <- intersect(names(foo),names(AF))
+
+    phi <- mapply(function(x,y) sum(x*y), AF[diseaseVec], foo[diseaseVec])
+    return(phi)
+}
