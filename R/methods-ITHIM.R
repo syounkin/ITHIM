@@ -224,8 +224,14 @@ setMethod("getSiN", signature(x = "ITHIM"), function(x){
 #' @rdname getF-methods
 #' @aliases getF
 #' @export
-setMethod("getF", signature(x = "ITHIM"), function(x){
-    return(getF(getParameterSet(x)))
+setMethod("getF", signature(x = "ITHIM", prob = "logical"), function(x, prob){
+    return(getF(getParameterSet(x), prob = prob))
+})
+#' @rdname getF-methods
+#' @aliases getF
+#' @export
+setMethod("getF", signature(x = "ITHIM", prob = "missing"), function(x, prob){
+    return(getF(getParameterSet(x), prob = FALSE))
 })
 #' @rdname getWalkTime-methods
 #' @aliases getWalkTime

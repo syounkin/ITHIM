@@ -108,6 +108,17 @@ setMethod("getSiN", signature(x = "ParameterSet"), function(x){
 #' @rdname getF-methods
 #' @aliases getF
 #' @export
-setMethod("getF", signature(x = "ParameterSet"), function(x){
-    return(x@F)
+setMethod("getF", signature(x = "ParameterSet", prob = "logical"), function(x, prob){
+    F <- x@F
+    if(prob){
+        return(F/sum(F))
+    }else{
+        return(F)
+    }
+})
+#' @rdname getF-methods
+#' @aliases getF
+#' @export
+setMethod("getF", signature(x = "ParameterSet", prob = "missing"), function(x, prob){
+    return(getF(x, prob = FALSE))
 })

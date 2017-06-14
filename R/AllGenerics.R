@@ -361,6 +361,7 @@ setGeneric("tabulateDeltaBurden", function(baseline, scenario) standardGeneric("
 #' Get F
 #'
 #' @param x ITHIM or ParameterSetobject
+#' @param prob a logical value
 #'
 #' @return foo
 #' @export
@@ -368,4 +369,4 @@ setGeneric("tabulateDeltaBurden", function(baseline, scenario) standardGeneric("
 #' @rdname getF-methods
 #'
 #'
-setGeneric("getF", function(x) standardGeneric("getF"))
+setGeneric("getF", function(x, prob) standardGeneric("getF"))
