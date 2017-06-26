@@ -74,3 +74,40 @@ readGBD2 <- function(filename){
     gbdArray <- array(foo$value, dim = c(13,2,8,4), dimnames = list(unique(foo$disease),unique(foo$sex), unique(foo$ageClass), unique(foo$burdenType)))
     return(gbdArray)
 }
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+### Foo
+###
+### Foo
+###
+### @return Foo
+###
+###
+summarizeBurden <- function(ITHIM.baseline, ITHIM.scenario, burdenType = "deaths"){
+
+    GBDList <- getGBD(ITHIM.baseline) %>%
+        split(., .$burdenType) %>%
+        lapply(., function(x) split(x, x$disease))
+
+    reformatGBD2 <- function(x){
+        x %>%
+            spread(., key = sex, value = value) %>%
+            arrange(., ageClass) %>% select(M,F) %>%
+            return(.)
+    }
+
+    burdenList <- lapply(lapply(GBDList[[burdenType]],reformatGBD2),function(x) return(x))
+    AFList <- ITHIM:::compareModels(ITHIM.baseline, ITHIM.scenario)$AF
+
+    diseaseVec <- intersect(names(burdenList),names(AFList))
+    burdenList <- burdenList[diseaseVec]
+    AFList <- AFList[diseaseVec]
+
+    burdenList.scenario <- mapply(function(x,y) (1-x)*y, AFList, burdenList, SIMPLIFY = FALSE)
+
+    rho <- mapply(function(x,y) 1 - sum(y)/sum(x), burdenList, burdenList.scenario, SIMPLIFY = TRUE)
+
+    return(rho)
+
+}
