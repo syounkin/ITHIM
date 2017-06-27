@@ -83,8 +83,8 @@
 #'
 #' ## Create ITHIM object using csv files ##
 #'
-#' activeTransportFile <- system.file("activeTransportTime.csv", package = "ITHIM")
-#' GBDFile <- system.file("gbd.csv", package = "ITHIM")
+#' activeTransportFile <- system.file("activeTransport.portland.csv", package = "ITHIM")
+#' GBDFile <- system.file("burden.portland.csv", package = "ITHIM")
 #'
 #' ITHIM.baseline <- createITHIM(activeTransportFile = activeTransportFile, GBDFile = GBDFile)
 #' getMeans(ITHIM.baseline)
