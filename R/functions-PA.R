@@ -19,6 +19,7 @@
 ###
 readActiveTransportTime <- function(filename){
     activeTravel <- read.csv(file = filename, header = TRUE, stringsAsFactors = FALSE)
+    activeTravel <- within(activeTravel, value <- ifelse(is.na(value),1e-3,value))
 
     activeTravelList <- split(activeTravel, activeTravel$mode)
 
