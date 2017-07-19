@@ -15,35 +15,12 @@ readGBD <- function(filename){
 
     gbd <- gbd %>% arrange(disease,sex,ageClass,burdenType)
 
-    if("burdenType" %in% names(gbd)){
-        normalized <- TRUE
-    }else{
-        normalized <- FALSE
-    }
+    gbdDiseaseVec <- sort(unique(gbd$disease))
+    diseaseVec <- sort(c("BreastCancer", "ColonCancer", "CVD", "Dementia", "Diabetes", "Depression", "RTIs"))
 
-    if(!normalized){
-        stop("GBD inmpuit gfile myust be normalized.")
-    }
-    #gbd <- gbd %>% spread(burdenType, value)
-    ## if(!(
-    ##     setEquality(names(gbd), c("region","disease","sex","ageClass","deaths","yll","yld","daly"))
-    ##     ||
-    ##     setEquality(names(gbd), c("disease","sex","ageClass","deaths","yll","yld","daly")))){
-    ##     stop("Error with column names")
-    ## }
-
-    ## if( !(all(unique(gbd$disease) %in% c("BreastCancer", "ColonCancer", "CVD", "Dementia", "Diabetes", "Depression", "RTIs")))){
-    ##     stop("Extraneous diseases are included in the disease burden file.  Currently the ITHIM package does not support this.  Please see the help page for createITHIM and remove extraneous diseases from disease burden file.")
-    ## }
-
-    ## if(length(names(gbd))==7){
-    ##     gbdList2 <- reformatGBD(gbd)
-    ## }else if(length(names(gbd))==8){
-    ##     gbdList2 <- lapply(split(gbd,gbd$region), reformatGBD)
-    ## }else{
-    ##     stop("Wrong number of columns in GBD file.")
-    ## }
-    ## return(gbdList2)
+    if(!identical(diseaseVec, gbdDiseaseVec)){
+        stop("The disease burden file must contain the following diseases; BreastCancer, ColonCancer, CVD, Dementia, Diabetes, Depression, RTIs.  For more information see the help page for createITHIM by running help(createITHIM).")
+        }
 
     gbdList2 <- lapply(split(gbd, gbd$disease), function(x) {
         foo <- split(x,x$sex)
