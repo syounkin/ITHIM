@@ -361,6 +361,7 @@ setGeneric("tabulateDeltaBurden", function(baseline, scenario) standardGeneric("
 #' Get F
 #'
 #' @param x ITHIM or ParameterSetobject
+#' @param prob a logical value
 #'
 #' @return foo
 #' @export
@@ -368,4 +369,36 @@ setGeneric("tabulateDeltaBurden", function(baseline, scenario) standardGeneric("
 #' @rdname getF-methods
 #'
 #'
-setGeneric("getF", function(x) standardGeneric("getF"))
+setGeneric("getF", function(x, prob) standardGeneric("getF"))
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#' Foo
+#'
+#' Foobar
+#'
+#' @param baseline ITHIM object
+#' @param scenario ITHIM object
+#'
+#' @return A list of attributable fractions
+#'
+#' @export
+#' @docType methods
+#' @rdname getAF-methods
+setGeneric("getAF", function(baseline, scenario) standardGeneric("getAF"))
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#' Foo
+#'
+#' Foobar
+#'
+#' @param baseline ITHIM object
+#' @param scenario ITHIM object
+#'
+#' @return A vector of summarised attributable fractions
+#'
+#' @export
+#' @docType methods
+#' @rdname summariseAF-methods
+setGeneric("summariseAF", function(baseline, scenario) standardGeneric("summariseAF"))

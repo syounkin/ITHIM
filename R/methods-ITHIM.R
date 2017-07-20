@@ -36,37 +36,6 @@ setAs("ITHIM", "list", function(from) list(parameters = as(from@parameters,"list
                                            means = from@means,
                                            quintiles = from@quintiles))
 
-## #' @rdname tilePlot-methods
-## #' @aliases tilePlot
-## #' @export
-## setMethod("tilePlot", signature(x = "ITHIM", n = "numeric"), function(x, n){
-
-##     baseWalk <- getMeans(x)$walk
-##     baseCycle <- getMeans(x)$cycle
-
-##     results <- data.frame()
-##     wVec <- seq(0,2*baseWalk,length.out = n)
-##     cVec <- seq(0,2*baseCycle,length.out = n)
-
-##     for(muwt in wVec){
-##         ITHIM.scenario <- update(x, list(muwt = muwt))
-##         for(muct in cVec){
-##             if(muwt !=0 | muct !=0){
-##                 ITHIM.scenario <- update(ITHIM.scenario, list(muct = muct))
-##                 comparativeRisk <- data.frame(cycleTime = muct,
-##                                               walkTime= muwt,
-##                                               DALYS = deltaBurden(x, ITHIM.scenario)
-##                                               )
-##                 results <- rbind(comparativeRisk, results)
-##             }
-##         }
-##     }
-
-##     p <- ggplot(results, aes(x = walkTime, y = cycleTime, fill = (DALYS + getBurden(x))))
-##     p + geom_tile() + geom_hline(yintercept=baseCycle, linetype = 2) + geom_vline(xintercept=baseWalk, linetype = 2) + scale_fill_gradientn(colours = terrain.colors(10),name = "DALYs")
-
-## })
-
 #' @rdname getBurden-methods
 #' @aliases getBurden
 #' @export
@@ -224,8 +193,14 @@ setMethod("getSiN", signature(x = "ITHIM"), function(x){
 #' @rdname getF-methods
 #' @aliases getF
 #' @export
-setMethod("getF", signature(x = "ITHIM"), function(x){
-    return(getF(getParameterSet(x)))
+setMethod("getF", signature(x = "ITHIM", prob = "logical"), function(x, prob){
+    return(getF(getParameterSet(x), prob = prob))
+})
+#' @rdname getF-methods
+#' @aliases getF
+#' @export
+setMethod("getF", signature(x = "ITHIM", prob = "missing"), function(x, prob){
+    return(getF(getParameterSet(x), prob = FALSE))
 })
 #' @rdname getWalkTime-methods
 #' @aliases getWalkTime
@@ -287,3 +262,29 @@ setMethod("getNonTravelMETs", signature(x = "ITHIM", form = "missing"), function
 setMethod("tabulateDeltaBurden", signature(baseline = "ITHIM", scenario = "ITHIM"), function(baseline, scenario){
     return(tabulateDeltaBurdenFunction(baseline, scenario))
 })
+#' @rdname getAF-methods
+#' @aliases getAF
+#' @export
+setMethod("getAF", signature(baseline = "ITHIM", scenario = "ITHIM"), function(baseline, scenario){
+    CM <- compareModels(baseline, scenario)
+    return(CM$AF)
+})
+#' @rdname summariseAF-methods
+#' @aliases summariseAF
+#' @export
+setMethod("summariseAF", signature(baseline = "ITHIM", scenario = "ITHIM"), function(baseline, scenario){
+    phi <- summariseAFFunction(baseline, scenario)
+    return(phi)
+})
+
+
+summariseAFFunction <- function(baseline, scenario){
+    require("tidyverse")
+    foo <- getGBD(baseline) %>% tbl_df(.) %>% dplyr::filter(., burdenType == "deaths") %>% tidyr::spread(., sex, value) %>% dplyr::select(., disease,M,F)
+    foo <- lapply(split(foo,foo$disease), function(x) x[,-1])
+    AF <- getAF(baseline,scenario)
+    diseaseVec <- intersect(names(foo),names(AF))
+
+    phi <- mapply(function(x,y) sum(x*y), AF[diseaseVec], foo[diseaseVec])
+    return(phi)
+}

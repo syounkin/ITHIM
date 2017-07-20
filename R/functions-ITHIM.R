@@ -17,11 +17,11 @@
 ###
 ###
 createITHIMFunction <- function(roadInjuriesFile = system.file("roadInjuriesUS.csv", package = "ITHIM"),
-                                activeTransportTimeFile = system.file("activeTransportTime.csv", package = "ITHIM"),
-                                GBDFile = system.file("gbd.csv", package = "ITHIM"),
+                                activeTransportTimeFile = system.file("activeTransport.portland.csv", package = "ITHIM"),
+                                GBDFile = system.file("burden.portland.csv", package = "ITHIM"),
                                 distRoadTypeFile = system.file("distByRoadTypeBaseline.csv", package = "ITHIM"),
                                 safetyInNumbersFile = system.file("SiN.csv", package = "ITHIM"),
-                                FFile = system.file("F.csv",package = "ITHIM"),
+                                FFile = system.file("F.portland.csv",package = "ITHIM"),
                                 meanType = "overall"){
 
     new("ITHIM", parameters = parameters <- createParameterList(
@@ -50,9 +50,9 @@ createITHIMFunction <- function(roadInjuriesFile = system.file("roadInjuriesUS.c
 ###
 createParameterList <- function(
                                 roadInjuriesFile = system.file("roadInjuriesUS.csv", package = "ITHIM"),
-                                activeTransportTimeFile = system.file("activeTransportTime.csv", package = "ITHIM"),
-                                GBDFile = system.file("gbd.csv", package = "ITHIM"),
-                                FFile = system.file("F.csv", package = "ITHIM"),
+                                activeTransportTimeFile = system.file("activeTransport.portland.csv", package = "ITHIM"),
+                                GBDFile = system.file("burden.portland.csv", package = "ITHIM"),
+                                FFile = system.file("F.portland.csv", package = "ITHIM"),
                                 distRoadTypeFile = system.file("distByRoadTypeBaseline.csv", package = "ITHIM"),
                                 safetyInNumbersFile = system.file("SiN.csv", package = "ITHIM"),
                                 meanType = "overall"){
@@ -69,17 +69,21 @@ createParameterList <- function(
 
     cv <- 3.0288 # coefficient of variation for active transport time
 
-    muNonTravel <- 2 # MET-hrs./week leisure activity
-    muNonTravelMatrix <- matrix(c(0.0000000,0.0000000,
-                                  0.9715051,1.0354205,
-                                  0.9505718,0.8999381,
-                                  0.8315675,0.7180636,
-                                  0.0000000,0.0000000,
-                                  1.0000000,1.1171469,
-                                  0.9878429,0.9434823,
-                                  0.8782254,0.7737818),
-                                ncol = 2, dimnames = list(paste0("ageClass",1:nAgeClass),c("M","F")
-                                                          ))
+    muNonTravel <- mean(c(500,1000)/60) # MET-hrs./week leisure activity
+
+
+    muNonTravelMatrix <- matrix(1,ncol = 2, nrow = 8, dimnames = list(paste0("ageClass",1:nAgeClass),c("M","F")))
+    
+    ## muNonTravelMatrix <- matrix(c(0.0000000,0.0000000,
+    ##                               0.9715051,1.0354205,
+    ##                               0.9505718,0.8999381,
+    ##                               0.8315675,0.7180636,
+    ##                               0.0000000,0.0000000,
+    ##                               1.0000000,1.1171469,
+    ##                               0.9878429,0.9434823,
+    ##                               0.8782254,0.7737818),
+    ##                             ncol = 2, dimnames = list(paste0("ageClass",1:nAgeClass),c("M","F")
+    ##                                                      ))
     cvNonTravel <- 1 # coefficient of variation for leisure activity
     roadInjuries <- array()
     modeNames <- unlist(unique(lapply(roadInjuries, rownames)))

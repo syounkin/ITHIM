@@ -68,34 +68,20 @@
 #' @seealso \code{\link{createITHIM}}, \code{\link{getMeans}}, \code{\link{deltaBurden}}, \code{\link{getBurden}}, \code{\link{update}}
 #' @examples
 #'
-#' ## Create default ITHIM object ##
-#'
-#' ITHIM.baseline <- createITHIM()
-#'
-#' (meanVec <- getMeans(ITHIM.baseline))
-#'
-#' ITHIM.scenario <- update(ITHIM.baseline, list(muwt = 2*meanVec$walk, muct = 2*meanVec$cycle))
-#' getMeans(ITHIM.scenario)
-#' 
-#' deltaDALY <- deltaBurden(ITHIM.baseline, ITHIM.scenario, bur = "daly", dis = "CVD")
-#' initialBurden <- getBurden(ITHIM.baseline, bur = "daly", dis = "CVD")
-#' (pctChange <- deltaDALY/initialBurden*100)
-#'
-#' ## Create ITHIM object using csv files ##
-#'
-#' activeTransportFile <- system.file("activeTransportTime.csv", package = "ITHIM")
-#' GBDFile <- system.file("gbd.csv", package = "ITHIM")
+#' activeTransportFile <- system.file("activeTransport.portland.csv", package = "ITHIM")
+#' GBDFile <- system.file("burden.portland.csv", package = "ITHIM")
 #'
 #' ITHIM.baseline <- createITHIM(activeTransportFile = activeTransportFile, GBDFile = GBDFile)
 #' getMeans(ITHIM.baseline)
 #'
-#' ITHIM.scenario <- update(ITHIM.baseline, list(muwt = 2*meanVec$walk, muct = 2*meanVec$cycle))
+#' activeTransportFile <- system.file("activeTransport.scenario.portland.csv", package = "ITHIM")
+#' ITHIM.scenario <- createITHIM(activeTransportFile = activeTransportFile, GBDFile = GBDFile)
 #' getMeans(ITHIM.scenario)
-#' 
+#'
 #' deltaDALY <- deltaBurden(ITHIM.baseline, ITHIM.scenario, bur = "daly", dis = "CVD")
 #' initialBurden <- getBurden(ITHIM.baseline, bur = "daly", dis = "CVD")
 #' (pctChange <- deltaDALY/initialBurden*100)
 #'
 #' @import tidyverse abind utils methods stats
-#' 
+#'
 NULL

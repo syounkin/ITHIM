@@ -19,6 +19,7 @@
 ###
 readActiveTransportTime <- function(filename){
     activeTravel <- read.csv(file = filename, header = TRUE, stringsAsFactors = FALSE)
+    activeTravel <- within(activeTravel, value <- ifelse(is.na(value),1e-3,value))
 
     activeTravelList <- split(activeTravel, activeTravel$mode)
 
@@ -157,7 +158,7 @@ deltaBurdenFunction <- function(ITHIM.baseline, ITHIM.scenario, bur = "daly", di
     }else{
         message("Error in type conditional")
     }
-    
+
   return(burden) # AgeClass 1 is NOT removed from totals
 }
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -436,7 +437,7 @@ compareModels <- function(baseline, scenario){
 ### @return A random sample from the distribution.
 ###
 ###
-getNonTravelDistribution <- function(mu, cv, size = 1e4){
+getNonTravelDistribution <- function(mu, cv, size = 1e6){
     mu <- ifelse(mu == 0, 0.01, mu)
     sd <- mu*cv
     simLogNorm <- rlnorm(size, log(mu/sqrt(1+sd^2/mu^2)), sqrt(log(1+sd^2/mu^2)))

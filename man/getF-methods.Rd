@@ -3,18 +3,26 @@
 \docType{methods}
 \name{getF}
 \alias{getF}
-\alias{getF,ITHIM-method}
-\alias{getF,ParameterSet-method}
+\alias{getF,ITHIM,logical-method}
+\alias{getF,ITHIM,missing-method}
+\alias{getF,ParameterSet,logical-method}
+\alias{getF,ParameterSet,missing-method}
 \title{Get F}
 \usage{
-getF(x)
+getF(x, prob)
 
-\S4method{getF}{ITHIM}(x)
+\S4method{getF}{ITHIM,logical}(x, prob)
 
-\S4method{getF}{ParameterSet}(x)
+\S4method{getF}{ITHIM,missing}(x, prob)
+
+\S4method{getF}{ParameterSet,logical}(x, prob)
+
+\S4method{getF}{ParameterSet,missing}(x, prob)
 }
 \arguments{
 \item{x}{ITHIM or ParameterSetobject}
+
+\item{prob}{a logical value}
 }
 \value{
 foo

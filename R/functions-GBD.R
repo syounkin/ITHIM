@@ -15,35 +15,12 @@ readGBD <- function(filename){
 
     gbd <- gbd %>% arrange(disease,sex,ageClass,burdenType)
 
-    if("burdenType" %in% names(gbd)){
-        normalized <- TRUE
-    }else{
-        normalized <- FALSE
-    }
+    gbdDiseaseVec <- sort(unique(gbd$disease))
+    diseaseVec <- sort(c("BreastCancer", "ColonCancer", "CVD", "Dementia", "Diabetes", "Depression", "RTIs"))
 
-    if(!normalized){
-        stop("GBD inmpuit gfile myust be normalized.")
-    }
-    #gbd <- gbd %>% spread(burdenType, value)
-    ## if(!(
-    ##     setEquality(names(gbd), c("region","disease","sex","ageClass","deaths","yll","yld","daly"))
-    ##     ||
-    ##     setEquality(names(gbd), c("disease","sex","ageClass","deaths","yll","yld","daly")))){
-    ##     stop("Error with column names")
-    ## }
-
-    ## if( !(all(unique(gbd$disease) %in% c("BreastCancer", "ColonCancer", "CVD", "Dementia", "Diabetes", "Depression", "RTIs")))){
-    ##     stop("Extraneous diseases are included in the disease burden file.  Currently the ITHIM package does not support this.  Please see the help page for createITHIM and remove extraneous diseases from disease burden file.")
-    ## }
-
-    ## if(length(names(gbd))==7){
-    ##     gbdList2 <- reformatGBD(gbd)
-    ## }else if(length(names(gbd))==8){
-    ##     gbdList2 <- lapply(split(gbd,gbd$region), reformatGBD)
-    ## }else{
-    ##     stop("Wrong number of columns in GBD file.")
-    ## }
-    ## return(gbdList2)
+    if(!identical(diseaseVec, gbdDiseaseVec)){
+        stop("The disease burden file must contain the following diseases; BreastCancer, ColonCancer, CVD, Dementia, Diabetes, Depression, RTIs.  For more information see the help page for createITHIM by running help(createITHIM).")
+        }
 
     gbdList2 <- lapply(split(gbd, gbd$disease), function(x) {
         foo <- split(x,x$sex)
@@ -73,4 +50,41 @@ readGBD2 <- function(filename){
     foo <- read.csv(file = filename)
     gbdArray <- array(foo$value, dim = c(13,2,8,4), dimnames = list(unique(foo$disease),unique(foo$sex), unique(foo$ageClass), unique(foo$burdenType)))
     return(gbdArray)
+}
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+### Foo
+###
+### Foo
+###
+### @return Foo
+###
+###
+summarizeBurden <- function(ITHIM.baseline, ITHIM.scenario, burdenType = "deaths"){
+
+    GBDList <- getGBD(ITHIM.baseline) %>%
+        split(., .$burdenType) %>%
+        lapply(., function(x) split(x, x$disease))
+
+    reformatGBD2 <- function(x){
+        x %>%
+            spread(., key = sex, value = value) %>%
+            arrange(., ageClass) %>% select(M,F) %>%
+            return(.)
+    }
+
+    burdenList <- lapply(lapply(GBDList[[burdenType]],reformatGBD2),function(x) return(x))
+    AFList <- ITHIM:::compareModels(ITHIM.baseline, ITHIM.scenario)$AF
+
+    diseaseVec <- intersect(names(burdenList),names(AFList))
+    burdenList <- burdenList[diseaseVec]
+    AFList <- AFList[diseaseVec]
+
+    burdenList.scenario <- mapply(function(x,y) (1-x)*y, AFList, burdenList, SIMPLIFY = FALSE)
+
+    rho <- mapply(function(x,y) 1 - sum(y)/sum(x), burdenList, burdenList.scenario, SIMPLIFY = TRUE)
+
+    return(rho)
+
 }

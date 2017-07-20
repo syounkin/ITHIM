@@ -1,8 +1,8 @@
 Package: ITHIM
 Type: Package
 Title: The Integrated Transport and Health Impacts Model
-Version: 0.5.3
-Date: 2017-06-08
+Version: 0.5.5
+Date: 2017-06-26
 Author: Samuel G. Younkin <syounkin@wisc.edu>
 Maintainer: Samuel G. Younkin <syounkin@wisc.edu>
 Description: Implements the Integrated Transport and Health Impacts
