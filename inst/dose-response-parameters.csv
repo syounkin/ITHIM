@@ -1,0 +1,10 @@
+disease,subpop,RR_1MET
+BreastCancer,F,0.973199069
+BreastCancer,M,1
+CVD,,0.93831942
+Dementia,,0.943149062
+Depression,15-29,0.955901887
+Depression,>29,0.977950943
+Diabetes,,0.94277975
+Colon Cancer,M,0.960652476
+Colon Cancer,F,0.97288384
