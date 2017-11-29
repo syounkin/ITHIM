@@ -73,7 +73,7 @@ createParameterList <- function(
 
 
     muNonTravelMatrix <- matrix(1,ncol = 2, nrow = 8, dimnames = list(paste0("ageClass",1:nAgeClass),c("M","F")))
-    
+
     ## muNonTravelMatrix <- matrix(c(0.0000000,0.0000000,
     ##                               0.9715051,1.0354205,
     ##                               0.9505718,0.8999381,
@@ -84,7 +84,7 @@ createParameterList <- function(
     ##                               0.8782254,0.7737818),
     ##                             ncol = 2, dimnames = list(paste0("ageClass",1:nAgeClass),c("M","F")
     ##                                                      ))
-    cvNonTravel <- 1 # coefficient of variation for leisure activity
+    cvNonTravel <- cv # coefficient of variation for leisure activity
     roadInjuries <- array()
     modeNames <- unlist(unique(lapply(roadInjuries, rownames)))
 
