@@ -3,40 +3,14 @@
 \docType{methods}
 \name{createITHIM}
 \alias{createITHIM}
-\alias{createITHIM,character,character,character,character,character-method}
-\alias{createITHIM,character,character,missing,character,character-method}
-\alias{createITHIM,character,character,missing,missing,missing-method}
-\alias{createITHIM,character,missing,character,character,character-method}
-\alias{createITHIM,character,missing,missing,character,character-method}
-\alias{createITHIM,missing,missing,missing,missing,missing-method}
+\alias{createITHIM,character,character,character-method}
 \title{Create an ITHIM object}
 \usage{
-createITHIM(activeTransportFile, GBDFile, roadInjuriesFile, distRoadTypeFile,
-  safetyInNumbersFile)
+createITHIM(activeTransportFile, GBDFile, FFile, roadInjuriesFile,
+  distRoadTypeFile, safetyInNumbersFile)
 
-
-  \S4method{createITHIM}{character,character,character,character,character}(activeTransportFile,
-  GBDFile, roadInjuriesFile, distRoadTypeFile, safetyInNumbersFile)
-
-
-  \S4method{createITHIM}{character,character,missing,character,character}(activeTransportFile,
-  GBDFile, roadInjuriesFile, distRoadTypeFile, safetyInNumbersFile)
-
-
-  \S4method{createITHIM}{character,character,missing,missing,missing}(activeTransportFile,
-  GBDFile, roadInjuriesFile, distRoadTypeFile, safetyInNumbersFile)
-
-
-  \S4method{createITHIM}{character,missing,missing,character,character}(activeTransportFile,
-  GBDFile, roadInjuriesFile, distRoadTypeFile, safetyInNumbersFile)
-
-
-  \S4method{createITHIM}{character,missing,character,character,character}(activeTransportFile,
-  GBDFile, roadInjuriesFile, distRoadTypeFile, safetyInNumbersFile)
-
-
-  \S4method{createITHIM}{missing,missing,missing,missing,missing}(activeTransportFile,
-  GBDFile, roadInjuriesFile, distRoadTypeFile, safetyInNumbersFile)
+\S4method{createITHIM}{character,character,character}(activeTransportFile,
+  GBDFile, FFile)
 }
 \arguments{
 \item{activeTransportFile}{A character string indicating the name

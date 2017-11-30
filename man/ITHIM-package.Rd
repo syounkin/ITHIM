@@ -70,8 +70,9 @@ the 2000 Bay Area Travel Survey.
 
 activeTransportFile <- system.file("activeTransport.portland.csv", package = "ITHIM")
 GBDFile <- system.file("burden.portland.csv", package = "ITHIM")
+FFile <- system.file("F.portland.csv", package = "ITHIM")
 
-ITHIM.baseline <- createITHIM(activeTransportFile = activeTransportFile, GBDFile = GBDFile)
+ITHIM.baseline <- createITHIM(activeTransportFile = activeTransportFile, GBDFile = GBDFile, FFile = FFile)
 getMeans(ITHIM.baseline)
 
 activeTransportFile <- system.file("activeTransport.scenario.portland.csv", package = "ITHIM")
