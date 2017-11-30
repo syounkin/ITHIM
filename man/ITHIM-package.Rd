@@ -76,7 +76,7 @@ ITHIM.baseline <- createITHIM(activeTransportFile = activeTransportFile, GBDFile
 getMeans(ITHIM.baseline)
 
 activeTransportFile <- system.file("activeTransport.scenario.portland.csv", package = "ITHIM")
-ITHIM.scenario <- createITHIM(activeTransportFile = activeTransportFile, GBDFile = GBDFile)
+ITHIM.scenario <- createITHIM(activeTransportFile = activeTransportFile, GBDFile = GBDFile, FFile = FFile)
 getMeans(ITHIM.scenario)
 
 deltaDALY <- deltaBurden(ITHIM.baseline, ITHIM.scenario, bur = "daly", dis = "CVD")
