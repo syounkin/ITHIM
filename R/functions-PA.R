@@ -483,7 +483,7 @@ computeWalkingMETs <- function(){
 
     #METs <- 1.2216*v + 0.0838
     #return(ifelse( METs < 2.5, 2.5, METs ))
-    return(4.5)
+    return(3.5)
 
 }
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
