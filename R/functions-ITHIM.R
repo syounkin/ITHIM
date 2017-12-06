@@ -192,3 +192,35 @@ tabulateDeltaBurdenFunction <- function(ITHIM.baseline, ITHIM.scenario){
 
     return(results)
 }
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#' Update an ITHIM object
+#'
+#' Takes an ITHIM object as input and returns a new ITHIM object with
+#' parameters updated accordingly.
+#'
+#' @param ITHIM.baseline Baseline
+#' @param ITHIM.scenario.list An ITHIM list
+#'
+#' @return A data frame of change in burden
+#'
+#' @export
+tabulateResults <- function(ITHIM.baseline, ITHIM.scenario.list){
+
+    results <- data.frame()
+    vision.names <- names(ITHIM.scenario.list)
+    i <- 1
+    for( ITHIM.scenario in ITHIM.scenario.list ){
+        vision <- vision.names[i]
+        i <- i + 1
+        for( bur in c("daly","yll", "yld", "deaths") ){
+            for(dis in c("BreastCancer", "ColonCancer","Depression", "Dementia", "Diabetes","CVD")){
+                percent <- 100*deltaBurden(ITHIM.baseline, ITHIM.scenario, bur = bur, dis = dis, type = "percent")
+                results <- rbind(results, data.frame(vision = vision, bur,dis,percent))
+            }
+        }
+    }
+return(results)
+}
