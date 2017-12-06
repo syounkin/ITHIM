@@ -222,5 +222,6 @@ tabulateResults <- function(ITHIM.baseline, ITHIM.scenario.list){
             }
         }
     }
-return(results)
+    results <- results %>% spread(vision, percent) %>% arrange(bur, dis)
+    return(results)
 }
