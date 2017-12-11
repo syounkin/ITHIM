@@ -67,7 +67,7 @@ createParameterList <- function(
     Rwt <- Mwt/Mwt[3,2]
     Rct <- Mct/Mct[3,2]
 
-    cv <- 3.0288 # coefficient of variation for active transport time
+    cv <- 1.65 # coefficient of variation for active transport time
 
     muNonTravel <- mean(c(500,1000)/60) # MET-hrs./week leisure activity
 
