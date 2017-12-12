@@ -21,7 +21,9 @@ getCycleTimeFunction <- function(ITHIM, form = 2){
     return(data.frame(walkTime, type = "cycle time"))
 }
 getNonTravelMETsFunction <- function(ITHIM, form = 2){
-    if( form == 1 ){
+    EXCEL <- ITHIM@parameters@EXCEL
+    if( !EXCEL ){
+        if( form == 1 ){
         nonTravelMETs <- ITHIM@means$meanNonTravel
     }else if (form == 2){
         nonTravelMETs <- melt(ITHIM@means$meanNonTravel)
@@ -29,5 +31,8 @@ getNonTravelMETsFunction <- function(ITHIM, form = 2){
     }else{
         message("Bad form for getnonTravelMETs()")
     }
-    return(data.frame(nonTravelMETs, type = "non-travel METs"))
+        return(data.frame(nonTravelMETs, type = "non-travel METs"))
+    }else{
+        return("Using hard-coded EXCEL values for nonTravel METs")
+        }
 }
