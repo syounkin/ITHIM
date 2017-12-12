@@ -22,7 +22,8 @@ createITHIMFunction <- function(roadInjuriesFile = system.file("roadInjuriesUS.c
                                 distRoadTypeFile = system.file("distByRoadTypeBaseline.csv", package = "ITHIM"),
                                 safetyInNumbersFile = system.file("SiN.csv", package = "ITHIM"),
                                 FFile = system.file("F.portland.csv",package = "ITHIM"),
-                                meanType = "overall"){
+                                meanType = "overall",
+                                EXCEL = FALSE){
 
     new("ITHIM", parameters = parameters <- createParameterList(
                                   activeTransportTimeFile = activeTransportTimeFile,
@@ -30,7 +31,8 @@ createITHIMFunction <- function(roadInjuriesFile = system.file("roadInjuriesUS.c
                                   safetyInNumbersFile = safetyInNumbersFile,
                                   GBDFile = GBDFile,
                                   FFile = FFile,
-                                  meanType = meanType),
+                                  meanType = meanType,
+                                  EXCEL = EXCEL),
         means = means <- computeMeanMatrices(as(parameters,"list")),
         quintiles = getQuintiles(means, as(parameters,"list")))
 }
@@ -55,7 +57,7 @@ createParameterList <- function(
                                 FFile = system.file("F.portland.csv", package = "ITHIM"),
                                 distRoadTypeFile = system.file("distByRoadTypeBaseline.csv", package = "ITHIM"),
                                 safetyInNumbersFile = system.file("SiN.csv", package = "ITHIM"),
-                                meanType = "overall"){
+                                meanType = "overall", EXCEL = FALSE){
 
     nAgeClass <- 8L
 
@@ -130,7 +132,8 @@ createParameterList <- function(
         quantiles = quantiles,
         roadInjuries = roadInjuries,
         distRoadType = distRoadType,
-        safetyInNumbers = safetyInNumbers
+        safetyInNumbers = safetyInNumbers,
+        EXCEL = EXCEL
     ))
 }
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
