@@ -205,20 +205,19 @@ getQuintiles <- function(means, parameters){
 
         TravelMET <- mapply(function(walk,cycle) 3.5*walk/60 + 6*cycle/60, WalkingTime, CyclingTime, SIMPLIFY = FALSE)
 
-        nonTravelMET <- read.csv(file = "~/Portland/nonTravelMETs.csv")
+        nonTravelFile <- system.file("nonTravelMETs.csv", package = "ITHIM")
+        nonTravelMET <- read.csv(file = nonTravelFile)
         nonTravelMET <- split(nonTravelMET, nonTravelMET$sex)
         nonTravelMET <- list(M = nonTravelMET$M, F = nonTravelMET$F)
         nonTravelMET <- lapply(nonTravelMET, function(x) x[,-(1:2)])
 
         TotalMET <- mapply(function(x,y) x + y, TravelMET, nonTravelMET, SIMPLIFY = FALSE)
 
-        # Compute TotalMET using file of nonTravel activity
-
     }
 
-  #TotalMET <- mapply(function(x,y) ifelse(x < 0.1, 0.1, x), TotalMET, SIMPLIFY=FALSE)
+  #TotalMET <- mapply(function(x,y) ifelse(x > 2.5, x, 0.1), TotalMET, SIMPLIFY=FALSE)
 
- return(list(ActiveTransportTime=ActiveTransportTime, WalkingTime=WalkingTime, CyclingTime=CyclingTime, TotalMET = TotalMET)) # WalkingMET=WalkingMET, CyclingMET = CyclingMET, TravelMET = TravelMET,
+ return(list(ActiveTransportTime=ActiveTransportTime, WalkingTime=WalkingTime, CyclingTime=CyclingTime, TotalMET = TotalMET))
 }
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
