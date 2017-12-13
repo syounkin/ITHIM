@@ -211,11 +211,10 @@ getQuintiles <- function(means, parameters){
         nonTravelMET <- list(M = nonTravelMET$M, F = nonTravelMET$F)
         nonTravelMET <- lapply(nonTravelMET, function(x) x[,-(1:2)])
 
-        TotalMET <- mapply(function(x,y) x + y, TravelMET, nonTravelMET, SIMPLIFY = FALSE)
+        TotalMET <- mapply("+", nonTravelMET, TravelMET, SIMPLIFY = FALSE)
+        TotalMET <- lapply(TotalMET, function(x) ifelse(as.matrix(x)>2.5,as.matrix(x),0.1))
 
     }
-
-  #TotalMET <- mapply(function(x,y) ifelse(x > 2.5, x, 0.1), TotalMET, SIMPLIFY=FALSE)
 
  return(list(ActiveTransportTime=ActiveTransportTime, WalkingTime=WalkingTime, CyclingTime=CyclingTime, TotalMET = TotalMET))
 }
