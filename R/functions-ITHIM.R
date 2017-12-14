@@ -228,3 +228,25 @@ tabulateResults <- function(ITHIM.baseline, ITHIM.scenario.list){
     results <- results %>% spread(vision, percent) %>% arrange(bur, dis)
     return(results)
 }
+
+superTabulate <- function(ITHIM.baseline, ITHIM.scenario.list){
+    results <- data.frame()
+    scenarioNames <- names(ITHIM.scenario.list)
+    i <- 1
+    for( ITHIM.scenario in ITHIM.scenario.list ){
+
+        foo <- ITHIM:::compareModels(ITHIM.baseline, ITHIM.scenario)
+
+        for (burden in c("deaths.delta","daly.delta","yll.delta","yld.delta")){
+
+            foobar <- foo[[burden]] %>% melt()
+            names(foobar) <- c("value","sex", "disease")
+            foobar <- data.frame(foobar, ageClass = paste0("ageClass",1:8), burdenType = gsub(".delta","",burden), vision = scenarioNames[i])
+            foobar <- foobar %>% select(vision, disease, sex, ageClass, burdenType, value)
+            results <- rbind(results, foobar)
+        }
+        i <- i+1
+    }
+    return(results)
+}
+
