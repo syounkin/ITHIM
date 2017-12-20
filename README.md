@@ -8,7 +8,7 @@ page.
 
 ```r
 library("devtools")
-install_github("ITHIM/ITHIM", ref="devel")
+install_github("ITHIM/ITHIM", ref="excel")
 library("ITHIM")
 example("ITHIM")
 ```

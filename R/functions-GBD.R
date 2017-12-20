@@ -16,10 +16,10 @@ readGBD <- function(filename){
     gbd <- gbd %>% arrange(disease,sex,ageClass,burdenType)
 
     gbdDiseaseVec <- sort(unique(gbd$disease))
-    diseaseVec <- sort(c("BreastCancer", "ColonCancer", "CVD", "Dementia", "Diabetes", "Depression", "RTIs"))
+    diseaseVec <- sort(c("BreastCancer", "ColonCancer", "CVD", "Dementia", "Diabetes", "Depression"))
 
     if(!identical(diseaseVec, gbdDiseaseVec)){
-        stop("The disease burden file must contain the following diseases; BreastCancer, ColonCancer, CVD, Dementia, Diabetes, Depression, RTIs.  For more information see the help page for createITHIM by running help(createITHIM).")
+        stop("The disease burden file must contain the following diseases; BreastCancer, ColonCancer, CVD, Dementia, Diabetes, Depression.  RTIs are no longer accepted.  For more information see the help page for createITHIM by running help(createITHIM).")
         }
 
     gbdList2 <- lapply(split(gbd, gbd$disease), function(x) {

@@ -22,7 +22,8 @@ createITHIMFunction <- function(roadInjuriesFile = system.file("roadInjuriesUS.c
                                 distRoadTypeFile = system.file("distByRoadTypeBaseline.csv", package = "ITHIM"),
                                 safetyInNumbersFile = system.file("SiN.csv", package = "ITHIM"),
                                 FFile = system.file("F.portland.csv",package = "ITHIM"),
-                                meanType = "overall"){
+                                meanType = "overall",
+                                EXCEL = FALSE){
 
     new("ITHIM", parameters = parameters <- createParameterList(
                                   activeTransportTimeFile = activeTransportTimeFile,
@@ -30,7 +31,8 @@ createITHIMFunction <- function(roadInjuriesFile = system.file("roadInjuriesUS.c
                                   safetyInNumbersFile = safetyInNumbersFile,
                                   GBDFile = GBDFile,
                                   FFile = FFile,
-                                  meanType = meanType),
+                                  meanType = meanType,
+                                  EXCEL = EXCEL),
         means = means <- computeMeanMatrices(as(parameters,"list")),
         quintiles = getQuintiles(means, as(parameters,"list")))
 }
@@ -55,7 +57,7 @@ createParameterList <- function(
                                 FFile = system.file("F.portland.csv", package = "ITHIM"),
                                 distRoadTypeFile = system.file("distByRoadTypeBaseline.csv", package = "ITHIM"),
                                 safetyInNumbersFile = system.file("SiN.csv", package = "ITHIM"),
-                                meanType = "overall"){
+                                meanType = "overall", EXCEL = FALSE){
 
     nAgeClass <- 8L
 
@@ -67,7 +69,7 @@ createParameterList <- function(
     Rwt <- Mwt/Mwt[3,2]
     Rct <- Mct/Mct[3,2]
 
-    cv <- 3.0288 # coefficient of variation for active transport time
+    cv <- 1.65 # coefficient of variation for active transport time
 
     muNonTravel <- mean(c(500,1000)/60) # MET-hrs./week leisure activity
 
@@ -130,7 +132,8 @@ createParameterList <- function(
         quantiles = quantiles,
         roadInjuries = roadInjuries,
         distRoadType = distRoadType,
-        safetyInNumbers = safetyInNumbers
+        safetyInNumbers = safetyInNumbers,
+        EXCEL = EXCEL
     ))
 }
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -225,3 +228,39 @@ tabulateResults <- function(ITHIM.baseline, ITHIM.scenario.list){
     results <- results %>% spread(vision, percent) %>% arrange(bur, dis)
     return(results)
 }
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#' Tabulate the results of Comparative Risk Assessment
+#'
+#' Given an ITHIM baselin eobject and a list of ITHIM scenario objects
+#' this function returns a data frame of change in burden (absolute,
+#' not percent)
+#'
+#' @param ITHIM.baseline Baseline
+#' @param ITHIM.scenario.list An ITHIM list
+#'
+#' @return A data frame of change in burden
+#'
+#' @export
+superTabulate <- function(ITHIM.baseline, ITHIM.scenario.list){
+    results <- data.frame()
+    scenarioNames <- names(ITHIM.scenario.list)
+    i <- 1
+    for( ITHIM.scenario in ITHIM.scenario.list ){
+
+        foo <- ITHIM:::compareModels(ITHIM.baseline, ITHIM.scenario)
+
+        for (burden in c("deaths.delta","daly.delta","yll.delta","yld.delta")){
+
+            foobar <- foo[[burden]] %>% melt()
+            names(foobar) <- c("value","sex", "disease")
+            foobar <- data.frame(foobar, ageClass = paste0("ageClass",1:8), burdenType = gsub(".delta","",burden), vision = scenarioNames[i])
+            foobar <- foobar %>% select(vision, disease, sex, ageClass, burdenType, value)
+            results <- rbind(results, foobar)
+        }
+        i <- i+1
+    }
+    return(results)
+}
+

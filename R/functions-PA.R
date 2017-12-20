@@ -185,22 +185,38 @@ getQuintiles <- function(means, parameters){
 
   ActiveTransportTime <- computeQuintiles(means$meanActiveTransportTime, means$sdActiveTransportTime, parameters$quantiles)
   WalkingTime <- list(M = ActiveTransportTime[["M"]] * (1-means$propTimeCycling[,"M"]), F = ActiveTransportTime[["F"]] * (1-means$propTimeCycling[,"F"]))
-  CyclingTime <- list(M = ActiveTransportTime[["M"]] * (means$propTimeCycling[,"M"]), F = ActiveTransportTime[["F"]] * (means$propTimeCycling[,"F"]))
+    CyclingTime <- list(M = ActiveTransportTime[["M"]] * (means$propTimeCycling[,"M"]), F = ActiveTransportTime[["F"]] * (means$propTimeCycling[,"F"]))
 
-  TotalMETSample <- mapply(getTotalDistribution,
+    if( !parameters$EXCEL ){
+
+        TotalMETSample <- mapply(getTotalDistribution,
                                  muTravel = means$meanActiveTransportTime,
                                  cvTravel = parameters$cv,
                                  muNonTravel = means$meanNonTravel,
                                  cvNonTravel = parameters$cvNonTravel,
                                  pWalk = means$pWalk, # parameters$pWalk
-                                 size = 1e5, SIMPLIFY = FALSE)
-  TotalMETQuintiles <- lapply(TotalMETSample,function(x) quantile(x, parameters$quantiles, na.rm = TRUE))
+                                 size = 1e5,
+                                 SIMPLIFY = FALSE)
+        TotalMETQuintiles <- lapply(TotalMETSample,function(x) quantile(x, parameters$quantiles, na.rm = TRUE))
 
-  TotalMET <- list( M = matrix(unlist(TotalMETQuintiles[1:8]),ncol = length(parameters$quantiles), byrow = TRUE), F = matrix(unlist(TotalMETQuintiles[9:16]),ncol = length(parameters$quantiles), byrow = TRUE ) )
+        TotalMET <- list( M = matrix(unlist(TotalMETQuintiles[1:8]),ncol = length(parameters$quantiles), byrow = TRUE), F = matrix(unlist(TotalMETQuintiles[9:16]),ncol = length(parameters$quantiles), byrow = TRUE ) )
 
-  TotalMET <- mapply(function(x,y) ifelse(x < 0.1, 0.1, x), TotalMET, SIMPLIFY=FALSE)
+    }else{
 
- return(list(ActiveTransportTime=ActiveTransportTime, WalkingTime=WalkingTime, CyclingTime=CyclingTime, TotalMET = TotalMET)) # WalkingMET=WalkingMET, CyclingMET = CyclingMET, TravelMET = TravelMET,
+        TravelMET <- mapply(function(walk,cycle) 3.5*walk/60 + 6*cycle/60, WalkingTime, CyclingTime, SIMPLIFY = FALSE)
+
+        nonTravelFile <- system.file("nonTravelMETs.csv", package = "ITHIM")
+        nonTravelMET <- read.csv(file = nonTravelFile)
+        nonTravelMET <- split(nonTravelMET, nonTravelMET$sex)
+        nonTravelMET <- list(M = nonTravelMET$M, F = nonTravelMET$F)
+        nonTravelMET <- lapply(nonTravelMET, function(x) x[,-(1:2)])
+
+        TotalMET <- mapply("+", nonTravelMET, TravelMET, SIMPLIFY = FALSE)
+        TotalMET <- lapply(TotalMET, function(x) ifelse(as.matrix(x)>2.5,as.matrix(x),0.1))
+
+    }
+
+ return(list(ActiveTransportTime=ActiveTransportTime, WalkingTime=WalkingTime, CyclingTime=CyclingTime, TotalMET = TotalMET))
 }
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -438,11 +454,11 @@ compareModels <- function(baseline, scenario){
 ###
 ###
 getNonTravelDistribution <- function(mu, cv, size = 1e6){
-    mu <- ifelse(mu == 0, 0.01, mu)
-    sd <- mu*cv
-    simLogNorm <- rlnorm(size, log(mu/sqrt(1+sd^2/mu^2)), sqrt(log(1+sd^2/mu^2)))
-    simData <- simLogNorm
-    return(simData)
+        mu <- ifelse(mu == 0, 0.01, mu)
+        sd <- mu*cv
+        simLogNorm <- rlnorm(size, log(mu/sqrt(1+sd^2/mu^2)), sqrt(log(1+sd^2/mu^2)))
+        simData <- simLogNorm
+        return(simData)
 }
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
