@@ -228,7 +228,21 @@ tabulateResults <- function(ITHIM.baseline, ITHIM.scenario.list){
     results <- results %>% spread(vision, percent) %>% arrange(bur, dis)
     return(results)
 }
-
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#' Tabulate the results of Comparative Risk Assessment
+#'
+#' Given an ITHIM baselin eobject and a list of ITHIM scenario objects
+#' this function returns a data frame of change in burden (absolute,
+#' not percent)
+#'
+#' @param ITHIM.baseline Baseline
+#' @param ITHIM.scenario.list An ITHIM list
+#'
+#' @return A data frame of change in burden
+#'
+#' @export
 superTabulate <- function(ITHIM.baseline, ITHIM.scenario.list){
     results <- data.frame()
     scenarioNames <- names(ITHIM.scenario.list)
