@@ -246,6 +246,10 @@ tabulateResults <- function(ITHIM.baseline, ITHIM.scenario.list){
 superTabulate <- function(ITHIM.baseline, ITHIM.scenario.list){
     results <- data.frame()
     scenarioNames <- names(ITHIM.scenario.list)
+    if(is.null(scenarioNames)){
+        scenarioNames <- paste0("scenario",1:length(ITHIM.scenario.list))
+        message("Try using a named list of scenario objects.  Otherwise the scenarios will be named scenario1, scenario2, scenario3...")
+    }
     i <- 1
     for( ITHIM.scenario in ITHIM.scenario.list ){
 
