@@ -116,6 +116,8 @@ createParameterList <- function(
     n <- 100 # percentiles instead of quintiles
     quantiles <- seq(1/n, (n-1)/n, by = 1/n)
 
+    EXCEL <- TRUE
+
     return( new("ParameterSet",
         Rwt = Rwt,
         Rct = Rct,
