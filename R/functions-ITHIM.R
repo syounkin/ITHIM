@@ -23,7 +23,7 @@ createITHIMFunction <- function(roadInjuriesFile = system.file("roadInjuriesUS.c
                                 safetyInNumbersFile = system.file("SiN.csv", package = "ITHIM"),
                                 FFile = system.file("F.portland.csv",package = "ITHIM"),
                                 meanType = "overall",
-                                EXCEL = FALSE){
+                                EXCEL = TRUE){
 
     new("ITHIM", parameters = parameters <- createParameterList(
                                   activeTransportTimeFile = activeTransportTimeFile,
@@ -57,7 +57,7 @@ createParameterList <- function(
                                 FFile = system.file("F.portland.csv", package = "ITHIM"),
                                 distRoadTypeFile = system.file("distByRoadTypeBaseline.csv", package = "ITHIM"),
                                 safetyInNumbersFile = system.file("SiN.csv", package = "ITHIM"),
-                                meanType = "overall", EXCEL = FALSE){
+                                meanType = "overall", EXCEL = TRUE){
 
     nAgeClass <- 8L
 
