@@ -15,7 +15,7 @@ superTabulate(ITHIM.baseline, ITHIM.scenario.list)
 A data frame of change in burden
 }
 \description{
-Given an ITHIM baselin eobject and a list of ITHIM scenario objects
+Given an ITHIM baseline object and a list of ITHIM scenario objects
 this function returns a data frame of change in burden (absolute,
 not percent)
 }
