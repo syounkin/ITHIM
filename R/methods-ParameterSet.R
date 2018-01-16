@@ -62,8 +62,8 @@ setAs("ParameterSet", "list", function(from) list(Rwt = from@Rwt, Rct = from@Rct
 setMethod("update", signature(x = "ParameterSet", parList = "list"), function(x, parList){
     x <- as(x, "list")
 
-#    excelIndex <- which(str_to_upper(names(parList)) == "EXCEL")
-#    names(parList)[excelIndex] <- "EXCEL"
+    excelIndex <- which(str_to_upper(names(parList)) == "EXCEL")
+    names(parList)[excelIndex] <- "EXCEL"
 
     for(i in 1:length(parList) ){
         x[[names(parList)[i]]] <- parList[[i]]

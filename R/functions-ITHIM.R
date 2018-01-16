@@ -23,7 +23,7 @@ createITHIMFunction <- function(roadInjuriesFile = system.file("roadInjuriesUS.c
                                 safetyInNumbersFile = system.file("SiN.csv", package = "ITHIM"),
                                 FFile = system.file("F.portland.csv",package = "ITHIM"),
                                 meanType = "overall",
-                                EXCEL = TRUE){
+                                EXCEL = FALSE){
 
     new("ITHIM", parameters = parameters <- createParameterList(
                                   activeTransportTimeFile = activeTransportTimeFile,
@@ -57,7 +57,7 @@ createParameterList <- function(
                                 FFile = system.file("F.portland.csv", package = "ITHIM"),
                                 distRoadTypeFile = system.file("distByRoadTypeBaseline.csv", package = "ITHIM"),
                                 safetyInNumbersFile = system.file("SiN.csv", package = "ITHIM"),
-                                meanType = "overall", EXCEL = TRUE){
+                                meanType = "overall", EXCEL = FALSE){
 
     nAgeClass <- 8L
 
@@ -115,8 +115,6 @@ createParameterList <- function(
 
     n <- 100 # percentiles instead of quintiles
     quantiles <- seq(1/n, (n-1)/n, by = 1/n)
-
-    EXCEL <- TRUE
 
     return( new("ParameterSet",
         Rwt = Rwt,
