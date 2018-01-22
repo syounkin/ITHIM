@@ -13,12 +13,6 @@
 #'
 #' @note For a list of parameter names use \code{getParameterNames}.
 #'
-#' @examples
-#' ITHIM <- createITHIM()
-#' getMeans(ITHIM)
-#' ITHIM.new <- update(ITHIM, list(muwt = 10, muct = 5))
-#' getMeans(ITHIM.new)
-#'
 #' @export
 #' @docType methods
 #' @rdname update-methods
@@ -166,6 +160,7 @@ setGeneric("getParameterNames", function(x) standardGeneric("getParameterNames")
 #' @param GBDFile A character string indicating the name of the file
 #'     containing the disease burden data.  Default value uses data
 #'     from the inst directory.
+#' @param FFile A file containing population count data
 #' @param roadInjuriesFile A character string indicating the name of
 #'     the file containing the road injury data (still under
 #'     development).  Default value uses data from the inst directory.
@@ -199,12 +194,6 @@ setGeneric("getParameterNames", function(x) standardGeneric("getParameterNames")
 #' @export
 #' @docType methods
 #' @rdname createITHIM-methods
-#' @examples
-#'
-#' activeTransportFile <- system.file("activeTransportTime.csv", package = "ITHIM")
-#' GBDFile <- system.file("gbd.csv", package = "ITHIM")
-#'
-#' ITHIM <- createITHIM(activeTransportFile = activeTransportFile, GBDFile = GBDFile)
 #'
 setGeneric("createITHIM", function(activeTransportFile, GBDFile, FFile, roadInjuriesFile, distRoadTypeFile, safetyInNumbersFile) standardGeneric("createITHIM"))
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
