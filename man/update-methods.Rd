@@ -34,11 +34,4 @@ parameters updated accordingly.
 \note{
 For a list of parameter names use \code{getParameterNames}.
 }
-\examples{
-ITHIM <- createITHIM()
-getMeans(ITHIM)
-ITHIM.new <- update(ITHIM, list(muwt = 10, muct = 5))
-getMeans(ITHIM.new)
-
-}
 

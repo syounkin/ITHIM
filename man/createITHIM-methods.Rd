@@ -21,6 +21,8 @@ value uses data from the inst directory.}
 containing the disease burden data.  Default value uses data
 from the inst directory.}
 
+\item{FFile}{A file containing population count data}
+
 \item{roadInjuriesFile}{A character string indicating the name of
 the file containing the road injury data (still under
 development).  Default value uses data from the inst directory.}
@@ -58,13 +60,5 @@ The format for the disease burden will be normalized and
 
 If run with no arguments this function will return the
     default ITHIM object
-}
-\examples{
-
-activeTransportFile <- system.file("activeTransportTime.csv", package = "ITHIM")
-GBDFile <- system.file("gbd.csv", package = "ITHIM")
-
-ITHIM <- createITHIM(activeTransportFile = activeTransportFile, GBDFile = GBDFile)
-
 }
 
