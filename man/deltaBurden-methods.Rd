@@ -4,13 +4,21 @@
 \name{deltaBurden}
 \alias{deltaBurden}
 \alias{deltaBurden,ITHIM,ITHIM,character,character,character-method}
+\alias{deltaBurden}
 \alias{deltaBurden,ITHIM,ITHIM,character,character,missing-method}
+\alias{deltaBurden}
 \alias{deltaBurden,ITHIM,ITHIM,character,missing,character-method}
+\alias{deltaBurden}
 \alias{deltaBurden,ITHIM,ITHIM,character,missing,missing-method}
+\alias{deltaBurden}
 \alias{deltaBurden,ITHIM,ITHIM,missing,character,character-method}
+\alias{deltaBurden}
 \alias{deltaBurden,ITHIM,ITHIM,missing,character,missing-method}
+\alias{deltaBurden}
 \alias{deltaBurden,ITHIM,ITHIM,missing,missing,character-method}
+\alias{deltaBurden}
 \alias{deltaBurden,ITHIM,ITHIM,missing,missing,missing-method}
+\alias{deltaBurden}
 \title{Gets Change in Disease Burden due to Physical Activity}
 \usage{
 deltaBurden(baseline, scenario, bur, dis, type)
@@ -67,4 +75,3 @@ Gets Change in Disease Burden due to Physical Activity
 The parameters dis and bur should be harmonized across
     \code{getBurden} and \code{deltaBurden}.
 }
-

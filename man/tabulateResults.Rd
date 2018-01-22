@@ -18,4 +18,3 @@ A data frame of change in burden
 Takes an ITHIM object as input and returns a new ITHIM object with
 parameters updated accordingly.
 }
-

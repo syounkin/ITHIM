@@ -4,8 +4,11 @@
 \name{getCycleTime}
 \alias{getCycleTime}
 \alias{getCycleTime,ITHIM,integer-method}
-\alias{getCycleTime,ITHIM,missing-method}
+\alias{getCycleTime}
 \alias{getCycleTime,ITHIM,numeric-method}
+\alias{getCycleTime}
+\alias{getCycleTime,ITHIM,missing-method}
+\alias{getCycleTime}
 \title{Returns the mean cycle time matrix}
 \usage{
 getCycleTime(x, form)
@@ -27,4 +30,3 @@ A numerical matrix of mean cycle time
 \description{
 Returns the mean cycle time matrix
 }
-

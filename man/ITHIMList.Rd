@@ -12,4 +12,3 @@ Foo.
 This line and the next ones go into the details.
 This line thus appears in the details as well.
 }
-

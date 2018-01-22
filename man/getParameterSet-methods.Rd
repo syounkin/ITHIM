@@ -4,6 +4,7 @@
 \name{getParameterSet}
 \alias{getParameterSet}
 \alias{getParameterSet,ITHIM-method}
+\alias{getParameterSet}
 \title{Retrieve a ParameterSet object}
 \usage{
 getParameterSet(x)
@@ -19,4 +20,3 @@ An object of class ParameterSet
 \description{
 Returns the ParameterSet object embedded in an ITHIM object.
 }
-

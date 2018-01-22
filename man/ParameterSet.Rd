@@ -9,4 +9,3 @@
 This class defines the set of parameters needed for an
 ITHIM analysis.  See ITHIM class for more information.
 }
-

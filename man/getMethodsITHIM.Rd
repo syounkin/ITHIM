@@ -12,4 +12,3 @@ A character vector of method names
 \description{
 Retrieves the names of methods for ITHIM Objects
 }
-

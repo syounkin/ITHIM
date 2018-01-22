@@ -4,8 +4,11 @@
 \name{getWalkTime}
 \alias{getWalkTime}
 \alias{getWalkTime,ITHIM,integer-method}
-\alias{getWalkTime,ITHIM,missing-method}
+\alias{getWalkTime}
 \alias{getWalkTime,ITHIM,numeric-method}
+\alias{getWalkTime}
+\alias{getWalkTime,ITHIM,missing-method}
+\alias{getWalkTime}
 \title{Returns the mean walk time matrix}
 \usage{
 getWalkTime(x, form)
@@ -27,4 +30,3 @@ A numerical matrix of mean walk time
 \description{
 Returns the mean walk time matrix
 }
-

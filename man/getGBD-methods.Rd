@@ -4,7 +4,9 @@
 \name{getGBD}
 \alias{getGBD}
 \alias{getGBD,ITHIM,character-method}
+\alias{getGBD}
 \alias{getGBD,ITHIM,missing-method}
+\alias{getGBD}
 \title{Retrieves the Global Burden of Disease (GBD) data}
 \usage{
 getGBD(x, format = "data.frame")
@@ -25,4 +27,3 @@ Either a list or a data frame containg GBD data.
 \description{
 Retrieves the Global Burden of Disease (GBD) data from an ITHIM object
 }
-
