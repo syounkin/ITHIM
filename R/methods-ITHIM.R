@@ -279,8 +279,8 @@ setMethod("summariseAF", signature(baseline = "ITHIM", scenario = "ITHIM"), func
 
 
 summariseAFFunction <- function(baseline, scenario){
-    require("tidyverse")
-    foo <- getGBD(baseline) %>% tbl_df(.) %>% dplyr::filter(., burdenType == "deaths") %>% tidyr::spread(., sex, value) %>% dplyr::select(., disease,M,F)
+
+    foo <- getGBD(baseline) %>% tbl_df(.) %>% filter(., burdenType == "deaths") %>% spread(., sex, value) %>% select(., disease,M,F)
     foo <- lapply(split(foo,foo$disease), function(x) x[,-1])
     AF <- getAF(baseline,scenario)
     diseaseVec <- intersect(names(foo),names(AF))
