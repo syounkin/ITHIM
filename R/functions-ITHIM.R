@@ -92,11 +92,11 @@ createParameterList <- function(
 
     # read safetyInNumbers using helper function which converts "normalize" csv into array
 
-    safetyInNumbers <- readSafetyInNumbers(file = safetyInNumbersFile)
+    safetyInNumbers <- array() #readSafetyInNumbers(file = safetyInNumbersFile)
 
     # read distRoadType using helper function which converts "normalize" csv into array
 
-    distRoadType <- readDistByRoadType(file = distRoadTypeFile)
+    distRoadType <- array() #readDistByRoadType(file = distRoadTypeFile)
 
     GBD <- readGBD(filename = GBDFile)
 
