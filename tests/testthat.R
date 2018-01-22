@@ -1,2 +1,2 @@
-require("testthat")
-test_check("ITHIM")
+#require("testthat")
+#test_check("ITHIM")
