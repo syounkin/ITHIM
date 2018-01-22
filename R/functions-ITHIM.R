@@ -253,7 +253,7 @@ superTabulate <- function(ITHIM.baseline, ITHIM.scenario.list){
     i <- 1
     for( ITHIM.scenario in ITHIM.scenario.list ){
 
-        foo <- ITHIM:::compareModels(ITHIM.baseline, ITHIM.scenario)
+        foo <- compareModels(ITHIM.baseline, ITHIM.scenario)
 
         for (burden in c("deaths.delta","daly.delta","yll.delta","yld.delta")){
 

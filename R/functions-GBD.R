@@ -75,7 +75,7 @@ summarizeBurden <- function(ITHIM.baseline, ITHIM.scenario, burdenType = "deaths
     }
 
     burdenList <- lapply(lapply(GBDList[[burdenType]],reformatGBD2),function(x) return(x))
-    AFList <- ITHIM:::compareModels(ITHIM.baseline, ITHIM.scenario)$AF
+    AFList <- compareModels(ITHIM.baseline, ITHIM.scenario)$AF
 
     diseaseVec <- intersect(names(burdenList),names(AFList))
     burdenList <- burdenList[diseaseVec]
