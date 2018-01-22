@@ -72,11 +72,15 @@
 #' GBDFile <- system.file("burden.portland.csv", package = "ITHIM")
 #' FFile <- system.file("F.portland.csv", package = "ITHIM")
 #'
-#' ITHIM.baseline <- createITHIM(activeTransportFile = activeTransportFile, GBDFile = GBDFile, FFile = FFile)
+#' ITHIM.baseline <- createITHIM(activeTransportFile = activeTransportFile,
+#' GBDFile = GBDFile,
+#' FFile = FFile)
 #' getMeans(ITHIM.baseline)
 #'
 #' activeTransportFile <- system.file("activeTransport.scenario.portland.csv", package = "ITHIM")
-#' ITHIM.scenario <- createITHIM(activeTransportFile = activeTransportFile, GBDFile = GBDFile, FFile = FFile)
+#' ITHIM.scenario <- createITHIM(activeTransportFile = activeTransportFile,
+#' GBDFile = GBDFile,
+#' FFile = FFile)
 #' getMeans(ITHIM.scenario)
 #'
 #' deltaDALY <- deltaBurden(ITHIM.baseline, ITHIM.scenario, bur = "daly", dis = "CVD")

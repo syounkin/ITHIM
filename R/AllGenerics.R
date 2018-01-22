@@ -182,9 +182,7 @@ setGeneric("getParameterNames", function(x) standardGeneric("getParameterNames")
 #'     needed only if the road injury component is being used.
 #'
 #' @note The format for the disease burden will be normalized and
-#'     explained in greater detail soon.  See
-#'     \url{https://github.com/syounkin/ITHIM/blob/devel/inst/gbd.csv}
-#'     for an example.
+#'     explained in greater detail soon.
 #'
 #' @return An object of class ITHIM
 #'

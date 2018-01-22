@@ -54,9 +54,7 @@ The disease burden file must contain values for any of the
     needed only if the road injury component is being used.
 
 The format for the disease burden will be normalized and
-    explained in greater detail soon.  See
-    \url{https://github.com/syounkin/ITHIM/blob/devel/inst/gbd.csv}
-    for an example.
+    explained in greater detail soon.
 
 If run with no arguments this function will return the
     default ITHIM object
