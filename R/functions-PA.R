@@ -203,6 +203,8 @@ getQuintiles <- function(means, parameters){
 
     }else{
 
+        browser()
+        
         TravelMET <- mapply(function(walk,cycle) 3.5*walk/60 + 6*cycle/60, WalkingTime, CyclingTime, SIMPLIFY = FALSE)
 
         nonTravelFile <- system.file("nonTravelMETs.csv", package = "ITHIM")
