@@ -203,12 +203,15 @@ getQuintiles <- function(means, parameters){
 
     }else{
 
-        browser()
+        # browser()
         
         TravelMET <- mapply(function(walk,cycle) 3.5*walk/60 + 6*cycle/60, WalkingTime, CyclingTime, SIMPLIFY = FALSE)
 
         nonTravelFile <- system.file("nonTravelMETs.csv", package = "ITHIM")
-        nonTravelMET <- read.csv(file = nonTravelFile)
+        nonTravelMET <- read.csv(file = nonTravelFile, header = TRUE)
+        message(cat(names(nonTravelMET), sep = ","))
+        names(nonTravelMET) <- c("sex", "ageClass", "q1", "q2", "q3", "q4", "q5")
+        message(cat(names(nonTravelMET), sep = ","))
         nonTravelMET <- split(nonTravelMET, nonTravelMET$sex)
         nonTravelMET <- list(M = nonTravelMET$M, F = nonTravelMET$F)
         nonTravelMET <- lapply(nonTravelMET, function(x) x[,-(1:2)])
