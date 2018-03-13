@@ -4,13 +4,9 @@
 \name{getBurden}
 \alias{getBurden}
 \alias{getBurden,ITHIM,character,character-method}
-\alias{getBurden}
 \alias{getBurden,ITHIM,character,missing-method}
-\alias{getBurden}
 \alias{getBurden,ITHIM,missing,character-method}
-\alias{getBurden}
 \alias{getBurden,ITHIM,missing,missing-method}
-\alias{getBurden}
 \title{Gets Burden}
 \usage{
 getBurden(x, bur, dis)
@@ -49,3 +45,4 @@ If bur is set wrong 0 will be returned, not an error message.
     This is a bug.  It should not return zero in this case.  That
     is misleading.
 }
+

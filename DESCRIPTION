@@ -18,9 +18,14 @@ Description: Implements the Integrated Transport and Health Impacts
 URL: https://github.com/syounkin/ITHIM
 License: GPL-2
 Depends:
-    R (>= 3.0.0), tidyverse, reshape2
+    R (>= 3.0.0),
+    tidyverse,
+    reshape2
 Imports:
-    utils, methods, stats
+    utils,
+    methods,
+    stats
 Suggests:
-    knitr, testthat
-RoxygenNote: 6.0.1
+    knitr,
+    testthat
+RoxygenNote: 5.0.1

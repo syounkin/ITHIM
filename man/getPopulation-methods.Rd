@@ -3,12 +3,9 @@
 \docType{methods}
 \name{getPopulation}
 \alias{getPopulation}
-\alias{getPopulation,missing,vector,vector-method}
-\alias{getPopulation}
-\alias{getPopulation,numeric,missing,missing-method}
-\alias{getPopulation}
 \alias{getPopulation,list,missing,missing-method}
-\alias{getPopulation}
+\alias{getPopulation,missing,vector,vector-method}
+\alias{getPopulation,numeric,missing,missing-method}
 \title{Retrieves population matrix from U.S. Census}
 \usage{
 getPopulation(msa, state, county)
@@ -36,3 +33,4 @@ Retrieves population matrix from U.S. Census
 The underlying function, \code{getTractAgeSex}, was written
     primarily by Vargo
 }
+

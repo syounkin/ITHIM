@@ -4,7 +4,6 @@
 \name{createITHIM}
 \alias{createITHIM}
 \alias{createITHIM,character,character,character-method}
-\alias{createITHIM}
 \title{Create an ITHIM object}
 \usage{
 createITHIM(activeTransportFile, GBDFile, FFile, roadInjuriesFile,
@@ -60,3 +59,4 @@ The format for the disease burden will be normalized and
 If run with no arguments this function will return the
     default ITHIM object
 }
+

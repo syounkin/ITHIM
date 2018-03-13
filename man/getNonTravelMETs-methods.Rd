@@ -4,11 +4,8 @@
 \name{getNonTravelMETs}
 \alias{getNonTravelMETs}
 \alias{getNonTravelMETs,ITHIM,integer-method}
-\alias{getNonTravelMETs}
-\alias{getNonTravelMETs,ITHIM,numeric-method}
-\alias{getNonTravelMETs}
 \alias{getNonTravelMETs,ITHIM,missing-method}
-\alias{getNonTravelMETs}
+\alias{getNonTravelMETs,ITHIM,numeric-method}
 \title{Returns the non-travel METs matrix}
 \usage{
 getNonTravelMETs(x, form)
@@ -30,3 +27,4 @@ A numerical matrix of mean non-travel activity
 \description{
 Returns the non-travel METs matrix
 }
+

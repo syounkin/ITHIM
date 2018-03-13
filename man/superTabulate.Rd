@@ -19,3 +19,4 @@ Given an ITHIM baseline object and a list of ITHIM scenario objects
 this function returns a data frame of change in burden (absolute,
 not percent)
 }
+

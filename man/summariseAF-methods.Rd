@@ -4,7 +4,6 @@
 \name{summariseAF}
 \alias{summariseAF}
 \alias{summariseAF,ITHIM,ITHIM-method}
-\alias{summariseAF}
 \title{Foo}
 \usage{
 summariseAF(baseline, scenario)
@@ -22,3 +21,4 @@ A vector of summarised attributable fractions
 \description{
 Foobar
 }
+

@@ -4,7 +4,6 @@
 \name{tabulateDeltaBurden}
 \alias{tabulateDeltaBurden}
 \alias{tabulateDeltaBurden,ITHIM,ITHIM-method}
-\alias{tabulateDeltaBurden}
 \title{Foo}
 \usage{
 tabulateDeltaBurden(baseline, scenario)
@@ -22,3 +21,4 @@ foo
 \description{
 Foo
 }
+

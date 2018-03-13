@@ -4,7 +4,6 @@
 \name{getAF}
 \alias{getAF}
 \alias{getAF,ITHIM,ITHIM-method}
-\alias{getAF}
 \title{Foo}
 \usage{
 getAF(baseline, scenario)
@@ -22,3 +21,4 @@ A list of attributable fractions
 \description{
 Foobar
 }
+

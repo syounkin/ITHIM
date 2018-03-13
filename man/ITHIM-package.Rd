@@ -2,8 +2,8 @@
 % Please edit documentation in R/packageInfo.R
 \docType{package}
 \name{ITHIM-package}
-\alias{ITHIM-package}
 \alias{ITHIM}
+\alias{ITHIM-package}
 \title{Integrated Transport and Health Impacts Model (ITHIM)}
 \description{
 ITHIM is a mathematical model that integrates data on travel
@@ -88,12 +88,13 @@ initialBurden <- getBurden(ITHIM.baseline, bur = "daly", dis = "CVD")
 (pctChange <- deltaDALY/initialBurden*100)
 
 }
+\author{
+Samuel G. Younkin \email{syounkin@wisc.edu}
+}
 \references{
 \url{http://www.cedar.iph.cam.ac.uk/research/modelling/ithim/}, \url{https://ithim.ghi.wisc.edu/}
 }
 \seealso{
 \code{\link{createITHIM}}, \code{\link{getMeans}}, \code{\link{deltaBurden}}, \code{\link{getBurden}}, \code{\link{update}}
 }
-\author{
-Samuel G. Younkin \email{syounkin@wisc.edu}
-}
+
