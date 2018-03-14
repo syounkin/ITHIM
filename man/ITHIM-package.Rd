@@ -68,24 +68,16 @@ the 2000 Bay Area Travel Survey.
 }
 \examples{
 
-activeTransportFile <- system.file("activeTransport.portland.csv", package = "ITHIM")
-GBDFile <- system.file("burden.portland.csv", package = "ITHIM")
-FFile <- system.file("F.portland.csv", package = "ITHIM")
+CRA(meanlog.baseline = log(10), meanlog.scenario = log(11))
+CRA(p0.baseline = 0.75, p0.scenario = 0.74)
 
-ITHIM.baseline <- createITHIM(activeTransportFile = activeTransportFile,
-GBDFile = GBDFile,
-FFile = FFile)
-getMeans(ITHIM.baseline)
+CRA(meanlog.baseline = log(10), meanlog.scenario = log(11), p0.baseline = 0, p0.scenario = 0)
 
-activeTransportFile <- system.file("activeTransport.scenario.portland.csv", package = "ITHIM")
-ITHIM.scenario <- createITHIM(activeTransportFile = activeTransportFile,
-GBDFile = GBDFile,
-FFile = FFile)
-getMeans(ITHIM.scenario)
-
-deltaDALY <- deltaBurden(ITHIM.baseline, ITHIM.scenario, bur = "daly", dis = "CVD")
-initialBurden <- getBurden(ITHIM.baseline, bur = "daly", dis = "CVD")
-(pctChange <- deltaDALY/initialBurden*100)
+n <- 1e4
+P <- qlnorm(p = 1/n*(1:(n-1)), meanlog = log(10))
+Q <- qlnorm(p = 1/n*(1:(n-1)), meanlog = log(11))
+CRA( P = P, Q = Q, type = "non-parametric")
+CRA(meanlog.baseline = log(10), meanlog.scenario = log(11), p0.baseline = 0, p0.scenario = 0, meanlog.leisure = 1e-6)
 
 }
 \author{

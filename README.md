@@ -7,7 +7,7 @@ the package [tutorial](https://github.com/ITHIM/ITHIM/wiki/ITHIM-Tutorial) page.
 
 ```r
 library("devtools")
-install_github("ITHIM/ITHIM", ref="devel")
+install_github("ITHIM/ITHIM", ref="ITHIM-R")
 library("ITHIM")
 example("ITHIM")
 ```

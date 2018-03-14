@@ -4,8 +4,8 @@
 \alias{CRA}
 \title{Perform comparative risk assesment}
 \usage{
-CRA(meanlog.baseline = log(5), sdlog.baseline = 0.1, p0.baseline = 0.5,
-  meanlog.scenario = log(5), sdlog.scenario = 0.1, p0.scenario = 0.5,
+CRA(meanlog.baseline = log(5), sdlog.baseline = 1, p0.baseline = 0.5,
+  meanlog.scenario = log(5), sdlog.scenario = 1, p0.scenario = 0.5,
   meanlog.leisure = log(10), sdlog.leisure = 1, n = 10000, B = 1e+05, P,
   Q, R = function(x) exp(-x), type = "parametric")
 }
