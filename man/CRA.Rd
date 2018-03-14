@@ -4,10 +4,10 @@
 \alias{CRA}
 \title{Perform comparative risk assesment}
 \usage{
-CRA(meanlog.baseline = 10, sdlog.baseline = 1, p0.baseline = 0.5,
-  meanlog.scenario = 10, sdlog.scenario = 1, p0.scenario = 0.5,
-  n = 10000, B = 1e+05, P, Q, R = function(x) exp(-x),
-  type = "parametric")
+CRA(meanlog.baseline = log(5), sdlog.baseline = 0.1, p0.baseline = 0.5,
+  meanlog.scenario = log(5), sdlog.scenario = 0.1, p0.scenario = 0.5,
+  meanlog.leisure = log(10), sdlog.leisure = 1, n = 10000, B = 1e+05, P,
+  Q, R = function(x) exp(-x), type = "parametric")
 }
 \arguments{
 \item{meanlog.baseline}{Mean of exposure in baseline (log-scale, parameteric model)}
@@ -18,9 +18,13 @@ CRA(meanlog.baseline = 10, sdlog.baseline = 1, p0.baseline = 0.5,
 
 \item{meanlog.scenario}{Mean of exposure in scenario (log-scale, parameteric model)}
 
-\item{sdlog.scenario}{Standard deviation of exposure in baseline (log-scale, parameteric model)}
+\item{sdlog.scenario}{Standard deviation of exposure in scenario (log-scale, parameteric model)}
 
 \item{p0.scenario}{Proportion of inactive travelers in scenario}
+
+\item{meanlog.leisure}{Mean of exposure in leisure physical activity (log-scale, parameteric model)}
+
+\item{sdlog.leisure}{Standard deviation of leisure physical activity in baseline (log-scale, parameteric model)}
 
 \item{n}{Number of quantiles}
 
