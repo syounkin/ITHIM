@@ -26,7 +26,7 @@ CRA(meanlog.baseline = log(5), sdlog.baseline = 1, p0.baseline = 0.5,
 
 \item{sdlog.leisure}{Standard deviation of leisure physical activity in baseline (log-scale, parameteric model)}
 
-\item{n}{Number of quantiles}
+\item{n}{Number of quantiles (parametric)}
 
 \item{B}{Sample size (parametric model)}
 
@@ -42,6 +42,9 @@ CRA(meanlog.baseline = log(5), sdlog.baseline = 1, p0.baseline = 0.5,
 The population attributable fraction
 }
 \description{
-Foo
+This function accepts up to eight parameters for use with the
+parameteric physical activity model, or two vectors of quantiles
+for the non-paraetric model.  The function returns the population
+attributable fraction.
 }
 
