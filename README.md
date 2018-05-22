@@ -6,8 +6,11 @@ the package [tutorial](https://github.com/ITHIM/ITHIM/wiki/ITHIM-Tutorial) page.
 #### Quick Start
 
 ```r
+if (!require(devtools))
+  install.packages("devtools")
 library("devtools")
-install_github("ITHIM/ITHIM", ref="ITHIM-R")
+devtools::install_github("ITHIM/ITHIM", ref="ITHIM-R")
+#devtools::install("~/ITHIM/")
 library("ITHIM")
 example("ITHIM")
 ```
