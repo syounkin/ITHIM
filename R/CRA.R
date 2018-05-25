@@ -33,7 +33,7 @@ CRA.function <- function(meanlog.baseline = log(5),
                 B = 1e5,
                 P,
                 Q,
-                R = function(x) exp(-0.03*x),
+                R = function(x) exp(-0.03*x), # shape parameter for colon cancer from Excel workbook
                 type = "parametric"){
 
     if(type == "parametric"){
@@ -73,11 +73,11 @@ CRA.function <- function(meanlog.baseline = log(5),
 #' @return A data frame with population attributable fractions
 CRA.DF <- function(leisure = "medium"){
     if(leisure == "low"){
-        leisure.value <- 1} # 3 min/day walking
+        leisure.value <- log(1)} # 3 min/day walking
     else if(leisure == "medium"){
-        leisure.value <- 10 # 29 min/day walking
+        leisure.value <- log(10) # 30 min/day walking
     }else if( leisure == "high"){
-        leisure.value <- 100 # 4.8 hrs/day walking
+        leisure.value <- log(50) # 2.5 hrs/day walking
     }else{
         message("Problem with leisure argument.")
     }
