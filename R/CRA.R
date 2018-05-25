@@ -21,9 +21,7 @@
 #' @param type A character string.  Either "parametric" or "non-parametric"
 #'
 #' @return The population attributable fraction
-#'
-#' @export
-CRA <- function(meanlog.baseline = log(5),
+CRA.function <- function(meanlog.baseline = log(5),
                 sdlog.baseline = 1,
                 p0.baseline = 0.5,
                 meanlog.scenario = log(5),
@@ -31,11 +29,11 @@ CRA <- function(meanlog.baseline = log(5),
                 p0.scenario = 0.5,
                 meanlog.leisure = log(10),
                 sdlog.leisure = 1,
-                n = 1e4,
+                n = 1e3,
                 B = 1e5,
                 P,
                 Q,
-                R = function(x) exp(-x),
+                R = function(x) exp(-0.03*x),
                 type = "parametric"){
 
     if(type == "parametric"){
@@ -61,6 +59,56 @@ CRA <- function(meanlog.baseline = log(5),
 
     }
 
-    return((sum(R(P)) - sum(R(Q)))/sum(R(P)))
+    return((sum(R(Q)) - sum(R(P)))/sum(R(P)))
+
+}
+#' Perform comparative risk assesment
+#'
+#' Foo
+#'
+#' @param leisue A character string, either "low", "medium" or "high"
+#'     indicating the amonut of leisure activity on the population
+#' @param n Number of quantiles (parametric)
+#'
+#' @return A data frame with population attributable fractions
+CRA.DF <- function(leisure = "medium"){
+    if(leisure == "low"){
+        leisure.value <- 1} # 3 min/day walking
+    else if(leisure == "medium"){
+        leisure.value <- 10 # 29 min/day walking
+    }else if( leisure == "high"){
+        leisure.value <- 100 # 4.8 hrs/day walking
+    }else{
+        message("Problem with leisure argument.")
+    }
+    CRA.interior <- function(x, y) {
+        cra.value <- CRA.function(meanlog.baseline = x$meanlog,
+                         meanlog.scenario = y$meanlog,
+                         p0.baseline = x$p0,
+                         p0.scenario = y$p0,
+                         meanlog.leisure = leisure.value,
+                         type = "parametric"
+                         )
+        return(cra.value)
+    }
+    return(CRA.interior)
+}
+#' Perform comparative risk assesment
+#'
+#' Foo
+#'
+#' @param activityFile.baseline Name of activity file for baseline
+#' @param activityFile.scenario Name of activity file for scenario
+#'
+#' @return A data frame with population attributable fractions
+#' @export
+CRA <- function(activityFile.baseline = system.file("activity.baseline.csv", package = "ITHIM"), activityFile.scenario = system.file("activity.scenario.csv", package = "ITHIM")){
+
+    activityDF.baseline <- read.csv(file = activityFile.baseline, row.names = 1)
+    activityDF.scenario <- read.csv(file = activityFile.scenario, row.names = 1)
+    activityList.baseline <- setNames(split(activityDF.baseline,seq(nrow(activityDF.baseline))),rownames(activityDF.baseline))
+    activityList.scenario <- setNames(split(activityDF.scenario,seq(nrow(activityDF.scenario))),rownames(activityDF.scenario))
+
+    return(data.frame(low = mapply( CRA.DF(leisure = "low"), activityList.baseline, activityList.scenario), medium = mapply( CRA.DF(leisure = "medium"), activityList.baseline, activityList.scenario), high = mapply( CRA.DF(leisure = "high"), activityList.baseline, activityList.scenario)))
 
 }

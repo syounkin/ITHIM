@@ -2,8 +2,8 @@
 % Please edit documentation in R/packageInfo.R
 \docType{package}
 \name{ITHIM-package}
-\alias{ITHIM}
 \alias{ITHIM-package}
+\alias{ITHIM}
 \title{Integrated Transport and Health Impacts Model (ITHIM)}
 \description{
 ITHIM is a mathematical model that integrates data on travel
@@ -79,13 +79,12 @@ CRA( P = P, Q = Q, type = "non-parametric")
 CRA(meanlog.baseline = log(10), meanlog.scenario = log(11), p0.baseline = 0, p0.scenario = 0, meanlog.leisure = 1e-6, n = n)
 
 }
-\author{
-Samuel G. Younkin \email{syounkin@wisc.edu}
-}
 \references{
 \url{http://www.cedar.iph.cam.ac.uk/research/modelling/ithim/}, \url{https://ithim.ghi.wisc.edu/}
 }
 \seealso{
 \code{\link{createITHIM}}, \code{\link{getMeans}}, \code{\link{deltaBurden}}, \code{\link{getBurden}}, \code{\link{update}}
 }
-
+\author{
+Samuel G. Younkin \email{syounkin@wisc.edu}
+}

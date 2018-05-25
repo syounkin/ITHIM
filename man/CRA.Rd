@@ -4,47 +4,18 @@
 \alias{CRA}
 \title{Perform comparative risk assesment}
 \usage{
-CRA(meanlog.baseline = log(5), sdlog.baseline = 1, p0.baseline = 0.5,
-  meanlog.scenario = log(5), sdlog.scenario = 1, p0.scenario = 0.5,
-  meanlog.leisure = log(10), sdlog.leisure = 1, n = 10000, B = 1e+05, P,
-  Q, R = function(x) exp(-x), type = "parametric")
+CRA(activityFile.baseline = system.file("activity.baseline.csv", package =
+  "ITHIM"), activityFile.scenario = system.file("activity.scenario.csv",
+  package = "ITHIM"))
 }
 \arguments{
-\item{meanlog.baseline}{Mean of exposure in baseline (log-scale, parameteric model)}
+\item{activityFile.baseline}{Name of activity file for baseline}
 
-\item{sdlog.baseline}{Standard deviation of exposure in baseline (log-scale, parameteric model)}
-
-\item{p0.baseline}{Proportion of inactive travelers in baseline}
-
-\item{meanlog.scenario}{Mean of exposure in scenario (log-scale, parameteric model)}
-
-\item{sdlog.scenario}{Standard deviation of exposure in scenario (log-scale, parameteric model)}
-
-\item{p0.scenario}{Proportion of inactive travelers in scenario}
-
-\item{meanlog.leisure}{Mean of exposure in leisure physical activity (log-scale, parameteric model)}
-
-\item{sdlog.leisure}{Standard deviation of leisure physical activity in baseline (log-scale, parameteric model)}
-
-\item{n}{Number of quantiles (parametric)}
-
-\item{B}{Sample size (parametric model)}
-
-\item{P}{Quantiles of exposure in baseline (non-parametric model)}
-
-\item{Q}{Quantiles of exposure in scenario (non-parametric model)}
-
-\item{R}{Relative risk function in terms of total exposure (physical activity)}
-
-\item{type}{A character string.  Either "parametric" or "non-parametric"}
+\item{activityFile.scenario}{Name of activity file for scenario}
 }
 \value{
-The population attributable fraction
+A data frame with population attributable fractions
 }
 \description{
-This function accepts up to eight parameters for use with the
-parameteric physical activity model, or two vectors of quantiles
-for the non-paraetric model.  The function returns the population
-attributable fraction.
+Foo
 }
-
