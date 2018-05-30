@@ -29,8 +29,8 @@ CRA.function <- function(meanlog.baseline = log(5),
                 p0.scenario = 0.5,
                 meanlog.leisure = log(10),
                 sdlog.leisure = 1,
-                n = 1e3,
-                B = 1e5,
+                n = 1e4,
+                B = 1e6,
                 P,
                 Q,
                 R = function(x) exp(-0.03*x), # shape parameter for colon cancer from Excel workbook
@@ -77,7 +77,7 @@ CRA.DF <- function(leisure = "medium"){
     else if(leisure == "medium"){
         leisure.value <- log(10) # 30 min/day walking
     }else if( leisure == "high"){
-        leisure.value <- log(50) # 2.5 hrs/day walking
+        leisure.value <- log(100) # 24 hrs/day walking
     }else{
         message("Problem with leisure argument.")
     }
