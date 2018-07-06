@@ -1,4 +1,4 @@
-ID,p0,meanlog,sdlog
-group1,0.5,10,5
-group2,0.5,15,4
-group3,0.5,18,3
+ID,p0,mean,sd
+group1,0.96,13,5
+group2,0.97,14,4
+group3,0.96,15,3
