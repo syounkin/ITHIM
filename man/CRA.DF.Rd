@@ -4,13 +4,13 @@
 \alias{CRA.DF}
 \title{Perform comparative risk assesment}
 \usage{
-CRA.DF(leisure = "medium", n = 10000)
+CRA.DF(leisure = "medium")
 }
 \arguments{
-\item{n}{Number of quantiles (parametric)}
-
 \item{leisue}{A character string, either "low", "medium" or "high"
 indicating the amonut of leisure activity on the population}
+
+\item{n}{Number of quantiles (parametric)}
 }
 \value{
 A data frame with population attributable fractions
