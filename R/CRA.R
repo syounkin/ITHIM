@@ -82,8 +82,8 @@ CRA.DF <- function(leisure = "medium"){
         message("Problem with leisure argument.")
     }
     CRA.interior <- function(x, y) {
-        cra.value <- CRA.function(meanlog.baseline = x$meanlog,
-                         meanlog.scenario = y$meanlog,
+        cra.value <- CRA.function(meanlog.baseline = log(x$mean/sqrt(1+x$sd^2/x$mean^2)),
+                         meanlog.scenario = log(y$mean/sqrt(1+y$sd^2/y$mean^2)),
                          p0.baseline = x$p0,
                          p0.scenario = y$p0,
                          meanlog.leisure = leisure.value,
