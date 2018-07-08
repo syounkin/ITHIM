@@ -2,6 +2,7 @@
 
 export(CRA)
 export(getTA)
+export(getp0)
 exportClasses(TravelSurvey)
 import(methods)
 import(stats)
