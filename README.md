@@ -1,17 +1,16 @@
 ### ITHIM: Integrated Transport and Health Impacts Model
 
 Welcome to the repository for the R package ITHIM. Please also visit
-the [tutorial](https://github.com/syounkin/GHI/blob/master/R/tutorial.Rmd#ithim-package-tutorial).
+the package [tutorial](https://github.com/ITHIM/ITHIM/wiki/ITHIM-Tutorial) page.
 
 #### Quick Start
 
-Install ITHIM from GitHub and create the default ITHIM model.
-
 ```r
+if (!require(devtools))
+  install.packages("devtools")
 library("devtools")
-install_github("syounkin/ITHIM", ref="master")
+devtools::install_github("ITHIM/ITHIM", ref="ITHIM-R")
+#devtools::install("~/ITHIM/")
 library("ITHIM")
-ITHIM <- createITHIM()
+example("ITHIM")
 ```
-
-[![Stories in Ready](https://badge.waffle.io/syounkin/ITHIM.svg?label=ready&title=Ready)](http://waffle.io/syounkin/ITHIM)
