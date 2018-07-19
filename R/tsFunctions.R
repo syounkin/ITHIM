@@ -30,14 +30,13 @@ getp0 <- function(ts, fAT = 1){
 
     ts.df %>%
         group_by(location, houseID, subjectID, sex, age, mode) %>%
-        summarise(T = sum(duration)) %>%
-        spread(mode, T, fill = 0)    %>%
+        summarise(T = sum(duration)) %>% ungroup() %>%
+        spread(mode, T, fill = 0) %>%
         select(location, houseID, subjectID, sex, age, walk, cycle) %>%
-        ungroup() %>%
-        group_by(location, sex, age) %>%
-        dplyr::filter(!is.na(location) & !is.na(sex) & !is.na(age)) %>%
+        dplyr::filter(!is.na(location) & !is.na(sex) & !is.na(age)) %>% group_by(location, sex, age) %>%
         summarise(n0 = sum(walk + cycle == 0), n = n()) %>%
         mutate(p0 = (1/fAT)*(n0/n) + 1 - 1/fAT) %>%
+        mutate(p0 = ifelse(p0 < 0, 0, p0)) %>%
         select(location, sex, age, p0)
 
 }
