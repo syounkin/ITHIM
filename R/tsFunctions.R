@@ -24,7 +24,7 @@ getTA <- function(ts, alpha = 1){
 
 }
 #' @export
-getp0 <- function(ts, beta = 1){
+getp0 <- function(ts, fAT = 1){
 
     ts.df <- full_join(ts@trip, full_join(ts@person, ts@house, by = "houseID"), by = c("houseID","subjectID"))
 
@@ -37,7 +37,7 @@ getp0 <- function(ts, beta = 1){
         group_by(location, sex, age) %>%
         dplyr::filter(!is.na(location) & !is.na(sex) & !is.na(age)) %>%
         summarise(n0 = sum(walk + cycle == 0), n = n()) %>%
-        mutate(p0 = beta*n0/n) %>%
+        mutate(p0 = (1/fAT)*(n0/n) + 1 - 1/fAT) %>%
         select(location, sex, age, p0)
 
 }
