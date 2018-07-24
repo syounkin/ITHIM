@@ -24,6 +24,7 @@ setClass(Class = "TravelSurvey", representation = representation(person = "data.
              if( !is.character(object@trip$subjectID)) msg <- "The subjectID variable in the trip table must be character class."
              if( !is.numeric(object@trip$duration)) msg <- "The duration variable in the trip table must be numeric."
              if( !is.factor(object@trip$mode)) msg <- "The mode variable in the trip table must be a factor."
+             if( !identical(levels(object@trip$mode), c("walk","cycle","other"))) msg <- "The mode variable must have levels walk, cycle, other in that order."
 
              if( !is.character(object@house$houseID)) msg <- "The houseID variable in the house table must be character class."
              if( !is.factor(object@house$location)) msg <- "The location variable in the house table must be a factor."
