@@ -40,3 +40,29 @@ getp0 <- function(ts, fAT = 1){
         select(location, sex, age, p0)
 
 }
+#' @export
+getMeans <- function(ts, activeTravelers = TRUE, alpha = 1){
+
+    ts.df <- full_join(ts@trip, full_join(ts@person, ts@house, by = "houseID"), by = c("houseID","subjectID"))
+
+    if(!activeTravelers){
+
+        ts.df %>%
+            group_by(location, houseID, subjectID, sex, age, mode) %>%
+            summarise(T = sum(duration)) %>%
+            spread(mode, T, fill = 0) %>%
+            group_by(location, sex, age) %>%
+            summarise(walk = alpha*mean(walk), cycle = alpha*mean(cycle), other = alpha*mean(other))
+
+    }else{
+
+        ts.df %>%
+            group_by(location, houseID, subjectID, sex, age, mode) %>%
+            summarise(T = sum(duration)) %>%
+            spread(mode, T, fill = 0) %>%
+            dplyr::filter(walk + cycle > 0 ) %>%
+            group_by(location, sex, age) %>%
+            summarise(walk = alpha*mean(walk), cycle = alpha*mean(cycle), other = alpha*mean(other))
+
+    }
+}
