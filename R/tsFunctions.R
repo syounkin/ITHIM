@@ -26,6 +26,9 @@ getTA <- function(ts, alpha = 1){
 #' @export
 getp0 <- function(ts, fAT = 1){
 
+    validObject(ts)
+
+
     ts.df <- full_join(ts@trip, full_join(ts@person, ts@house, by = "houseID"), by = c("houseID","subjectID"))
 
     ts.df %>%
