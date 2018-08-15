@@ -33,7 +33,7 @@ CRA.function <- function(meanlog.baseline = log(5),
                 B = 1e6,
                 P,
                 Q,
-                R = function(x) exp(-0.03*x), # shape parameter for colon cancer from Excel workbook
+                R = function(x) exp(-0.03*sqrt(x)), # shape parameter for colon cancer from Excel workbook
                 type = "parametric"){
 
     if(type == "parametric"){
