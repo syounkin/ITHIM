@@ -83,7 +83,9 @@ CRA.DF <- function(leisure = "medium"){
     }
     CRA.interior <- function(x, y) {
         cra.value <- CRA.function(meanlog.baseline = log(x$mean/sqrt(1+x$sd^2/x$mean^2)),
-                         meanlog.scenario = log(y$mean/sqrt(1+y$sd^2/y$mean^2)),
+                                  meanlog.scenario = log(y$mean/sqrt(1+y$sd^2/y$mean^2)),
+                                  sdlog.baseline = log(1+x$sd^2/x$mean^2),
+                                  sdlog.scenario = log(1+y$sd^2/y$mean^2),
                          p0.baseline = x$p0,
                          p0.scenario = y$p0,
                          meanlog.leisure = leisure.value,
