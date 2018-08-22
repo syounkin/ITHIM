@@ -7,7 +7,7 @@
 CRA.function(meanlog.baseline = log(5), sdlog.baseline = 1,
   p0.baseline = 0.5, meanlog.scenario = log(5), sdlog.scenario = 1,
   p0.scenario = 0.5, meanlog.leisure = log(10), sdlog.leisure = 1,
-  n = 10000, B = 1e+06, P, Q, R = function(x) exp(-0.03 * x),
+  n = 10000, B = 1e+06, P, Q, R = function(x) exp(-0.03 * sqrt(x)),
   type = "parametric")
 }
 \arguments{

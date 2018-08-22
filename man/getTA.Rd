@@ -4,7 +4,7 @@
 \alias{getTA}
 \title{Compute Travel Activity Parameters}
 \usage{
-getTA(ts, alpha = 1)
+getTA(ts, activeTravelers = TRUE, alpha = 1)
 }
 \arguments{
 \item{ts}{A TravelSurvey object}
