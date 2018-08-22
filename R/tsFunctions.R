@@ -6,21 +6,39 @@
 #'
 #' @return A data frame with travel activity mean and standard deviation
 #' @export
-getTA <- function(ts, alpha = 1){
+getTA <- function(ts, activeTravelers = TRUE, alpha = 1){
 
     ts.df <- full_join(ts@trip, full_join(ts@person, ts@house, by = "houseID"), by = c("houseID","subjectID"))
 
-    ts.df %>%
-        group_by(location, houseID, subjectID, sex, age, mode) %>%
-        summarise(T = sum(duration)) %>%
-        spread(mode, T, fill = 0)    %>%
-        select(location, houseID, subjectID, sex, age, walk, cycle) %>%
-        ungroup() %>%
-        dplyr::filter(walk + cycle > 0 ) %>%
-        mutate( TA = alpha *(3*walk/60 + 6*cycle/60) ) %>%
-        group_by(location, sex, age) %>%
-        dplyr::filter(!is.na(location) & !is.na(sex) & !is.na(age)) %>%
-        summarise(mean = mean(TA), sd = sd(TA))
+    if( activeTravelers ){
+
+        ts.df %>%
+            group_by(location, houseID, subjectID, sex, age, mode) %>%
+            summarise(T = sum(duration)) %>%
+            spread(mode, T, fill = 0)    %>%
+            select(location, houseID, subjectID, sex, age, walk, cycle) %>%
+            ungroup() %>%
+            dplyr::filter(walk + cycle > 0 ) %>%
+            mutate( TA = alpha *(3*walk/60 + 6*cycle/60) ) %>%
+            group_by(location, sex, age) %>%
+            dplyr::filter(!is.na(location) & !is.na(sex) & !is.na(age)) %>%
+            summarise(mean = mean(TA), sd = sd(TA))
+
+    }else{
+
+        ts.df %>%
+            group_by(location, houseID, subjectID, sex, age, mode) %>%
+            summarise(T = sum(duration)) %>%
+            spread(mode, T, fill = 0)    %>%
+            select(location, houseID, subjectID, sex, age, walk, cycle) %>%
+            ungroup() %>%
+            mutate( TA = alpha *(3*walk/60 + 6*cycle/60) ) %>%
+            group_by(location, sex, age) %>%
+            dplyr::filter(!is.na(location) & !is.na(sex) & !is.na(age)) %>%
+            summarise(mean = mean(TA), sd = sd(TA))
+
+    }
+
 
 }
 #' @export
