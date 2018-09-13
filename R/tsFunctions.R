@@ -69,6 +69,7 @@ getMeans <- function(ts, activeTravelers = TRUE, alpha = 1){
     if(!activeTravelers){
 
         ts.df %>%
+            dplyr::filter(!is.na(location) & !is.na(sex) & !is.na(age) & !is.na(mode)) %>%
             group_by(location, houseID, subjectID, sex, age, mode) %>%
             summarise(T = sum(duration)) %>%
             spread(mode, T, fill = 0) %>%
@@ -78,6 +79,7 @@ getMeans <- function(ts, activeTravelers = TRUE, alpha = 1){
     }else{
 
         ts.df %>%
+            dplyr::filter(!is.na(location) & !is.na(sex) & !is.na(age) & !is.na(mode)) %>%
             group_by(location, houseID, subjectID, sex, age, mode) %>%
             summarise(T = sum(duration)) %>%
             spread(mode, T, fill = 0) %>%
